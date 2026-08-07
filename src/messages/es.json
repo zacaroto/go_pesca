@@ -1,0 +1,92 @@
+{
+  "common": {
+    "appName": "Go Pesca",
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar Sesión",
+    "language": "Idioma",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "submit": "Enviar",
+    "loading": "Cargando...",
+    "noResults": "No se encontraron resultados"
+  },
+  "nav": {
+    "home": "Inicio",
+    "pokedex": "Pokédex",
+    "catches": "Capturas",
+    "newCatch": "Nueva Captura",
+    "species": "Especies",
+    "profile": "Perfil"
+  },
+  "home": {
+    "title": "Tu Pokédex de Pesca",
+    "subtitle": "Registra tus capturas y completa tu colección de especies",
+    "cta": "Registrar Captura"
+  },
+  "auth": {
+    "loginTitle": "Iniciar Sesión",
+    "registerTitle": "Crear Cuenta",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "displayName": "Nombre de usuario",
+    "loginButton": "Entrar",
+    "registerButton": "Crear Cuenta",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "invalidCredentials": "Credenciales inválidas",
+    "registrationSuccess": "Cuenta creada. Revisa tu correo para confirmar."
+  },
+  "pokedex": {
+    "title": "Mi Pokédex",
+    "progress": "{caught}/{total} especies capturadas",
+    "caught": "Capturadas",
+    "uncaught": "Por capturar",
+    "all": "Todas",
+    "firstCatch": "Primera captura",
+    "lastCatch": "Última captura",
+    "totalCatches": "Total de capturas",
+    "noCatches": "Aún no has capturado esta especie"
+  },
+  "catches": {
+    "title": "Mis Capturas",
+    "newCatch": "Nueva Captura",
+    "photo": "Foto",
+    "species": "Especie",
+    "location": "Ubicación",
+    "date": "Fecha",
+    "weight": "Peso (kg)",
+    "length": "Largo (cm)",
+    "bait": "Carnada / Señuelo",
+    "weather": "Clima",
+    "tide": "Marea",
+    "time": "Hora",
+    "notes": "Notas",
+    "optionalFields": "Campos opcionales",
+    "uploadPhoto": "Subir foto",
+    "selectSpecies": "Seleccionar especie",
+    "pickLocation": "Seleccionar ubicación",
+    "catchSaved": "¡Captura registrada!",
+    "noCatches": "Aún no tienes capturas. ¡Sal a pescar!",
+    "filterBySpecies": "Filtrar por especie",
+    "filterByDate": "Filtrar por fecha"
+  },
+  "species": {
+    "title": "Catálogo de Especies",
+    "habitat": "Hábitat",
+    "freshwater": "Agua dulce",
+    "saltwater": "Agua salada",
+    "brackish": "Agua salobre",
+    "scientificName": "Nombre científico",
+    "description": "Descripción",
+    "suggestSpecies": "Sugerir especie",
+    "suggestionTitle": "Sugerir Nueva Especie",
+    "commonName": "Nombre común",
+    "suggestionNotes": "Notas adicionales",
+    "suggestionSent": "¡Sugerencia enviada! La revisaremos pronto.",
+    "allHabitats": "Todos los hábitats"
+  }
+}

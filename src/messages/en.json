@@ -1,0 +1,92 @@
+{
+  "common": {
+    "appName": "Go Pesca",
+    "login": "Log In",
+    "register": "Sign Up",
+    "logout": "Log Out",
+    "language": "Language",
+    "search": "Search",
+    "filter": "Filter",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "noResults": "No results found"
+  },
+  "nav": {
+    "home": "Home",
+    "pokedex": "Pokédex",
+    "catches": "Catches",
+    "newCatch": "New Catch",
+    "species": "Species",
+    "profile": "Profile"
+  },
+  "home": {
+    "title": "Your Fishing Pokédex",
+    "subtitle": "Log your catches and complete your species collection",
+    "cta": "Log a Catch"
+  },
+  "auth": {
+    "loginTitle": "Log In",
+    "registerTitle": "Create Account",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "displayName": "Display name",
+    "loginButton": "Log In",
+    "registerButton": "Create Account",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "invalidCredentials": "Invalid credentials",
+    "registrationSuccess": "Account created. Check your email to confirm."
+  },
+  "pokedex": {
+    "title": "My Pokédex",
+    "progress": "{caught}/{total} species caught",
+    "caught": "Caught",
+    "uncaught": "Not caught",
+    "all": "All",
+    "firstCatch": "First catch",
+    "lastCatch": "Last catch",
+    "totalCatches": "Total catches",
+    "noCatches": "You haven't caught this species yet"
+  },
+  "catches": {
+    "title": "My Catches",
+    "newCatch": "New Catch",
+    "photo": "Photo",
+    "species": "Species",
+    "location": "Location",
+    "date": "Date",
+    "weight": "Weight (kg)",
+    "length": "Length (cm)",
+    "bait": "Bait / Lure",
+    "weather": "Weather",
+    "tide": "Tide",
+    "time": "Time",
+    "notes": "Notes",
+    "optionalFields": "Optional fields",
+    "uploadPhoto": "Upload photo",
+    "selectSpecies": "Select species",
+    "pickLocation": "Pick location",
+    "catchSaved": "Catch logged!",
+    "noCatches": "No catches yet. Go fishing!",
+    "filterBySpecies": "Filter by species",
+    "filterByDate": "Filter by date"
+  },
+  "species": {
+    "title": "Species Catalog",
+    "habitat": "Habitat",
+    "freshwater": "Freshwater",
+    "saltwater": "Saltwater",
+    "brackish": "Brackish",
+    "scientificName": "Scientific name",
+    "description": "Description",
+    "suggestSpecies": "Suggest species",
+    "suggestionTitle": "Suggest New Species",
+    "commonName": "Common name",
+    "suggestionNotes": "Additional notes",
+    "suggestionSent": "Suggestion sent! We'll review it soon.",
+    "allHabitats": "All habitats"
+  }
+}
