@@ -101,18 +101,21 @@ export function CatchForm({ locale }: Props) {
           type="date"
           value={catchDate}
           onChange={(e) => setCatchDate(e.target.value)}
-          className="w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm dark:bg-gray-900"
+          className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm dark:bg-gray-900"
           required
         />
       </div>
 
-      <div>
+      <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
         <button
           type="button"
           onClick={() => setShowOptional(!showOptional)}
-          className="text-sm text-blue-600 hover:underline"
+          className="flex items-center gap-2 text-sm text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 font-medium transition-colors"
         >
-          {showOptional ? "▾" : "▸"} {t("optionalFields")}
+          <svg className={`w-4 h-4 transition-transform duration-200 ${showOptional ? "rotate-90" : ""}`} viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
+          </svg>
+          {t("optionalFields")}
         </button>
         {showOptional && (
           <div className="mt-3 space-y-4 border-l-2 border-gray-200 dark:border-gray-700 pl-4">
@@ -126,7 +129,7 @@ export function CatchForm({ locale }: Props) {
                   step="0.01"
                   value={weightKg}
                   onChange={(e) => setWeightKg(e.target.value)}
-                  className="w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm dark:bg-gray-900"
+                  className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm dark:bg-gray-900"
                 />
               </div>
               <div>
@@ -138,7 +141,7 @@ export function CatchForm({ locale }: Props) {
                   step="0.1"
                   value={lengthCm}
                   onChange={(e) => setLengthCm(e.target.value)}
-                  className="w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm dark:bg-gray-900"
+                  className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm dark:bg-gray-900"
                 />
               </div>
             </div>
@@ -150,7 +153,7 @@ export function CatchForm({ locale }: Props) {
                 type="text"
                 value={baitLure}
                 onChange={(e) => setBaitLure(e.target.value)}
-                className="w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm dark:bg-gray-900"
+                className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm dark:bg-gray-900"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -162,7 +165,7 @@ export function CatchForm({ locale }: Props) {
                   type="text"
                   value={weather}
                   onChange={(e) => setWeather(e.target.value)}
-                  className="w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm dark:bg-gray-900"
+                  className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm dark:bg-gray-900"
                 />
               </div>
               <div>
@@ -173,7 +176,7 @@ export function CatchForm({ locale }: Props) {
                   type="text"
                   value={tide}
                   onChange={(e) => setTide(e.target.value)}
-                  className="w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm dark:bg-gray-900"
+                  className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm dark:bg-gray-900"
                 />
               </div>
             </div>
@@ -185,7 +188,7 @@ export function CatchForm({ locale }: Props) {
                 type="time"
                 value={timeOfDay}
                 onChange={(e) => setTimeOfDay(e.target.value)}
-                className="w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm dark:bg-gray-900"
+                className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm dark:bg-gray-900"
               />
             </div>
             <div>
@@ -196,7 +199,7 @@ export function CatchForm({ locale }: Props) {
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 rows={3}
-                className="w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm dark:bg-gray-900"
+                className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm dark:bg-gray-900"
               />
             </div>
           </div>
@@ -210,7 +213,7 @@ export function CatchForm({ locale }: Props) {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors"
+        className="w-full bg-cyan-600 text-white py-3 rounded-lg font-medium hover:bg-cyan-700 active:scale-[0.98] disabled:opacity-50 transition-all duration-200 shadow-md hover:shadow-lg"
       >
         {submitting ? tCommon("loading") : tCommon("save")}
       </button>

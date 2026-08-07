@@ -64,13 +64,18 @@ function SpeciesDetail({
     <div className="max-w-2xl mx-auto px-4 py-8">
       <Link
         href="/species"
-        className="text-sm text-blue-600 hover:underline mb-4 inline-block"
+        className="text-sm text-cyan-600 dark:text-cyan-400 hover:underline mb-4 inline-flex items-center gap-1"
       >
-        &larr; {t("title")}
+        <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clipRule="evenodd" />
+        </svg>
+        {t("title")}
       </Link>
-      <div className="rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <div className="h-56 bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-6xl">
-          🐟
+      <div className="rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm">
+        <div className="h-56 bg-gradient-to-br from-cyan-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 flex items-center justify-center">
+          <svg className="w-20 h-20 text-cyan-300 dark:text-cyan-700" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1 14.5c-2 0-4-1.5-4-4s2-5 4-5c1 0 2 .5 2.5 1l2-1.5c.5-.3 1 0 .8.5l-1 3h2c.5 0 .7.5.4.8l-4 4c-.3.3-.7.1-.7-.3v-2h-1c-.5 0-1-.3-1-.5z"/>
+          </svg>
         </div>
         <div className="p-6">
           <h1 className="text-2xl font-bold mb-1">{name}</h1>

@@ -19,7 +19,7 @@ export function CatchCard({ catch_entry }: Props) {
   return (
     <Link
       href={`/catches/${catch_entry.id}`}
-      className="flex gap-4 rounded-lg border border-gray-200 dark:border-gray-700 p-3 hover:shadow-md transition-shadow"
+      className="flex gap-4 rounded-lg border border-gray-200 dark:border-gray-700 p-3 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5"
     >
       <img
         src={catch_entry.photo_url}
