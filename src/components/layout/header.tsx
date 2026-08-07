@@ -2,12 +2,14 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { UserMenu } from "./user-menu";
 import { LanguageSwitcher } from "./language-switcher";
+import { RankBadge } from "@/components/rank/rank-badge";
 
 type Props = {
   user: { id: string; email?: string; display_name?: string } | null;
+  rankData?: { caught: number; total: number };
 };
 
-export function Header({ user }: Props) {
+export function Header({ user, rankData }: Props) {
   const t = useTranslations();
 
   return (
@@ -34,7 +36,12 @@ export function Header({ user }: Props) {
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
           {user ? (
-            <UserMenu displayName={user.display_name ?? user.email ?? ""} />
+            <>
+              {rankData && (
+                <RankBadge caught={rankData.caught} total={rankData.total} size="sm" />
+              )}
+              <UserMenu displayName={user.display_name ?? user.email ?? ""} />
+            </>
           ) : (
             <div className="flex items-center gap-2">
               <Link

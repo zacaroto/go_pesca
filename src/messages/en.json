@@ -81,6 +81,14 @@
     "catchUpdated": "Catch updated!",
     "catchDeleted": "Catch deleted"
   },
+  "rank": {
+    "title": "Rank",
+    "sardina": "Sardina",
+    "tilapia": "Tilapia",
+    "robalo": "Róbalo / Snook",
+    "dorado": "Dorado / Mahi-Mahi",
+    "marlinAzul": "Blue Marlin"
+  },
   "species": {
     "title": "Species Catalog",
     "habitat": "Habitat",
