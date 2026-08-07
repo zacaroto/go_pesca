@@ -55,6 +55,7 @@ export default async function CatchDetailPage({ params }: Props) {
           &larr; Back
         </Link>
         <CatchDetail
+          locale={locale}
           catch_data={{
             id: c.id,
             photo_url: c.photo_url,
@@ -70,6 +71,7 @@ export default async function CatchDetailPage({ params }: Props) {
             time_of_day: c.time_of_day,
             notes: c.notes,
             species_name: speciesName,
+            species_id: c.species_id,
           }}
         />
       </div>

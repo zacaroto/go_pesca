@@ -1,7 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
+import { PhotoUpload } from "./photo-upload";
+import { SpeciesPicker } from "./species-picker";
+import { deleteCatch, updateCatch } from "@/lib/catches";
 
 const MapComponent = dynamic(() => import("./location-map"), {
   ssr: false,
@@ -25,16 +30,218 @@ type CatchData = {
   time_of_day: string | null;
   notes: string | null;
   species_name: string;
+  species_id: number;
 };
 
 type Props = {
   catch_data: CatchData;
+  locale: string;
 };
 
 function noop() {}
 
-export function CatchDetail({ catch_data }: Props) {
+export function CatchDetail({ catch_data, locale }: Props) {
   const t = useTranslations("catches");
+  const tCommon = useTranslations("common");
+  const router = useRouter();
+
+  const [editing, setEditing] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
+  // Edit state
+  const [speciesId, setSpeciesId] = useState(catch_data.species_id);
+  const [catchDate, setCatchDate] = useState(catch_data.catch_date);
+  const [weightKg, setWeightKg] = useState(catch_data.weight_kg?.toString() ?? "");
+  const [lengthCm, setLengthCm] = useState(catch_data.length_cm?.toString() ?? "");
+  const [baitLure, setBaitLure] = useState(catch_data.bait_lure ?? "");
+  const [weather, setWeather] = useState(catch_data.weather ?? "");
+  const [tide, setTide] = useState(catch_data.tide ?? "");
+  const [timeOfDay, setTimeOfDay] = useState(catch_data.time_of_day ?? "");
+  const [notes, setNotes] = useState(catch_data.notes ?? "");
+  const [newPhoto, setNewPhoto] = useState<File | null>(null);
+
+  async function handleDelete() {
+    if (!confirm(t("confirmDelete"))) return;
+    setDeleting(true);
+    try {
+      await deleteCatch(catch_data.id, catch_data.photo_url);
+      router.push(`/${locale}/catches`);
+    } catch {
+      setDeleting(false);
+    }
+  }
+
+  function handleCancel() {
+    setEditing(false);
+    setSpeciesId(catch_data.species_id);
+    setCatchDate(catch_data.catch_date);
+    setWeightKg(catch_data.weight_kg?.toString() ?? "");
+    setLengthCm(catch_data.length_cm?.toString() ?? "");
+    setBaitLure(catch_data.bait_lure ?? "");
+    setWeather(catch_data.weather ?? "");
+    setTide(catch_data.tide ?? "");
+    setTimeOfDay(catch_data.time_of_day ?? "");
+    setNotes(catch_data.notes ?? "");
+    setNewPhoto(null);
+  }
+
+  async function handleSave() {
+    setSaving(true);
+    try {
+      await updateCatch(
+        catch_data.id,
+        {
+          speciesId,
+          catchDate,
+          latitude: catch_data.latitude,
+          longitude: catch_data.longitude,
+          weightKg: weightKg ? parseFloat(weightKg) : undefined,
+          lengthCm: lengthCm ? parseFloat(lengthCm) : undefined,
+          baitLure: baitLure || undefined,
+          weather: weather || undefined,
+          tide: tide || undefined,
+          timeOfDay: timeOfDay || undefined,
+          notes: notes || undefined,
+        },
+        catch_data.photo_url,
+        newPhoto ?? undefined
+      );
+      router.refresh();
+      setEditing(false);
+    } catch {
+      // stay in edit mode on error
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  const inputClass =
+    "w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm dark:bg-gray-900";
+
+  if (editing) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <p className="text-xs text-gray-500 mb-1">{t("photo")}</p>
+          <PhotoUpload onSelect={setNewPhoto} />
+          {!newPhoto && (
+            <img
+              src={catch_data.photo_url}
+              alt={catch_data.species_name}
+              className="w-full h-48 object-cover rounded-lg mt-2 opacity-60"
+            />
+          )}
+        </div>
+
+        <SpeciesPicker locale={locale} value={speciesId} onChange={setSpeciesId} />
+
+        <div>
+          <label className="block text-sm font-medium mb-1">{t("date")} *</label>
+          <input
+            type="date"
+            value={catchDate}
+            onChange={(e) => setCatchDate(e.target.value)}
+            className={inputClass}
+            required
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">{t("weight")}</label>
+            <input
+              type="number"
+              step="0.01"
+              value={weightKg}
+              onChange={(e) => setWeightKg(e.target.value)}
+              className={inputClass}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">{t("length")}</label>
+            <input
+              type="number"
+              step="0.1"
+              value={lengthCm}
+              onChange={(e) => setLengthCm(e.target.value)}
+              className={inputClass}
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">{t("bait")}</label>
+          <input
+            type="text"
+            value={baitLure}
+            onChange={(e) => setBaitLure(e.target.value)}
+            className={inputClass}
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">{t("weather")}</label>
+            <input
+              type="text"
+              value={weather}
+              onChange={(e) => setWeather(e.target.value)}
+              className={inputClass}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">{t("tide")}</label>
+            <input
+              type="text"
+              value={tide}
+              onChange={(e) => setTide(e.target.value)}
+              className={inputClass}
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">{t("time")}</label>
+          <input
+            type="time"
+            value={timeOfDay}
+            onChange={(e) => setTimeOfDay(e.target.value)}
+            className={inputClass}
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">{t("notes")}</label>
+          <textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            rows={3}
+            className={inputClass}
+          />
+        </div>
+
+        <div className="flex gap-3">
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={saving}
+            className="flex-1 bg-cyan-600 text-white py-2.5 rounded-lg font-medium hover:bg-cyan-700 disabled:opacity-50 transition-colors"
+          >
+            {saving ? t("saving") : tCommon("save")}
+          </button>
+          <button
+            type="button"
+            onClick={handleCancel}
+            disabled={saving}
+            className="flex-1 border border-gray-300 dark:border-gray-600 py-2.5 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
+          >
+            {tCommon("cancel")}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const fields = [
     { label: t("weight"), value: catch_data.weight_kg ? `${catch_data.weight_kg} kg` : null },
@@ -93,6 +300,24 @@ export function CatchDetail({ catch_data }: Props) {
           <p className="text-sm">{catch_data.notes}</p>
         </div>
       )}
+
+      <div className="flex gap-3 pt-2">
+        <button
+          type="button"
+          onClick={() => setEditing(true)}
+          className="flex-1 bg-cyan-600 text-white py-2.5 rounded-lg font-medium hover:bg-cyan-700 transition-colors"
+        >
+          {t("edit")}
+        </button>
+        <button
+          type="button"
+          onClick={handleDelete}
+          disabled={deleting}
+          className="flex-1 bg-red-600 text-white py-2.5 rounded-lg font-medium hover:bg-red-700 disabled:opacity-50 transition-colors"
+        >
+          {deleting ? t("deleting") : t("delete")}
+        </button>
+      </div>
     </div>
   );
 }

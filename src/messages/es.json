@@ -72,7 +72,14 @@
     "catchSaved": "¡Captura registrada!",
     "noCatches": "Aún no tienes capturas. ¡Sal a pescar!",
     "filterBySpecies": "Filtrar por especie",
-    "filterByDate": "Filtrar por fecha"
+    "filterByDate": "Filtrar por fecha",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "confirmDelete": "¿Estás seguro de que quieres eliminar esta captura?",
+    "saving": "Guardando...",
+    "deleting": "Eliminando...",
+    "catchUpdated": "¡Captura actualizada!",
+    "catchDeleted": "Captura eliminada"
   },
   "species": {
     "title": "Catálogo de Especies",
