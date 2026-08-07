@@ -35,10 +35,10 @@ export function PokedexGrid({ entries, locale }: Props) {
           <button
             key={f}
             onClick={() => setFilter(f)}
-            className={`px-3 py-1 text-sm rounded-full border transition-colors ${
+            className={`px-3 py-1.5 text-sm rounded-full border transition-all duration-200 active:scale-[0.98] ${
               filter === f
-                ? "bg-blue-600 text-white border-blue-600"
-                : "border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800"
+                ? "bg-cyan-600 text-white border-cyan-600 shadow-sm"
+                : "border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-gray-400"
             }`}
           >
             {t(f)}
@@ -47,7 +47,7 @@ export function PokedexGrid({ entries, locale }: Props) {
         <select
           value={habitat}
           onChange={(e) => setHabitat(e.target.value)}
-          className="rounded-full border border-gray-300 dark:border-gray-600 px-3 py-1 text-sm dark:bg-gray-900"
+          className="rounded-full border border-gray-300 dark:border-gray-600 px-3 py-1.5 text-sm dark:bg-gray-900"
         >
           <option value="">{tSpecies("allHabitats")}</option>
           <option value="freshwater">{tSpecies("freshwater")}</option>
