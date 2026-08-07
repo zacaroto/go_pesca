@@ -81,6 +81,14 @@
     "catchUpdated": "¡Captura actualizada!",
     "catchDeleted": "Captura eliminada"
   },
+  "rank": {
+    "title": "Rango",
+    "sardina": "Sardina",
+    "tilapia": "Tilapia",
+    "robalo": "Róbalo",
+    "dorado": "Dorado",
+    "marlinAzul": "Marlín Azul"
+  },
   "species": {
     "title": "Catálogo de Especies",
     "habitat": "Hábitat",
