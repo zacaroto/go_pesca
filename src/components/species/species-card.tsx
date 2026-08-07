@@ -39,9 +39,17 @@ export function SpeciesCard({ species, locale }: Props) {
       className="block rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5"
     >
       <div className="h-44 bg-gradient-to-br from-cyan-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 flex items-center justify-center">
-        <svg className="w-16 h-16 text-cyan-300 dark:text-cyan-700" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1 14.5c-2 0-4-1.5-4-4s2-5 4-5c1 0 2 .5 2.5 1l2-1.5c.5-.3 1 0 .8.5l-1 3h2c.5 0 .7.5.4.8l-4 4c-.3.3-.7.1-.7-.3v-2h-1c-.5 0-1-.3-1-.5z"/>
-        </svg>
+        {species.reference_photo_url ? (
+          <img
+            src={species.reference_photo_url}
+            alt={name}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <svg className="w-16 h-16 text-cyan-300 dark:text-cyan-700" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1 14.5c-2 0-4-1.5-4-4s2-5 4-5c1 0 2 .5 2.5 1l2-1.5c.5-.3 1 0 .8.5l-1 3h2c.5 0 .7.5.4.8l-4 4c-.3.3-.7.1-.7-.3v-2h-1c-.5 0-1-.3-1-.5z"/>
+          </svg>
+        )}
       </div>
       <div className="p-3">
         <h3 className="font-semibold text-sm">{name}</h3>
