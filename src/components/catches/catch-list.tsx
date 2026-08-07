@@ -26,11 +26,19 @@ type Props = {
 
 export function CatchList({ catches, species }: Props) {
   const t = useTranslations("catches");
+  const tCommon = useTranslations("common");
+  const [search, setSearch] = useState("");
   const [selectedSpecies, setSelectedSpecies] = useState("");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
 
   const filtered = catches.filter((c) => {
+    if (search) {
+      const q = search.toLowerCase();
+      const matchesSpecies = c.species_name.toLowerCase().includes(q);
+      const matchesLocation = c.location_name?.toLowerCase().includes(q);
+      if (!matchesSpecies && !matchesLocation) return false;
+    }
     if (selectedSpecies && c.species_id !== parseInt(selectedSpecies))
       return false;
     if (dateFrom && c.catch_date < dateFrom) return false;
@@ -40,6 +48,13 @@ export function CatchList({ catches, species }: Props) {
 
   return (
     <div>
+      <input
+        type="text"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder={`${tCommon("search")}...`}
+        className="w-full mb-3 rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm dark:bg-gray-900"
+      />
       <CatchFilters
         species={species}
         selectedSpecies={selectedSpecies}

@@ -13,13 +13,22 @@ type Props = {
 
 export function PokedexGrid({ entries, locale }: Props) {
   const t = useTranslations("pokedex");
+  const tCommon = useTranslations("common");
   const tSpecies = useTranslations("species");
+  const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"all" | "caught" | "uncaught">("all");
   const [habitat, setHabitat] = useState("");
 
   const caught = entries.filter((e) => e.catch_count > 0).length;
 
   const filtered = entries.filter((e) => {
+    if (search) {
+      const q = search.toLowerCase();
+      const name = locale === "es" ? e.name_es : e.name_en;
+      const matchesName = name.toLowerCase().includes(q);
+      const matchesScientific = e.scientific_name.toLowerCase().includes(q);
+      if (!matchesName && !matchesScientific) return false;
+    }
     if (filter === "caught" && e.catch_count === 0) return false;
     if (filter === "uncaught" && e.catch_count > 0) return false;
     if (habitat && e.habitat !== habitat) return false;
@@ -29,6 +38,14 @@ export function PokedexGrid({ entries, locale }: Props) {
   return (
     <div>
       <ProgressBar caught={caught} total={entries.length} />
+
+      <input
+        type="text"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder={`${tCommon("search")}...`}
+        className="w-full mb-3 rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm dark:bg-gray-900"
+      />
 
       <div className="flex flex-wrap gap-2 mb-6">
         {(["all", "caught", "uncaught"] as const).map((f) => (
