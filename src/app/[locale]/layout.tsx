@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/layout/header";
+import { BottomNav } from "@/components/layout/bottom-nav";
 
 type Props = {
   children: React.ReactNode;
@@ -22,7 +23,7 @@ export async function generateMetadata({
   const { locale } = await params;
   const isSpanish = locale === "es";
   return {
-    title: isSpanish ? "Go Pesca - Tu Pokédex de Pesca" : "Go Pesca - Your Fishing Pokédex",
+    title: isSpanish ? "Go Pesca - Tu Pescadex" : "Go Pesca - Your FishyDex",
     description: isSpanish
       ? "Registra tus capturas y completa tu colección de especies"
       : "Log your catches and complete your species collection",
@@ -83,7 +84,8 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <NextIntlClientProvider messages={messages}>
       <Header user={user} rankData={rankData} />
-      <main className="flex-1 flex flex-col">{children}</main>
+      <main className="flex-1 flex flex-col pb-20 sm:pb-0">{children}</main>
+      {user && <BottomNav />}
     </NextIntlClientProvider>
   );
 }

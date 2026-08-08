@@ -15,14 +15,14 @@
   },
   "nav": {
     "home": "Home",
-    "pokedex": "Pokédex",
+    "pokedex": "FishyDex",
     "catches": "Catches",
     "newCatch": "New Catch",
     "species": "Species",
     "profile": "Profile"
   },
   "home": {
-    "title": "Your Fishing Pokédex",
+    "title": "Your FishyDex",
     "subtitle": "Log your catches and complete your species collection",
     "cta": "Log a Catch"
   },
@@ -41,7 +41,7 @@
     "registrationSuccess": "Account created. Check your email to confirm."
   },
   "pokedex": {
-    "title": "My Pokédex",
+    "title": "My FishyDex",
     "progress": "{caught}/{total} species caught",
     "caught": "Caught",
     "uncaught": "Not caught",

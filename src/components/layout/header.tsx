@@ -3,6 +3,8 @@ import Link from "next/link";
 import { UserMenu } from "./user-menu";
 import { LanguageSwitcher } from "./language-switcher";
 import { RankBadge } from "@/components/rank/rank-badge";
+import { Logo } from "@/components/logo";
+import { VersionBadge } from "@/components/version-badge";
 
 type Props = {
   user: { id: string; email?: string; display_name?: string } | null;
@@ -16,8 +18,10 @@ export function Header({ user, rankData }: Props) {
     <header className="border-b border-gray-200 dark:border-gray-800 shadow-sm bg-white dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-40">
       <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <Link href="/" className="text-xl font-bold text-cyan-600 dark:text-cyan-400">
-            {t("common.appName")}
+          <Link href="/" className="flex items-center gap-2 text-xl font-bold text-cyan-600 dark:text-cyan-400" style={{ fontFamily: "var(--font-fredoka)" }}>
+            <Logo size={28} />
+            <span className="hidden sm:inline">{t("common.appName")}</span>
+            <VersionBadge />
           </Link>
           {user && (
             <nav className="hidden sm:flex items-center gap-1 text-sm">
