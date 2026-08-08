@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 
 const tabs = [
@@ -41,15 +40,10 @@ export function BottomNav() {
   const t = useTranslations("nav");
 
   function isActive(href: string) {
-    // Strip locale prefix (e.g., /es/pokedex -> /pokedex)
-    const pathWithoutLocale = pathname.replace(/^\/(es|en)/, "") || "/";
-    return pathWithoutLocale === href || pathWithoutLocale.startsWith(href + "/");
+    return pathname === href || pathname.startsWith(href + "/");
   }
 
-  const isNewCatchActive = (() => {
-    const pathWithoutLocale = pathname.replace(/^\/(es|en)/, "") || "/";
-    return pathWithoutLocale === "/catches/new";
-  })();
+  const isNewCatchActive = pathname === "/catches/new";
 
   return (
     <nav className="fixed bottom-0 inset-x-0 z-40 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 sm:hidden">

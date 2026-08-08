@@ -102,6 +102,11 @@
     "commonName": "Common name",
     "suggestionNotes": "Additional notes",
     "suggestionSent": "Suggestion sent! We'll review it soon.",
-    "allHabitats": "All habitats"
+    "allHabitats": "All habitats",
+    "maxSize": "Max Size",
+    "weight": "Weight",
+    "length": "Length",
+    "fishingRegions": "Fishing Regions in CR",
+    "bestBait": "Bait / Lure"
   }
 }

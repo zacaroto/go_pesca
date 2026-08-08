@@ -30,7 +30,7 @@ export function PokedexCard({ entry, locale }: Props) {
           <img
             src={entry.first_catch_photo}
             alt={name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-700 ease-out"
           />
         ) : (
           <div className="flex flex-col items-center gap-1">
