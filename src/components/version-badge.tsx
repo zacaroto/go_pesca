@@ -2,7 +2,7 @@ import packageJson from "../../package.json";
 
 export function VersionBadge() {
   return (
-    <span className="text-[10px] text-gray-400 dark:text-gray-500">
+    <span className="text-[10px] text-muted">
       v{packageJson.version}
     </span>
   );

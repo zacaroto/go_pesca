@@ -1,13 +1,40 @@
 @import "tailwindcss";
 
+/* ========================================
+   GO PESCA — Tropical Collector's Voyage
+   ======================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #0891b2;
-  --primary-dark: #0e7490;
-  --primary-light: #22d3ee;
-  --accent: #d97706;
-  --accent-light: #fbbf24;
+  /* Tropical Ocean Palette */
+  --background: #FEF9F2;
+  --foreground: #16213E;
+  --primary: #0077B6;
+  --primary-dark: #023E8A;
+  --primary-light: #00B4D8;
+  --accent: #F77F00;
+  --accent-light: #FCBF49;
+  --secondary: #06D6A0;
+  --coral: #EF476F;
+  --surface: #FFFFFF;
+  --surface-alt: #FFF3E4;
+  --muted: #94A3B8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0B1929;
+    --foreground: #E8F0FE;
+    --primary: #00B4D8;
+    --primary-dark: #0077B6;
+    --primary-light: #48CAE4;
+    --accent: #FCBF49;
+    --accent-light: #FDD85D;
+    --secondary: #06D6A0;
+    --coral: #FF6B6B;
+    --surface: #132F4C;
+    --surface-alt: #1B3D60;
+    --muted: #64748B;
+  }
 }
 
 @theme inline {
@@ -18,34 +45,27 @@
   --color-primary-light: var(--primary-light);
   --color-accent: var(--accent);
   --color-accent-light: var(--accent-light);
-  --font-sans: var(--font-inter);
+  --color-secondary: var(--secondary);
+  --color-coral: var(--coral);
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-nunito);
   --font-heading: var(--font-fredoka);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --primary: #22d3ee;
-    --primary-dark: #0891b2;
-    --primary-light: #67e8f9;
-    --accent: #fbbf24;
-    --accent-light: #fcd34d;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  font-family: var(--font-nunito), system-ui, sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-fredoka), var(--font-inter), sans-serif;
+  font-family: var(--font-fredoka), var(--font-nunito), sans-serif;
   letter-spacing: -0.01em;
 }
 
-/* Base focus-visible for all interactive elements */
+/* ── Focus styles ── */
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
@@ -59,5 +79,219 @@ input:focus,
 select:focus,
 textarea:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 25%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent);
 }
+
+/* ── Animations ── */
+@keyframes wave-drift {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-8px) rotate(2deg); }
+  66% { transform: translateY(4px) rotate(-1deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes bubble-rise {
+  0% { transform: translateY(0) scale(1); opacity: 0.6; }
+  100% { transform: translateY(-120px) scale(0.3); opacity: 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px color-mix(in srgb, var(--primary-light) 30%, transparent); }
+  50% { box-shadow: 0 0 24px color-mix(in srgb, var(--primary-light) 60%, transparent); }
+}
+
+@keyframes scale-in {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slide-up {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-wave-drift {
+  animation: wave-drift 12s linear infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* Staggered delays for grid items */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+
+/* ── Glass morphism ── */
+.glass {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .glass {
+    background: rgba(11, 25, 41, 0.8);
+  }
+}
+
+/* ── Holographic card border (caught species) ── */
+.holo-border {
+  position: relative;
+  overflow: visible;
+}
+
+.holo-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(
+    135deg,
+    var(--secondary) 0%,
+    var(--primary-light) 25%,
+    var(--accent-light) 50%,
+    var(--coral) 75%,
+    var(--secondary) 100%
+  );
+  background-size: 300% 300%;
+  animation: shimmer 4s ease infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.holo-border:hover::before {
+  opacity: 1;
+}
+
+/* ── Ocean gradient backgrounds ── */
+.ocean-gradient {
+  background: linear-gradient(
+    180deg,
+    var(--primary-dark) 0%,
+    var(--primary) 40%,
+    var(--primary-light) 100%
+  );
+}
+
+.sunset-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--accent) 0%,
+    var(--coral) 50%,
+    var(--primary) 100%
+  );
+}
+
+.tropical-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--primary-light) 0%,
+    var(--secondary) 50%,
+    var(--accent-light) 100%
+  );
+}
+
+/* ── Decorative wave divider ── */
+.wave-divider {
+  position: relative;
+}
+
+.wave-divider::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 32px;
+  background: var(--background);
+  clip-path: ellipse(55% 100% at 50% 100%);
+}
+
+/* ── Text gradient utility ── */
+.text-gradient-ocean {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-sunset {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--coral) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Playful shadow presets ── */
+.shadow-ocean {
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--primary) 15%, transparent),
+              0 1px 3px color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.shadow-coral {
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--coral) 20%, transparent),
+              0 1px 3px color-mix(in srgb, var(--coral) 10%, transparent);
+}
+
+.shadow-accent {
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--accent) 20%, transparent),
+              0 1px 3px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+/* ── Habitat accent colors ── */
+.habitat-freshwater { --habitat-color: #06D6A0; }
+.habitat-saltwater { --habitat-color: #0077B6; }
+.habitat-brackish { --habitat-color: #F77F00; }

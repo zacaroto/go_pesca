@@ -14,11 +14,11 @@ const RANK_ICONS: Record<RankKey, string> = {
 };
 
 const TIER_COLORS: Record<RankKey, string> = {
-  sardina: "bg-gray-100 text-gray-700 border-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600",
-  tilapia: "bg-green-50 text-green-700 border-green-200 dark:bg-green-900/40 dark:text-green-300 dark:border-green-800",
-  robalo: "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/40 dark:text-blue-300 dark:border-blue-800",
-  dorado: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/40 dark:text-amber-300 dark:border-amber-800",
-  marlinAzul: "bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/40 dark:text-purple-300 dark:border-purple-800",
+  sardina: "bg-foreground/8 text-muted border-foreground/15 dark:bg-white/8 dark:text-muted dark:border-white/15",
+  tilapia: "bg-secondary/15 text-secondary border-secondary/30",
+  robalo: "bg-primary/15 text-primary border-primary/30",
+  dorado: "bg-accent/15 text-accent border-accent/30",
+  marlinAzul: "bg-gradient-to-r from-coral/15 to-purple-500/15 text-coral border-coral/30",
 };
 
 type Props = {
@@ -32,9 +32,9 @@ export function RankBadge({ caught, total, size = "md" }: Props) {
   const { key, level } = getRank(caught, total);
 
   const sizeClasses = {
-    sm: "text-xs px-2 py-0.5 gap-1",
-    md: "text-sm px-3 py-1 gap-1.5",
-    lg: "text-base px-4 py-1.5 gap-2",
+    sm: "text-xs px-2.5 py-1 gap-1",
+    md: "text-sm px-3.5 py-1.5 gap-1.5",
+    lg: "text-base px-5 py-2 gap-2",
   }[size];
 
   const iconSize = {
@@ -45,7 +45,7 @@ export function RankBadge({ caught, total, size = "md" }: Props) {
 
   return (
     <span
-      className={`inline-flex items-center font-semibold rounded-full border ${TIER_COLORS[key]} ${sizeClasses}`}
+      className={`inline-flex items-center font-extrabold rounded-xl border-2 ${TIER_COLORS[key]} ${sizeClasses}`}
     >
       <span className={iconSize}>{RANK_ICONS[key]}</span>
       {t(key)} {ROMAN[level]}

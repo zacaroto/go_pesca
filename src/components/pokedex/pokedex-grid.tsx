@@ -43,7 +43,7 @@ export function PokedexGrid({ entries, locale }: Props) {
       <div className="mb-5 space-y-3">
         <div className="relative">
           <svg
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+            className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
@@ -57,7 +57,7 @@ export function PokedexGrid({ entries, locale }: Props) {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={`${tCommon("search")}...`}
-            className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-sm bg-white dark:bg-gray-800/50 focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-400 outline-none transition-all"
+            className="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-foreground/8 dark:border-white/8 text-sm bg-surface dark:bg-surface-alt font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all"
           />
         </div>
 
@@ -66,20 +66,20 @@ export function PokedexGrid({ entries, locale }: Props) {
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`flex-shrink-0 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 active:scale-[0.97] ${
+              className={`flex-shrink-0 px-4 py-2.5 text-sm font-bold rounded-xl transition-all duration-200 active:scale-[0.95] ${
                 filter === f
-                  ? "bg-cyan-600 text-white shadow-sm shadow-cyan-600/25"
-                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  ? "bg-primary text-white shadow-ocean"
+                  : "bg-surface dark:bg-surface-alt text-muted ring-1 ring-foreground/8 dark:ring-white/8 hover:ring-primary/30"
               }`}
             >
               {t(f)}
               {f === "caught" && (
-                <span className={`ml-1.5 text-xs ${filter === f ? "text-cyan-200" : "text-gray-400"}`}>
+                <span className={`ml-1.5 text-xs ${filter === f ? "text-white/70" : "text-muted/60"}`}>
                   {caught}
                 </span>
               )}
               {f === "uncaught" && (
-                <span className={`ml-1.5 text-xs ${filter === f ? "text-cyan-200" : "text-gray-400"}`}>
+                <span className={`ml-1.5 text-xs ${filter === f ? "text-white/70" : "text-muted/60"}`}>
                   {entries.length - caught}
                 </span>
               )}
@@ -88,7 +88,7 @@ export function PokedexGrid({ entries, locale }: Props) {
           <select
             value={habitat}
             onChange={(e) => setHabitat(e.target.value)}
-            className="flex-shrink-0 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-cyan-500/30"
+            className="flex-shrink-0 rounded-xl border-2 border-foreground/8 dark:border-white/8 bg-surface dark:bg-surface-alt px-3 py-2.5 text-sm font-medium outline-none focus:ring-2 focus:ring-primary/30"
           >
             <option value="">{tSpecies("allHabitats")}</option>
             <option value="freshwater">{tSpecies("freshwater")}</option>
@@ -99,8 +99,8 @@ export function PokedexGrid({ entries, locale }: Props) {
       </div>
 
       {/* Results count */}
-      <p className="text-xs text-gray-400 mb-3">
-        {filtered.length} {filtered.length === 1 ? "species" : "species"}
+      <p className="text-xs text-muted font-bold mb-3">
+        {filtered.length} species
       </p>
 
       {/* Grid */}

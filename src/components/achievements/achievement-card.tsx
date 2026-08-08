@@ -22,59 +22,72 @@ export function AchievementCard({
   const name = t(`items.${achievementId}.name`);
   const description = t(`items.${achievementId}.description`);
 
+  // Parse progress for progress bar (e.g. "3/10")
+  const progressParts = progress?.split("/");
+  const progressPct = progressParts
+    ? Math.min(100, Math.round((parseInt(progressParts[0]) / parseInt(progressParts[1])) * 100))
+    : 0;
+
   return (
     <div
-      className={`relative rounded-2xl p-4 ring-1 transition-all duration-200 ${
+      className={`relative rounded-2xl p-4 transition-all duration-300 ${
         earned
-          ? "bg-white dark:bg-gray-800/50 ring-cyan-200 dark:ring-cyan-800/50 shadow-sm"
-          : "bg-gray-50 dark:bg-gray-900/50 ring-gray-200 dark:ring-gray-700/50 opacity-60"
+          ? "bg-gradient-to-br from-accent-light/15 via-surface to-secondary/10 dark:from-accent-light/10 dark:via-surface-alt dark:to-secondary/5 ring-2 ring-accent-light/40 shadow-accent"
+          : "bg-surface dark:bg-surface-alt ring-1 ring-foreground/8 dark:ring-white/8"
       }`}
     >
       <div className="flex items-start gap-3">
-        <span
-          className={`text-2xl ${earned ? "" : "grayscale"}`}
-        >
+        {/* Icon */}
+        <div className={`flex items-center justify-center w-11 h-11 rounded-xl text-2xl flex-shrink-0 ${
+          earned
+            ? "bg-accent-light/20 dark:bg-accent-light/10"
+            : "bg-foreground/5 dark:bg-white/5"
+        }`}>
           {earned ? icon : "🔒"}
-        </span>
+        </div>
+
+        {/* Content */}
         <div className="flex-1 min-w-0">
-          <p
-            className={`text-sm font-bold truncate ${
-              earned
-                ? "text-gray-900 dark:text-gray-100"
-                : "text-gray-500 dark:text-gray-400"
-            }`}
-          >
+          <p className={`text-sm font-extrabold truncate ${
+            earned ? "text-foreground" : "text-muted"
+          }`}>
             {name}
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+          <p className="text-xs text-muted mt-0.5">
             {description}
           </p>
+
+          {/* Earned date */}
           {earned && awardedAt && (
-            <p className="text-[10px] text-cyan-600 dark:text-cyan-400 mt-1.5 font-medium">
+            <p className="text-[10px] text-accent font-bold mt-2">
               {new Date(awardedAt).toLocaleDateString()}
             </p>
           )}
+
+          {/* Progress bar for unearned */}
           {!earned && progress && (
-            <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-1.5 font-medium">
-              {progress}
-            </p>
+            <div className="mt-2.5">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[10px] text-muted font-bold">{progress}</span>
+                <span className="text-[10px] text-muted font-bold">{progressPct}%</span>
+              </div>
+              <div className="w-full h-1.5 bg-foreground/8 dark:bg-white/8 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-primary to-primary-light rounded-full transition-all duration-500"
+                  style={{ width: `${progressPct}%` }}
+                />
+              </div>
+            </div>
           )}
         </div>
+
+        {/* Check mark for earned */}
         {earned && (
-          <span className="text-cyan-500 dark:text-cyan-400">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="w-5 h-5"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z"
-                clipRule="evenodd"
-              />
+          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-secondary flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white" className="w-3.5 h-3.5">
+              <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
             </svg>
-          </span>
+          </div>
         )}
       </div>
     </div>

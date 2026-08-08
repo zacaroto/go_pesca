@@ -7,6 +7,7 @@ const tabs = [
   {
     key: "pokedex" as const,
     href: "/pokedex",
+    activeColor: "text-primary",
     icon: (active: boolean) => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={active ? "currentColor" : "none"} stroke="currentColor" strokeWidth={active ? 0 : 1.5} className="w-6 h-6">
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25a2.25 2.25 0 0 1-2.25-2.25v-2.25Z" />
@@ -16,6 +17,7 @@ const tabs = [
   {
     key: "catches" as const,
     href: "/catches",
+    activeColor: "text-secondary",
     icon: (active: boolean) => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={active ? "currentColor" : "none"} stroke="currentColor" strokeWidth={active ? 0 : 1.5} className="w-6 h-6">
         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
@@ -25,6 +27,7 @@ const tabs = [
   {
     key: "species" as const,
     href: "/species",
+    activeColor: "text-accent",
     icon: (active: boolean) => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={active ? "currentColor" : "none"} stroke="currentColor" strokeWidth={active ? 0 : 1.5} className="w-6 h-6">
         <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
@@ -32,17 +35,18 @@ const tabs = [
     ),
   },
   {
-    key: "achievements" as const,
-    href: "/achievements",
+    key: "community" as const,
+    href: "/community",
+    activeColor: "text-coral",
     icon: (active: boolean) => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={active ? "currentColor" : "none"} stroke="currentColor" strokeWidth={active ? 0 : 1.5} className="w-6 h-6">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 0 1 3 3h-15a3 3 0 0 1 3-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 0 1-.982-3.172M9.497 14.25a7.454 7.454 0 0 0 .981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 0 0 7.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M18.75 4.236c.982.143 1.954.317 2.916.52A6.003 6.003 0 0 1 16.27 9.728M18.75 4.236V4.5c0 2.108-.966 3.99-2.48 5.228m0 0a6.023 6.023 0 0 1-2.27.308 6.023 6.023 0 0 1-2.27-.308" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
       </svg>
     ),
   },
 ] as const;
 
-type TabKey = "pokedex" | "catches" | "species" | "achievements";
+type TabKey = "pokedex" | "catches" | "species" | "community";
 
 export function BottomNav() {
   const pathname = usePathname();
@@ -52,45 +56,55 @@ export function BottomNav() {
     return pathname === href || pathname.startsWith(href + "/");
   }
 
-  const isNewCatchActive = pathname === "/catches/new";
-
   return (
-    <nav className="fixed bottom-0 inset-x-0 z-40 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 sm:hidden overflow-hidden">
-      <div className="flex items-center justify-around h-16 px-1">
-        {tabs.map((tab) => {
-          const active = isActive(tab.href);
-          return (
-            <Link
-              key={tab.key}
-              href={tab.href}
-              className={`flex flex-col items-center justify-center gap-0.5 flex-1 py-1 rounded-lg transition-colors ${
-                active
-                  ? "text-cyan-600 dark:text-cyan-400"
-                  : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
-              }`}
-            >
-              {tab.icon(active)}
-              <span className="text-[9px] font-medium leading-tight truncate max-w-full">
-                {t(tab.key as TabKey)}
-              </span>
-            </Link>
-          );
-        })}
+    <nav className="fixed bottom-0 inset-x-0 z-40 sm:hidden">
+      {/* Wave SVG top edge */}
+      <svg className="w-full h-4 -mb-px" viewBox="0 0 400 16" preserveAspectRatio="none">
+        <path d="M0,16 C50,4 100,12 150,6 C200,0 250,10 300,4 C350,-2 380,8 400,6 L400,16 Z" className="fill-surface dark:fill-[#132F4C]" />
+      </svg>
 
-        {/* New Catch - primary action */}
-        <Link
-          href="/catches/new"
-          className="flex flex-col items-center justify-center gap-0.5 flex-1 py-1 rounded-lg transition-colors"
-        >
-          <span className="flex items-center justify-center w-10 h-10 -mt-4 rounded-full bg-cyan-600 dark:bg-cyan-500 shadow-lg shadow-cyan-600/30">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-              <path fillRule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clipRule="evenodd" />
-            </svg>
-          </span>
-          <span className="text-[9px] font-medium leading-tight text-cyan-600 dark:text-cyan-400 truncate max-w-full">
-            {t("newCatch")}
-          </span>
-        </Link>
+      <div className="bg-surface dark:bg-surface-alt pb-[env(safe-area-inset-bottom)]">
+        <div className="flex items-center justify-around h-16 px-1">
+          {tabs.map((tab) => {
+            const active = isActive(tab.href);
+            return (
+              <Link
+                key={tab.key}
+                href={tab.href}
+                className={`flex flex-col items-center justify-center gap-0.5 flex-1 py-1 rounded-xl transition-all duration-200 ${
+                  active
+                    ? `${tab.activeColor}`
+                    : "text-muted hover:text-foreground/70"
+                }`}
+              >
+                <span className={`transition-transform duration-200 ${active ? "scale-110" : ""}`}>
+                  {tab.icon(active)}
+                </span>
+                <span className="text-[9px] font-bold leading-tight truncate max-w-full">
+                  {t(tab.key as TabKey)}
+                </span>
+                {active && (
+                  <span className={`w-1 h-1 rounded-full bg-current -mt-0.5`} />
+                )}
+              </Link>
+            );
+          })}
+
+          {/* New Catch - FAB style */}
+          <Link
+            href="/catches/new"
+            className="flex flex-col items-center justify-center gap-0.5 flex-1 py-1 rounded-xl transition-colors"
+          >
+            <span className="flex items-center justify-center w-11 h-11 -mt-5 rounded-2xl bg-gradient-to-br from-accent to-coral text-white shadow-lg shadow-coral/30 active:scale-95 transition-transform duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                <path fillRule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clipRule="evenodd" />
+              </svg>
+            </span>
+            <span className="text-[9px] font-bold leading-tight text-accent truncate max-w-full">
+              {t("newCatch")}
+            </span>
+          </Link>
+        </div>
       </div>
     </nav>
   );

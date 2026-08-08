@@ -13,45 +13,54 @@ export function PokedexCard({ entry, locale }: Props) {
   return (
     <Link
       href={`/pokedex/${entry.id}`}
-      className={`group block rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 ${
+      className={`group block rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 ${
         caught
-          ? "bg-white dark:bg-gray-800 shadow-sm hover:shadow-xl hover:shadow-cyan-100/50 dark:hover:shadow-cyan-900/20 ring-1 ring-cyan-100 dark:ring-cyan-800/40"
-          : "bg-gray-50 dark:bg-gray-800/50 opacity-60 hover:opacity-80 ring-1 ring-gray-200 dark:ring-gray-700"
+          ? "holo-border bg-surface dark:bg-surface-alt shadow-sm hover:shadow-ocean"
+          : "bg-foreground/5 dark:bg-white/5 opacity-55 hover:opacity-75"
       }`}
     >
+      {/* Image area */}
       <div
         className={`relative h-36 flex items-center justify-center overflow-hidden ${
           caught
-            ? "bg-gradient-to-br from-cyan-50 via-blue-50 to-teal-50 dark:from-cyan-900/20 dark:via-blue-900/20 dark:to-teal-900/20"
-            : "bg-gray-100 dark:bg-gray-800"
+            ? "bg-gradient-to-br from-primary-light/15 via-secondary/10 to-accent-light/15"
+            : "bg-foreground/5 dark:bg-white/5"
         }`}
       >
         {caught && entry.first_catch_photo ? (
           <img
             src={entry.first_catch_photo}
             alt={name}
-            className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-700 ease-out"
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
           />
         ) : (
-          <div className="flex flex-col items-center gap-1">
-            <svg className={`w-10 h-10 ${caught ? "text-cyan-300" : "text-gray-300 dark:text-gray-600"}`} viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1 14.5c-2 0-4-1.5-4-4s2-5 4-5c1 0 2 .5 2.5 1l2-1.5c.5-.3 1 0 .8.5l-1 3h2c.5 0 .7.5.4.8l-4 4c-.3.3-.7.1-.7-.3v-2h-1c-.5 0-1-.3-1-.5z"/>
-            </svg>
-            <span className="text-[10px] text-gray-400 dark:text-gray-500">?</span>
+          <div className="flex flex-col items-center gap-2">
+            <div className={`w-14 h-14 rounded-full flex items-center justify-center ${caught ? "bg-primary-light/20" : "bg-foreground/10 dark:bg-white/10"}`}>
+              <span className="text-2xl">❓</span>
+            </div>
           </div>
         )}
+
+        {/* Catch count badge */}
         {caught && (
-          <div className="absolute top-2 right-2 bg-cyan-600/90 backdrop-blur-sm text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+          <div className="absolute top-2 right-2 bg-gradient-to-r from-primary to-primary-light text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow-sm">
             x{entry.catch_count}
           </div>
         )}
+
+        {/* Habitat indicator dot */}
+        <div className={`absolute bottom-2 left-2 w-2.5 h-2.5 rounded-full ring-2 ring-white/80 dark:ring-surface/80 ${
+          entry.habitat === "freshwater" ? "bg-secondary" : entry.habitat === "saltwater" ? "bg-primary" : "bg-accent"
+        }`} />
       </div>
+
+      {/* Info */}
       <div className="p-2.5">
-        <h3 className={`font-semibold text-sm leading-tight ${caught ? "text-gray-900 dark:text-gray-100" : "text-gray-400 dark:text-gray-500"}`}>
-          {name}
+        <h3 className={`font-bold text-sm leading-tight ${caught ? "text-foreground" : "text-muted"}`}>
+          {caught ? name : "???"}
         </h3>
-        <p className="text-[11px] text-gray-400 dark:text-gray-500 italic mt-0.5 truncate">
-          {entry.scientific_name}
+        <p className="text-[11px] text-muted italic mt-0.5 truncate">
+          {caught ? entry.scientific_name : "???"}
         </p>
       </div>
     </Link>

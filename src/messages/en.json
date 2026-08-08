@@ -19,6 +19,7 @@
     "catches": "Catches",
     "newCatch": "New Catch",
     "species": "Species",
+    "community": "Community",
     "achievements": "Achievements",
     "profile": "Profile"
   },
@@ -80,7 +81,9 @@
     "saving": "Saving...",
     "deleting": "Deleting...",
     "catchUpdated": "Catch updated!",
-    "catchDeleted": "Catch deleted"
+    "catchDeleted": "Catch deleted",
+    "isPublic": "Visible in community",
+    "isPublicHelp": "Your catch will appear in the feed"
   },
   "rank": {
     "title": "Rank",
@@ -109,6 +112,19 @@
     "length": "Length",
     "fishingRegions": "Fishing Regions in CR",
     "bestBait": "Bait / Lure"
+  },
+  "feed": {
+    "title": "Community",
+    "empty": "No catches yet. Be the first!",
+    "loadMore": "Load more",
+    "loading": "Loading...",
+    "reactions": {
+      "fish": "Nice catch",
+      "fire": "Fire",
+      "trophy": "Trophy",
+      "wow": "Wow",
+      "respect": "Respect"
+    }
   },
   "achievements": {
     "title": "Achievements",

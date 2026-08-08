@@ -33,7 +33,6 @@ export default async function AchievementsPage({ params }: Props) {
     redirect(`/${locale}/auth/login`);
   }
 
-  // Fetch user achievements and catch stats in parallel
   const [{ data: userAchievements }, { data: allCatches }] = await Promise.all([
     supabase
       .from("user_achievements")
@@ -76,10 +75,10 @@ export default async function AchievementsPage({ params }: Props) {
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+        <h1 className="text-3xl font-extrabold text-gradient-ocean" style={{ fontFamily: "var(--font-fredoka)" }}>
           {t("title")}
         </h1>
-        <span className="text-sm font-medium text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/50 px-3 py-1 rounded-full">
+        <span className="text-sm font-extrabold text-primary bg-primary/10 px-4 py-1.5 rounded-xl">
           {earnedCount}/{ACHIEVEMENT_DEFS.length}
         </span>
       </div>
