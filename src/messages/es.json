@@ -102,6 +102,11 @@
     "commonName": "Nombre común",
     "suggestionNotes": "Notas adicionales",
     "suggestionSent": "¡Sugerencia enviada! La revisaremos pronto.",
-    "allHabitats": "Todos los hábitats"
+    "allHabitats": "Todos los hábitats",
+    "maxSize": "Tamaño Máximo",
+    "weight": "Peso",
+    "length": "Largo",
+    "fishingRegions": "Zonas de Pesca en CR",
+    "bestBait": "Carnada / Señuelo"
   }
 }
