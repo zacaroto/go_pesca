@@ -55,22 +55,22 @@ export function BottomNav() {
   const isNewCatchActive = pathname === "/catches/new";
 
   return (
-    <nav className="fixed bottom-0 inset-x-0 z-40 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 sm:hidden">
-      <div className="flex items-center justify-around h-16 px-2">
+    <nav className="fixed bottom-0 inset-x-0 z-40 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 sm:hidden overflow-hidden">
+      <div className="flex items-center justify-around h-16 px-1">
         {tabs.map((tab) => {
           const active = isActive(tab.href);
           return (
             <Link
               key={tab.key}
               href={tab.href}
-              className={`flex flex-col items-center justify-center gap-0.5 min-w-[4rem] py-1 rounded-lg transition-colors ${
+              className={`flex flex-col items-center justify-center gap-0.5 flex-1 py-1 rounded-lg transition-colors ${
                 active
                   ? "text-cyan-600 dark:text-cyan-400"
                   : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
               }`}
             >
               {tab.icon(active)}
-              <span className="text-[10px] font-medium leading-tight">
+              <span className="text-[9px] font-medium leading-tight truncate max-w-full">
                 {t(tab.key as TabKey)}
               </span>
             </Link>
@@ -80,18 +80,14 @@ export function BottomNav() {
         {/* New Catch - primary action */}
         <Link
           href="/catches/new"
-          className={`flex flex-col items-center justify-center gap-0.5 min-w-[4rem] py-1 rounded-lg transition-colors ${
-            isNewCatchActive
-              ? "text-white"
-              : "text-white"
-          }`}
+          className="flex flex-col items-center justify-center gap-0.5 flex-1 py-1 rounded-lg transition-colors"
         >
           <span className="flex items-center justify-center w-10 h-10 -mt-4 rounded-full bg-cyan-600 dark:bg-cyan-500 shadow-lg shadow-cyan-600/30">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
               <path fillRule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clipRule="evenodd" />
             </svg>
           </span>
-          <span className="text-[10px] font-medium leading-tight text-cyan-600 dark:text-cyan-400">
+          <span className="text-[9px] font-medium leading-tight text-cyan-600 dark:text-cyan-400 truncate max-w-full">
             {t("newCatch")}
           </span>
         </Link>
