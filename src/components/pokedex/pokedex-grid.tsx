@@ -61,7 +61,7 @@ export function PokedexGrid({ entries, locale }: Props) {
           />
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto pb-1">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 -mx-4 px-4">
           {(["all", "caught", "uncaught"] as const).map((f) => (
             <button
               key={f}

@@ -38,7 +38,7 @@ function PokedexContent({
   const t = useTranslations("pokedex");
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-4xl mx-auto px-4 py-8 overflow-x-hidden">
       <h1 className="text-2xl font-bold mb-6">{t("title")}</h1>
       <PokedexGrid entries={entries} locale={locale} />
     </div>
