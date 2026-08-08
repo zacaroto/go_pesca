@@ -34,6 +34,9 @@ export function Header({ user, rankData }: Props) {
               <Link href="/species" className="px-3 py-1.5 rounded-md hover:text-cyan-600 hover:bg-cyan-50 dark:hover:bg-cyan-950 transition-all duration-200">
                 {t("nav.species")}
               </Link>
+              <Link href="/achievements" className="px-3 py-1.5 rounded-md hover:text-cyan-600 hover:bg-cyan-50 dark:hover:bg-cyan-950 transition-all duration-200">
+                {t("nav.achievements")}
+              </Link>
             </nav>
           )}
         </div>

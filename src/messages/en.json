@@ -19,6 +19,7 @@
     "catches": "Catches",
     "newCatch": "New Catch",
     "species": "Species",
+    "achievements": "Achievements",
     "profile": "Profile"
   },
   "home": {
@@ -108,5 +109,47 @@
     "length": "Length",
     "fishingRegions": "Fishing Regions in CR",
     "bestBait": "Bait / Lure"
+  },
+  "achievements": {
+    "title": "Achievements",
+    "unlocked": "Achievement Unlocked!",
+    "items": {
+      "first_blood": {
+        "name": "First Blood",
+        "description": "Log your first catch"
+      },
+      "species_5": {
+        "name": "Explorer",
+        "description": "Catch 5 different species"
+      },
+      "species_10": {
+        "name": "Marine Biologist",
+        "description": "Catch 10 different species"
+      },
+      "species_20": {
+        "name": "Master Angler",
+        "description": "Catch 20 different species"
+      },
+      "big_catch": {
+        "name": "Monster",
+        "description": "Catch a fish over 10kg"
+      },
+      "night_owl": {
+        "name": "Night Owl",
+        "description": "Log a catch between 20:00 and 05:00"
+      },
+      "early_bird": {
+        "name": "Early Bird",
+        "description": "Log a catch between 04:00 and 07:00"
+      },
+      "catch_10": {
+        "name": "Dedicated",
+        "description": "Log 10 total catches"
+      },
+      "catch_50": {
+        "name": "Legend",
+        "description": "Log 50 total catches"
+      }
+    }
   }
 }

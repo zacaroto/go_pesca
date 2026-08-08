@@ -5,6 +5,7 @@ import { routing } from "@/i18n/routing";
 import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/layout/header";
 import { BottomNav } from "@/components/layout/bottom-nav";
+import { AchievementProvider } from "@/components/achievements/achievement-provider";
 
 type Props = {
   children: React.ReactNode;
@@ -83,9 +84,11 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <Header user={user} rankData={rankData} />
-      <main className="flex-1 flex flex-col pb-20 sm:pb-0">{children}</main>
-      {user && <BottomNav />}
+      <AchievementProvider>
+        <Header user={user} rankData={rankData} />
+        <main className="flex-1 flex flex-col pb-20 sm:pb-0">{children}</main>
+        {user && <BottomNav />}
+      </AchievementProvider>
     </NextIntlClientProvider>
   );
 }

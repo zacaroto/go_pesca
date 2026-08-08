@@ -19,6 +19,7 @@
     "catches": "Capturas",
     "newCatch": "Nueva Captura",
     "species": "Especies",
+    "achievements": "Logros",
     "profile": "Perfil"
   },
   "home": {
@@ -108,5 +109,47 @@
     "length": "Largo",
     "fishingRegions": "Zonas de Pesca en CR",
     "bestBait": "Carnada / Señuelo"
+  },
+  "achievements": {
+    "title": "Logros",
+    "unlocked": "¡Logro desbloqueado!",
+    "items": {
+      "first_blood": {
+        "name": "Primera Sangre",
+        "description": "Registra tu primera captura"
+      },
+      "species_5": {
+        "name": "Explorador",
+        "description": "Captura 5 especies diferentes"
+      },
+      "species_10": {
+        "name": "Biólogo Marino",
+        "description": "Captura 10 especies diferentes"
+      },
+      "species_20": {
+        "name": "Maestro Pescador",
+        "description": "Captura 20 especies diferentes"
+      },
+      "big_catch": {
+        "name": "Monstruo",
+        "description": "Captura un pez de más de 10kg"
+      },
+      "night_owl": {
+        "name": "Búho Nocturno",
+        "description": "Registra una captura entre las 20:00 y las 05:00"
+      },
+      "early_bird": {
+        "name": "Madrugador",
+        "description": "Registra una captura entre las 04:00 y las 07:00"
+      },
+      "catch_10": {
+        "name": "Dedicado",
+        "description": "Registra 10 capturas en total"
+      },
+      "catch_50": {
+        "name": "Leyenda",
+        "description": "Registra 50 capturas en total"
+      }
+    }
   }
 }
