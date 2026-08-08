@@ -7,6 +7,8 @@ import { PhotoUpload } from "./photo-upload";
 import { SpeciesPicker } from "./species-picker";
 import { LocationPicker } from "./location-picker";
 import { submitCatch } from "@/lib/catches";
+import { checkAndAwardAchievements } from "@/lib/achievements";
+import { useAchievements } from "@/components/achievements/achievement-provider";
 
 type Props = {
   locale: string;
@@ -19,6 +21,7 @@ export function CatchForm({ locale }: Props) {
   const t = useTranslations("catches");
   const tCommon = useTranslations("common");
   const router = useRouter();
+  const { showAchievements } = useAchievements();
 
   const [photo, setPhoto] = useState<File | null>(null);
   const [speciesId, setSpeciesId] = useState<number | null>(null);
@@ -58,7 +61,7 @@ export function CatchForm({ locale }: Props) {
 
     setSubmitting(true);
     try {
-      await submitCatch(photo, {
+      const catchRecord = (await submitCatch(photo, {
         speciesId,
         latitude,
         longitude,
@@ -71,7 +74,21 @@ export function CatchForm({ locale }: Props) {
         tide: tide || undefined,
         timeOfDay: timeOfDay || undefined,
         notes: notes || undefined,
-      });
+      })) as { id: string; user_id: string };
+
+      // Check for new achievements
+      try {
+        const newAchievements = await checkAndAwardAchievements(
+          catchRecord.user_id,
+          catchRecord.id
+        );
+        if (newAchievements.length > 0) {
+          showAchievements(newAchievements);
+        }
+      } catch {
+        // Don't block navigation if achievement check fails
+      }
+
       router.push(`/${locale}/catches`);
     } catch {
       setError("Error saving catch");
