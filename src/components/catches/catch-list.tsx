@@ -48,13 +48,28 @@ export function CatchList({ catches, species }: Props) {
 
   return (
     <div>
-      <input
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder={`${tCommon("search")}...`}
-        className="w-full mb-3 rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm dark:bg-gray-900"
-      />
+      {/* Search */}
+      <div className="relative mb-3">
+        <svg
+          className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+        </svg>
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder={`${tCommon("search")}...`}
+          className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-sm bg-white dark:bg-gray-800/50 focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-400 outline-none transition-all"
+        />
+      </div>
+
+      {/* Filters */}
       <CatchFilters
         species={species}
         selectedSpecies={selectedSpecies}
@@ -64,10 +79,20 @@ export function CatchList({ catches, species }: Props) {
         onDateFromChange={setDateFrom}
         onDateToChange={setDateTo}
       />
+
+      {/* Results count */}
+      <p className="text-xs text-gray-400 mb-3">
+        {filtered.length} {filtered.length === 1 ? "catch" : "catches"}
+      </p>
+
+      {/* List */}
       {filtered.length === 0 ? (
-        <p className="text-gray-500 text-center py-8">{t("noCatches")}</p>
+        <div className="text-center py-16">
+          <div className="text-4xl mb-3">{"\u{1F3A3}"}</div>
+          <p className="text-gray-500 dark:text-gray-400">{t("noCatches")}</p>
+        </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-2">
           {filtered.map((c) => (
             <CatchCard key={c.id} catch_entry={c} />
           ))}

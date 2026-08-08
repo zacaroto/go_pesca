@@ -23,7 +23,7 @@ type Props = {
 };
 
 export function SpeciesGrid({ species, locale }: Props) {
-  const t = useTranslations("species");
+  const tCommon = useTranslations("common");
   const [search, setSearch] = useState("");
   const [habitat, setHabitat] = useState("");
 
@@ -39,19 +39,26 @@ export function SpeciesGrid({ species, locale }: Props) {
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
+      {/* Search & Filters */}
+      <div className="space-y-3 mb-5">
         <SpeciesSearch value={search} onChange={setSearch} />
-        <SpeciesFilter value={habitat} onChange={setHabitat} />
+        <div className="flex items-center gap-2">
+          <SpeciesFilter value={habitat} onChange={setHabitat} />
+        </div>
       </div>
+
+      {/* Results count */}
+      <p className="text-xs text-gray-400 mb-3">
+        {filtered.length} species
+      </p>
+
       {filtered.length === 0 ? (
-        <div className="text-center py-12">
-          <svg className="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-          </svg>
-          <p className="text-gray-500">{t("allHabitats")}</p>
+        <div className="text-center py-16">
+          <div className="text-4xl mb-3">{"\u{1F41F}"}</div>
+          <p className="text-gray-500 dark:text-gray-400">{tCommon("noResults")}</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {filtered.map((s) => (
             <SpeciesCard key={s.id} species={s} locale={locale} />
           ))}

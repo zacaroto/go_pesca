@@ -15,14 +15,14 @@
   },
   "nav": {
     "home": "Inicio",
-    "pokedex": "Pokédex",
+    "pokedex": "Pescadex",
     "catches": "Capturas",
     "newCatch": "Nueva Captura",
     "species": "Especies",
     "profile": "Perfil"
   },
   "home": {
-    "title": "Tu Pokédex de Pesca",
+    "title": "Tu Pescadex",
     "subtitle": "Registra tus capturas y completa tu colección de especies",
     "cta": "Registrar Captura"
   },
@@ -41,7 +41,7 @@
     "registrationSuccess": "Cuenta creada. Revisa tu correo para confirmar."
   },
   "pokedex": {
-    "title": "Mi Pokédex",
+    "title": "Mi Pescadex",
     "progress": "{caught}/{total} especies capturadas",
     "caught": "Capturadas",
     "uncaught": "Por capturar",

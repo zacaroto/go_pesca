@@ -18,8 +18,8 @@
   --color-primary-light: var(--primary-light);
   --color-accent: var(--accent);
   --color-accent-light: var(--accent-light);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-fredoka);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,7 +37,12 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-fredoka), var(--font-inter), sans-serif;
+  letter-spacing: -0.01em;
 }
 
 /* Base focus-visible for all interactive elements */
