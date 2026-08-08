@@ -26,7 +26,6 @@ export function PhotoUpload({ onSelect }: Props) {
         id={inputId}
         type="file"
         accept="image/*"
-        capture="environment"
         onChange={handleChange}
         className="sr-only"
       />
