@@ -31,6 +31,7 @@ type CatchData = {
   notes: string | null;
   species_name: string;
   species_id: number;
+  is_public: boolean;
 };
 
 type Props = {
@@ -59,6 +60,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
   const [tide, setTide] = useState(catch_data.tide ?? "");
   const [timeOfDay, setTimeOfDay] = useState(catch_data.time_of_day ?? "");
   const [notes, setNotes] = useState(catch_data.notes ?? "");
+  const [isPublic, setIsPublic] = useState(catch_data.is_public);
   const [newPhoto, setNewPhoto] = useState<File | null>(null);
 
   async function handleDelete() {
@@ -83,6 +85,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
     setTide(catch_data.tide ?? "");
     setTimeOfDay(catch_data.time_of_day ?? "");
     setNotes(catch_data.notes ?? "");
+    setIsPublic(catch_data.is_public);
     setNewPhoto(null);
   }
 
@@ -103,6 +106,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
           tide: tide || undefined,
           timeOfDay: timeOfDay || undefined,
           notes: notes || undefined,
+          isPublic,
         },
         catch_data.photo_url,
         newPhoto ?? undefined
@@ -219,6 +223,31 @@ export function CatchDetail({ catch_data, locale }: Props) {
             rows={3}
             className={inputClass}
           />
+        </div>
+
+        <div>
+          <label className="flex items-center justify-between cursor-pointer">
+            <div>
+              <span className="block text-sm font-medium">{t("isPublic")}</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">{t("isPublicHelp")}</span>
+            </div>
+            <div
+              role="switch"
+              aria-checked={isPublic}
+              onClick={() => setIsPublic(!isPublic)}
+              onKeyDown={(e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setIsPublic(!isPublic); } }}
+              tabIndex={0}
+              className={`relative inline-flex h-6 w-11 flex-shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out cursor-pointer ${
+                isPublic ? "bg-cyan-600" : "bg-gray-300 dark:bg-gray-600"
+              }`}
+            >
+              <span
+                className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                  isPublic ? "translate-x-5" : "translate-x-0"
+                }`}
+              />
+            </div>
+          </label>
         </div>
 
         <div className="flex gap-3">

@@ -18,6 +18,7 @@ type CatchData = {
   tide?: string;
   timeOfDay?: string;
   notes?: string;
+  isPublic?: boolean;
 };
 
 export async function submitCatch(photo: File, data: CatchData) {
@@ -56,6 +57,7 @@ export async function submitCatch(photo: File, data: CatchData) {
     tide: data.tide || null,
     time_of_day: data.timeOfDay || null,
     notes: data.notes || null,
+    is_public: data.isPublic !== undefined ? data.isPublic : true,
   };
   const { data: catchRecord, error: insertError } = await supabase
     .from("catches")
@@ -143,6 +145,7 @@ export async function updateCatch(
   if (data.tide !== undefined) row.tide = data.tide || null;
   if (data.timeOfDay !== undefined) row.time_of_day = data.timeOfDay || null;
   if (data.notes !== undefined) row.notes = data.notes || null;
+  if (data.isPublic !== undefined) row.is_public = data.isPublic;
   if (photoUrl) row.photo_url = photoUrl;
 
   const { data: updated, error: updateError } = await supabase

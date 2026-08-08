@@ -76,6 +76,7 @@ export type Database = {
           tide: string | null;
           time_of_day: string | null;
           notes: string | null;
+          is_public: boolean;
           created_at: string;
         };
         Insert: {
@@ -94,6 +95,7 @@ export type Database = {
           tide?: string | null;
           time_of_day?: string | null;
           notes?: string | null;
+          is_public?: boolean;
           created_at?: string;
         };
         Update: {
@@ -112,6 +114,30 @@ export type Database = {
           tide?: string | null;
           time_of_day?: string | null;
           notes?: string | null;
+          is_public?: boolean;
+          created_at?: string;
+        };
+      };
+      catch_reactions: {
+        Row: {
+          id: string;
+          user_id: string;
+          catch_id: string;
+          reaction_type: "fish" | "fire" | "trophy" | "wow" | "respect";
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          catch_id: string;
+          reaction_type: "fish" | "fire" | "trophy" | "wow" | "respect";
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          catch_id?: string;
+          reaction_type?: "fish" | "fire" | "trophy" | "wow" | "respect";
           created_at?: string;
         };
       };

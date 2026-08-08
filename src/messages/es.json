@@ -19,6 +19,7 @@
     "catches": "Capturas",
     "newCatch": "Nueva",
     "species": "Especies",
+    "community": "Comunidad",
     "achievements": "Logros",
     "profile": "Perfil"
   },
@@ -80,7 +81,9 @@
     "saving": "Guardando...",
     "deleting": "Eliminando...",
     "catchUpdated": "¡Captura actualizada!",
-    "catchDeleted": "Captura eliminada"
+    "catchDeleted": "Captura eliminada",
+    "isPublic": "Visible en comunidad",
+    "isPublicHelp": "Tu captura aparecerá en el feed"
   },
   "rank": {
     "title": "Rango",
@@ -109,6 +112,19 @@
     "length": "Largo",
     "fishingRegions": "Zonas de Pesca en CR",
     "bestBait": "Carnada / Señuelo"
+  },
+  "feed": {
+    "title": "Comunidad",
+    "empty": "Aún no hay capturas. ¡Sé el primero!",
+    "loadMore": "Ver más",
+    "loading": "Cargando...",
+    "reactions": {
+      "fish": "Buena pesca",
+      "fire": "Fuego",
+      "trophy": "Trofeo",
+      "wow": "Wow",
+      "respect": "Respeto"
+    }
   },
   "achievements": {
     "title": "Logros",

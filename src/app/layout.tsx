@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Fredoka } from "next/font/google";
+import { Nunito, Fredoka } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const nunito = Nunito({
+  variable: "--font-nunito",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 const fredoka = Fredoka({
@@ -29,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html
-      className={`${inter.variable} ${fredoka.variable} h-full antialiased`}
+      className={`${nunito.variable} ${fredoka.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
