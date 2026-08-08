@@ -256,7 +256,7 @@ export function CatchForm({ locale }: Props) {
                 type="time"
                 value={timeOfDay}
                 onChange={(e) => setTimeOfDay(e.target.value)}
-                className={inputClass}
+                className={inputClass + " h-[42px]"}
               />
             </div>
             <div>
