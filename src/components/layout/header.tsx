@@ -50,7 +50,7 @@ export function Header({ user, rankData }: Props) {
               {rankData && (
                 <RankBadge caught={rankData.caught} total={rankData.total} size="sm" />
               )}
-              <UserMenu displayName={user.display_name ?? user.email ?? ""} />
+              <UserMenu displayName={user.display_name ?? user.email ?? ""} userId={user.id} />
             </>
           ) : (
             <div className="flex items-center gap-2">

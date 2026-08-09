@@ -6,6 +6,10 @@ export type Database = {
           id: string;
           display_name: string | null;
           avatar_url: string | null;
+          bio: string | null;
+          fishing_tags: string[];
+          home_region: string | null;
+          social_links: Record<string, string>;
           is_admin: boolean;
           created_at: string;
         };
@@ -13,6 +17,10 @@ export type Database = {
           id: string;
           display_name?: string | null;
           avatar_url?: string | null;
+          bio?: string | null;
+          fishing_tags?: string[];
+          home_region?: string | null;
+          social_links?: Record<string, string>;
           is_admin?: boolean;
           created_at?: string;
         };
@@ -20,6 +28,10 @@ export type Database = {
           id?: string;
           display_name?: string | null;
           avatar_url?: string | null;
+          bio?: string | null;
+          fishing_tags?: string[];
+          home_region?: string | null;
+          social_links?: Record<string, string>;
           is_admin?: boolean;
           created_at?: string;
         };

@@ -126,6 +126,42 @@
       "respect": "Respect"
     }
   },
+  "profile": {
+    "title": "Profile",
+    "editProfile": "Edit Profile",
+    "myProfile": "My Profile",
+    "bio": "Bio",
+    "bioPlaceholder": "Tell us about your fishing adventures...",
+    "fishingStyle": "Fishing Style",
+    "homeRegion": "Home Region",
+    "socialLinks": "Social Links",
+    "instagram": "Instagram",
+    "youtube": "YouTube",
+    "other": "Website",
+    "save": "Save",
+    "saving": "Saving...",
+    "memberSince": "Member Since",
+    "totalCatches": "Total Catches",
+    "speciesCaught": "Species Caught",
+    "achievements": "Achievements",
+    "displayName": "Display Name",
+    "regions": {
+      "pacific": "Pacific Coast",
+      "caribbean": "Caribbean Coast",
+      "centralValley": "Central Valley",
+      "northernPlains": "Northern Plains",
+      "southPacific": "South Pacific"
+    },
+    "tags": {
+      "shore": "Shore",
+      "kayak": "Kayak",
+      "offshore": "Offshore",
+      "fly": "Fly Fishing",
+      "river": "River",
+      "lake": "Lake",
+      "spearfishing": "Spearfishing"
+    }
+  },
   "achievements": {
     "title": "Achievements",
     "unlocked": "Achievement Unlocked!",
