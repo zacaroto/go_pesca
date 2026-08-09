@@ -160,7 +160,11 @@
       "river": "River",
       "lake": "Lake",
       "spearfishing": "Spearfishing"
-    }
+    },
+    "favoriteSpots": "Favorite Spots",
+    "favoriteSpotsPlaceholder": "Add a spot...",
+    "addSpot": "Add",
+    "maxSpots": "Max 10 spots"
   },
   "achievements": {
     "title": "Achievements",

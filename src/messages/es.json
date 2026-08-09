@@ -160,7 +160,11 @@
       "river": "Río",
       "lake": "Lago",
       "spearfishing": "Pesca Sub"
-    }
+    },
+    "favoriteSpots": "Spots Favoritos",
+    "favoriteSpotsPlaceholder": "Agregar un spot...",
+    "addSpot": "Agregar",
+    "maxSpots": "Máximo 10 spots"
   },
   "achievements": {
     "title": "Logros",

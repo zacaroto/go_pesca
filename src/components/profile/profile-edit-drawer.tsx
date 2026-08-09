@@ -13,6 +13,7 @@ type ProfileData = {
   fishing_tags: string[];
   home_region: string | null;
   social_links: Record<string, string>;
+  favorite_spots: string[];
 };
 
 type Props = {
@@ -26,6 +27,7 @@ const inputClass =
 
 const FISHING_TAGS = ["shore", "kayak", "offshore", "fly", "river", "lake", "spearfishing"] as const;
 const REGIONS = ["pacific", "caribbean", "centralValley", "northernPlains", "southPacific"] as const;
+const MAX_SPOTS = 10;
 
 export function ProfileEditDrawer({ open, onClose, profile }: Props) {
   const t = useTranslations("profile");
@@ -38,6 +40,8 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
   const [instagram, setInstagram] = useState(profile.social_links?.instagram ?? "");
   const [youtube, setYoutube] = useState(profile.social_links?.youtube ?? "");
   const [other, setOther] = useState(profile.social_links?.other ?? "");
+  const [favoriteSpots, setFavoriteSpots] = useState<string[]>(profile.favorite_spots ?? []);
+  const [spotInput, setSpotInput] = useState("");
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
 
@@ -45,6 +49,17 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
     setFishingTags((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
+  }
+
+  function addSpot() {
+    const trimmed = spotInput.trim();
+    if (!trimmed || favoriteSpots.length >= MAX_SPOTS || favoriteSpots.includes(trimmed)) return;
+    setFavoriteSpots((prev) => [...prev, trimmed]);
+    setSpotInput("");
+  }
+
+  function removeSpot(spot: string) {
+    setFavoriteSpots((prev) => prev.filter((s) => s !== spot));
   }
 
   async function handleSave() {
@@ -65,6 +80,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
         fishing_tags: fishingTags,
         home_region: homeRegion || null,
         social_links: socialLinks,
+        favorite_spots: favoriteSpots,
       });
 
       router.refresh();
@@ -81,29 +97,30 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
   return (
     <div className="fixed inset-0 z-50">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
 
-      {/* Drawer */}
-      <div className="absolute inset-x-0 bottom-0 max-h-[90vh] overflow-y-auto rounded-t-2xl bg-surface dark:bg-surface-alt shadow-xl animate-in slide-in-from-bottom duration-300">
-        {/* Handle */}
-        <div className="sticky top-0 z-10 bg-surface dark:bg-surface-alt pt-3 pb-2 px-5">
-          <div className="w-10 h-1 rounded-full bg-foreground/20 mx-auto mb-3" />
+      {/* Drawer — capped at 60vh */}
+      <div className="absolute inset-x-0 bottom-0 max-h-[60vh] flex flex-col rounded-t-2xl bg-surface dark:bg-surface-alt shadow-xl animate-in slide-in-from-bottom duration-300">
+        {/* Handle + header (sticky) */}
+        <div className="flex-shrink-0 pt-2.5 pb-2 px-4 border-b border-foreground/5">
+          <div className="w-8 h-1 rounded-full bg-foreground/15 mx-auto mb-2" />
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-extrabold text-foreground" style={{ fontFamily: "var(--font-fredoka)" }}>
+            <h2 className="text-base font-extrabold text-foreground" style={{ fontFamily: "var(--font-fredoka)" }}>
               {t("editProfile")}
             </h2>
             <button
               onClick={onClose}
-              className="text-muted hover:text-foreground transition-colors"
+              className="p-1.5 rounded-lg hover:bg-foreground/5 text-muted hover:text-foreground transition-colors"
             >
-              <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
         </div>
 
-        <div className="px-5 pb-8 space-y-5">
+        {/* Scrollable content */}
+        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
           {/* Avatar */}
           <AvatarUpload
             currentUrl={profile.avatar_url}
@@ -113,7 +130,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
 
           {/* Display Name */}
           <div>
-            <label className="block text-xs font-medium text-muted mb-1.5">
+            <label className="block text-xs font-medium text-muted mb-1">
               {t("displayName")}
             </label>
             <input
@@ -126,30 +143,30 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
 
           {/* Bio */}
           <div>
-            <label className="block text-xs font-medium text-muted mb-1.5">
+            <label className="block text-xs font-medium text-muted mb-1">
               {t("bio")}
             </label>
             <textarea
               value={bio}
               onChange={(e) => setBio(e.target.value)}
               placeholder={t("bioPlaceholder")}
-              rows={3}
+              rows={2}
               className={inputClass + " resize-none"}
             />
           </div>
 
           {/* Fishing Tags */}
           <div>
-            <label className="block text-xs font-medium text-muted mb-2">
+            <label className="block text-xs font-medium text-muted mb-1.5">
               {t("fishingStyle")}
             </label>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {FISHING_TAGS.map((tag) => (
                 <button
                   key={tag}
                   type="button"
                   onClick={() => toggleTag(tag)}
-                  className={`text-xs font-semibold px-3 py-1.5 rounded-xl border-2 transition-all ${
+                  className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition-all ${
                     fishingTags.includes(tag)
                       ? "bg-primary/15 text-primary border-primary/30"
                       : "bg-foreground/5 text-muted border-transparent hover:border-foreground/15"
@@ -161,9 +178,65 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
             </div>
           </div>
 
-          {/* Home Region */}
+          {/* Favorite Spots */}
           <div>
             <label className="block text-xs font-medium text-muted mb-1.5">
+              {t("favoriteSpots")}
+            </label>
+            {/* Current spots */}
+            {favoriteSpots.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mb-2">
+                {favoriteSpots.map((spot) => (
+                  <span
+                    key={spot}
+                    className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-lg bg-accent/10 text-accent border border-accent/15"
+                  >
+                    <svg className="w-3 h-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                      <path fillRule="evenodd" d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 3.834 3.025ZM12 12.75a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clipRule="evenodd" />
+                    </svg>
+                    {spot}
+                    <button
+                      type="button"
+                      onClick={() => removeSpot(spot)}
+                      className="ml-0.5 hover:text-red-500 transition-colors"
+                    >
+                      <svg className="w-3 h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
+            {/* Add spot input */}
+            {favoriteSpots.length < MAX_SPOTS && (
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={spotInput}
+                  onChange={(e) => setSpotInput(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addSpot(); } }}
+                  placeholder={t("favoriteSpotsPlaceholder")}
+                  className={inputClass}
+                />
+                <button
+                  type="button"
+                  onClick={addSpot}
+                  disabled={!spotInput.trim()}
+                  className="flex-shrink-0 px-3 py-2 text-xs font-semibold rounded-xl bg-accent/15 text-accent hover:bg-accent/25 disabled:opacity-40 transition-colors"
+                >
+                  {t("addSpot")}
+                </button>
+              </div>
+            )}
+            {favoriteSpots.length >= MAX_SPOTS && (
+              <p className="text-[11px] text-muted mt-1">{t("maxSpots")}</p>
+            )}
+          </div>
+
+          {/* Home Region */}
+          <div>
+            <label className="block text-xs font-medium text-muted mb-1">
               {t("homeRegion")}
             </label>
             <select
@@ -181,49 +254,49 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
           </div>
 
           {/* Social Links */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             <label className="block text-xs font-medium text-muted">
               {t("socialLinks")}
             </label>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-medium text-muted w-20">{t("instagram")}</span>
-                <input
-                  type="text"
-                  value={instagram}
-                  onChange={(e) => setInstagram(e.target.value)}
-                  placeholder="@username"
-                  className={inputClass}
-                />
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-medium text-muted w-20">{t("youtube")}</span>
-                <input
-                  type="text"
-                  value={youtube}
-                  onChange={(e) => setYoutube(e.target.value)}
-                  placeholder="@channel"
-                  className={inputClass}
-                />
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-medium text-muted w-20">{t("other")}</span>
-                <input
-                  type="text"
-                  value={other}
-                  onChange={(e) => setOther(e.target.value)}
-                  placeholder="https://..."
-                  className={inputClass}
-                />
-              </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-medium text-muted w-16 flex-shrink-0">{t("instagram")}</span>
+              <input
+                type="text"
+                value={instagram}
+                onChange={(e) => setInstagram(e.target.value)}
+                placeholder="@username"
+                className={inputClass}
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-medium text-muted w-16 flex-shrink-0">{t("youtube")}</span>
+              <input
+                type="text"
+                value={youtube}
+                onChange={(e) => setYoutube(e.target.value)}
+                placeholder="@channel"
+                className={inputClass}
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-medium text-muted w-16 flex-shrink-0">{t("other")}</span>
+              <input
+                type="text"
+                value={other}
+                onChange={(e) => setOther(e.target.value)}
+                placeholder="https://..."
+                className={inputClass}
+              />
             </div>
           </div>
+        </div>
 
-          {/* Save button */}
+        {/* Save button (sticky bottom) */}
+        <div className="flex-shrink-0 px-4 py-3 border-t border-foreground/5">
           <button
             onClick={handleSave}
             disabled={saving}
-            className="w-full bg-primary text-white py-3.5 rounded-2xl font-semibold hover:bg-primary/90 active:scale-[0.98] disabled:opacity-50 transition-all duration-200 shadow-lg shadow-primary/25"
+            className="w-full bg-primary text-white py-3 rounded-2xl font-semibold hover:bg-primary/90 active:scale-[0.98] disabled:opacity-50 transition-all duration-200 shadow-lg shadow-primary/25"
           >
             {saving ? t("saving") : t("save")}
           </button>

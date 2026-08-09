@@ -10,6 +10,7 @@ export type Database = {
           fishing_tags: string[];
           home_region: string | null;
           social_links: Record<string, string>;
+          favorite_spots: string[];
           is_admin: boolean;
           created_at: string;
         };
@@ -21,6 +22,7 @@ export type Database = {
           fishing_tags?: string[];
           home_region?: string | null;
           social_links?: Record<string, string>;
+          favorite_spots?: string[];
           is_admin?: boolean;
           created_at?: string;
         };
@@ -32,6 +34,7 @@ export type Database = {
           fishing_tags?: string[];
           home_region?: string | null;
           social_links?: Record<string, string>;
+          favorite_spots?: string[];
           is_admin?: boolean;
           created_at?: string;
         };
