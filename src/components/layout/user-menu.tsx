@@ -7,9 +7,10 @@ import { useRouter, Link } from "@/i18n/navigation";
 
 type Props = {
   displayName: string;
+  userId: string;
 };
 
-export function UserMenu({ displayName }: Props) {
+export function UserMenu({ displayName, userId }: Props) {
   const t = useTranslations();
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -36,6 +37,13 @@ export function UserMenu({ displayName }: Props) {
         <>
           <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
           <div className="absolute right-0 top-full mt-1 w-48 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg z-20">
+            <Link
+              href={`/profile/${userId}` as "/profile/[userId]"}
+              className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800"
+              onClick={() => setOpen(false)}
+            >
+              {t("profile.myProfile")}
+            </Link>
             <Link
               href="/catches/new"
               className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800"

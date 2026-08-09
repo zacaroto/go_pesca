@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "@/i18n/navigation";
 import { ReactionBar } from "./reaction-bar";
 import type { FeedCatch, FeedReactions } from "@/lib/feed";
 
@@ -37,15 +38,25 @@ export function FeedCard({ catch_entry, reactions }: Props) {
       <div className="p-3.5 space-y-3">
         {/* Angler + meta row */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            {/* Avatar placeholder */}
-            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-white text-xs font-bold">
-              {catch_entry.display_name?.charAt(0)?.toUpperCase() ?? "?"}
-            </div>
+          <Link
+            href={`/profile/${catch_entry.user_id}` as "/profile/[userId]"}
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+          >
+            {catch_entry.avatar_url ? (
+              <img
+                src={catch_entry.avatar_url}
+                alt=""
+                className="w-7 h-7 rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-white text-xs font-bold">
+                {catch_entry.display_name?.charAt(0)?.toUpperCase() ?? "?"}
+              </div>
+            )}
             <span className="text-sm font-bold text-foreground">
               {catch_entry.display_name}
             </span>
-          </div>
+          </Link>
           <div className="flex items-center gap-2.5 text-xs text-muted font-medium">
             <span className="inline-flex items-center gap-1">
               <svg className="w-3.5 h-3.5 text-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">

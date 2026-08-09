@@ -5,9 +5,11 @@ type ReactionRow = Database["public"]["Tables"]["catch_reactions"]["Row"];
 
 export type FeedCatch = {
   id: string;
+  user_id: string;
   photo_url: string;
   species_name: string;
   display_name: string;
+  avatar_url: string | null;
   location_name: string | null;
   catch_date: string;
   created_at: string;
@@ -44,9 +46,9 @@ export async function fetchFeedCatches(
   let query = supabase
     .from("catches")
     .select(
-      `id, photo_url, location_name, catch_date, created_at,
+      `id, user_id, photo_url, location_name, catch_date, created_at,
        species:species_id (${nameCol}),
-       profile:user_id (display_name)`
+       profile:user_id (display_name, avatar_url)`
     )
     .eq("is_public", true)
     .order("created_at", { ascending: false })
@@ -64,9 +66,11 @@ export async function fetchFeedCatches(
     const profile = row.profile as Record<string, string> | null;
     return {
       id: row.id as string,
+      user_id: row.user_id as string,
       photo_url: row.photo_url as string,
       species_name: species?.[nameCol] ?? "",
       display_name: profile?.display_name ?? "",
+      avatar_url: (profile?.avatar_url as string) ?? null,
       location_name: row.location_name as string | null,
       catch_date: row.catch_date as string,
       created_at: row.created_at as string,

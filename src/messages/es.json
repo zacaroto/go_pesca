@@ -126,6 +126,42 @@
       "respect": "Respeto"
     }
   },
+  "profile": {
+    "title": "Perfil",
+    "editProfile": "Editar Perfil",
+    "myProfile": "Mi Perfil",
+    "bio": "Bio",
+    "bioPlaceholder": "Cuéntanos sobre tus aventuras de pesca...",
+    "fishingStyle": "Estilo de Pesca",
+    "homeRegion": "Región",
+    "socialLinks": "Redes Sociales",
+    "instagram": "Instagram",
+    "youtube": "YouTube",
+    "other": "Sitio web",
+    "save": "Guardar",
+    "saving": "Guardando...",
+    "memberSince": "Miembro Desde",
+    "totalCatches": "Capturas Totales",
+    "speciesCaught": "Especies Capturadas",
+    "achievements": "Logros",
+    "displayName": "Nombre",
+    "regions": {
+      "pacific": "Costa Pacífica",
+      "caribbean": "Costa Caribe",
+      "centralValley": "Valle Central",
+      "northernPlains": "Llanuras del Norte",
+      "southPacific": "Pacífico Sur"
+    },
+    "tags": {
+      "shore": "Orilla",
+      "kayak": "Kayak",
+      "offshore": "Alta Mar",
+      "fly": "Mosca",
+      "river": "Río",
+      "lake": "Lago",
+      "spearfishing": "Pesca Sub"
+    }
+  },
   "achievements": {
     "title": "Logros",
     "unlocked": "¡Logro desbloqueado!",
