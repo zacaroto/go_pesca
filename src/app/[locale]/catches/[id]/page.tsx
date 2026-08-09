@@ -72,6 +72,7 @@ export default async function CatchDetailPage({ params }: Props) {
             notes: c.notes,
             species_name: speciesName,
             species_id: c.species_id,
+            is_public: c.is_public,
           }}
         />
       </div>
