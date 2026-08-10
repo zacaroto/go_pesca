@@ -92,6 +92,7 @@ export type Database = {
           time_of_day: string | null;
           notes: string | null;
           is_public: boolean;
+          share_to_groups: boolean;
           created_at: string;
         };
         Insert: {
@@ -111,6 +112,7 @@ export type Database = {
           time_of_day?: string | null;
           notes?: string | null;
           is_public?: boolean;
+          share_to_groups?: boolean;
           created_at?: string;
         };
         Update: {
@@ -130,6 +132,7 @@ export type Database = {
           time_of_day?: string | null;
           notes?: string | null;
           is_public?: boolean;
+          share_to_groups?: boolean;
           created_at?: string;
         };
       };
