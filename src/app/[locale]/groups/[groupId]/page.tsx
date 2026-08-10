@@ -1,7 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { getGroupById, isGroupMember, getGroupMembers } from "@/lib/groups";
+import { getGroupById, isGroupMember, getGroupMembers } from "@/lib/groups.server";
 import { fetchGroupFeedCatches } from "@/lib/group-feed";
 import { fetchReactionsForCatches } from "@/lib/feed";
 import { GroupDetailContent } from "./group-detail-content";

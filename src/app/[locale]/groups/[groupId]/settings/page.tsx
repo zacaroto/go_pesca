@@ -1,7 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { getGroupById } from "@/lib/groups";
+import { getGroupById } from "@/lib/groups.server";
 import { GroupSettingsContent } from "./settings-content";
 
 type Props = {

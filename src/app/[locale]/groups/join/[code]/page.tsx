@@ -1,7 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { getGroupByInviteCode, isGroupMember } from "@/lib/groups";
+import { getGroupByInviteCode, isGroupMember } from "@/lib/groups.server";
 import { JoinConfirmation } from "@/components/groups/join-confirmation";
 
 type Props = {

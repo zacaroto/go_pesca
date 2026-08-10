@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { fetchFeedCatches, fetchReactionsForCatches } from "@/lib/feed";
-import { getUserGroupsServer } from "@/lib/groups";
+import { getUserGroupsServer } from "@/lib/groups.server";
 import type { GroupWithMemberCount } from "@/lib/groups";
 import { FeedList } from "@/components/feed/feed-list";
 import { MyGroupsBar } from "@/components/groups/my-groups-bar";
