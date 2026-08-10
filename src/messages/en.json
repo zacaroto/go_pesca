@@ -209,5 +209,42 @@
         "description": "Log 50 total catches"
       }
     }
+  },
+  "groups": {
+    "title": "Groups",
+    "createGroup": "Create Group",
+    "joinGroup": "Join Group",
+    "name": "Group Name",
+    "description": "Description",
+    "avatar": "Group Photo",
+    "publicGroup": "Public Group",
+    "publicGroupHelp": "Anyone with the link can join",
+    "nameRequired": "Group name is required",
+    "saveError": "Error saving group",
+    "settings": "Group Settings",
+    "members": "Members",
+    "memberCount": "{count} members",
+    "creator": "Creator",
+    "public": "Public",
+    "private": "Private",
+    "copyLink": "Copy Invite Link",
+    "copied": "Copied!",
+    "leave": "Leave",
+    "confirmLeave": "Are you sure you want to leave this group?",
+    "groupFeed": "Catches",
+    "emptyFeed": "No catches shared yet. Start fishing!",
+    "dangerZone": "Danger Zone",
+    "deleteWarning": "Deleting a group is permanent and removes all members.",
+    "deleteGroup": "Delete Group",
+    "deleting": "Deleting...",
+    "confirmDelete": "Are you sure you want to delete this group? This cannot be undone.",
+    "groupNotFound": "Group Not Found",
+    "groupNotFoundHelp": "This invite link is invalid or the group no longer exists.",
+    "groupFull": "This group is full (max 20 members).",
+    "joining": "Joining...",
+    "joinError": "Error joining group",
+    "myGroups": "My Groups",
+    "noGroups": "No groups yet",
+    "createFirst": "Create or join a group to share catches with your crew!"
   }
 }
