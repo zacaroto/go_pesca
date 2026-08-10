@@ -83,7 +83,9 @@
     "catchUpdated": "Catch updated!",
     "catchDeleted": "Catch deleted",
     "isPublic": "Visible in community",
-    "isPublicHelp": "Your catch will appear in the feed"
+    "isPublicHelp": "Your catch will appear in the feed",
+    "shareToGroups": "Share to my groups",
+    "shareToGroupsHelp": "Your catch will appear in your groups' feeds"
   },
   "rank": {
     "title": "Rank",

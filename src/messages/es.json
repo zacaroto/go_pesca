@@ -83,7 +83,9 @@
     "catchUpdated": "¡Captura actualizada!",
     "catchDeleted": "Captura eliminada",
     "isPublic": "Visible en comunidad",
-    "isPublicHelp": "Tu captura aparecerá en el feed"
+    "isPublicHelp": "Tu captura aparecerá en el feed",
+    "shareToGroups": "Compartir con mis grupos",
+    "shareToGroupsHelp": "Tu captura aparecerá en los feeds de tus grupos"
   },
   "rank": {
     "title": "Rango",
