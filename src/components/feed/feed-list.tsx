@@ -10,9 +10,11 @@ type Props = {
   initialCatches: FeedCatch[];
   initialReactions: Record<string, FeedReactions>;
   locale: string;
+  fetchMoreFn?: (locale: string, cursor: string) => Promise<FeedCatch[]>;
+  emptyMessage?: string;
 };
 
-export function FeedList({ initialCatches, initialReactions, locale }: Props) {
+export function FeedList({ initialCatches, initialReactions, locale, fetchMoreFn, emptyMessage }: Props) {
   const t = useTranslations("feed");
   const [catches, setCatches] = useState(initialCatches);
   const [reactions, setReactions] = useState(initialReactions);
@@ -27,7 +29,8 @@ export function FeedList({ initialCatches, initialReactions, locale }: Props) {
 
     setLoading(true);
     try {
-      const moreCatches = await fetchMoreFeedCatches(locale, lastCatch.created_at);
+      const fetcher = fetchMoreFn ?? fetchMoreFeedCatches;
+      const moreCatches = await fetcher(locale, lastCatch.created_at);
 
       if (moreCatches.length < 20) {
         setHasMore(false);
@@ -55,7 +58,7 @@ export function FeedList({ initialCatches, initialReactions, locale }: Props) {
           <span className="text-4xl">🎣</span>
         </div>
         <p className="text-muted text-sm font-medium">
-          {t("empty")}
+          {emptyMessage ?? t("empty")}
         </p>
       </div>
     );

@@ -83,7 +83,9 @@
     "catchUpdated": "¡Captura actualizada!",
     "catchDeleted": "Captura eliminada",
     "isPublic": "Visible en comunidad",
-    "isPublicHelp": "Tu captura aparecerá en el feed"
+    "isPublicHelp": "Tu captura aparecerá en el feed",
+    "shareToGroups": "Compartir con mis grupos",
+    "shareToGroupsHelp": "Tu captura aparecerá en los feeds de tus grupos"
   },
   "rank": {
     "title": "Rango",
@@ -207,5 +209,42 @@
         "description": "Registra 50 capturas en total"
       }
     }
+  },
+  "groups": {
+    "title": "Grupos",
+    "createGroup": "Crear Grupo",
+    "joinGroup": "Unirse al Grupo",
+    "name": "Nombre del Grupo",
+    "description": "Descripción",
+    "avatar": "Foto del Grupo",
+    "publicGroup": "Grupo Público",
+    "publicGroupHelp": "Cualquiera con el enlace puede unirse",
+    "nameRequired": "El nombre del grupo es obligatorio",
+    "saveError": "Error al guardar el grupo",
+    "settings": "Configuración del Grupo",
+    "members": "Miembros",
+    "memberCount": "{count} miembros",
+    "creator": "Creador",
+    "public": "Público",
+    "private": "Privado",
+    "copyLink": "Copiar Enlace",
+    "copied": "¡Copiado!",
+    "leave": "Salir",
+    "confirmLeave": "¿Estás seguro de que quieres salir de este grupo?",
+    "groupFeed": "Capturas",
+    "emptyFeed": "Aún no hay capturas compartidas. ¡Sal a pescar!",
+    "dangerZone": "Zona de Peligro",
+    "deleteWarning": "Eliminar un grupo es permanente y remueve a todos los miembros.",
+    "deleteGroup": "Eliminar Grupo",
+    "deleting": "Eliminando...",
+    "confirmDelete": "¿Estás seguro de que quieres eliminar este grupo? Esto no se puede deshacer.",
+    "groupNotFound": "Grupo No Encontrado",
+    "groupNotFoundHelp": "Este enlace de invitación es inválido o el grupo ya no existe.",
+    "groupFull": "Este grupo está lleno (máximo 20 miembros).",
+    "joining": "Uniéndose...",
+    "joinError": "Error al unirse al grupo",
+    "myGroups": "Mis Grupos",
+    "noGroups": "Aún no tienes grupos",
+    "createFirst": "¡Crea o únete a un grupo para compartir capturas con tu crew!"
   }
 }
