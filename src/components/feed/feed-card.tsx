@@ -26,6 +26,17 @@ export function FeedCard({ catch_entry, reactions }: Props) {
         />
         {/* Gradient overlay */}
         <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/40 to-transparent" />
+        {/* Group badge */}
+        {catch_entry.group_name && (
+          <div className="absolute top-2.5 left-2.5">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-sm text-[10px] font-semibold text-white">
+              <svg className="w-3 h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path fillRule="evenodd" d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 17.084a11.116 11.116 0 0 1 3.727-1.482 3 3 0 0 1 3.926 0 11.12 11.12 0 0 1 3.727 1.482 4.5 4.5 0 0 0-11.38 0Z" clipRule="evenodd" />
+              </svg>
+              {catch_entry.group_name}
+            </span>
+          </div>
+        )}
         {/* Species name on photo */}
         <div className="absolute bottom-3 left-3.5">
           <h3 className="font-extrabold text-base text-white drop-shadow-md" style={{ fontFamily: "var(--font-fredoka)" }}>

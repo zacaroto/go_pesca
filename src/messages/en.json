@@ -11,7 +11,8 @@
     "cancel": "Cancel",
     "submit": "Submit",
     "loading": "Loading...",
-    "noResults": "No results found"
+    "noResults": "No results found",
+    "errorSaving": "Failed to save changes. Please try again."
   },
   "nav": {
     "home": "Home",
@@ -120,6 +121,12 @@
     "empty": "No catches yet. Be the first!",
     "loadMore": "Load more",
     "loading": "Loading...",
+    "groupActivity": "Your groups activity",
+    "discover": "Discover",
+    "noGroupsTitle": "Join a group",
+    "noGroupsDescription": "Share catches and compete with your fishing crew",
+    "joinWithCode": "Join with code",
+    "noGroupActivity": "Your groups have no recent catches. Go fishing!",
     "reactions": {
       "fish": "Nice catch",
       "fire": "Fire",

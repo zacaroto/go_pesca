@@ -11,7 +11,8 @@
     "cancel": "Cancelar",
     "submit": "Enviar",
     "loading": "Cargando...",
-    "noResults": "No se encontraron resultados"
+    "noResults": "No se encontraron resultados",
+    "errorSaving": "Error al guardar los cambios. Intenta de nuevo."
   },
   "nav": {
     "home": "Inicio",
@@ -120,6 +121,12 @@
     "empty": "Aún no hay capturas. ¡Sé el primero!",
     "loadMore": "Ver más",
     "loading": "Cargando...",
+    "groupActivity": "Actividad de tus grupos",
+    "discover": "Descubre",
+    "noGroupsTitle": "Únete a un grupo",
+    "noGroupsDescription": "Comparte capturas y compite con tu grupo de pesca",
+    "joinWithCode": "Unirse con código",
+    "noGroupActivity": "Tus grupos no tienen capturas recientes. ¡Sal a pescar!",
     "reactions": {
       "fish": "Buena pesca",
       "fire": "Fuego",
