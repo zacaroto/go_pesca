@@ -62,6 +62,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
   const [notes, setNotes] = useState(catch_data.notes ?? "");
   const [isPublic, setIsPublic] = useState(catch_data.is_public);
   const [newPhoto, setNewPhoto] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleDelete() {
     if (!confirm(t("confirmDelete"))) return;
@@ -91,6 +92,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
 
   async function handleSave() {
     setSaving(true);
+    setError(null);
     try {
       await updateCatch(
         catch_data.id,
@@ -113,8 +115,9 @@ export function CatchDetail({ catch_data, locale }: Props) {
       );
       router.refresh();
       setEditing(false);
-    } catch {
-      // stay in edit mode on error
+    } catch (err) {
+      console.error("Failed to update catch:", err);
+      setError(tCommon("errorSaving"));
     } finally {
       setSaving(false);
     }
@@ -249,6 +252,12 @@ export function CatchDetail({ catch_data, locale }: Props) {
             </div>
           </label>
         </div>
+
+        {error && (
+          <p className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-3 py-2 rounded-lg">
+            {error}
+          </p>
+        )}
 
         <div className="flex gap-3">
           <button

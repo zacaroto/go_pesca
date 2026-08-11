@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { RankBadge } from "@/components/rank/rank-badge";
 
 type Props = {
@@ -43,12 +44,12 @@ export function ProfileStats({ stats, memberSince, rankData }: Props) {
           </div>
           <div className="text-[10px] font-medium text-muted leading-tight mt-0.5">{t("speciesCaught")}</div>
         </div>
-        <div className="text-center">
-          <div className="text-xl font-extrabold text-coral" style={{ fontFamily: "var(--font-fredoka)" }}>
+        <Link href="/achievements" className="text-center group rounded-lg py-1 -my-1 active:bg-foreground/5 transition-colors">
+          <div className="text-xl font-extrabold text-coral underline decoration-coral/30 underline-offset-2 group-hover:decoration-coral/60" style={{ fontFamily: "var(--font-fredoka)" }}>
             {stats.achievements}
           </div>
-          <div className="text-[10px] font-medium text-muted leading-tight mt-0.5">{t("achievements")}</div>
-        </div>
+          <div className="text-[10px] font-medium text-muted leading-tight mt-0.5">{t("achievements")} &rsaquo;</div>
+        </Link>
         <div className="text-center">
           <div className="text-sm font-extrabold text-secondary" style={{ fontFamily: "var(--font-fredoka)" }}>
             {formattedDate}
