@@ -27,9 +27,12 @@ export function RegisterScreen({ navigation }: Props) {
 
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
+  const submitting = useRef(false);
 
   function validate(): string | null {
     if (!displayName.trim()) return "Display name is required";
+    if (displayName.trim().length > 50)
+      return "Display name must be 50 characters or less";
     if (!email.trim()) return "Email is required";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
       return "Invalid email format";
@@ -40,6 +43,8 @@ export function RegisterScreen({ navigation }: Props) {
   }
 
   async function handleSubmit() {
+    if (submitting.current) return;
+
     const validationError = validate();
     if (validationError) {
       setError(validationError);
@@ -48,6 +53,7 @@ export function RegisterScreen({ navigation }: Props) {
 
     setError("");
     setLoading(true);
+    submitting.current = true;
 
     try {
       const { error: authError } = await signUp(
@@ -59,7 +65,7 @@ export function RegisterScreen({ navigation }: Props) {
         if (authError.message.toLowerCase().includes("already registered")) {
           setError("This email is already registered");
         } else {
-          setError(authError.message);
+          setError("Registration failed. Please try again");
         }
       }
       // On success, onAuthStateChange in AuthContext handles navigation
@@ -67,6 +73,7 @@ export function RegisterScreen({ navigation }: Props) {
       setError("Unable to connect. Check your internet and try again");
     } finally {
       setLoading(false);
+      submitting.current = false;
     }
   }
 

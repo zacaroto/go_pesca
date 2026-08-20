@@ -25,6 +25,7 @@ export function LoginScreen({ navigation }: Props) {
   const [loading, setLoading] = useState(false);
 
   const passwordRef = useRef<TextInput>(null);
+  const submitting = useRef(false);
 
   function validate(): string | null {
     if (!email.trim()) return "Email is required";
@@ -37,6 +38,8 @@ export function LoginScreen({ navigation }: Props) {
   }
 
   async function handleSubmit() {
+    if (submitting.current) return;
+
     const validationError = validate();
     if (validationError) {
       setError(validationError);
@@ -45,6 +48,7 @@ export function LoginScreen({ navigation }: Props) {
 
     setError("");
     setLoading(true);
+    submitting.current = true;
 
     try {
       const { error: authError } = await signIn(email.trim(), password);
@@ -55,6 +59,7 @@ export function LoginScreen({ navigation }: Props) {
       setError("Unable to connect. Check your internet and try again");
     } finally {
       setLoading(false);
+      submitting.current = false;
     }
   }
 
