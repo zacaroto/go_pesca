@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Text, View, StyleSheet } from "react-native";
 import { TabNavigator } from "./TabNavigator";
+import { NewCatchScreen } from "../screens/NewCatchScreen";
 import type { RootStackParamList } from "./types";
 
 function LoginScreen() {
@@ -25,6 +26,16 @@ export function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Main" component={TabNavigator} />
+      <Stack.Screen
+        name="NewCatch"
+        component={NewCatchScreen}
+        options={{
+          presentation: "modal",
+          headerShown: true,
+          title: "New Catch",
+          animation: "slide_from_bottom",
+        }}
+      />
       <Stack.Screen
         name="Login"
         component={LoginScreen}
