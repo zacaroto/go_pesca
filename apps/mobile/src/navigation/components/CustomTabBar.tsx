@@ -1,3 +1,4 @@
+import React from "react";
 import { View, Pressable, Text, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import type { BottomTabBarProps } from "@react-navigation/bottom-tabs";
@@ -20,9 +21,8 @@ export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarPro
   const insets = useSafeAreaInsets();
   const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  // Insert FAB at index 2 (center position)
   const tabRoutes = state.routes;
-  const fabIndex = 2;
+  const fabIndex = Math.floor(tabRoutes.length / 2);
 
   return (
     <View style={[styles.container, { paddingBottom: insets.bottom }]}>
@@ -57,57 +57,48 @@ export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarPro
               ? options.title
               : route.name;
 
-        // Render tabs, inserting FAB at center
-        const elements = [];
-
-        if (index === fabIndex) {
-          // Render FAB before this tab
-          elements.push(
-            <Pressable
-              key="fab"
-              style={styles.fabWrapper}
-              onPress={() => rootNavigation.navigate("NewCatch")}
-              accessibilityLabel="New Catch"
-              accessibilityRole="button"
-            >
-              <View style={styles.fabButton}>
-                <Ionicons name="add" size={28} color="#fff" />
-              </View>
-              <Text style={styles.fabLabel}>New Catch</Text>
-            </Pressable>,
-          );
-        }
-
-        elements.push(
-          <Pressable
-            key={route.key}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            accessibilityLabel={label}
-            accessibilityRole="tab"
-            accessibilityState={isFocused ? { selected: true } : {}}
-            style={styles.tab}
-          >
-            {iconConfig && (
-              <Ionicons
-                name={isFocused ? iconConfig.focused : iconConfig.unfocused}
-                size={24}
-                color={isFocused ? ACTIVE_COLOR : INACTIVE_COLOR}
-              />
+        return (
+          <React.Fragment key={route.key}>
+            {index === fabIndex && (
+              <Pressable
+                style={styles.fabWrapper}
+                onPress={() => rootNavigation.navigate("NewCatch")}
+                accessibilityLabel="New Catch"
+                accessibilityRole="button"
+              >
+                <View style={styles.fabButton}>
+                  <Ionicons name="add" size={28} color="#fff" />
+                </View>
+                <Text style={styles.fabLabel}>New Catch</Text>
+              </Pressable>
             )}
-            <Text
-              style={[
-                styles.label,
-                { color: isFocused ? ACTIVE_COLOR : INACTIVE_COLOR },
-              ]}
+            <Pressable
+              onPress={onPress}
+              onLongPress={onLongPress}
+              accessibilityLabel={label}
+              accessibilityRole="tab"
+              accessibilityState={isFocused ? { selected: true } : {}}
+              style={styles.tab}
             >
-              {label}
-            </Text>
-            {isFocused && <View style={styles.indicator} />}
-          </Pressable>,
+              {iconConfig && (
+                <Ionicons
+                  name={isFocused ? iconConfig.focused : iconConfig.unfocused}
+                  size={24}
+                  color={isFocused ? ACTIVE_COLOR : INACTIVE_COLOR}
+                />
+              )}
+              <Text
+                style={[
+                  styles.label,
+                  { color: isFocused ? ACTIVE_COLOR : INACTIVE_COLOR },
+                ]}
+              >
+                {label}
+              </Text>
+              {isFocused && <View style={styles.indicator} />}
+            </Pressable>
+          </React.Fragment>
         );
-
-        return elements;
       })}
     </View>
   );
@@ -121,6 +112,7 @@ const styles = StyleSheet.create({
     borderTopColor: "#e5e7eb",
     alignItems: "flex-end",
     paddingTop: 6,
+    overflow: "visible",
   },
   tab: {
     flex: 1,
@@ -155,12 +147,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: -24,
-    shadowColor: "#f97316",
+    shadowColor: "#0891b2",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8,
-    // Gradient approximation: use a solid coral/accent blend
     backgroundColor: "#0891b2",
   },
   fabLabel: {
