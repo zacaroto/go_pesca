@@ -1,69 +1,41 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Text, View, StyleSheet } from "react-native";
 import type { TabParamList } from "./types";
-
-function PlaceholderScreen({ name }: { name: string }) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>{name}</Text>
-    </View>
-  );
-}
+import { PokedexStack } from "./stacks/PokedexStack";
+import { CatchesStack } from "./stacks/CatchesStack";
+import { CommunityStack } from "./stacks/CommunityStack";
+import { SpeciesStack } from "./stacks/SpeciesStack";
+import { CustomTabBar } from "./components/CustomTabBar";
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
 export function TabNavigator() {
   return (
     <Tab.Navigator
+      tabBar={(props) => <CustomTabBar {...props} />}
       screenOptions={{
-        headerShown: true,
-        tabBarActiveTintColor: "#0891b2",
+        headerShown: false,
       }}
     >
       <Tab.Screen
         name="Pokedex"
-        options={{ title: "Pokédex", tabBarLabel: "Pokédex" }}
-      >
-        {() => <PlaceholderScreen name="Pokédex" />}
-      </Tab.Screen>
+        component={PokedexStack}
+        options={{ title: "Pokédex" }}
+      />
       <Tab.Screen
         name="Catches"
-        options={{ title: "Catches", tabBarLabel: "Catches" }}
-      >
-        {() => <PlaceholderScreen name="Catches" />}
-      </Tab.Screen>
-      <Tab.Screen
-        name="NewCatch"
-        options={{ title: "New Catch", tabBarLabel: "+" }}
-      >
-        {() => <PlaceholderScreen name="New Catch" />}
-      </Tab.Screen>
+        component={CatchesStack}
+        options={{ title: "Catches" }}
+      />
       <Tab.Screen
         name="Community"
-        options={{ title: "Community", tabBarLabel: "Community" }}
-      >
-        {() => <PlaceholderScreen name="Community" />}
-      </Tab.Screen>
+        component={CommunityStack}
+        options={{ title: "Community" }}
+      />
       <Tab.Screen
         name="Species"
-        options={{ title: "Species", tabBarLabel: "Species" }}
-      >
-        {() => <PlaceholderScreen name="Species" />}
-      </Tab.Screen>
+        component={SpeciesStack}
+        options={{ title: "Species" }}
+      />
     </Tab.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#fff",
-  },
-  text: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#333",
-  },
-});
