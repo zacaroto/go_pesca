@@ -13,6 +13,7 @@ export type FeedCatch = {
   location_name: string | null;
   catch_date: string;
   created_at: string;
+  group_name?: string;
 };
 
 export type ReactionCounts = {

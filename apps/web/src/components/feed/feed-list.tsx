@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { FeedCard } from "./feed-card";
 import { fetchMoreFeedCatches, fetchMoreReactions } from "@/lib/feed-client";
+import { fetchMoreAllGroupsFeedCatches } from "@/lib/group-feed-client";
 import type { FeedCatch, FeedReactions } from "@/lib/feed";
 
 type Props = {
@@ -11,10 +12,16 @@ type Props = {
   initialReactions: Record<string, FeedReactions>;
   locale: string;
   fetchMoreFn?: (locale: string, cursor: string) => Promise<FeedCatch[]>;
+  feedType?: "global" | "allGroups";
   emptyMessage?: string;
 };
 
-export function FeedList({ initialCatches, initialReactions, locale, fetchMoreFn, emptyMessage }: Props) {
+const feedTypeFetchers = {
+  global: fetchMoreFeedCatches,
+  allGroups: fetchMoreAllGroupsFeedCatches,
+};
+
+export function FeedList({ initialCatches, initialReactions, locale, fetchMoreFn, feedType, emptyMessage }: Props) {
   const t = useTranslations("feed");
   const [catches, setCatches] = useState(initialCatches);
   const [reactions, setReactions] = useState(initialReactions);
@@ -29,7 +36,7 @@ export function FeedList({ initialCatches, initialReactions, locale, fetchMoreFn
 
     setLoading(true);
     try {
-      const fetcher = fetchMoreFn ?? fetchMoreFeedCatches;
+      const fetcher = fetchMoreFn ?? (feedType ? feedTypeFetchers[feedType] : fetchMoreFeedCatches);
       const moreCatches = await fetcher(locale, lastCatch.created_at);
 
       if (moreCatches.length < 20) {
