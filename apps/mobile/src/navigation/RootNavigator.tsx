@@ -1,54 +1,51 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Text, View, StyleSheet } from "react-native";
+import { View, ActivityIndicator, StyleSheet } from "react-native";
 import { TabNavigator } from "./TabNavigator";
+import { LoginScreen } from "../screens/LoginScreen";
+import { RegisterScreen } from "../screens/RegisterScreen";
+import { useAuth } from "../hooks/useAuth";
 import type { RootStackParamList } from "./types";
-
-function LoginScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Login</Text>
-    </View>
-  );
-}
-
-function RegisterScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Register</Text>
-    </View>
-  );
-}
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function RootNavigator() {
+  const { session, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" color="#0891b2" />
+      </View>
+    );
+  }
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Main" component={TabNavigator} />
-      <Stack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{ headerShown: true, title: "Login" }}
-      />
-      <Stack.Screen
-        name="Register"
-        component={RegisterScreen}
-        options={{ headerShown: true, title: "Register" }}
-      />
+      {session ? (
+        <Stack.Screen name="Main" component={TabNavigator} />
+      ) : (
+        <>
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ headerShown: true, title: "Login" }}
+          />
+          <Stack.Screen
+            name="Register"
+            component={RegisterScreen}
+            options={{ headerShown: true, title: "Register" }}
+          />
+        </>
+      )}
     </Stack.Navigator>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  loading: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#fff",
-  },
-  text: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#333",
   },
 });
