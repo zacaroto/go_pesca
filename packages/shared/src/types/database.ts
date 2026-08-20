@@ -197,6 +197,61 @@ export type Database = {
           reviewed_at?: string | null;
         };
       };
+      groups: {
+        Row: {
+          id: string;
+          name: string;
+          description: string | null;
+          avatar_url: string | null;
+          is_public: boolean;
+          invite_code: string;
+          created_by: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          description?: string | null;
+          avatar_url?: string | null;
+          is_public?: boolean;
+          invite_code: string;
+          created_by: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          description?: string | null;
+          avatar_url?: string | null;
+          is_public?: boolean;
+          invite_code?: string;
+          created_by?: string;
+          created_at?: string;
+        };
+      };
+      group_members: {
+        Row: {
+          id: string;
+          group_id: string;
+          user_id: string;
+          role: "creator" | "member";
+          joined_at: string;
+        };
+        Insert: {
+          id?: string;
+          group_id: string;
+          user_id: string;
+          role?: "creator" | "member";
+          joined_at?: string;
+        };
+        Update: {
+          id?: string;
+          group_id?: string;
+          user_id?: string;
+          role?: "creator" | "member";
+          joined_at?: string;
+        };
+      };
     };
   };
 };

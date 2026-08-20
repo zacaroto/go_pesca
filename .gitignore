@@ -46,3 +46,9 @@ yarn-error.log*
 ios/
 android/
 dist/
+
+# supabase local
+supabase/.temp/
+
+# omc state
+.omc/
