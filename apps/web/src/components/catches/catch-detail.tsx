@@ -49,6 +49,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   // Edit state
   const [speciesId, setSpeciesId] = useState(catch_data.species_id);
@@ -65,7 +66,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
   const [error, setError] = useState<string | null>(null);
 
   async function handleDelete() {
-    if (!confirm(t("confirmDelete"))) return;
+    setShowDeleteConfirm(false);
     setDeleting(true);
     try {
       await deleteCatch(catch_data.id, catch_data.photo_url);
@@ -349,13 +350,60 @@ export function CatchDetail({ catch_data, locale }: Props) {
         </button>
         <button
           type="button"
-          onClick={handleDelete}
+          onClick={() => setShowDeleteConfirm(true)}
           disabled={deleting}
-          className="flex-1 bg-red-600 text-white py-2.5 rounded-lg font-medium hover:bg-red-700 disabled:opacity-50 transition-colors"
+          className="flex-1 bg-neon-coral text-white py-3 rounded-2xl font-bold chunky-border bouncy-shadow bouncy-hover bouncy-active transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+          style={{ fontFamily: "var(--font-fredoka)" }}
         >
+          <span className="material-symbols-outlined text-xl">delete</span>
           {deleting ? t("deleting") : t("delete")}
         </button>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-on-surface/40 backdrop-blur-sm"
+            onClick={() => setShowDeleteConfirm(false)}
+          />
+          <div className="relative bg-card-bg rounded-3xl chunky-border chunky-shadow p-6 max-w-sm w-full space-y-4 animate-float">
+            <div className="flex flex-col items-center text-center space-y-3">
+              <div className="w-16 h-16 bg-neon-coral/15 rounded-full flex items-center justify-center sticker-border">
+                <span className="material-symbols-outlined text-neon-coral text-4xl">warning</span>
+              </div>
+              <h3
+                className="text-headline-md text-on-surface"
+                style={{ fontFamily: "var(--font-fredoka)" }}
+              >
+                {t("confirmDelete")}
+              </h3>
+              <p className="text-body-md text-muted">
+                {t("confirmDeleteDescription")}
+              </p>
+            </div>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={() => setShowDeleteConfirm(false)}
+                className="flex-1 bg-surface-container text-on-surface py-3 rounded-2xl font-bold chunky-border bouncy-shadow bouncy-hover bouncy-active transition-all"
+                style={{ fontFamily: "var(--font-fredoka)" }}
+              >
+                {tCommon("cancel")}
+              </button>
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="flex-1 bg-neon-coral text-white py-3 rounded-2xl font-bold chunky-border bouncy-shadow bouncy-hover bouncy-active transition-all flex items-center justify-center gap-2"
+                style={{ fontFamily: "var(--font-fredoka)" }}
+              >
+                <span className="material-symbols-outlined text-lg">delete</span>
+                {t("delete")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

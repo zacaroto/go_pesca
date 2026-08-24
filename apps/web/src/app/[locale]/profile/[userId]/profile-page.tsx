@@ -23,7 +23,7 @@ export function ProfilePage({ profile, stats, rankData, isOwner }: Props) {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-6 space-y-4">
+    <div className="max-w-5xl mx-auto px-5 md:px-10 py-8 space-y-8">
       <ProfileHeader
         profile={profile}
         isOwner={isOwner}

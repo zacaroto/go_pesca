@@ -26,6 +26,7 @@
   },
   "home": {
     "title": "Tu Pescadex",
+    "hero": "¡La Gran Aventura Comienza Aquí!",
     "subtitle": "Registra tus capturas y completa tu colección de especies",
     "cta": "Registrar Captura"
   },
@@ -78,7 +79,8 @@
     "filterByDate": "Filtrar por fecha",
     "edit": "Editar",
     "delete": "Eliminar",
-    "confirmDelete": "¿Estás seguro de que quieres eliminar esta captura?",
+    "confirmDelete": "¿Eliminar esta captura?",
+    "confirmDeleteDescription": "Esta acción no se puede deshacer. Tu registro de captura y foto se eliminarán permanentemente.",
     "saving": "Guardando...",
     "deleting": "Eliminando...",
     "catchUpdated": "¡Captura actualizada!",

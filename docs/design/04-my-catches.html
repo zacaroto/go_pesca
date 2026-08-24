@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mis Capturas - Go Pesca</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&amp;family=Nunito+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed-dim": "#00e293",
+                      "surface-container": "#eaedff",
+                      "primary-fixed": "#d2e4ff",
+                      "tertiary-fixed": "#ffdcbc",
+                      "surface-container-low": "#f2f3ff",
+                      "background": "#faf8ff",
+                      "surface-bright": "#faf8ff",
+                      "tertiary": "#895100",
+                      "secondary-container": "#25fea8",
+                      "surface-container-highest": "#dae1ff",
+                      "on-primary-fixed": "#001c37",
+                      "surface": "#faf8ff",
+                      "primary-container": "#0096ff",
+                      "error-container": "#ffdad6",
+                      "electric-purple": "#7209B7",
+                      "on-tertiary-container": "#432500",
+                      "on-secondary-fixed-variant": "#005232",
+                      "primary": "#0061a7",
+                      "on-tertiary-fixed-variant": "#683d00",
+                      "on-primary-fixed-variant": "#00487f",
+                      "neon-coral": "#FF4D6D",
+                      "on-secondary-fixed": "#002111",
+                      "on-surface-variant": "#3f4753",
+                      "surface-variant": "#dae1ff",
+                      "on-surface": "#0f1a37",
+                      "on-secondary-container": "#007147",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed": "#2c1700",
+                      "tertiary-container": "#d28000",
+                      "inverse-on-surface": "#eef0ff",
+                      "inverse-surface": "#252f4d",
+                      "outline": "#707884",
+                      "surface-container-high": "#e2e7ff",
+                      "surface-tint": "#0061a7",
+                      "sunny-yellow": "#FFD60A",
+                      "error": "#ba1a1a",
+                      "secondary": "#006c44",
+                      "on-primary": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "secondary-fixed": "#50ffaf",
+                      "surface-dim": "#ced9ff",
+                      "card-bg": "#FFFFFF",
+                      "primary-fixed-dim": "#a1c9ff",
+                      "on-background": "#0f1a37",
+                      "on-primary-container": "#002d52",
+                      "page-bg": "#F0F9FF",
+                      "inverse-primary": "#a1c9ff",
+                      "tertiary-fixed-dim": "#ffb86b",
+                      "outline-variant": "#bfc7d5",
+                      "on-secondary": "#ffffff",
+                      "on-error": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "unit": "4px",
+                      "stack-sm": "8px",
+                      "stack-lg": "32px",
+                      "stack-md": "16px",
+                      "margin-mobile": "20px",
+                      "margin-desktop": "40px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Fredoka"
+                      ],
+                      "body-lg": [
+                              "Nunito Sans"
+                      ],
+                      "body-md": [
+                              "Nunito Sans"
+                      ],
+                      "headline-lg": [
+                              "Fredoka"
+                      ],
+                      "label-sm": [
+                              "Fredoka"
+                      ],
+                      "headline-md": [
+                              "Fredoka"
+                      ],
+                      "label-lg": [
+                              "Fredoka"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.08em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      }
+              }
+            },
+          }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .sticker-card {
+            border: 3px solid white;
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.1);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+        }
+        
+        .sticker-card:hover {
+            transform: translateY(-4px) scale(1.02) rotate(0deg) !important;
+            box-shadow: 6px 6px 0px 0px rgba(0,0,0,0.15);
+        }
+        
+        .sticker-card:active {
+            transform: translateY(2px) translateX(2px) scale(0.98) !important;
+            box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.1);
+        }
+
+        .fab-3d {
+            box-shadow: 0px 6px 0px 0px #00487f, 0px 8px 10px rgba(0,0,0,0.2);
+            transition: all 0.15s ease;
+        }
+
+        .fab-3d:active {
+            transform: translateY(6px);
+            box-shadow: 0px 0px 0px 0px #00487f, 0px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .habitat-badge-salt {
+            border: 2px solid white;
+            box-shadow: 0 0 8px rgba(255,255,255,0.8);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-page-bg text-on-background font-body-md pb-32">
+<!-- TopAppBar -->
+<header class="bg-surface w-full top-0 sticky border-b-4 border-outline-variant shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] z-40">
+<div class="flex justify-between items-center px-margin-mobile py-stack-sm w-full">
+<div class="flex items-center gap-stack-sm hover:scale-105 transition-transform active:translate-y-0.5 active:translate-x-0.5 transition-all cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed border-2 border-tertiary flex items-center justify-center text-on-tertiary-container font-bold overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A small, stylized avatar illustration of an adventurous angler in a tropical setting. The illustration is vibrant, cartoonish, and energetic, fitting a collectible card game aesthetic with thick outlines and bold colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCu6ImsdO2lBg5yjlRd6iwv0yZDDsWamvUMlNMWpQQLrMbmzsA5Kaw2ovOOkJvZM5W9WBPWf26S-y1RMIs2Bz0NPYlxuPan9LTu4wJ6zHayIw7NIqsljFJk9HBBloWK1XqfiiNm3kKmodd4z2hm5Y09qu9L-H1rYNpufXwaEL98-omjCGJwASRchXLTdAjs6KMAeIYRrrqLCRHuWWJ1bJzqlbKM1dGkg9SmdX54NOqGZDzOrqABOh7u8A"/>
+</div>
+<h1 class="font-display-lg text-headline-md text-primary tracking-tight">Go Pesca</h1>
+</div>
+<button class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-primary border-2 border-primary-fixed-dim hover:scale-105 transition-transform active:translate-y-0.5 active:translate-x-0.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)]">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="px-margin-mobile py-stack-lg max-w-5xl mx-auto">
+<div class="flex justify-between items-end mb-stack-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-unit">Mis Capturas</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">¡Tus trofeos más recientes!</p>
+</div>
+<div class="hidden md:flex gap-stack-sm">
+<button class="bg-surface-container border-2 border-outline-variant rounded-xl px-4 py-2 font-label-lg text-label-lg text-on-surface-variant flex items-center gap-2 hover:bg-surface-container-high transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,0.05)]">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+                    Filtrar
+                </button>
+</div>
+</div>
+<!-- Bento Grid / Sticker Grid -->
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-gutter">
+<!-- Card 1 -->
+<div class="sticker-card bg-primary-fixed rounded-2xl p-stack-sm flex flex-col relative" style="transform: rotate(-2deg);">
+<div class="absolute -top-3 -right-3 habitat-badge-salt bg-primary-container text-on-primary rounded-full px-3 py-1 font-label-sm text-label-sm flex items-center gap-1 z-10">
+<span class="material-symbols-outlined text-[16px]" data-icon="water">water</span>
+                    Salada
+                </div>
+<div class="w-full aspect-square rounded-xl overflow-hidden border-2 border-white mb-stack-sm bg-white">
+<img class="w-full h-full object-cover" data-alt="A stylized, cartoonish illustration of a Mahi-Mahi (Dorado) fish leaping out of vibrant blue tropical water. The fish has bold, thick white outlines like a sticker, bright neon green and yellow coloring, and is set against a sunny, high-contrast gradient background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfJg3AMs3m9G7lTdRa-uNYVduJkA284wVLmzL-GwDvVg01EZrnSQCrGQ_J81G4S--vwiRe5fOILHncoawYWTbx4n9eTEtaDjycScyawKoLQQQ5KKNOoHPIy0DEuJlfLuh68haBLAvJcmX-FL6EAwBwSOFoFqW3UYVR9ltJJ4yiy-5PbnYyBxMaOS18S9626xSMPR04s_QTSzum2yUWlES3wDBl3s33ZkoEuTs9Ky0mpkZtuPzmWKTYvg"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline-md text-headline-md text-on-primary-fixed leading-tight mb-1">Dorado Dorado</h3>
+<p class="font-label-sm text-label-sm text-on-primary-fixed-variant opacity-80 uppercase mb-2">12.5 kg • Playa Norte</p>
+</div>
+<div class="flex items-center gap-2 mt-auto">
+<div class="bg-white/50 rounded-full px-2 py-1 flex items-center gap-1">
+<span class="text-lg">🔥</span>
+<span class="font-label-sm text-label-sm text-on-primary-fixed font-bold">12</span>
+</div>
+<div class="bg-white/50 rounded-full px-2 py-1 flex items-center gap-1">
+<span class="text-lg">🤩</span>
+<span class="font-label-sm text-label-sm text-on-primary-fixed font-bold">5</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="sticker-card bg-secondary-container rounded-2xl p-stack-sm flex flex-col relative" style="transform: rotate(3deg);">
+<div class="absolute -top-3 -right-3 habitat-badge-salt bg-secondary text-on-secondary rounded-full px-3 py-1 font-label-sm text-label-sm flex items-center gap-1 z-10">
+<span class="material-symbols-outlined text-[16px]" data-icon="grass">grass</span>
+                    Dulce
+                </div>
+<div class="w-full aspect-square rounded-xl overflow-hidden border-2 border-white mb-stack-sm bg-white">
+<img class="w-full h-full object-cover" data-alt="A stylized, chunky illustration of a Largemouth Bass breaking the surface of a murky green lake. The artwork features a thick white sticker border around the fish, highly saturated greens and browns, and a playful, bouncy aesthetic typical of a modern collectible card game." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIkThRUxQBVjmJAFYNbHTIh6kAHbWFJS2AUNRxfeZwtRrbyvzcoI6Yh-RQ2JxFLME1crKYth0H4BCHQGn8xvE9-c1bv0dB2Y4ZPcfyYYU-GXgzo6yMrN_IOS8PBMtFL-7LmaY5t0Hbg9NvLy3IYgWbdyezi2UNcnkk579B8Po8-DlvMgctD8yaag-shjSGKwpLk3_mOLie9fnTJPTD-BWFR44rf6HFTRvAwKl1_U-WV7kQohk8wIrJOQ"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline-md text-headline-md text-on-secondary-container leading-tight mb-1">Boca Grande</h3>
+<p class="font-label-sm text-label-sm text-on-secondary-container opacity-80 uppercase mb-2">3.2 kg • Lago Verde</p>
+</div>
+<div class="flex items-center gap-2 mt-auto">
+<div class="bg-white/50 rounded-full px-2 py-1 flex items-center gap-1">
+<span class="text-lg">💪</span>
+<span class="font-label-sm text-label-sm text-on-secondary-container font-bold">24</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="sticker-card bg-tertiary-fixed rounded-2xl p-stack-sm flex flex-col relative" style="transform: rotate(-1deg);">
+<div class="w-full aspect-square rounded-xl overflow-hidden border-2 border-white mb-stack-sm bg-white">
+<img class="w-full h-full object-cover" data-alt="A colorful, cartoon-style illustration of a Red Snapper. The fish is bright neon coral red with a thick white sticker-like outline. It is depicted against a stylized, high-saturation sunset gradient background. The aesthetic is chunky, vibrant, and highly tactile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvjUNPpGyprKsaZNd4iTmSWZNLtNVO34MoU3aJpFC3OIUoc372w3_8LJn6vHsChhx9V_g41aJhYoheSotYLpA_mwUHrC5xSkiDn_yG0kgNj71KosiVl5EFUmoAeCe7gUFZmRY-jta-bMM1k2F6CxqvDCfgCs9s_jxaDgTEygCxxu_GOSzCeu60wrf1Ba4Yqf3QAI1bVPhDC8A3ZGAJQjpUcO2dspN5l6pbVzZPE-YBxiQsJc8HGXInKw"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline-md text-headline-md text-on-tertiary-container leading-tight mb-1">Pargo Rojo</h3>
+<p class="font-label-sm text-label-sm text-on-tertiary-fixed-variant opacity-80 uppercase mb-2">1.8 kg • Arrecife</p>
+</div>
+<div class="flex items-center gap-2 mt-auto">
+<div class="bg-white/50 rounded-full px-2 py-1 flex items-center gap-1">
+<span class="text-lg">❤️</span>
+<span class="font-label-sm text-label-sm text-on-tertiary-container font-bold">8</span>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="sticker-card bg-surface-container-high rounded-2xl p-stack-sm flex flex-col relative" style="transform: rotate(4deg);">
+<div class="w-full aspect-square rounded-xl overflow-hidden border-2 border-white mb-stack-sm bg-white">
+<img class="w-full h-full object-cover" data-alt="A playful illustration of a small, shiny silver Sardine. The fish has exaggerated, cute features, a thick white outline, and is set against a vibrant turquoise background. The style is modern-cartoonish with solid, punchy colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIfrX3aPRZOz4C8ylTzAgolaRxT2OIFm5ORsP0HYozU4lEDQ3bs7x3ws3XMFoIRNVAh32Yvb6ziN9cbZ_joXB0Bb0wFLED6SbrzVUqtA3gkjQoyQcmS-__cQ8R8VXL1yxKZs-aGtPK96PuTCZI2ciqieCkKLpvGLyrUFf-UEOrtwvamfGcHmUl1Msa3dAjhjDcHDRVPdbdQLZO0cxAWX7bINSf_Tc14ShDmrnL7yeK0QfT9c5GrekFVw"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline-md text-headline-md text-on-surface leading-tight mb-1">Sardinilla</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant opacity-80 uppercase mb-2">0.1 kg • Muelle</p>
+</div>
+<div class="flex items-center gap-2 mt-auto">
+<div class="bg-white/50 rounded-full px-2 py-1 flex items-center gap-1">
+<span class="text-lg">😅</span>
+<span class="font-label-sm text-label-sm text-on-surface font-bold">1</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB for New Catch -->
+<button class="fixed bottom-28 right-margin-mobile z-50 bg-primary text-on-primary rounded-2xl w-16 h-16 flex items-center justify-center border-2 border-white fab-3d hover:bg-primary-container md:hidden">
+<span class="material-symbols-outlined text-[32px] font-bold" data-icon="add">add</span>
+</button>
+<button class="fixed bottom-margin-desktop right-margin-desktop z-50 bg-primary text-on-primary rounded-2xl px-6 py-4 items-center justify-center gap-2 border-2 border-white fab-3d hover:bg-primary-container hidden md:flex font-headline-md text-headline-md">
+<span class="material-symbols-outlined text-[28px] font-bold" data-icon="add">add</span>
+        Nueva Captura
+    </button>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="bg-surface-container-highest fixed bottom-0 w-full rounded-t-lg z-50 border-t-4 border-outline-variant shadow-[0px_-4px_0px_0px_rgba(0,0,0,0.05)] md:hidden">
+<div class="fixed bottom-0 left-0 w-full h-20 flex justify-around items-center px-gutter pb-4">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-stack-sm opacity-80 hover:brightness-110 active:scale-95 transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm uppercase font-bold mt-1">Inicio</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-stack-sm opacity-80 hover:brightness-110 active:scale-95 transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="style">style</span>
+<span class="font-label-sm text-label-sm uppercase font-bold mt-1">Pescadex</span>
+</a>
+<!-- Active Item: Log/My Catches -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl p-stack-sm scale-110 -translate-y-2 border-2 border-secondary hover:brightness-110 active:scale-95 transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="hook" data-weight="fill" style="font-variation-settings: 'FILL' 1;">question_mark</span>
+<span class="font-label-sm text-label-sm uppercase font-bold mt-1">Log</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-stack-sm opacity-80 hover:brightness-110 active:scale-95 transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm uppercase font-bold mt-1">Perfil</span>
+</a>
+</div>
+</nav>
+</body></html>
