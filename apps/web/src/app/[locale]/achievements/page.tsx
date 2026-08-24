@@ -73,17 +73,21 @@ export default async function AchievementsPage({ params }: Props) {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
+    <div className="max-w-5xl mx-auto px-5 md:px-10 py-8 space-y-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-extrabold text-gradient-ocean" style={{ fontFamily: "var(--font-fredoka)" }}>
+        <h1
+          className="text-headline-lg text-on-surface flex items-center gap-2"
+          style={{ fontFamily: "var(--font-fredoka)" }}
+        >
+          <span className="material-symbols-outlined text-tertiary-container text-3xl">military_tech</span>
           {t("title")}
         </h1>
-        <span className="text-sm font-extrabold text-primary bg-primary/10 px-4 py-1.5 rounded-xl">
+        <span className="text-label-lg font-bold text-on-primary bg-primary px-4 py-1.5 rounded-full chunky-border chunky-shadow">
           {earnedCount}/{ACHIEVEMENT_DEFS.length}
         </span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {ACHIEVEMENT_DEFS.map((def) => (
           <AchievementCard
             key={def.id}

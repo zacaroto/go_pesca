@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Go Pesca - Iniciar Sesión / Registro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&amp;family=Nunito+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#00e293",
+                        "surface-container": "#eaedff",
+                        "primary-fixed": "#d2e4ff",
+                        "tertiary-fixed": "#ffdcbc",
+                        "surface-container-low": "#f2f3ff",
+                        "background": "#faf8ff",
+                        "surface-bright": "#faf8ff",
+                        "tertiary": "#895100",
+                        "secondary-container": "#25fea8",
+                        "surface-container-highest": "#dae1ff",
+                        "on-primary-fixed": "#001c37",
+                        "surface": "#faf8ff",
+                        "primary-container": "#0096ff",
+                        "error-container": "#ffdad6",
+                        "electric-purple": "#7209B7",
+                        "on-tertiary-container": "#432500",
+                        "on-secondary-fixed-variant": "#005232",
+                        "primary": "#0061a7",
+                        "on-tertiary-fixed-variant": "#683d00",
+                        "on-primary-fixed-variant": "#00487f",
+                        "neon-coral": "#FF4D6D",
+                        "on-secondary-fixed": "#002111",
+                        "on-surface-variant": "#3f4753",
+                        "surface-variant": "#dae1ff",
+                        "on-surface": "#0f1a37",
+                        "on-secondary-container": "#007147",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#2c1700",
+                        "tertiary-container": "#d28000",
+                        "inverse-on-surface": "#eef0ff",
+                        "inverse-surface": "#252f4d",
+                        "outline": "#707884",
+                        "surface-container-high": "#e2e7ff",
+                        "surface-tint": "#0061a7",
+                        "sunny-yellow": "#FFD60A",
+                        "error": "#ba1a1a",
+                        "secondary": "#006c44",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#50ffaf",
+                        "surface-dim": "#ced9ff",
+                        "card-bg": "#FFFFFF",
+                        "primary-fixed-dim": "#a1c9ff",
+                        "on-background": "#0f1a37",
+                        "on-primary-container": "#002d52",
+                        "page-bg": "#F0F9FF",
+                        "inverse-primary": "#a1c9ff",
+                        "tertiary-fixed-dim": "#ffb86b",
+                        "outline-variant": "#bfc7d5",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "stack-md": "16px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "40px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Fredoka"],
+                        "body-lg": ["Nunito Sans"],
+                        "body-md": ["Nunito Sans"],
+                        "headline-lg": ["Fredoka"],
+                        "label-sm": ["Fredoka"],
+                        "headline-md": ["Fredoka"],
+                        "label-lg": ["Fredoka"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-lg": ["16px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    },
+                    "boxShadow": {
+                        "bouncy": "4px 4px 0px 0px rgba(0,0,0,0.1)",
+                        "bouncy-pressed": "1px 1px 0px 0px rgba(0,0,0,0.1)",
+                        "button": "0px 4px 0px 0px var(--tw-shadow-color)",
+                        "button-pressed": "0px 1px 0px 0px var(--tw-shadow-color)",
+                        "input": "inset 2px 2px 5px rgba(0,0,0,0.05)"
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Nunito Sans', sans-serif; }
+        .bouncy-hover:hover { transform: translateY(-2px); box-shadow: 4px 6px 0px 0px rgba(0,0,0,0.1); }
+        .bouncy-active:active { transform: translateY(2px) translateX(2px); box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.1); }
+        
+        .btn-primary {
+            --tw-shadow-color: #00487f; /* on-primary-fixed-variant approx */
+        }
+        .btn-tertiary {
+            --tw-shadow-color: #683d00; /* on-tertiary-fixed-variant approx */
+        }
+        
+        .floating-bg {
+            background-color: #00e293; /* secondary-fixed-dim */
+            background-image: radial-gradient(circle at 20% 30%, #25fea8 0%, transparent 40%), 
+                              radial-gradient(circle at 80% 70%, #50ffaf 0%, transparent 40%);
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -1;
+            overflow: hidden;
+        }
+        
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        @keyframes float-fast {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(-10deg); }
+        }
+        .bubble {
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 50%;
+            position: absolute;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-secondary-fixed-dim min-h-screen flex items-center justify-center p-gutter relative overflow-hidden">
+<!-- Playful Background Elements -->
+<div class="floating-bg">
+<div class="bubble w-16 h-16 top-10 left-10" style="animation: float-slow 4s ease-in-out infinite;"></div>
+<div class="bubble w-8 h-8 top-1/4 right-20" style="animation: float-fast 3s ease-in-out infinite;"></div>
+<div class="bubble w-24 h-24 bottom-20 left-1/4" style="animation: float-slow 5s ease-in-out infinite;"></div>
+<div class="bubble w-12 h-12 bottom-1/3 right-10" style="animation: float-fast 3.5s ease-in-out infinite;"></div>
+<!-- Abstract Fish/Leaves (CSS representations for the bubbly feel) -->
+<div class="absolute top-20 right-1/4 text-on-secondary-container opacity-50" style="animation: float-slow 6s ease-in-out infinite;">
+<span class="material-symbols-outlined text-[64px]" style="font-variation-settings: 'FILL' 1;">sailing</span>
+</div>
+<div class="absolute bottom-32 left-10 text-on-secondary-container opacity-50" style="animation: float-fast 5s ease-in-out infinite;">
+<span class="material-symbols-outlined text-[48px]" style="font-variation-settings: 'FILL' 1;">water</span>
+</div>
+</div>
+<main class="w-full max-w-md z-10 relative">
+<!-- Character / Logo Header -->
+<div class="flex flex-col items-center justify-center mb-stack-md relative">
+<div class="w-32 h-32 rounded-full border-4 border-surface-container-lowest shadow-bouncy bg-primary-fixed overflow-hidden flex items-center justify-center mb-stack-sm" style="animation: float-slow 4s ease-in-out infinite;">
+<img class="w-full h-full object-cover" data-alt="A stylized, modern 3D cartoon illustration of 'Captain Splash', a friendly, slightly goofy pelican wearing a bright yellow fisherman's hat. The character has large, expressive eyes and a vibrant color palette of deep blue, bright orange, and sunny yellow. The background is a flat, bright pastel blue, emphasizing the bouncy, tactile sticker aesthetic of the character. Studio lighting with soft, colorful shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpGa3CmzvniHGz_c_eloBJHjCFSL5srLueG5E6kglfApwLUbvIo7XTaCWIUS_azuAnKt42c0gzgTCsHOIPIhPIIG5pgYoZUGGSQs4X8GDEnOEhBp_4KgATVqG8IPvrUbNvU6IrZFgWRwgP0K3bo6XCsHLZBMEX4lfQkpMxQ4cSOGPusHoa5f3PxgE2PtHIMBjdPRCwxpMCvCeeWyXnQuVn06cMjrGMkrv--G2TTymm0o-EiiNSGGe-TQ"/>
+</div>
+<h1 class="font-display-lg text-display-lg text-surface-container-lowest text-center drop-shadow-[2px_2px_0px_#002111]">¡Hola Pescador!</h1>
+<p class="font-body-lg text-body-lg text-on-secondary-container font-bold mt-2 text-center bg-surface-container-lowest px-4 py-1 rounded-full border-2 border-on-secondary-fixed shadow-bouncy">
+                Únete a Go Pesca hoy
+            </p>
+</div>
+<!-- Chunky Login Card -->
+<div class="bg-surface-container-lowest rounded-3xl border-4 border-on-surface shadow-bouncy p-stack-lg relative">
+<!-- Tabs (Visual only for layout demonstration) -->
+<div class="flex gap-gutter mb-stack-lg">
+<button class="flex-1 pb-2 border-b-4 border-primary text-primary font-headline-md text-headline-md font-bold text-center">
+                    Entrar
+                </button>
+<button class="flex-1 pb-2 border-b-4 border-outline-variant text-outline font-headline-md text-headline-md font-bold text-center hover:text-primary transition-colors cursor-pointer" onclick="toggleView('signup')">
+                    Registro
+                </button>
+</div>
+<!-- Login Form -->
+<form class="flex flex-col gap-stack-md" id="login-form">
+<div class="flex flex-col gap-stack-sm">
+<label class="font-label-lg text-label-lg text-on-surface font-bold ml-2">Correo Electrónico</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">mail</span>
+<input class="w-full bg-surface-container-low border-2 border-on-surface rounded-2xl py-3 pl-12 pr-4 font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-fixed transition-all shadow-input" placeholder="tu@correo.com" type="email"/>
+</div>
+</div>
+<div class="flex flex-col gap-stack-sm">
+<label class="font-label-lg text-label-lg text-on-surface font-bold ml-2">Contraseña</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">lock</span>
+<input class="w-full bg-surface-container-low border-2 border-on-surface rounded-2xl py-3 pl-12 pr-4 font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-fixed transition-all shadow-input" placeholder="••••••••" type="password"/>
+</div>
+<div class="text-right">
+<a class="font-label-sm text-label-sm text-primary hover:text-primary-container font-bold transition-colors" href="#">¿Olvidaste tu contraseña?</a>
+</div>
+</div>
+<button class="mt-stack-sm w-full bg-primary text-on-primary font-headline-md text-headline-md font-bold py-4 rounded-2xl border-3 border-on-primary-fixed-variant shadow-button hover:bg-primary-container active:shadow-button-pressed active:translate-y-1 transition-all flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">login</span>
+                    ¡A Pescar!
+                </button>
+<div class="relative flex items-center py-2">
+<div class="flex-grow border-t-2 border-outline-variant"></div>
+<span class="flex-shrink-0 mx-4 text-outline font-label-sm text-label-sm font-bold">O CON</span>
+<div class="flex-grow border-t-2 border-outline-variant"></div>
+</div>
+<button class="w-full bg-tertiary-fixed text-on-tertiary-container font-headline-md text-headline-md font-bold py-3 rounded-2xl border-3 border-tertiary shadow-button btn-tertiary hover:brightness-105 active:shadow-button-pressed active:translate-y-1 transition-all flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[28px]">g_mobiledata</span>
+                    Google
+                </button>
+</form>
+<!-- Hidden Sign Up Form (for structural completeness in UI flow) -->
+<form class="hidden flex-col gap-stack-md" id="signup-form">
+<div class="flex flex-col gap-stack-sm">
+<label class="font-label-lg text-label-lg text-on-surface font-bold ml-2">Nombre de Pescador</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">person</span>
+<input class="w-full bg-surface-container-low border-2 border-on-surface rounded-2xl py-3 pl-12 pr-4 font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary-fixed transition-all shadow-input" placeholder="Capitán Nemo" type="text"/>
+</div>
+</div>
+<!-- Other fields would go here -->
+<button class="mt-stack-sm w-full bg-secondary text-on-secondary font-headline-md text-headline-md font-bold py-4 rounded-2xl border-3 border-on-secondary-fixed-variant shadow-[0px_4px_0px_0px_#005232] hover:brightness-110 active:shadow-[0px_1px_0px_0px_#005232] active:translate-y-1 transition-all flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person_add</span>
+                    Crear Cuenta
+                </button>
+</form>
+</div>
+</main>
+<script>
+        // Simple UI interaction script
+        function toggleView(view) {
+            // In a real app this would switch tabs, just a placeholder for the UI designer role
+            console.log('Switch to', view);
+        }
+    </script>
+</body></html>

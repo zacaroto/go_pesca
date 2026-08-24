@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Go Pesca - Community Feed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400..700&amp;family=Nunito+Sans:opsz,wght@6..12,400..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#007147",
+                    "outline": "#707884",
+                    "surface-bright": "#faf8ff",
+                    "on-primary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#2c1700",
+                    "on-background": "#0f1a37",
+                    "on-primary-fixed": "#001c37",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed": "#002111",
+                    "surface-tint": "#0061a7",
+                    "on-surface": "#0f1a37",
+                    "neon-coral": "#FF4D6D",
+                    "surface-container": "#eaedff",
+                    "outline-variant": "#bfc7d5",
+                    "secondary-fixed-dim": "#00e293",
+                    "secondary-container": "#25fea8",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#3f4753",
+                    "on-tertiary-fixed-variant": "#683d00",
+                    "inverse-primary": "#a1c9ff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#dae1ff",
+                    "on-primary-fixed-variant": "#00487f",
+                    "surface": "#faf8ff",
+                    "surface-container-high": "#e2e7ff",
+                    "page-bg": "#F0F9FF",
+                    "tertiary": "#895100",
+                    "primary-fixed": "#d2e4ff",
+                    "surface-variant": "#dae1ff",
+                    "tertiary-container": "#d28000",
+                    "tertiary-fixed-dim": "#ffb86b",
+                    "tertiary-fixed": "#ffdcbc",
+                    "secondary-fixed": "#50ffaf",
+                    "on-tertiary-container": "#432500",
+                    "card-bg": "#FFFFFF",
+                    "primary-container": "#0096ff",
+                    "surface-container-low": "#f2f3ff",
+                    "sunny-yellow": "#FFD60A",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#a1c9ff",
+                    "secondary": "#006c44",
+                    "on-secondary-fixed-variant": "#005232",
+                    "inverse-surface": "#252f4d",
+                    "error": "#ba1a1a",
+                    "inverse-on-surface": "#eef0ff",
+                    "surface-dim": "#ced9ff",
+                    "primary": "#0061a7",
+                    "on-primary-container": "#002d52",
+                    "error-container": "#ffdad6",
+                    "background": "#faf8ff",
+                    "electric-purple": "#7209B7"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "margin-desktop": "40px",
+                    "gutter": "16px",
+                    "stack-lg": "32px",
+                    "stack-md": "16px",
+                    "margin-mobile": "20px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "body-md": [
+                            "Nunito Sans"
+                    ],
+                    "label-sm": [
+                            "Fredoka"
+                    ],
+                    "headline-lg": [
+                            "Fredoka"
+                    ],
+                    "body-lg": [
+                            "Nunito Sans"
+                    ],
+                    "display-lg": [
+                            "Fredoka"
+                    ],
+                    "headline-md": [
+                            "Fredoka"
+                    ],
+                    "label-lg": [
+                            "Fredoka"
+                    ]
+            },
+            "fontSize": {
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-sm": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.08em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-lg": [
+                            "16px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "500"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #F0F9FF; /* page-bg */
+        }
+        .chunky-border {
+            border: 3px solid #0f1a37; /* on-background */
+        }
+        .bouncy-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.1);
+        }
+        .card-tilt-right {
+            transform: rotate(2deg);
+        }
+        .card-tilt-left {
+            transform: rotate(-2deg);
+        }
+        .sticker-glow {
+            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md text-on-background min-h-screen flex flex-col pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim text-primary dark:text-primary-fixed-dim font-headline-md text-headline-md font-bold w-full top-0 sticky border-b-4 border-outline-variant dark:border-outline shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] hover:scale-105 transition-transform active:translate-y-0.5 active:translate-x-0.5 transition-all flex justify-between items-center px-margin-mobile py-stack-sm w-full z-40 bg-opacity-95 backdrop-blur-sm">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-sunny-yellow chunky-border flex items-center justify-center overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A cartoonish, bright and colorful badge illustrating a high-level master angler rank in a modern collectible card game aesthetic. Thick black outlines, vibrant gold and yellow colors, glossy sticker feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4_oeUI9RfF5ARgGdIv_Tdcobpjb6avHauJeBnCYQhu9X0cyV_yPtya5SOJBaHM206NNk7sBl50tPHFDrSv4W8Sl8abjlO0EWqOSzAOsZ_mopeZQ8XxnTdSuGT0O9IcopiZI4bKU2Qc1Tm27HJ0gDD0APT3FWNSTJYdBYgvb8HnaGllwtE7q2QSpAgkUFQCn9GGvY2z1hhU3o8vd4NlH1BtRh8ZnBclodRwzC-vA6rVCLvirhq8eGISg"/>
+</div>
+<span class="font-display-lg text-headline-md text-primary dark:text-primary-fixed tracking-tight">Go Pesca</span>
+</div>
+<button class="p-2 rounded-full bg-surface-container chunky-border bouncy-shadow hover:bg-surface-container-high active:scale-95 transition-all text-on-surface">
+<span class="material-symbols-outlined" data-icon="notifications" style="font-variation-settings: 'FILL' 1;">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col items-center w-full px-gutter md:px-margin-desktop py-stack-lg gap-stack-lg max-w-3xl mx-auto">
+<!-- Feed Container -->
+<div class="w-full flex flex-col gap-10">
+<!-- Card 1 -->
+<article class="bg-card-bg chunky-border bouncy-shadow rounded-3xl p-stack-md flex flex-col gap-stack-sm card-tilt-right hover:scale-[1.02] transition-transform duration-300">
+<!-- User Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full border-4 border-secondary-container bg-surface-container overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A cheerful profile picture of a young angler holding a small fish, rendered in a colorful, modern-cartoonish style with thick outlines and a bright sunny background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKga4iP276e__Q8CbXMwtYKpguUrXUifCAV4mYoaRgtwqyoXWCjZauPdMlKFkWsqAiucTyaaNDILjDfG3RgJxJ6T3gYKO8ezUQ8CSYgZPm6ml-q_oDOrJdVkRsdWFa5kyjb56EzcJEM1-aO_B60puFft15UQZHIpYeVMUvvIL1_CN9XOPM1_1TxNTnldVh6ND5aCo4chqdVW9JSMmn7-ZQZzcceBSp0kLBmCr-FxyyVjSkIedRlY9Oag"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-bold">@SaltyDawg</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2 hours ago • Saltwater Harbor</span>
+</div>
+</div>
+<!-- Badge -->
+<div class="bg-primary-container text-on-primary-container font-label-sm text-label-sm px-3 py-1 rounded-full chunky-border sticker-glow flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">waves</span>
+                        Saltwater
+                    </div>
+</div>
+<!-- Image / Polaroid -->
+<div class="w-full aspect-[4/3] rounded-2xl chunky-border bg-surface-container overflow-hidden relative group">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A highly stylized, vibrant photo of a large, colorful Mahimahi caught on a boat. The style is modern-cartoonish with exaggerated colors, a thick white sticker outline around the fish, and a high-contrast tropical background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA81zqhmKAObjl2E4XCZ7dxL2w295KoWqYZqfMW-Z-5tWmDNtPHNJF8QMUTre9cDbcAjwKThSekuLiWaX9I61mzUBM6OBaCMPGYYYB8pwX4BweIgim4R7Bt2ZZxRbSCPB1ex5eTupuMvJOy4xlPt5GYNZsb5XSwg0Hp4h9_tPOWx8j-ljbbUc_Ze5_S3NW6W58D1DONrQpSrnSlKmcxDsqtCUgm8NCVe6EYz9I00Nz9KP8A71U_NWOQeQ"/>
+<!-- Rarity Tag -->
+<div class="absolute bottom-3 right-3 bg-neon-coral text-on-primary font-label-sm text-label-sm px-3 py-1 rounded-full chunky-border shadow-md">
+                        EPIC CATCH
+                    </div>
+</div>
+<!-- Caption -->
+<p class="font-body-md text-body-md text-on-surface">
+                    Finally landed this beast after a 20 minute fight! 🎣 Need to upgrade my line before going after the big ones again. #MahiMahi #SaltLife
+                </p>
+<!-- Reactions -->
+<div class="flex gap-4 mt-2">
+<button class="flex items-center gap-1 bg-surface-container hover:bg-surface-container-highest active:translate-y-[2px] active:translate-x-[2px] active:shadow-none transition-all px-4 py-2 rounded-xl chunky-border bouncy-shadow text-on-surface">
+<span class="text-xl">🔥</span>
+<span class="font-label-lg text-label-lg">24</span>
+</button>
+<button class="flex items-center gap-1 bg-surface-container hover:bg-surface-container-highest active:translate-y-[2px] active:translate-x-[2px] active:shadow-none transition-all px-4 py-2 rounded-xl chunky-border bouncy-shadow text-on-surface">
+<span class="text-xl">🐟</span>
+<span class="font-label-lg text-label-lg">12</span>
+</button>
+<button class="flex items-center gap-1 bg-surface-container hover:bg-surface-container-highest active:translate-y-[2px] active:translate-x-[2px] active:shadow-none transition-all px-4 py-2 rounded-xl chunky-border bouncy-shadow text-on-surface ml-auto">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="font-label-lg text-label-lg">5</span>
+</button>
+</div>
+</article>
+<!-- Playful Divider -->
+<div class="flex justify-center items-center opacity-30 my-2">
+<span class="material-symbols-outlined text-4xl transform -rotate-45" data-icon="hook">question_mark</span>
+<span class="material-symbols-outlined text-4xl" data-icon="horizontal_rule">horizontal_rule</span>
+<span class="material-symbols-outlined text-4xl transform rotate-45" data-icon="hook">question_mark</span>
+</div>
+<!-- Card 2 -->
+<article class="bg-card-bg chunky-border bouncy-shadow rounded-3xl p-stack-md flex flex-col gap-stack-sm card-tilt-left hover:scale-[1.02] transition-transform duration-300">
+<!-- User Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full border-4 border-electric-purple bg-surface-container overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A playful avatar of an angler with a neon hat, rendered in a colorful, modern-cartoonish style with thick outlines and a bright purple background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_xRoGo_pOBapueHe-OMipYkuPJyhWeo7Xb_jrgoSQUQwL8W4RafdQJ-iqmCird8vunZ2HeJbOYPB2fQi28Eh7KIdyjJhOtnqhcr4p4jDHLrJPw1m6VZz5ED-AfqUp3UrzQArme7e8YKxnxXSUYNWqoclHYV4y16uIqh2K0eQJ7xDomWO_bLNtIwrbf9tGPjAB-SlV-m5vjlXFjk4yD50vZGc0S8v_fTfcOw1JV5RRyELZRXHGFNjUgQ"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-bold">@RiverKing</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">5 hours ago • Quiet Creek</span>
+</div>
+</div>
+<!-- Badge -->
+<div class="bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-3 py-1 rounded-full chunky-border sticker-glow flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">eco</span>
+                        Freshwater
+                    </div>
+</div>
+<!-- Image / Polaroid -->
+<div class="w-full aspect-square md:aspect-[4/3] rounded-2xl chunky-border bg-surface-container overflow-hidden relative group">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A stylized photo of a small, vibrant rainbow trout held gently above the water. Modern-cartoonish aesthetic with a 'sticker' style white stroke around the fish, high saturation, and a lush green background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwYXKwCQEkMpa5aXxytrXWBNsebI6-DJk7fLajzFetf3KJLB6KOHXi4KJQcKqx-bzRdqeYXxEHU9jGToJf9_caFaXK2XbTjv_G6eTPz4ZCFDpqJqGps-reSTYc1dJSL4ePu9zgl7a2uUEGwCqTGFbBkbE3V44B_g2QOGEZoa8Xai2PjnWdmdggct1mKPSxdSpp0U6Gt0icG9UZLEv7F8cwFuTnv1fzqKEnCi83J_rPxt-Cbk51TLuvcA"/>
+</div>
+<!-- Caption -->
+<p class="font-body-md text-body-md text-on-surface">
+                    Perfect morning on the creek. Released this little beauty back into the wild. 🌿💧
+                </p>
+<!-- Reactions -->
+<div class="flex gap-4 mt-2">
+<button class="flex items-center gap-1 bg-surface-container hover:bg-surface-container-highest active:translate-y-[2px] active:translate-x-[2px] active:shadow-none transition-all px-4 py-2 rounded-xl chunky-border bouncy-shadow text-on-surface">
+<span class="text-xl">🙌</span>
+<span class="font-label-lg text-label-lg">42</span>
+</button>
+<button class="flex items-center gap-1 bg-surface-container hover:bg-surface-container-highest active:translate-y-[2px] active:translate-x-[2px] active:shadow-none transition-all px-4 py-2 rounded-xl chunky-border bouncy-shadow text-on-surface ml-auto">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="font-label-lg text-label-lg">8</span>
+</button>
+</div>
+</article>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-surface-container-highest dark:bg-surface-container text-on-primary-container dark:text-on-primary-container font-label-sm text-label-sm uppercase font-bold fixed bottom-0 left-0 w-full h-20 flex justify-around items-center px-gutter pb-4 rounded-t-lg z-50 border-t-4 border-outline-variant dark:border-outline shadow-[0px_-4px_0px_0px_rgba(0,0,0,0.05)] md:hidden">
+<!-- Active Tab: Home -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl p-stack-sm scale-110 -translate-y-2 border-2 border-secondary hover:brightness-110 active:scale-95 transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="mt-1">Home</span>
+</a>
+<!-- Inactive Tab: Pescadex -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-stack-sm opacity-80 hover:brightness-110 active:scale-95 transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="style">style</span>
+<span class="mt-1">Pescadex</span>
+</a>
+<!-- Inactive Tab: Log -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-stack-sm opacity-80 hover:brightness-110 active:scale-95 transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="hook">question_mark</span>
+<span class="mt-1">Log</span>
+</a>
+<!-- Inactive Tab: Profile -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-stack-sm opacity-80 hover:brightness-110 active:scale-95 transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="mt-1">Profile</span>
+</a>
+</nav>
+<!-- Desktop SideNav (Hidden on Mobile, placeholder for flex layout if needed on larger screens) -->
+<!-- In a real app, you'd integrate the SideNav JSON here and show it on md:flex, hiding the BottomNav -->
+</body></html>
