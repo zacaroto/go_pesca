@@ -23,7 +23,7 @@ type Props = {
 };
 
 const inputClass =
-  "w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-400 transition-all";
+  "w-full bg-surface-container-lowest text-on-surface rounded-2xl chunky-border p-3 text-sm focus:outline-none focus:ring-4 focus:ring-secondary-container transition-all";
 
 const FISHING_TAGS = ["shore", "kayak", "offshore", "fly", "river", "lake", "spearfishing"] as const;
 const REGIONS = ["pacific", "caribbean", "centralValley", "northernPlains", "southPacific"] as const;
@@ -97,30 +97,31 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
   return (
     <div className="fixed inset-0 z-50">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-on-surface/40 backdrop-blur-sm" onClick={onClose} />
 
-      {/* Drawer — capped at 60vh */}
-      <div className="absolute inset-x-0 bottom-0 max-h-[60vh] flex flex-col rounded-t-2xl bg-surface dark:bg-surface-alt shadow-xl animate-in slide-in-from-bottom duration-300">
+      {/* Drawer */}
+      <div className="absolute inset-x-0 bottom-0 mx-auto max-w-lg max-h-[75vh] flex flex-col rounded-t-3xl bg-card-bg chunky-border border-b-0 shadow-xl">
         {/* Handle + header (sticky) */}
-        <div className="flex-shrink-0 pt-2.5 pb-2 px-4 border-b border-foreground/5">
-          <div className="w-8 h-1 rounded-full bg-foreground/15 mx-auto mb-2" />
+        <div className="flex-shrink-0 pt-3 pb-2 px-5 border-b border-outline-variant">
+          <div className="w-10 h-1.5 rounded-full bg-outline-variant mx-auto mb-3" />
           <div className="flex items-center justify-between">
-            <h2 className="text-base font-extrabold text-foreground" style={{ fontFamily: "var(--font-fredoka)" }}>
+            <h2
+              className="text-headline-md text-on-surface"
+              style={{ fontFamily: "var(--font-fredoka)" }}
+            >
               {t("editProfile")}
             </h2>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg hover:bg-foreground/5 text-muted hover:text-foreground transition-colors"
+              className="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center border-2 border-outline-variant hover:scale-105 transition-transform active:translate-y-0.5 active:translate-x-0.5 text-muted"
             >
-              <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-              </svg>
+              <span className="material-symbols-outlined text-xl">close</span>
             </button>
           </div>
         </div>
 
         {/* Scrollable content */}
-        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+        <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5">
           {/* Avatar */}
           <AvatarUpload
             currentUrl={profile.avatar_url}
@@ -130,7 +131,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
 
           {/* Display Name */}
           <div>
-            <label className="block text-xs font-medium text-muted mb-1">
+            <label className="block text-label-lg font-bold text-on-surface mb-1.5" style={{ fontFamily: "var(--font-fredoka)" }}>
               {t("displayName")}
             </label>
             <input
@@ -143,7 +144,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
 
           {/* Bio */}
           <div>
-            <label className="block text-xs font-medium text-muted mb-1">
+            <label className="block text-label-lg font-bold text-on-surface mb-1.5" style={{ fontFamily: "var(--font-fredoka)" }}>
               {t("bio")}
             </label>
             <textarea
@@ -157,19 +158,19 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
 
           {/* Fishing Tags */}
           <div>
-            <label className="block text-xs font-medium text-muted mb-1.5">
+            <label className="block text-label-lg font-bold text-on-surface mb-2" style={{ fontFamily: "var(--font-fredoka)" }}>
               {t("fishingStyle")}
             </label>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {FISHING_TAGS.map((tag) => (
                 <button
                   key={tag}
                   type="button"
                   onClick={() => toggleTag(tag)}
-                  className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition-all ${
+                  className={`text-label-sm font-bold px-3 py-1.5 rounded-full border-2 transition-all bouncy-active ${
                     fishingTags.includes(tag)
-                      ? "bg-primary/15 text-primary border-primary/30"
-                      : "bg-foreground/5 text-muted border-transparent hover:border-foreground/15"
+                      ? "bg-primary text-on-primary border-on-surface chunky-shadow"
+                      : "bg-surface-container text-muted border-outline-variant hover:border-primary"
                   }`}
                 >
                   {t(`tags.${tag}` as Parameters<typeof t>[0])}
@@ -180,35 +181,29 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
 
           {/* Favorite Spots */}
           <div>
-            <label className="block text-xs font-medium text-muted mb-1.5">
+            <label className="block text-label-lg font-bold text-on-surface mb-2" style={{ fontFamily: "var(--font-fredoka)" }}>
               {t("favoriteSpots")}
             </label>
-            {/* Current spots */}
             {favoriteSpots.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 mb-2">
+              <div className="flex flex-wrap gap-2 mb-2">
                 {favoriteSpots.map((spot) => (
                   <span
                     key={spot}
-                    className="inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-lg bg-accent/10 text-accent border border-accent/15"
+                    className="inline-flex items-center gap-1 text-label-sm font-bold px-3 py-1.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed border-2 border-outline-variant"
                   >
-                    <svg className="w-3 h-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                      <path fillRule="evenodd" d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 3.834 3.025ZM12 12.75a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clipRule="evenodd" />
-                    </svg>
+                    <span className="material-symbols-outlined text-[14px]">location_on</span>
                     {spot}
                     <button
                       type="button"
                       onClick={() => removeSpot(spot)}
-                      className="ml-0.5 hover:text-red-500 transition-colors"
+                      className="ml-0.5 hover:text-neon-coral transition-colors"
                     >
-                      <svg className="w-3 h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                      </svg>
+                      <span className="material-symbols-outlined text-[14px]">close</span>
                     </button>
                   </span>
                 ))}
               </div>
             )}
-            {/* Add spot input */}
             {favoriteSpots.length < MAX_SPOTS && (
               <div className="flex gap-2">
                 <input
@@ -223,20 +218,20 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
                   type="button"
                   onClick={addSpot}
                   disabled={!spotInput.trim()}
-                  className="flex-shrink-0 px-3 py-2 text-xs font-semibold rounded-xl bg-accent/15 text-accent hover:bg-accent/25 disabled:opacity-40 transition-colors"
+                  className="flex-shrink-0 px-4 py-2 text-label-sm font-bold rounded-2xl bg-tertiary-container text-on-tertiary-container chunky-border bouncy-shadow bouncy-active disabled:opacity-40 transition-all"
                 >
                   {t("addSpot")}
                 </button>
               </div>
             )}
             {favoriteSpots.length >= MAX_SPOTS && (
-              <p className="text-[11px] text-muted mt-1">{t("maxSpots")}</p>
+              <p className="text-label-sm text-muted mt-1">{t("maxSpots")}</p>
             )}
           </div>
 
           {/* Home Region */}
           <div>
-            <label className="block text-xs font-medium text-muted mb-1">
+            <label className="block text-label-lg font-bold text-on-surface mb-1.5" style={{ fontFamily: "var(--font-fredoka)" }}>
               {t("homeRegion")}
             </label>
             <select
@@ -254,12 +249,12 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
           </div>
 
           {/* Social Links */}
-          <div className="space-y-2">
-            <label className="block text-xs font-medium text-muted">
+          <div className="space-y-3">
+            <label className="block text-label-lg font-bold text-on-surface" style={{ fontFamily: "var(--font-fredoka)" }}>
               {t("socialLinks")}
             </label>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-medium text-muted w-16 flex-shrink-0">{t("instagram")}</span>
+              <span className="text-label-sm font-bold text-muted w-20 flex-shrink-0">{t("instagram")}</span>
               <input
                 type="text"
                 value={instagram}
@@ -269,7 +264,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
               />
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-medium text-muted w-16 flex-shrink-0">{t("youtube")}</span>
+              <span className="text-label-sm font-bold text-muted w-20 flex-shrink-0">{t("youtube")}</span>
               <input
                 type="text"
                 value={youtube}
@@ -279,7 +274,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
               />
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-medium text-muted w-16 flex-shrink-0">{t("other")}</span>
+              <span className="text-label-sm font-bold text-muted w-20 flex-shrink-0">{t("other")}</span>
               <input
                 type="text"
                 value={other}
@@ -292,12 +287,14 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
         </div>
 
         {/* Save button (sticky bottom) */}
-        <div className="flex-shrink-0 px-4 py-3 border-t border-foreground/5">
+        <div className="flex-shrink-0 px-5 py-4 border-t border-outline-variant">
           <button
             onClick={handleSave}
             disabled={saving}
-            className="w-full bg-primary text-white py-3 rounded-2xl font-semibold hover:bg-primary/90 active:scale-[0.98] disabled:opacity-50 transition-all duration-200 shadow-lg shadow-primary/25"
+            className="w-full bg-primary text-on-primary py-3.5 rounded-2xl font-bold chunky-border chunky-shadow bouncy-hover bouncy-active disabled:opacity-50 transition-all flex items-center justify-center gap-2"
+            style={{ fontFamily: "var(--font-fredoka)" }}
           >
+            <span className="material-symbols-outlined text-xl">check_circle</span>
             {saving ? t("saving") : t("save")}
           </button>
         </div>

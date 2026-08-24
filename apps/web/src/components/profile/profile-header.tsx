@@ -104,6 +104,21 @@ export function ProfileHeader({ profile, isOwner, onEdit }: Props) {
           </div>
         )}
 
+        {/* Favorite spots */}
+        {profile.favorite_spots?.length > 0 && (
+          <div className="flex flex-wrap justify-center gap-1.5 pt-2">
+            {profile.favorite_spots.map((spot) => (
+              <span
+                key={spot}
+                className="inline-flex items-center gap-1 text-label-sm font-bold px-3 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed border border-outline-variant"
+              >
+                <span className="material-symbols-outlined text-[14px]">location_on</span>
+                {spot}
+              </span>
+            ))}
+          </div>
+        )}
+
         {/* Social links */}
         {(profile.social_links?.instagram || profile.social_links?.youtube || profile.social_links?.other) && (
           <div className="flex items-center justify-center gap-2 pt-2">
