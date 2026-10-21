@@ -26,6 +26,7 @@ export function FeedList({ initialCatches, initialReactions, locale, fetchMoreFn
   const [catches, setCatches] = useState(initialCatches);
   const [reactions, setReactions] = useState(initialReactions);
   const [loading, setLoading] = useState(false);
+  const [loadError, setLoadError] = useState(false);
   const [hasMore, setHasMore] = useState(initialCatches.length >= 20);
 
   async function loadMore() {
@@ -35,6 +36,7 @@ export function FeedList({ initialCatches, initialReactions, locale, fetchMoreFn
     if (!lastCatch) return;
 
     setLoading(true);
+    setLoadError(false);
     try {
       const fetcher = fetchMoreFn ?? (feedType ? feedTypeFetchers[feedType] : fetchMoreFeedCatches);
       const moreCatches = await fetcher(locale, lastCatch.created_at);
@@ -53,6 +55,7 @@ export function FeedList({ initialCatches, initialReactions, locale, fetchMoreFn
       }
     } catch (err) {
       console.error("Failed to load more catches", err);
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
@@ -84,6 +87,11 @@ export function FeedList({ initialCatches, initialReactions, locale, fetchMoreFn
         >
           {loading ? t("loading") : t("loadMore")}
         </button>
+      )}
+      {loadError && (
+        <p role="alert" className="text-center text-[13px] text-[var(--negative)]">
+          {t("loadError")}
+        </p>
       )}
     </div>
   );

@@ -7,15 +7,19 @@ export function totalReactions(r: FeedReactions | undefined): number {
   return Object.values(r.counts).reduce((sum, n) => sum + n, 0);
 }
 
+/** Whole calendar days between the catch date and the viewer's local "today". */
 function daysAgo(dateStr: string, now: Date): number {
-  return (now.getTime() - new Date(`${dateStr}T00:00:00Z`).getTime()) / DAY;
+  const [y, m, d] = dateStr.slice(0, 10).split("-").map(Number);
+  const catchDay = Date.UTC(y, m - 1, d);
+  const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.round((today - catchDay) / DAY);
 }
 
 type Translate = (key: string, values?: Record<string, string | number>) => string;
 
 /** Relative catch date. `t` is scoped to the `feed` namespace (today, yesterday, daysAgo). */
 export function relativeDate(dateStr: string, now: Date, locale: string, t: Translate): string {
-  const diff = Math.floor(daysAgo(dateStr, now));
+  const diff = daysAgo(dateStr, now);
   if (diff <= 0) return t("today");
   if (diff === 1) return t("yesterday");
   if (diff < 7) return t("daysAgo", { count: diff });

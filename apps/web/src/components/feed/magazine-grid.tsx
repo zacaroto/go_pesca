@@ -161,23 +161,19 @@ export function CommunityTabs({ catches, groupFeedCatches, reactions, locale, ha
           {chip("groups", t("tabGroups"))}
         </div>
       )}
-      {active === "all" ? (
-        <MagazineGrid
-          key="global"
-          feedType="global"
-          initialCatches={catches}
-          initialReactions={reactions}
-          locale={locale}
-        />
-      ) : (
-        <MagazineGrid
-          key="allGroups"
-          feedType="allGroups"
-          initialCatches={groupFeedCatches}
-          initialReactions={reactions}
-          locale={locale}
-          emptyMessage={t("noGroupActivity")}
-        />
+      <div hidden={active !== "all"}>
+        <MagazineGrid feedType="global" initialCatches={catches} initialReactions={reactions} locale={locale} />
+      </div>
+      {hasGroups && (
+        <div hidden={active !== "groups"}>
+          <MagazineGrid
+            feedType="allGroups"
+            initialCatches={groupFeedCatches}
+            initialReactions={reactions}
+            locale={locale}
+            emptyMessage={t("noGroupActivity")}
+          />
+        </div>
       )}
     </div>
   );

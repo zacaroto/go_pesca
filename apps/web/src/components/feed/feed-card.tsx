@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { ReactionBar } from "./reaction-bar";
 import { relativeDate } from "@/lib/community-mosaic";
@@ -14,16 +14,17 @@ type Props = {
 
 export function FeedCard({ catch_entry, reactions, index = 0 }: Props) {
   const t = useTranslations("feed");
+  const locale = useLocale();
   const delay = `${index * 60}ms`;
   const meta = [
     catch_entry.location_name,
-    relativeDate(catch_entry.catch_date, new Date(), "es", t),
+    relativeDate(catch_entry.catch_date, new Date(), locale, t),
   ].filter(Boolean);
 
   return (
     <article
-      className="bg-[var(--surface)] rounded-[var(--r-card)] overflow-hidden mb-[var(--gap)] opacity-0 motion-reduce:opacity-100 motion-reduce:animate-none"
-      style={{ animation: `card-in var(--t-enter) var(--ease-out) ${delay} forwards` }}
+      className="bg-[var(--surface)] rounded-[var(--r-card)] overflow-hidden mb-[var(--gap)] opacity-0 animate-[card-in_var(--t-enter)_var(--ease-out)_forwards] motion-reduce:opacity-100 motion-reduce:animate-none"
+      style={{ animationDelay: delay }}
     >
       <div className="w-full h-[200px] bg-[var(--raised)]">
         <img src={catch_entry.photo_url} alt="" className="w-full h-full object-cover" loading="lazy" />
