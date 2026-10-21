@@ -3,6 +3,7 @@ import { View, ActivityIndicator, StyleSheet } from "react-native";
 import { TabNavigator } from "./TabNavigator";
 import { LoginScreen } from "../screens/LoginScreen";
 import { RegisterScreen } from "../screens/RegisterScreen";
+import { NewCatchScreen } from "../screens/NewCatchScreen";
 import { useAuth } from "../hooks/useAuth";
 import type { RootStackParamList } from "./types";
 
@@ -22,7 +23,19 @@ export function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {session ? (
-        <Stack.Screen name="Main" component={TabNavigator} />
+        <>
+          <Stack.Screen name="Main" component={TabNavigator} />
+          <Stack.Screen
+            name="NewCatch"
+            component={NewCatchScreen}
+            options={{
+              presentation: "modal",
+              headerShown: true,
+              title: "New Catch",
+              animation: "slide_from_bottom",
+            }}
+          />
+        </>
       ) : (
         <>
           <Stack.Screen
