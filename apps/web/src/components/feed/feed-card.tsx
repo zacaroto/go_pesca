@@ -121,7 +121,7 @@ export function FeedCard({ catch_entry, reactions, index = 0 }: Props) {
       >
         {catch_entry.location_name && (
           <>
-            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", minWidth: 0 }}>
+            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", minWidth: 0, overflowWrap: "anywhere" }}>
               {catch_entry.location_name}
             </span>
             <span style={{ flexShrink: 0 }}>·</span>
@@ -167,6 +167,7 @@ export function FeedCard({ catch_entry, reactions, index = 0 }: Props) {
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
               minWidth: 0,
+              overflowWrap: "anywhere",
             }}
           >
             {catch_entry.display_name}

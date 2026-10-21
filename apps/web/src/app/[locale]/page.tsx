@@ -131,6 +131,7 @@ export default async function Home({ params }: Props) {
           </span>
           <Link
             href="/catches"
+            className="active:opacity-75"
             style={{
               fontSize: "12px",
               fontWeight: 500,
