@@ -132,6 +132,7 @@ export function ProgressBar({ caught, total }: Props) {
                 fontSize: "11px",
                 fontWeight: 500,
                 color: "var(--faint)",
+                fontVariantNumeric: "tabular-nums",
               }}
             >
               +{speciesNeeded} para el siguiente

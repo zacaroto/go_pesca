@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
 import { PokedexCard } from "./pokedex-card";
 import { ProgressBar } from "./progress-bar";
 import type { PokedexEntry } from "@/lib/pokedex";
@@ -12,23 +11,12 @@ type Props = {
 };
 
 export function PokedexGrid({ entries, locale }: Props) {
-  const t = useTranslations("pokedex");
-  const tCommon = useTranslations("common");
-  const tSpecies = useTranslations("species");
-  const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"all" | "caught" | "uncaught">("all");
   const [habitat, setHabitat] = useState("");
 
   const caught = entries.filter((e) => e.catch_count > 0).length;
 
   const filtered = entries.filter((e) => {
-    if (search) {
-      const q = search.toLowerCase();
-      const name = locale === "es" ? e.name_es : e.name_en;
-      const matchesName = name.toLowerCase().includes(q);
-      const matchesScientific = e.scientific_name.toLowerCase().includes(q);
-      if (!matchesName && !matchesScientific) return false;
-    }
     if (filter === "caught" && e.catch_count === 0) return false;
     if (filter === "uncaught" && e.catch_count > 0) return false;
     if (habitat && e.habitat !== habitat) return false;
@@ -48,11 +36,6 @@ export function PokedexGrid({ entries, locale }: Props) {
       setFilter("all");
     }
   }
-
-  // Suppress unused translation warnings — kept for potential future use
-  void t;
-  void tCommon;
-  void tSpecies;
 
   return (
     <div className="max-w-5xl mx-auto pb-12">
@@ -76,6 +59,9 @@ export function PokedexGrid({ entries, locale }: Props) {
             <button
               key={chip.value}
               onClick={() => handleChip(chip.value)}
+              onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.95)")}
+              onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
               style={{
                 background: active ? "rgba(37,99,235,0.15)" : "transparent",
                 color: active ? "var(--accent-hi)" : "var(--muted)",
@@ -88,7 +74,7 @@ export function PokedexGrid({ entries, locale }: Props) {
                 cursor: "pointer",
                 whiteSpace: "nowrap",
                 flexShrink: 0,
-                transition: `color var(--t-ui), background var(--t-ui)`,
+                transition: `color var(--t-ui), background var(--t-ui), transform var(--t-press)`,
               }}
             >
               {chip.label}

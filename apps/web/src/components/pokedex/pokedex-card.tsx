@@ -76,7 +76,7 @@ export function PokedexCard({ entry, locale }: Props) {
         </div>
 
         {/* Name row */}
-        <div style={{ padding: "0 4px 4px" }}>
+        <div style={{ padding: "0 4px 4px", minWidth: 0 }}>
           <p
             style={{
               fontFamily: "var(--font-playfair), Georgia, serif",
