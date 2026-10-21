@@ -26,7 +26,7 @@ function relativeTime(dateStr: string) {
 }
 
 export function FeedCard({ catch_entry, reactions, index = 0 }: Props) {
-  const pill = habitatPill((catch_entry as any).habitat);
+  const pill = habitatPill(catch_entry.habitat);
   const delay = `${index * 60}ms`;
 
   return (
@@ -38,6 +38,7 @@ export function FeedCard({ catch_entry, reactions, index = 0 }: Props) {
         marginBottom: "var(--gap)",
         opacity: 0,
         animation: `card-in var(--t-enter) var(--ease-out) ${delay} forwards`,
+        animationFillMode: "forwards",
       }}
     >
       {/* Photo with overlaid content */}
@@ -133,7 +134,7 @@ export function FeedCard({ catch_entry, reactions, index = 0 }: Props) {
       <div className="flex items-center justify-between px-4 py-3" style={{ minWidth: 0 }}>
         <Link
           href={`/profile/${catch_entry.user_id}` as "/profile/[userId]"}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 active:opacity-70"
           style={{ textDecoration: "none", minWidth: 0 }}
         >
           <div
