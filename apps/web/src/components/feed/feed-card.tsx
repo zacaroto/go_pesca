@@ -7,92 +7,179 @@ import type { FeedCatch, FeedReactions } from "@/lib/feed";
 type Props = {
   catch_entry: FeedCatch;
   reactions: FeedReactions;
+  index?: number;
 };
 
-export function FeedCard({ catch_entry, reactions }: Props) {
-  const date = new Date(catch_entry.catch_date + "T00:00:00");
-  const day = date.getDate();
-  const month = date.toLocaleDateString(undefined, { month: "short" });
+function habitatPill(habitat: string | null | undefined) {
+  if (habitat === "saltwater")  return { cls: "pill-salt",  label: "Salada" };
+  if (habitat === "freshwater") return { cls: "pill-fresh", label: "Dulce" };
+  return { cls: "pill-brack", label: "Salobre" };
+}
+
+function relativeTime(dateStr: string) {
+  const date = new Date(dateStr + "T00:00:00");
+  const diffDays = Math.floor((Date.now() - date.getTime()) / 86_400_000);
+  if (diffDays === 0) return "hoy";
+  if (diffDays === 1) return "ayer";
+  if (diffDays < 7)  return `hace ${diffDays} días`;
+  return date.toLocaleDateString("es", { day: "numeric", month: "short" });
+}
+
+export function FeedCard({ catch_entry, reactions, index = 0 }: Props) {
+  const pill = habitatPill(catch_entry.habitat);
+  const delay = `${index * 60}ms`;
 
   return (
-    <div className="rounded-2xl bg-surface dark:bg-surface-alt ring-1 ring-foreground/5 dark:ring-white/5 overflow-hidden shadow-sm hover:shadow-ocean transition-shadow duration-300">
-      {/* Photo */}
-      <div className="relative w-full aspect-[4/3] overflow-hidden bg-foreground/5 dark:bg-white/5">
+    <article
+      style={{
+        background: "var(--surface)",
+        borderRadius: "var(--r-card)",
+        overflow: "hidden",
+        marginBottom: "var(--gap)",
+        opacity: 0,
+        animation: `card-in var(--t-enter) var(--ease-out) ${delay} forwards`,
+        animationFillMode: "forwards",
+      }}
+    >
+      {/* Photo with overlaid content */}
+      <div className="relative w-full" style={{ height: "200px", background: "var(--raised)" }}>
         <img
           src={catch_entry.photo_url}
-          alt=""
+          alt={catch_entry.species_name}
           className="w-full h-full object-cover"
           loading="lazy"
         />
-        {/* Gradient overlay */}
-        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/40 to-transparent" />
-        {/* Group badge */}
-        {catch_entry.group_name && (
-          <div className="absolute top-2.5 left-2.5">
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-sm text-[10px] font-semibold text-white">
-              <svg className="w-3 h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path fillRule="evenodd" d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 17.084a11.116 11.116 0 0 1 3.727-1.482 3 3 0 0 1 3.926 0 11.12 11.12 0 0 1 3.727 1.482 4.5 4.5 0 0 0-11.38 0Z" clipRule="evenodd" />
-              </svg>
-              {catch_entry.group_name}
-            </span>
-          </div>
-        )}
-        {/* Species name on photo */}
-        <div className="absolute bottom-3 left-3.5">
-          <h3 className="font-extrabold text-base text-white drop-shadow-md" style={{ fontFamily: "var(--font-fredoka)" }}>
+
+        {/* Gradient overlay — bottom 85% opacity → 0 at top */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.45) 40%, transparent 100%)",
+          }}
+        />
+
+        {/* Species name + weight + pill */}
+        <div className="absolute bottom-0 left-0 right-0 p-4">
+          <h3
+            style={{
+              fontFamily: "var(--font-playfair), Georgia, serif",
+              fontWeight: 900,
+              fontSize: "22px",
+              color: "#ffffff",
+              margin: 0,
+              textShadow: "0 1px 4px rgba(0,0,0,0.5)",
+              letterSpacing: "-0.01em",
+              lineHeight: 1.1,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
             {catch_entry.species_name}
           </h3>
+
+          <div className="flex items-center gap-2 mt-1.5" style={{ minWidth: 0 }}>
+            {catch_entry.weight_kg && (
+              <span
+                style={{
+                  fontFamily: "var(--font-inter), system-ui, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "28px",
+                  color: "#ffffff",
+                  fontVariantNumeric: "tabular-nums",
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1,
+                  flexShrink: 0,
+                }}
+              >
+                {catch_entry.weight_kg} kg
+              </span>
+            )}
+            <span
+              className={pill.cls}
+              style={{
+                fontSize: "10px",
+                fontWeight: 600,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                padding: "3px 8px",
+                borderRadius: "var(--r-pill)",
+                flexShrink: 0,
+                whiteSpace: "nowrap",
+              }}
+            >
+              {pill.label}
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Info */}
-      <div className="p-3.5 space-y-3">
-        {/* Angler + meta row */}
-        <div className="flex items-center justify-between">
-          <Link
-            href={`/profile/${catch_entry.user_id}` as "/profile/[userId]"}
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+      {/* Meta row — location + time */}
+      <div
+        className="flex items-center gap-2 px-4 pt-3"
+        style={{ color: "var(--faint)", fontSize: "11px", fontWeight: 500 }}
+      >
+        {catch_entry.location_name && (
+          <>
+            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", minWidth: 0, overflowWrap: "anywhere" }}>
+              {catch_entry.location_name}
+            </span>
+            <span style={{ flexShrink: 0 }}>·</span>
+          </>
+        )}
+        <span style={{ flexShrink: 0 }}>{relativeTime(catch_entry.catch_date)}</span>
+      </div>
+
+      {/* User + Reactions footer */}
+      <div className="flex items-center justify-between px-4 py-3" style={{ minWidth: 0 }}>
+        <Link
+          href={`/profile/${catch_entry.user_id}` as "/profile/[userId]"}
+          className="flex items-center gap-2 active:opacity-70"
+          style={{ textDecoration: "none", minWidth: 0 }}
+        >
+          <div
+            style={{
+              width: "28px",
+              height: "28px",
+              borderRadius: "50%",
+              background: "var(--raised)",
+              overflow: "hidden",
+              flexShrink: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
             {catch_entry.avatar_url ? (
-              <img
-                src={catch_entry.avatar_url}
-                alt=""
-                className="w-7 h-7 rounded-full object-cover"
-              />
+              <img src={catch_entry.avatar_url} alt="" className="w-full h-full object-cover" />
             ) : (
-              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-white text-xs font-bold">
+              <span style={{ fontSize: "11px", fontWeight: 600, color: "var(--accent-hi)" }}>
                 {catch_entry.display_name?.charAt(0)?.toUpperCase() ?? "?"}
-              </div>
-            )}
-            <span className="text-sm font-bold text-foreground">
-              {catch_entry.display_name}
-            </span>
-          </Link>
-          <div className="flex items-center gap-2.5 text-xs text-muted font-medium">
-            <span className="inline-flex items-center gap-1">
-              <svg className="w-3.5 h-3.5 text-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path fillRule="evenodd" d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Z" clipRule="evenodd" />
-              </svg>
-              {day} {month}
-            </span>
-            {catch_entry.location_name && (
-              <span className="inline-flex items-center gap-1 truncate max-w-[120px]">
-                <svg className="w-3.5 h-3.5 flex-shrink-0 text-coral" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                  <path fillRule="evenodd" d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 3.834 3.025ZM12 12.75a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clipRule="evenodd" />
-                </svg>
-                {catch_entry.location_name}
               </span>
             )}
           </div>
-        </div>
+          <span
+            style={{
+              fontSize: "13px",
+              fontWeight: 500,
+              color: "var(--muted)",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              minWidth: 0,
+              overflowWrap: "anywhere",
+            }}
+          >
+            {catch_entry.display_name}
+          </span>
+        </Link>
 
-        {/* Reactions */}
         <ReactionBar
           catchId={catch_entry.id}
           counts={reactions.counts}
           userReaction={reactions.userReaction}
         />
       </div>
-    </div>
+    </article>
   );
 }

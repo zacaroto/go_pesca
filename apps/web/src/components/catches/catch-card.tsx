@@ -6,61 +6,149 @@ type CatchEntry = {
   catch_date: string;
   location_name: string | null;
   species_name: string;
+  weight_kg?: number | null;
+  length_cm?: number | null;
+  habitat?: string | null;
 };
 
 type Props = {
   catch_entry: CatchEntry;
+  index?: number;
 };
 
-export function CatchCard({ catch_entry }: Props) {
-  const date = new Date(catch_entry.catch_date + "T00:00:00");
-  const day = date.getDate();
-  const month = date.toLocaleDateString(undefined, { month: "short" });
+function habitatPillCls(habitat: string | null | undefined) {
+  if (habitat === "saltwater")  return "pill-salt";
+  if (habitat === "freshwater") return "pill-fresh";
+  return "pill-brack";
+}
 
+function habitatLabel(habitat: string | null | undefined) {
+  if (habitat === "saltwater")  return "Salada";
+  if (habitat === "freshwater") return "Dulce";
+  return "Salobre";
+}
+
+function relativeTime(dateStr: string) {
+  const date = new Date(dateStr + "T00:00:00");
+  const diffDays = Math.floor((Date.now() - date.getTime()) / 86_400_000);
+  if (diffDays === 0) return "hoy";
+  if (diffDays === 1) return "ayer";
+  if (diffDays < 7)  return `hace ${diffDays}d`;
+  return date.toLocaleDateString("es", { day: "numeric", month: "short" });
+}
+
+export function CatchCard({ catch_entry, index = 0 }: Props) {
   return (
     <Link
       href={`/catches/${catch_entry.id}`}
-      className="group flex gap-3.5 rounded-2xl bg-surface dark:bg-surface-alt ring-1 ring-foreground/5 dark:ring-white/5 p-3 hover:shadow-ocean transition-all duration-300 hover:-translate-y-0.5"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "12px",
+        padding: "11px 0",
+        borderBottom: "1px solid var(--rule)",
+        textDecoration: "none",
+        minWidth: 0,
+        transition: `background var(--t-press)`,
+      }}
+      onMouseDown={(e) => (e.currentTarget.style.background = "var(--raised)")}
+      onMouseUp={(e) => (e.currentTarget.style.background = "transparent")}
+      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
     >
-      {/* Photo with rounded overlay */}
-      <div className="relative w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden ring-2 ring-primary-light/20">
+      {/* 42px habitat-gradient thumb */}
+      <div
+        style={{
+          width: "42px",
+          height: "42px",
+          borderRadius: "8px",
+          overflow: "hidden",
+          flexShrink: 0,
+          background: "var(--raised)",
+        }}
+      >
         <img
           src={catch_entry.photo_url}
-          alt=""
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          alt={catch_entry.species_name}
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
-        {/* Gradient overlay at bottom */}
-        <div className="absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-black/30 to-transparent" />
       </div>
 
-      {/* Info */}
-      <div className="flex-1 min-w-0 flex flex-col justify-center">
-        <h3 className="font-bold text-sm text-foreground">
+      {/* Text column */}
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div
+          style={{
+            fontFamily: "var(--font-playfair), Georgia, serif",
+            fontWeight: 700,
+            fontSize: "13px",
+            color: "var(--text)",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
           {catch_entry.species_name}
-        </h3>
-        <div className="flex items-center gap-3 mt-1.5">
-          <span className="inline-flex items-center gap-1 text-xs text-muted font-medium">
-            <svg className="w-3.5 h-3.5 text-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path fillRule="evenodd" d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Z" clipRule="evenodd" />
-            </svg>
-            {day} {month}
-          </span>
+        </div>
+        <div
+          className="flex items-center gap-1.5 mt-0.5"
+          style={{ minWidth: 0 }}
+        >
           {catch_entry.location_name && (
-            <span className="inline-flex items-center gap-1 text-xs text-muted font-medium truncate">
-              <svg className="w-3.5 h-3.5 flex-shrink-0 text-coral" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path fillRule="evenodd" d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 3.834 3.025ZM12 12.75a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clipRule="evenodd" />
-              </svg>
+            <span
+              style={{
+                fontSize: "11px",
+                color: "var(--faint)",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                minWidth: 0,
+                overflowWrap: "anywhere",
+              }}
+            >
               {catch_entry.location_name}
             </span>
           )}
+          <span
+            className={habitatPillCls(catch_entry.habitat)}
+            style={{
+              fontSize: "9px",
+              fontWeight: 600,
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              padding: "2px 6px",
+              borderRadius: "999px",
+              flexShrink: 0,
+              whiteSpace: "nowrap",
+            }}
+          >
+            {habitatLabel(catch_entry.habitat)}
+          </span>
         </div>
       </div>
 
-      {/* Arrow */}
-      <div className="flex-shrink-0 self-center">
-        <svg className="w-5 h-5 text-muted/40 group-hover:text-accent group-hover:translate-x-0.5 transition-all duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-        </svg>
+      {/* Weight + relative time */}
+      <div style={{ flexShrink: 0, textAlign: "right" }}>
+        {catch_entry.weight_kg && (
+          <div
+            style={{
+              fontSize: "14px",
+              fontWeight: 700,
+              color: "var(--text)",
+              fontVariantNumeric: "tabular-nums",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            {catch_entry.weight_kg} kg
+          </div>
+        )}
+        <div
+          style={{
+            fontSize: "11px",
+            color: "var(--faint)",
+            marginTop: "2px",
+          }}
+        >
+          {relativeTime(catch_entry.catch_date)}
+        </div>
       </div>
     </Link>
   );

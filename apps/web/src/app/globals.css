@@ -1,297 +1,192 @@
 @import "tailwindcss";
 
 /* ========================================
-   GO PESCA — Tropical Collector's Voyage
+   GO PESCA — Outdoor Dark Design System
    ======================================== */
 
 :root {
-  /* Tropical Ocean Palette */
-  --background: #FEF9F2;
-  --foreground: #16213E;
-  --primary: #0077B6;
-  --primary-dark: #023E8A;
-  --primary-light: #00B4D8;
-  --accent: #F77F00;
-  --accent-light: #FCBF49;
-  --secondary: #06D6A0;
-  --coral: #EF476F;
-  --surface: #FFFFFF;
-  --surface-alt: #FFF3E4;
-  --muted: #94A3B8;
-}
+  /* Elevation */
+  --ground:    #09090b;
+  --surface:   #141416;
+  --raised:    #222225;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0B1929;
-    --foreground: #E8F0FE;
-    --primary: #00B4D8;
-    --primary-dark: #0077B6;
-    --primary-light: #48CAE4;
-    --accent: #FCBF49;
-    --accent-light: #FDD85D;
-    --secondary: #06D6A0;
-    --coral: #FF6B6B;
-    --surface: #132F4C;
-    --surface-alt: #1B3D60;
-    --muted: #64748B;
-  }
+  /* Borders */
+  --border:    #1e1e21;
+  --rule:      #19191c;
+
+  /* Text */
+  --text:      #f4f4f5;
+  --muted:     #a1a1aa;
+  --faint:     #71717a;
+
+  /* Accent — cobalt, the only hue */
+  --accent:    #2563EB;
+  --accent-hi: #3B82F6;
+
+  /* Status */
+  --positive:  #22c55e;
+  --negative:  #ef4444;
+
+  /* Habitat pills */
+  --pill-salt-bg:   rgba(37,99,235,0.14);
+  --pill-salt-ink:  #93bbfd;
+  --pill-fresh-bg:  rgba(34,197,94,0.12);
+  --pill-fresh-ink: #4ade80;
+  --pill-brack-bg:  rgba(245,158,11,0.13);
+  --pill-brack-ink: #fbbf24;
+
+  /* Shape */
+  --r-card:    16px;
+  --r-pill:    999px;
+  --gap:       12px;
+  --pad:       18px;
+
+  /* Animation — Emil Kowalski philosophy */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --t-press:     120ms;
+  --t-ui:        180ms;
+  --t-enter:     280ms;
+
+  /* Legacy aliases — keeps un-redesigned screens from breaking */
+  --page-bg:          var(--ground);
+  --background:       var(--ground);
+  --card-bg:          var(--surface);
+  --on-surface:       var(--text);
+  --on-background:    var(--text);
+  --primary:          var(--accent);
+  --on-primary:       #ffffff;
+  --outline:          var(--faint);
+  --outline-variant:  var(--border);
+  --muted-legacy:     var(--muted);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-primary-dark: var(--primary-dark);
-  --color-primary-light: var(--primary-light);
-  --color-accent: var(--accent);
-  --color-accent-light: var(--accent-light);
-  --color-secondary: var(--secondary);
-  --color-coral: var(--coral);
-  --color-surface: var(--surface);
-  --color-surface-alt: var(--surface-alt);
-  --color-muted: var(--muted);
-  --font-sans: var(--font-nunito);
-  --font-heading: var(--font-fredoka);
+  /* Elevation */
+  --color-ground:   var(--ground);
+  --color-surface:  var(--surface);
+  --color-raised:   var(--raised);
+
+  /* Borders */
+  --color-border:   var(--border);
+  --color-rule:     var(--rule);
+
+  /* Text */
+  --color-text:     var(--text);
+  --color-muted:    var(--muted);
+  --color-faint:    var(--faint);
+
+  /* Accent */
+  --color-accent:    var(--accent);
+  --color-accent-hi: var(--accent-hi);
+
+  /* Status */
+  --color-positive:  var(--positive);
+  --color-negative:  var(--negative);
+
+  /* Legacy aliases — un-redesigned components use these */
+  --color-page-bg:          var(--ground);
+  --color-background:       var(--ground);
+  --color-foreground:       var(--text);
+  --color-card-bg:          var(--surface);
+  --color-on-surface:       var(--text);
+  --color-on-background:    var(--text);
+  --color-primary:          var(--accent);
+  --color-on-primary:       #ffffff;
+  --color-secondary:        var(--accent-hi);
+  --color-secondary-container: rgba(37,99,235,0.15);
+  --color-on-secondary-container: var(--accent-hi);
+  --color-outline:          var(--faint);
+  --color-outline-variant:  var(--border);
+  --color-surface-container:         var(--raised);
+  --color-surface-container-high:    var(--raised);
+  --color-surface-container-highest: var(--raised);
+  --color-surface-container-low:     var(--surface);
+  --color-surface-container-lowest:  var(--surface);
+  --color-surface-dim:      var(--surface);
+  --color-surface-bright:   var(--raised);
+  --color-primary-fixed:    rgba(37,99,235,0.12);
+  --color-on-primary-fixed: var(--accent-hi);
+  --color-on-primary-fixed-variant: var(--accent-hi);
+  --color-primary-fixed-dim: rgba(37,99,235,0.2);
+  --color-primary-container: var(--accent);
+  --color-on-primary-container: #ffffff;
+
+  /* Fonts */
+  --font-sans:    var(--font-inter), system-ui, sans-serif;
+  --font-serif:   var(--font-playfair), Georgia, serif;
+  /* Legacy font aliases */
+  --font-heading:      var(--font-playfair), Georgia, serif;
+  --font-display-lg:   var(--font-playfair), Georgia, serif;
+  --font-headline-lg:  var(--font-playfair), Georgia, serif;
+  --font-headline-md:  var(--font-playfair), Georgia, serif;
+  --font-body-lg:      var(--font-inter), system-ui, sans-serif;
+  --font-body-md:      var(--font-inter), system-ui, sans-serif;
+  --font-label-sm:     var(--font-inter), system-ui, sans-serif;
+  --font-label-lg:     var(--font-inter), system-ui, sans-serif;
+
+  /* Radius */
+  --radius-DEFAULT: var(--r-card);
+  --radius-lg:      var(--r-card);
+  --radius-xl:      var(--r-card);
+  --radius-full:    var(--r-pill);
 }
 
+/* Base */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-nunito), system-ui, sans-serif;
+  background-color: var(--ground);
+  color: var(--text);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-fredoka), var(--font-nunito), sans-serif;
-  letter-spacing: -0.01em;
+/* Material Symbols — keep class so old components don't crash (font no longer loaded) */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  display: inline-block;
+  white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ── Focus styles ── */
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
+/* ── Animation Keyframes ── */
+
+/* #1 — Card entrance (catch cards, feed cards) */
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent);
+/* #3 — Dex caught badge pop (spring) */
+@keyframes badge-pop {
+  from { opacity: 0; transform: scale(0); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
-/* ── Animations ── */
-@keyframes wave-drift {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
+/* ── Habitat pill helper classes ── */
+.pill-salt  { background: var(--pill-salt-bg);  color: var(--pill-salt-ink); }
+.pill-fresh { background: var(--pill-fresh-bg); color: var(--pill-fresh-ink); }
+.pill-brack { background: var(--pill-brack-bg); color: var(--pill-brack-ink); }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-}
-
-@keyframes float-slow {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  33% { transform: translateY(-8px) rotate(2deg); }
-  66% { transform: translateY(4px) rotate(-1deg); }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
-@keyframes bubble-rise {
-  0% { transform: translateY(0) scale(1); opacity: 0.6; }
-  100% { transform: translateY(-120px) scale(0.3); opacity: 0; }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 8px color-mix(in srgb, var(--primary-light) 30%, transparent); }
-  50% { box-shadow: 0 0 24px color-mix(in srgb, var(--primary-light) 60%, transparent); }
-}
-
-@keyframes scale-in {
-  0% { transform: scale(0.9); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-@keyframes slide-up {
-  0% { transform: translateY(20px); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.animate-wave-drift {
-  animation: wave-drift 12s linear infinite;
-}
-
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-.animate-float-slow {
-  animation: float-slow 6s ease-in-out infinite;
-}
-
-.animate-shimmer {
-  background-size: 200% auto;
-  animation: shimmer 3s linear infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2.5s ease-in-out infinite;
-}
-
-.animate-scale-in {
-  animation: scale-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.animate-slide-up {
-  animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.animate-spin-slow {
-  animation: spin-slow 20s linear infinite;
-}
-
-/* Staggered delays for grid items */
-.stagger-1 { animation-delay: 0.05s; }
-.stagger-2 { animation-delay: 0.1s; }
-.stagger-3 { animation-delay: 0.15s; }
-.stagger-4 { animation-delay: 0.2s; }
-.stagger-5 { animation-delay: 0.25s; }
-
-/* ── Glass morphism ── */
-.glass {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-}
-
-@media (prefers-color-scheme: dark) {
-  .glass {
-    background: rgba(11, 25, 41, 0.8);
-  }
-}
-
-/* ── Holographic card border (caught species) ── */
-.holo-border {
-  position: relative;
-  overflow: visible;
-}
-
-.holo-border::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  padding: 2px;
-  background: linear-gradient(
-    135deg,
-    var(--secondary) 0%,
-    var(--primary-light) 25%,
-    var(--accent-light) 50%,
-    var(--coral) 75%,
-    var(--secondary) 100%
-  );
-  background-size: 300% 300%;
-  animation: shimmer 4s ease infinite;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  z-index: -1;
-  opacity: 0.6;
-  transition: opacity 0.3s;
-}
-
-.holo-border:hover::before {
-  opacity: 1;
-}
-
-/* ── Ocean gradient backgrounds ── */
-.ocean-gradient {
-  background: linear-gradient(
-    180deg,
-    var(--primary-dark) 0%,
-    var(--primary) 40%,
-    var(--primary-light) 100%
-  );
-}
-
-.sunset-gradient {
-  background: linear-gradient(
-    135deg,
-    var(--accent) 0%,
-    var(--coral) 50%,
-    var(--primary) 100%
-  );
-}
-
-.tropical-gradient {
-  background: linear-gradient(
-    135deg,
-    var(--primary-light) 0%,
-    var(--secondary) 50%,
-    var(--accent-light) 100%
-  );
-}
-
-/* ── Decorative wave divider ── */
-.wave-divider {
-  position: relative;
-}
-
-.wave-divider::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  right: 0;
-  height: 32px;
-  background: var(--background);
-  clip-path: ellipse(55% 100% at 50% 100%);
-}
-
-/* ── Text gradient utility ── */
-.text-gradient-ocean {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--secondary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-sunset {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--coral) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ── Playful shadow presets ── */
-.shadow-ocean {
-  box-shadow: 0 4px 20px color-mix(in srgb, var(--primary) 15%, transparent),
-              0 1px 3px color-mix(in srgb, var(--primary) 10%, transparent);
-}
-
-.shadow-coral {
-  box-shadow: 0 4px 20px color-mix(in srgb, var(--coral) 20%, transparent),
-              0 1px 3px color-mix(in srgb, var(--coral) 10%, transparent);
-}
-
-.shadow-accent {
-  box-shadow: 0 4px 20px color-mix(in srgb, var(--accent) 20%, transparent),
-              0 1px 3px color-mix(in srgb, var(--accent) 10%, transparent);
-}
-
-/* ── Habitat accent colors ── */
-.habitat-freshwater { --habitat-color: #06D6A0; }
-.habitat-saltwater { --habitat-color: #0077B6; }
-.habitat-brackish { --habitat-color: #F77F00; }
+/* ── Legacy helper stubs — stops crashes in un-redesigned pages ── */
+.chunky-border  {}
+.chunky-shadow  {}
+.bouncy-shadow  {}
+.bouncy-hover   {}
+.bouncy-active  {}
+.bouncy-hover:hover {}
+.bouncy-active:active {}
+.sticker-border {}
+.sticker-glow   {}
+.fab-3d         {}
+.fab-3d:active  {}
+.holo-overlay   { display: none; }
+.liquid-tube    { background: var(--accent); }
+.bubble         { display: none; }
+.wave-bg        { display: none; }
+.hero-gradient  { background: var(--surface); }
+.bg-gradient-sunset { background: var(--accent); }

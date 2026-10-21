@@ -1,6 +1,6 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import * as SecureStore from "expo-secure-store";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Platform } from "react-native";
 import type { Database } from "@go-pesca/shared";
 import { ENV } from "./env";
 
@@ -16,9 +16,10 @@ import { ENV } from "./env";
   }
 })();
 
+const isNative = Platform.OS !== "web";
+
 const CHUNK_SIZE = 2000;
 const MAX_CHUNKS = 50;
-const FALLBACK_FLAG = "__async_storage_fallback";
 
 interface StorageBackend {
   get(key: string): Promise<string | null>;
@@ -32,10 +33,16 @@ const secureBackend: StorageBackend = {
   remove: (key) => SecureStore.deleteItemAsync(key),
 };
 
-const asyncBackend: StorageBackend = {
-  get: (key) => AsyncStorage.getItem(key),
-  set: (key, value) => AsyncStorage.setItem(key, value),
-  remove: (key) => AsyncStorage.removeItem(key),
+const webBackend: StorageBackend = {
+  get: (key) => Promise.resolve(localStorage.getItem(key)),
+  set: (key, value) => {
+    localStorage.setItem(key, value);
+    return Promise.resolve();
+  },
+  remove: (key) => {
+    localStorage.removeItem(key);
+    return Promise.resolve();
+  },
 };
 
 function chunkKey(key: string, index: number): string {
@@ -108,49 +115,19 @@ async function chunkedRemove(
   }
 }
 
-let usingFallback = false;
+const backend = isNative ? secureBackend : webBackend;
 
-const chunkedSecureStoreAdapter = {
+const storageAdapter = {
   async getItem(key: string): Promise<string | null> {
-    // Check SecureStore first
-    const value = await chunkedGet(key, secureBackend);
-    if (value !== null) return value;
-
-    // If we've ever fallen back, also check AsyncStorage
-    if (usingFallback) {
-      return chunkedGet(key, asyncBackend);
-    }
-
-    // Check if a previous session used the fallback
-    const flag = await AsyncStorage.getItem(FALLBACK_FLAG);
-    if (flag === "true") {
-      usingFallback = true;
-      return chunkedGet(key, asyncBackend);
-    }
-
-    return null;
+    return chunkedGet(key, backend);
   },
 
   async setItem(key: string, value: string): Promise<void> {
-    try {
-      await chunkedSet(key, value, secureBackend);
-    } catch (error) {
-      console.warn(
-        "SecureStore unavailable, falling back to AsyncStorage. " +
-          "Session storage is less secure.",
-        error,
-      );
-      usingFallback = true;
-      await AsyncStorage.setItem(FALLBACK_FLAG, "true");
-      await chunkedSet(key, value, asyncBackend);
-    }
+    await chunkedSet(key, value, backend);
   },
 
   async removeItem(key: string): Promise<void> {
-    await chunkedRemove(key, secureBackend);
-    if (usingFallback) {
-      await chunkedRemove(key, asyncBackend);
-    }
+    await chunkedRemove(key, backend);
   },
 };
 
@@ -159,7 +136,7 @@ export const supabase: SupabaseClient<Database> = createClient<Database>(
   ENV.SUPABASE_ANON_KEY,
   {
     auth: {
-      storage: chunkedSecureStoreAdapter,
+      storage: storageAdapter,
       autoRefreshToken: true,
       persistSession: true,
       detectSessionInUrl: false,

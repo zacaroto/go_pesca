@@ -26,52 +26,49 @@ export function SpeciesCard({ species, locale }: Props) {
         ? t("saltwater")
         : t("brackish");
 
-  const habitatColor =
+  const habitatBadgeStyle =
     species.habitat === "freshwater"
-      ? "bg-secondary/15 text-secondary border-secondary/30"
+      ? "bg-secondary text-white"
       : species.habitat === "saltwater"
-        ? "bg-primary/15 text-primary border-primary/30"
-        : "bg-accent/15 text-accent border-accent/30";
-
-  const topStripe =
-    species.habitat === "freshwater"
-      ? "from-secondary to-emerald-400"
-      : species.habitat === "saltwater"
-        ? "from-primary to-primary-light"
-        : "from-accent to-accent-light";
+        ? "bg-primary text-white"
+        : "bg-tertiary-container text-white";
 
   return (
     <Link
       href={`/species/${species.id}`}
-      className="group block rounded-2xl overflow-hidden bg-surface dark:bg-surface-alt ring-1 ring-foreground/5 dark:ring-white/5 hover:shadow-ocean transition-all duration-300 hover:-translate-y-1"
+      className="card-foil group block rounded-3xl overflow-hidden bg-card-bg chunky-border chunky-shadow hover:scale-105 active:translate-y-0.5 active:translate-x-0.5 transition-all p-3.5 flex flex-col gap-3 relative"
     >
-      {/* Habitat color stripe */}
-      <div className={`h-1 bg-gradient-to-r ${topStripe}`} />
-
-      {/* Image */}
-      <div className="relative h-44 bg-gradient-to-br from-primary-light/10 to-surface-alt/50 dark:from-white/5 dark:to-surface flex items-center justify-center overflow-hidden">
+      {/* Image Area */}
+      <div className="relative aspect-[4/3] rounded-2xl bg-surface-container flex items-center justify-center overflow-hidden border-2 border-white/60 shadow-inner">
         {species.reference_photo_url ? (
           <img
             src={species.reference_photo_url}
             alt={name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
           />
         ) : (
-          <div className="w-16 h-16 rounded-full bg-primary-light/10 flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center">
             <span className="text-3xl">🐟</span>
           </div>
         )}
+
+        {/* Habitat badge */}
         <span
-          className={`absolute top-2.5 right-2.5 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border ${habitatColor}`}
+          className={`absolute top-2.5 right-2.5 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm border border-white/40 ${habitatBadgeStyle}`}
         >
           {habitatLabel}
         </span>
       </div>
 
-      {/* Info */}
-      <div className="p-3">
-        <h3 className="font-bold text-sm text-foreground">{name}</h3>
-        <p className="text-[11px] text-muted italic mt-0.5 truncate">
+      {/* Info Body */}
+      <div className="flex flex-col">
+        <h3
+          className="font-headline-md text-base sm:text-lg font-bold text-on-surface leading-tight truncate"
+          style={{ fontFamily: "var(--font-fredoka)" }}
+        >
+          {name}
+        </h3>
+        <p className="font-label-sm text-xs text-outline italic truncate mt-0.5">
           {species.scientific_name}
         </p>
       </div>

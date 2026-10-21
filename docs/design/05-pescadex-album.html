@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tu Álbum Pescadex</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&amp;family=Nunito+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#007147",
+                    "outline": "#707884",
+                    "surface-bright": "#faf8ff",
+                    "on-primary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#2c1700",
+                    "on-background": "#0f1a37",
+                    "on-primary-fixed": "#001c37",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed": "#002111",
+                    "surface-tint": "#0061a7",
+                    "on-surface": "#0f1a37",
+                    "neon-coral": "#FF4D6D",
+                    "surface-container": "#eaedff",
+                    "outline-variant": "#bfc7d5",
+                    "secondary-fixed-dim": "#00e293",
+                    "secondary-container": "#25fea8",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#3f4753",
+                    "on-tertiary-fixed-variant": "#683d00",
+                    "inverse-primary": "#a1c9ff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#dae1ff",
+                    "on-primary-fixed-variant": "#00487f",
+                    "surface": "#faf8ff",
+                    "surface-container-high": "#e2e7ff",
+                    "page-bg": "#F0F9FF",
+                    "tertiary": "#895100",
+                    "primary-fixed": "#d2e4ff",
+                    "surface-variant": "#dae1ff",
+                    "tertiary-container": "#d28000",
+                    "tertiary-fixed-dim": "#ffb86b",
+                    "tertiary-fixed": "#ffdcbc",
+                    "secondary-fixed": "#50ffaf",
+                    "on-tertiary-container": "#432500",
+                    "card-bg": "#FFFFFF",
+                    "primary-container": "#0096ff",
+                    "surface-container-low": "#f2f3ff",
+                    "sunny-yellow": "#FFD60A",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#a1c9ff",
+                    "secondary": "#006c44",
+                    "on-secondary-fixed-variant": "#005232",
+                    "inverse-surface": "#252f4d",
+                    "error": "#ba1a1a",
+                    "inverse-on-surface": "#eef0ff",
+                    "surface-dim": "#ced9ff",
+                    "primary": "#0061a7",
+                    "on-primary-container": "#002d52",
+                    "error-container": "#ffdad6",
+                    "background": "#faf8ff",
+                    "electric-purple": "#7209B7"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "margin-desktop": "40px",
+                    "gutter": "16px",
+                    "stack-lg": "32px",
+                    "stack-md": "16px",
+                    "margin-mobile": "20px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "body-md": ["Nunito Sans"],
+                    "label-sm": ["Fredoka"],
+                    "headline-lg": ["Fredoka"],
+                    "body-lg": ["Nunito Sans"],
+                    "display-lg": ["Fredoka"],
+                    "headline-md": ["Fredoka"],
+                    "label-lg": ["Fredoka"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-lg": ["16px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          },
+        }
+      }
+    </script>
+<style>
+        .border-chunky { border-width: 3px; }
+        
+        /* Holographic Shimmer Effect */
+        .holo-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                115deg,
+                transparent 20%,
+                rgba(255, 255, 255, 0.6) 35%,
+                rgba(37, 254, 168, 0.4) 45%, /* secondary-container tint */
+                rgba(255, 214, 10, 0.4) 55%,  /* sunny-yellow tint */
+                transparent 70%
+            );
+            background-size: 250% 100%;
+            animation: holo-shimmer 4s infinite linear;
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @keyframes holo-shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -100% 0; }
+        }
+
+        /* Liquid Tube Progress Bar */
+        .liquid-tube {
+            background-image: repeating-linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.15) 0px,
+                rgba(255, 255, 255, 0.15) 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            background-size: 28px 28px;
+            animation: move-stripes 2s linear infinite;
+            box-shadow: inset 0 4px 6px -1px rgba(255, 255, 255, 0.5), inset 0 -4px 6px -1px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes move-stripes {
+            0% { background-position: 0 0; }
+            100% { background-position: 28px 0; }
+        }
+
+        /* Floating Animation for Badges */
+        .float-anim {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+    </style>
+</head>
+<body class="bg-page-bg text-on-background font-body-md min-h-screen selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopAppBar -->
+<header class="bg-surface top-0 sticky z-40 w-full border-b-[4px] border-outline-variant shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] flex justify-between items-center px-margin-mobile py-stack-sm md:hidden">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-full border-2 border-primary bg-primary-container flex items-center justify-center float-anim shadow-sm">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<h1 class="font-display-lg text-headline-md text-primary tracking-tight">Go Pesca</h1>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-primary hover:scale-105 active:scale-95 transition-all bg-surface-container-low border-2 border-outline-variant shadow-sm">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pb-32 pt-6 px-margin-mobile max-w-4xl mx-auto flex flex-col gap-stack-lg">
+<!-- Header & Progress -->
+<section class="flex flex-col gap-stack-md text-center">
+<h2 class="font-display-lg text-headline-lg md:text-display-lg text-electric-purple tracking-wide" style="text-shadow: 2px 2px 0px #FFD60A, -1px -1px 0px #fff;">
+                Tu Álbum Pescadex
+            </h2>
+<div class="flex flex-col gap-2 items-center">
+<div class="flex justify-between w-full px-2">
+<span class="font-label-sm text-label-sm text-outline font-bold">Progreso</span>
+<span class="font-label-sm text-label-sm text-primary font-bold">42 / 150</span>
+</div>
+<!-- Liquid Tube Progress -->
+<div class="w-full h-8 rounded-full border-[3px] border-outline bg-surface-container-highest shadow-inner overflow-hidden relative">
+<div class="h-full bg-primary absolute top-0 left-0 rounded-full liquid-tube" style="width: 28%;"></div>
+</div>
+</div>
+</section>
+<!-- Pescadex Grid -->
+<section class="grid grid-cols-2 md:grid-cols-3 gap-gutter">
+<!-- Card 1: Caught (Holo Glow) -->
+<article class="relative bg-card-bg border-chunky border-outline rounded-[2rem] shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] p-2 hover:scale-105 active:translate-y-0.5 active:translate-x-0.5 active:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)] transition-all cursor-pointer overflow-hidden flex flex-col gap-2 group">
+<div class="holo-overlay rounded-[1.5rem]"></div>
+<!-- Image Frame -->
+<div class="border-[3px] border-secondary-container rounded-2xl overflow-hidden aspect-[4/5] bg-surface-container relative shadow-[0_0_20px_rgba(37,254,168,0.4)]">
+<img class="w-full h-full object-cover z-0" data-alt="A highly detailed, vibrant digital illustration of a colorful Mahi-Mahi fish styled as a collectible TCG sticker. The fish is brightly colored with neon greens, yellows, and blues, popping against a dynamic, sun-drenched tropical underwater background. Thick white sticker outlines around the fish. Modern cartoonish aesthetic, highly saturated, visually delightful." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5bGYAFllcmki-cIMtxpkSkp1Zi2kNUDwCNfo8ZUY5aKqgSg_5zXMNWDDQHNCQ-3wp36HWHld-LY0Gu5dq6upEvNrlcQfxEulDiom-atWUIooIhRWFGU1PODlYhFbiq4Uj9frQ5GQufMKBWKQnKW4ZEJP2JYlaXr7skrCJgc2HfsnrPkArPO8cRwULJB0VQbuzvhsxmTf680jQLL9fcH4gDFF1cn_3FDDlpU4vKxSpWGdwVW6yTIiL4w"/>
+<!-- Habitat Badge -->
+<div class="absolute top-2 left-2 bg-surface-tint border-2 border-on-primary text-on-primary rounded-full px-2 py-0.5 font-label-sm text-[10px] uppercase shadow-sm flex items-center gap-1 z-20">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">water</span>
+                        Salada
+                    </div>
+</div>
+<div class="flex flex-col items-center pb-1 z-20">
+<h3 class="font-headline-md text-label-lg text-on-background m-0">Dorado</h3>
+<span class="font-label-sm text-[10px] text-tertiary-container bg-tertiary-fixed rounded-full px-2 py-0.5 mt-1 border border-tertiary-fixed-dim">Épico</span>
+</div>
+</article>
+<!-- Card 2: Caught (Holo Glow) -->
+<article class="relative bg-card-bg border-chunky border-outline rounded-[2rem] shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] p-2 hover:scale-105 active:translate-y-0.5 active:translate-x-0.5 active:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)] transition-all cursor-pointer overflow-hidden flex flex-col gap-2 group">
+<div class="holo-overlay rounded-[1.5rem]"></div>
+<!-- Image Frame -->
+<div class="border-[3px] border-secondary-container rounded-2xl overflow-hidden aspect-[4/5] bg-surface-container relative shadow-[0_0_20px_rgba(37,254,168,0.4)]">
+<img class="w-full h-full object-cover z-0" data-alt="A striking digital illustration of a vibrant Parrotfish styled as a collectible TCG sticker. Vivid pinks, turquoises, and oranges dominate the palette. The background is a stylized coral reef in a lush tropical setting. The fish has a distinct chunky white sticker border around it. Modern cartoonish, tactile, high energy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3Wg56rFQ62wPGBNeVxjVnz-9T5LomFgzABrabJu4zBogekOgS8NVT1-nHii_5IoO0ThYt7ksm9AJxAZKvKAEMAYivHFdtXpkKmlQvdC9bIlOicsdKDSgoHw7CavwqTQ2pucutRxcnla5F5zmyH6W34pvTOxY74RIqwTjZsr4wUKSjQCMCYsg4DbtlxeOcPbjUcC1V1F4-sfUckqbpX0-boZ3Vo5IeZS-7uEe6M9I19bM2E5ZDDpV-vA"/>
+<!-- Habitat Badge -->
+<div class="absolute top-2 left-2 bg-surface-tint border-2 border-on-primary text-on-primary rounded-full px-2 py-0.5 font-label-sm text-[10px] uppercase shadow-sm flex items-center gap-1 z-20">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">water</span>
+                        Salada
+                    </div>
+</div>
+<div class="flex flex-col items-center pb-1 z-20">
+<h3 class="font-headline-md text-label-lg text-on-background m-0">Pez Loro</h3>
+<span class="font-label-sm text-[10px] text-primary-fixed-variant bg-primary-fixed-dim rounded-full px-2 py-0.5 mt-1 border border-primary-fixed">Raro</span>
+</div>
+</article>
+<!-- Card 3: Uncaught (Locked Silhouette) -->
+<article class="relative bg-surface-dim border-chunky border-outline-variant rounded-[2rem] p-2 flex flex-col gap-2 opacity-90 saturate-50">
+<!-- Image Frame -->
+<div class="border-[3px] border-outline-variant rounded-2xl overflow-hidden aspect-[4/5] bg-surface-container-high relative flex items-center justify-center">
+<img class="w-3/4 h-3/4 object-contain opacity-50 z-0 drop-shadow-md" data-alt="A flat, dark grey silhouette of a chunky, cartoonish pufferfish styled as an empty sticker slot in a collectible album. The background is a muted, pale blue geometric pattern. The image lacks detail, serving purely as a placeholder shadow for an uncollected item in a TCG app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgQC8Xq3Ss4ykxKA89IRP7dlf7tMeKX0FpoMOf-b5rHM0FymkQWOofY39m0QBcRoc_H0R2BWvqpViRot3nXR71mF5sZETZmOd5snPhMhf5Vxo4JWwywMsZ3s06_PppJIrfbhf5zyFzMSArTzfqIq1ui_PL8EDvD4gVvHqhTUz9ORkX0UaHtvP0YtZFFd3z5U63w1mUBGz3v39U1YdhN-qeWI9GMqhxpsTdEnPcV93lCN3S6MA36IIACQ"/>
+<!-- Lock Sticker superimposed -->
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-neon-coral text-on-primary rounded-full p-3 border-[3px] border-on-primary flex items-center justify-center rotate-12 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.15)] z-20 hover:rotate-0 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lock</span>
+</div>
+</div>
+<div class="flex flex-col items-center pb-1">
+<h3 class="font-headline-md text-label-lg text-outline m-0">???</h3>
+<span class="font-label-sm text-[10px] text-outline bg-surface rounded-full px-2 py-0.5 mt-1 border border-outline-variant">Desconocido</span>
+</div>
+</article>
+<!-- Card 4: Uncaught (Locked Silhouette) -->
+<article class="relative bg-surface-dim border-chunky border-outline-variant rounded-[2rem] p-2 flex flex-col gap-2 opacity-90 saturate-50">
+<!-- Image Frame -->
+<div class="border-[3px] border-outline-variant rounded-2xl overflow-hidden aspect-[4/5] bg-surface-container-high relative flex items-center justify-center">
+<img class="w-3/4 h-3/4 object-contain opacity-50 z-0 drop-shadow-md" data-alt="A flat, dark grey silhouette of a sleek, cartoonish barracuda styled as an empty sticker slot in a collectible album. The background is a muted, pale blue geometric pattern. Serving as a placeholder shadow for an uncollected item." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPF3Bl0wB4HUYQquhM1rmLOHGRGphV1lY_OtDG9356uV4KcVpMjI4KIyWJKKzWQ84bD70vfuyEeJkcvxoQRmPBnSSgMLAkJuWAZZTO5HXqtkywkFJ8Wuqm166b-76aILWdAmQNQlSF5uSN6Xq3o9_EgnwO2Mg6jhekt2fuPZLXlj5zJ3mBZGXJs6etbP-3ReD-31Nv1yYdGRb2dzTB-ZsueNX_KmcDjbg_U4T8kEfvM2UwPxFZQApuQg"/>
+<!-- Lock Sticker superimposed -->
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-outline text-on-primary rounded-full p-3 border-[3px] border-on-primary flex items-center justify-center -rotate-6 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.15)] z-20 hover:rotate-0 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lock</span>
+</div>
+</div>
+<div class="flex flex-col items-center pb-1">
+<h3 class="font-headline-md text-label-lg text-outline m-0">???</h3>
+<span class="font-label-sm text-[10px] text-outline bg-surface rounded-full px-2 py-0.5 mt-1 border border-outline-variant">Desconocido</span>
+</div>
+</article>
+</section>
+</main>
+<!-- BottomNavBar (JSON Driven) -->
+<nav class="fixed bottom-0 left-0 w-full h-20 flex justify-around items-center px-gutter pb-4 bg-surface-container-highest rounded-t-lg z-50 border-t-[4px] border-outline-variant shadow-[0px_-4px_0px_0px_rgba(0,0,0,0.05)] md:hidden">
+<!-- Home: Inactive -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-stack-sm opacity-80 font-label-sm text-label-sm uppercase font-bold hover:brightness-110 active:scale-95 transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+            Home
+        </a>
+<!-- Pescadex: Active (Intent match for Album/Grid) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl p-stack-sm scale-110 -translate-y-2 border-2 border-secondary font-label-sm text-label-sm uppercase font-bold hover:brightness-110 active:scale-95 transition-all duration-200 ease-out shadow-sm" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">style</span>
+            Pescadex
+        </a>
+<!-- Log: Inactive -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-stack-sm opacity-80 font-label-sm text-label-sm uppercase font-bold hover:brightness-110 active:scale-95 transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined mb-1">question_mark</span>
+            Log
+        </a>
+<!-- Profile: Inactive -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-stack-sm opacity-80 font-label-sm text-label-sm uppercase font-bold hover:brightness-110 active:scale-95 transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+            Profile
+        </a>
+</nav>
+</body></html>

@@ -30,36 +30,40 @@ export function AchievementCard({
 
   return (
     <div
-      className={`relative rounded-2xl p-4 transition-all duration-300 ${
-        earned
-          ? "bg-gradient-to-br from-accent-light/15 via-surface to-secondary/10 dark:from-accent-light/10 dark:via-surface-alt dark:to-secondary/5 ring-2 ring-accent-light/40 shadow-accent"
-          : "bg-surface dark:bg-surface-alt ring-1 ring-foreground/8 dark:ring-white/8"
+      className={`relative bg-card-bg rounded-xl chunky-border p-4 chunky-shadow transition-all duration-300 hover:-translate-y-1 ${
+        earned ? "" : "opacity-70 grayscale hover:grayscale-0 hover:opacity-100"
       }`}
     >
       <div className="flex items-start gap-3">
         {/* Icon */}
-        <div className={`flex items-center justify-center w-11 h-11 rounded-xl text-2xl flex-shrink-0 ${
-          earned
-            ? "bg-accent-light/20 dark:bg-accent-light/10"
-            : "bg-foreground/5 dark:bg-white/5"
-        }`}>
+        <div
+          className={`flex items-center justify-center w-14 h-14 rounded-full text-2xl flex-shrink-0 sticker-border ${
+            earned
+              ? "bg-sunny-yellow"
+              : "bg-surface-container border-dashed"
+          }`}
+        >
           {earned ? icon : "🔒"}
         </div>
 
         {/* Content */}
         <div className="flex-1 min-w-0">
-          <p className={`text-sm font-extrabold truncate ${
-            earned ? "text-foreground" : "text-muted"
-          }`}>
+          <p
+            className={`text-label-lg font-bold truncate ${
+              earned ? "text-on-surface" : "text-muted"
+            }`}
+            style={{ fontFamily: "var(--font-fredoka)" }}
+          >
             {name}
           </p>
-          <p className="text-xs text-muted mt-0.5">
+          <p className="text-label-sm text-muted mt-0.5">
             {description}
           </p>
 
           {/* Earned date */}
           {earned && awardedAt && (
-            <p className="text-[10px] text-accent font-bold mt-2">
+            <p className="text-label-sm text-secondary font-bold mt-2 flex items-center gap-1">
+              <span className="material-symbols-outlined text-[14px]">check_circle</span>
               {new Date(awardedAt).toLocaleDateString()}
             </p>
           )}
@@ -68,12 +72,12 @@ export function AchievementCard({
           {!earned && progress && (
             <div className="mt-2.5">
               <div className="flex items-center justify-between mb-1">
-                <span className="text-[10px] text-muted font-bold">{progress}</span>
-                <span className="text-[10px] text-muted font-bold">{progressPct}%</span>
+                <span className="text-label-sm text-muted font-bold">{progress}</span>
+                <span className="text-label-sm text-muted font-bold">{progressPct}%</span>
               </div>
-              <div className="w-full h-1.5 bg-foreground/8 dark:bg-white/8 rounded-full overflow-hidden">
+              <div className="w-full h-3 bg-surface-container rounded-full overflow-hidden chunky-border">
                 <div
-                  className="h-full bg-gradient-to-r from-primary to-primary-light rounded-full transition-all duration-500"
+                  className="h-full bg-gradient-to-r from-primary to-primary-light rounded-full transition-all duration-500 liquid-tube"
                   style={{ width: `${progressPct}%` }}
                 />
               </div>
@@ -83,10 +87,10 @@ export function AchievementCard({
 
         {/* Check mark for earned */}
         {earned && (
-          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-secondary flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white" className="w-3.5 h-3.5">
-              <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
-            </svg>
+          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-secondary flex items-center justify-center sticker-border">
+            <span className="material-symbols-outlined text-on-secondary text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>
+              check
+            </span>
           </div>
         )}
       </div>

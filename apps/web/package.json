@@ -1,6 +1,6 @@
 {
   "name": "@go-pesca/web",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@go-pesca/shared": "*",
+    "@parcel/watcher": "^2.6.0",
     "@supabase/ssr": "^0.12.4",
     "@supabase/supabase-js": "^2.112.2",
     "@types/leaflet": "^1.9.22",
@@ -19,6 +20,10 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-leaflet": "^5.0.0"
+  },
+  "optionalDependencies": {
+    "@swc/core-linux-x64-gnu": "*",
+    "@swc/core-linux-x64-musl": "*"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

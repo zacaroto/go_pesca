@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Registrar Captura - Go Pesca</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&amp;family=Nunito+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#00e293",
+                        "surface-container": "#eaedff",
+                        "primary-fixed": "#d2e4ff",
+                        "tertiary-fixed": "#ffdcbc",
+                        "surface-container-low": "#f2f3ff",
+                        "background": "#faf8ff",
+                        "surface-bright": "#faf8ff",
+                        "tertiary": "#895100",
+                        "secondary-container": "#25fea8",
+                        "surface-container-highest": "#dae1ff",
+                        "on-primary-fixed": "#001c37",
+                        "surface": "#faf8ff",
+                        "primary-container": "#0096ff",
+                        "error-container": "#ffdad6",
+                        "electric-purple": "#7209B7",
+                        "on-tertiary-container": "#432500",
+                        "on-secondary-fixed-variant": "#005232",
+                        "primary": "#0061a7",
+                        "on-tertiary-fixed-variant": "#683d00",
+                        "on-primary-fixed-variant": "#00487f",
+                        "neon-coral": "#FF4D6D",
+                        "on-secondary-fixed": "#002111",
+                        "on-surface-variant": "#3f4753",
+                        "surface-variant": "#dae1ff",
+                        "on-surface": "#0f1a37",
+                        "on-secondary-container": "#007147",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#2c1700",
+                        "tertiary-container": "#d28000",
+                        "inverse-on-surface": "#eef0ff",
+                        "inverse-surface": "#252f4d",
+                        "outline": "#707884",
+                        "surface-container-high": "#e2e7ff",
+                        "surface-tint": "#0061a7",
+                        "sunny-yellow": "#FFD60A",
+                        "error": "#ba1a1a",
+                        "secondary": "#006c44",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#50ffaf",
+                        "surface-dim": "#ced9ff",
+                        "card-bg": "#FFFFFF",
+                        "primary-fixed-dim": "#a1c9ff",
+                        "on-background": "#0f1a37",
+                        "on-primary-container": "#002d52",
+                        "page-bg": "#F0F9FF",
+                        "inverse-primary": "#a1c9ff",
+                        "tertiary-fixed-dim": "#ffb86b",
+                        "outline-variant": "#bfc7d5",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "stack-md": "16px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "40px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Fredoka"],
+                        "body-lg": ["Nunito Sans"],
+                        "body-md": ["Nunito Sans"],
+                        "headline-lg": ["Fredoka"],
+                        "label-sm": ["Fredoka"],
+                        "headline-md": ["Fredoka"],
+                        "label-lg": ["Fredoka"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-lg": ["16px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .chunky-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(15, 26, 55, 0.15);
+        }
+        .chunky-border {
+            border: 3px solid #0f1a37; /* on-surface */
+        }
+        .btn-press:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px rgba(15, 26, 55, 0.15);
+        }
+        .powerup-icon:hover {
+            transform: scale(1.1);
+        }
+        .gradient-sunset {
+            background: linear-gradient(135deg, #FF4D6D, #d28000);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-24 md:pb-0 font-body-md overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-surface dark:bg-surface-dim border-b-4 border-outline-variant dark:border-outline shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] flex justify-between items-center px-margin-mobile py-stack-sm w-full">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<h1 class="font-display-lg text-headline-md text-primary dark:text-primary-fixed tracking-tight">Go Pesca</h1>
+<button class="hover:scale-105 transition-transform active:translate-y-0.5 active:translate-x-0.5 transition-all">
+<span class="material-symbols-outlined text-on-surface-variant text-3xl">notifications</span>
+</button>
+</header>
+<main class="max-w-3xl mx-auto px-gutter py-stack-lg">
+<!-- Progress Indicator -->
+<div class="flex justify-between items-center mb-8 px-4">
+<div class="flex gap-2 items-center">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-lg font-bold chunky-border">1</div>
+<div class="w-12 h-2 bg-primary rounded-full border-2 border-on-surface"></div>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-label-lg font-bold chunky-border">2</div>
+<div class="w-12 h-2 bg-surface-container-highest rounded-full border-2 border-on-surface opacity-50"></div>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-label-lg font-bold chunky-border opacity-50">3</div>
+</div>
+<span class="font-label-lg text-primary-container">Paso 1 de 3</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg mb-6 text-on-surface">¡Nueva Captura! 🎣</h2>
+<!-- Card Container -->
+<div class="bg-card-bg rounded-3xl chunky-border chunky-shadow p-stack-md md:p-stack-lg flex flex-col gap-8">
+<!-- Photo Upload Area (Sticker Frame) -->
+<section>
+<label class="font-headline-md text-headline-md text-on-surface mb-4 block">Foto del Trofeo</label>
+<div class="relative w-full aspect-video md:aspect-[21/9] bg-surface-container-low rounded-2xl chunky-border border-dashed flex flex-col items-center justify-center cursor-pointer hover:bg-surface-container transition-colors group">
+<div class="w-16 h-16 bg-primary-fixed text-on-primary-fixed rounded-full flex items-center justify-center chunky-border mb-3 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">add_a_photo</span>
+</div>
+<span class="font-label-lg text-label-lg text-primary">Toca para añadir foto</span>
+<span class="font-body-sm text-on-surface-variant mt-1 text-sm">¡Muestra tu mejor lado!</span>
+<!-- Decorative Sticker -->
+<div class="absolute -bottom-4 -right-4 w-12 h-12 bg-sunny-yellow rounded-full chunky-border flex items-center justify-center rotate-12 shadow-sm">
+<span class="material-symbols-outlined text-on-surface">star</span>
+</div>
+</div>
+</section>
+<!-- Species Input -->
+<section>
+<label class="font-headline-md text-headline-md text-on-surface mb-4 block">¿Qué picó?</label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest font-body-lg text-body-lg text-on-surface rounded-2xl chunky-border p-4 pl-12 focus:outline-none focus:ring-4 focus:ring-secondary-container focus:border-secondary transition-all" placeholder="Ej. Dorado, Róbalo..." type="text"/>
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-2xl">search</span>
+</div>
+<!-- Quick Tags -->
+<div class="flex flex-wrap gap-2 mt-4">
+<button class="bg-primary-container text-on-primary-container font-label-sm px-4 py-2 rounded-full chunky-border btn-press transition-transform">Atún</button>
+<button class="bg-tertiary-container text-on-tertiary-container font-label-sm px-4 py-2 rounded-full chunky-border btn-press transition-transform">Pargo</button>
+<button class="bg-surface-container-high text-on-surface font-label-sm px-4 py-2 rounded-full chunky-border btn-press transition-transform">Desconocido 🤷</button>
+</div>
+</section>
+<!-- Weather & Conditions (Power-ups) -->
+<section>
+<label class="font-headline-md text-headline-md text-on-surface mb-4 block">Condiciones</label>
+<div class="grid grid-cols-3 gap-4 mb-4">
+<button class="flex flex-col items-center justify-center bg-sunny-yellow/20 rounded-2xl p-4 chunky-border btn-press powerup-icon transition-all focus:bg-sunny-yellow/50">
+<span class="material-symbols-outlined text-4xl text-on-surface mb-2" style="font-variation-settings: 'FILL' 1;">light_mode</span>
+<span class="font-label-sm text-on-surface">Soleado</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-outline-variant/30 rounded-2xl p-4 chunky-border btn-press powerup-icon transition-all focus:bg-outline-variant/60">
+<span class="material-symbols-outlined text-4xl text-on-surface mb-2" style="font-variation-settings: 'FILL' 1;">cloud</span>
+<span class="font-label-sm text-on-surface">Nublado</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-fixed/50 rounded-2xl p-4 chunky-border btn-press powerup-icon transition-all focus:bg-primary-fixed">
+<span class="material-symbols-outlined text-4xl text-primary mb-2" style="font-variation-settings: 'FILL' 1;">rainy</span>
+<span class="font-label-sm text-primary">Lluvia</span>
+</button>
+</div>
+<div class="flex gap-4">
+<button class="flex-1 flex items-center justify-center gap-2 bg-secondary-fixed-dim/30 rounded-2xl p-3 chunky-border btn-press">
+<span class="material-symbols-outlined text-on-secondary-fixed-variant">water</span>
+<span class="font-label-lg text-on-secondary-fixed-variant">Marea Alta</span>
+</button>
+<button class="flex-1 flex items-center justify-center gap-2 bg-surface-container-high rounded-2xl p-3 chunky-border btn-press">
+<span class="material-symbols-outlined text-outline">waves</span>
+<span class="font-label-lg text-outline">Marea Baja</span>
+</button>
+</div>
+</section>
+<!-- Stats (Weight/Length) -->
+<section class="grid grid-cols-2 gap-4">
+<div>
+<label class="font-label-lg text-label-lg text-on-surface-variant mb-2 block">Peso (kg)</label>
+<input class="w-full bg-surface-container-lowest font-body-lg text-body-lg text-on-surface rounded-2xl chunky-border p-4 focus:outline-none focus:ring-4 focus:ring-secondary-container transition-all text-center" placeholder="0.0" type="number"/>
+</div>
+<div>
+<label class="font-label-lg text-label-lg text-on-surface-variant mb-2 block">Longitud (cm)</label>
+<input class="w-full bg-surface-container-lowest font-body-lg text-body-lg text-on-surface rounded-2xl chunky-border p-4 focus:outline-none focus:ring-4 focus:ring-secondary-container transition-all text-center" placeholder="0" type="number"/>
+</div>
+</section>
+</div>
+<!-- Next / Finish Action -->
+<div class="mt-8 flex justify-end">
+<button class="gradient-sunset text-on-primary font-headline-lg text-headline-md px-8 py-4 rounded-full chunky-border chunky-shadow btn-press transition-all flex items-center gap-2">
+                Siguiente
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">arrow_forward</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar (Mobile only, hidden on md) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full h-20 flex justify-around items-center px-gutter pb-4 bg-surface-container-highest dark:bg-surface-container border-t-4 border-outline-variant dark:border-outline shadow-[0px_-4px_0px_0px_rgba(0,0,0,0.05)] rounded-t-lg z-50">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-stack-sm opacity-80 hover:brightness-110 active:scale-95 transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined text-2xl mb-1">home</span>
+<span class="font-label-sm text-label-sm uppercase font-bold">Home</span>
+</a>
+<!-- Pescadex -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-stack-sm opacity-80 hover:brightness-110 active:scale-95 transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined text-2xl mb-1">style</span>
+<span class="font-label-sm text-label-sm uppercase font-bold">Pescadex</span>
+</a>
+<!-- Log (Active) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl p-stack-sm scale-110 -translate-y-2 border-2 border-secondary hover:brightness-110 active:scale-95 transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined text-2xl mb-1" style="font-variation-settings: 'FILL' 1;">question_mark</span>
+<span class="font-label-sm text-label-sm uppercase font-bold">Log</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-stack-sm opacity-80 hover:brightness-110 active:scale-95 transition-all duration-200 ease-out" href="#">
+<span class="material-symbols-outlined text-2xl mb-1">person</span>
+<span class="font-label-sm text-label-sm uppercase font-bold">Profile</span>
+</a>
+</nav>
+</body></html>

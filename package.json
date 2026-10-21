@@ -10,5 +10,16 @@
     "dev:mobile": "npm run start -w @go-pesca/mobile",
     "build:web": "npm run build -w @go-pesca/web",
     "lint:web": "npm run lint -w @go-pesca/web"
+  },
+  "dependencies": {
+    "react": "19.2.3"
+  },
+  "optionalDependencies": {
+    "@swc/core-linux-x64-gnu": "*",
+    "@swc/core-linux-x64-musl": "*",
+    "@tailwindcss/oxide-linux-x64-gnu": "*",
+    "@tailwindcss/oxide-linux-x64-musl": "*",
+    "lightningcss-linux-x64-gnu": "*",
+    "lightningcss-linux-x64-musl": "*"
   }
 }

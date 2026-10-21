@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Go Pesca - Detalles de la Especie</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400..700&amp;family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed-dim": "#00e293",
+                      "surface-container": "#eaedff",
+                      "primary-fixed": "#d2e4ff",
+                      "tertiary-fixed": "#ffdcbc",
+                      "surface-container-low": "#f2f3ff",
+                      "background": "#faf8ff",
+                      "surface-bright": "#faf8ff",
+                      "tertiary": "#895100",
+                      "secondary-container": "#25fea8",
+                      "surface-container-highest": "#dae1ff",
+                      "on-primary-fixed": "#001c37",
+                      "surface": "#faf8ff",
+                      "primary-container": "#0096ff",
+                      "error-container": "#ffdad6",
+                      "electric-purple": "#7209B7",
+                      "on-tertiary-container": "#432500",
+                      "on-secondary-fixed-variant": "#005232",
+                      "primary": "#0061a7",
+                      "on-tertiary-fixed-variant": "#683d00",
+                      "on-primary-fixed-variant": "#00487f",
+                      "neon-coral": "#FF4D6D",
+                      "on-secondary-fixed": "#002111",
+                      "on-surface-variant": "#3f4753",
+                      "surface-variant": "#dae1ff",
+                      "on-surface": "#0f1a37",
+                      "on-secondary-container": "#007147",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed": "#2c1700",
+                      "tertiary-container": "#d28000",
+                      "inverse-on-surface": "#eef0ff",
+                      "inverse-surface": "#252f4d",
+                      "outline": "#707884",
+                      "surface-container-high": "#e2e7ff",
+                      "surface-tint": "#0061a7",
+                      "sunny-yellow": "#FFD60A",
+                      "error": "#ba1a1a",
+                      "secondary": "#006c44",
+                      "on-primary": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "secondary-fixed": "#50ffaf",
+                      "surface-dim": "#ced9ff",
+                      "card-bg": "#FFFFFF",
+                      "primary-fixed-dim": "#a1c9ff",
+                      "on-background": "#0f1a37",
+                      "on-primary-container": "#002d52",
+                      "page-bg": "#F0F9FF",
+                      "inverse-primary": "#a1c9ff",
+                      "tertiary-fixed-dim": "#ffb86b",
+                      "outline-variant": "#bfc7d5",
+                      "on-secondary": "#ffffff",
+                      "on-error": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "unit": "4px",
+                      "stack-sm": "8px",
+                      "stack-lg": "32px",
+                      "stack-md": "16px",
+                      "margin-mobile": "20px",
+                      "margin-desktop": "40px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Fredoka"],
+                      "body-lg": ["Nunito Sans"],
+                      "body-md": ["Nunito Sans"],
+                      "headline-lg": ["Fredoka"],
+                      "label-sm": ["Fredoka"],
+                      "headline-md": ["Fredoka"],
+                      "label-lg": ["Fredoka"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-lg": ["16px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        /* Custom Sticker Effect */
+        .sticker-glow {
+            filter: drop-shadow(0px 0px 8px rgba(255,255,255,0.8)) drop-shadow(0px 4px 0px rgba(0,0,0,0.15));
+        }
+        
+        /* Bouncy Button Press */
+        .bouncy-press:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.1);
+        }
+
+        /* TCG Card Foil Effect (Subtle) */
+        .card-foil {
+            position: relative;
+            overflow: hidden;
+        }
+        .card-foil::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.1) 40%,
+                rgba(255, 255, 255, 0.4) 50%,
+                rgba(255, 255, 255, 0.1) 60%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg) translate(-100%, -100%);
+            animation: foilShine 6s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes foilShine {
+            0% { transform: rotate(30deg) translate(-100%, -100%); }
+            20% { transform: rotate(30deg) translate(100%, 100%); }
+            100% { transform: rotate(30deg) translate(100%, 100%); }
+        }
+
+        /* Thick Border Utilities */
+        .border-chunky { border-width: 3px; }
+        .border-card { border-width: 2px; }
+    </style>
+</head>
+<body class="bg-page-bg text-on-background min-h-screen pb-24 font-body-md relative overflow-x-hidden">
+<!-- Top Navigation (Task-Focused: Sub-page with Back Action, no shell nav for detail screens based on rules, but we need a top bar for 'Back') -->
+<header class="w-full top-0 sticky bg-surface z-40 border-b-4 border-outline-variant shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] flex justify-between items-center px-margin-mobile py-stack-sm">
+<button class="w-10 h-10 rounded-full bg-surface-container-highest border-2 border-outline flex items-center justify-center hover:scale-105 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary font-bold">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Pescadex</h1>
+<div class="w-10"></div> <!-- Spacer for center alignment -->
+</header>
+<main class="max-w-4xl mx-auto px-gutter py-stack-md flex flex-col gap-stack-lg">
+<!-- Hero TCG Card Section -->
+<section class="w-full flex justify-center mt-stack-sm">
+<div class="card-foil w-full max-w-sm rounded-[2.5rem] border-chunky border-primary bg-gradient-to-br from-primary-fixed to-surface-container shadow-[8px_8px_0px_0px_rgba(0,97,167,0.2)] p-stack-md flex flex-col items-center relative z-10 transition-transform hover:-translate-y-2 hover:shadow-[12px_12px_0px_0px_rgba(0,97,167,0.15)] duration-300">
+<!-- Rarity Badge -->
+<div class="absolute top-stack-md left-stack-md bg-sunny-yellow text-on-surface font-label-sm text-label-sm uppercase font-bold px-3 py-1 rounded-full border-2 border-on-surface shadow-[2px_2px_0px_0px_rgba(15,26,55,1)] transform -rotate-6">
+                    Épico
+                </div>
+<!-- ID/Number -->
+<div class="absolute top-stack-md right-stack-md font-headline-md text-headline-md text-primary opacity-50 font-bold">
+                    #042
+                </div>
+<!-- Fish Sticker Image -->
+<div class="w-48 h-48 mt-stack-lg mb-stack-md relative flex justify-center items-center">
+<img class="w-full h-full object-contain sticker-glow z-20" data-alt="A vibrant, modern-cartoonish illustration of a Mahi-Mahi (Dorado) fish. The fish is styled like a high-quality collectible sticker with a thick white outline, dynamic pose, bright green and yellow colors, catching a bright tropical light against a transparent background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH8V114E-ZfXX13vYn8wqlC_zhZ4oL8QISoYjxaq_uTiGerF-e97lcuo12CVDze91g0ILTdxfw_aUS2bXI1WeU4sz2mSIMAqCTfehuBUaIEED3XmWzqaZ_8l47KNSOy_YoFtSq3u5GcuNTPS4fMtcUu4eUa8qEhlxW6uGwh2uhsu6lXiiRQAPKGxImYIMeT4KT76AuY2oi2apBXauFoUuDS_L-lFgrz4Sf3JX2Sk_sYBfP_T-5kd432A"/>
+<!-- Subtle background circle behind fish -->
+<div class="absolute inset-0 bg-white/40 rounded-full blur-xl z-10"></div>
+</div>
+<!-- Title & Basic Info -->
+<div class="text-center w-full bg-white/80 rounded-2xl border-2 border-outline-variant p-stack-sm shadow-inner">
+<h2 class="font-headline-lg text-headline-lg font-bold text-primary-container leading-tight">Dorado</h2>
+<p class="font-body-md text-body-md text-on-surface-variant italic">Coryphaena hippurus</p>
+<!-- Habitat Badges -->
+<div class="flex justify-center gap-2 mt-stack-sm">
+<div class="flex items-center gap-1 bg-primary text-on-primary px-3 py-1 rounded-full border-2 border-on-primary-fixed-variant shadow-[2px_2px_0px_0px_rgba(0,72,127,1)]">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">water</span>
+<span class="font-label-sm text-label-sm uppercase font-bold">Agua Salada</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Bento Grid -->
+<section class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+<!-- Max Size -->
+<div class="col-span-1 bg-card-bg rounded-2xl border-card border-outline-variant shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] p-stack-md flex flex-col items-center justify-center text-center hover:-translate-y-1 transition-transform">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed-dim border-2 border-tertiary text-on-tertiary-container flex items-center justify-center mb-2 shadow-[2px_2px_0px_0px_rgba(137,81,0,0.2)]">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">straighten</span>
+</div>
+<h3 class="font-label-sm text-label-sm text-outline uppercase font-bold mb-1">Tamaño Máx</h3>
+<p class="font-headline-md text-headline-md text-on-surface font-bold">2.1m</p>
+</div>
+<!-- Max Weight -->
+<div class="col-span-1 bg-card-bg rounded-2xl border-card border-outline-variant shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] p-stack-md flex flex-col items-center justify-center text-center hover:-translate-y-1 transition-transform">
+<div class="w-12 h-12 rounded-full bg-primary-fixed-dim border-2 border-primary text-on-primary-container flex items-center justify-center mb-2 shadow-[2px_2px_0px_0px_rgba(0,97,167,0.2)]">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">scale</span>
+</div>
+<h3 class="font-label-sm text-label-sm text-outline uppercase font-bold mb-1">Peso Máx</h3>
+<p class="font-headline-md text-headline-md text-on-surface font-bold">40kg</p>
+</div>
+<!-- Activity Time -->
+<div class="col-span-2 bg-card-bg rounded-2xl border-card border-outline-variant shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] p-stack-md flex flex-row items-center justify-between hover:-translate-y-1 transition-transform">
+<div class="flex flex-col">
+<h3 class="font-label-sm text-label-sm text-outline uppercase font-bold mb-1">Actividad</h3>
+<p class="font-headline-md text-headline-md text-on-surface font-bold">Día</p>
+</div>
+<div class="w-16 h-16 rounded-full bg-sunny-yellow border-2 border-tertiary text-tertiary flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(137,81,0,0.2)]">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">light_mode</span>
+</div>
+</div>
+</section>
+<!-- Personal Record (High Score Plaque) -->
+<section class="w-full">
+<div class="bg-surface-container-highest rounded-3xl border-chunky border-secondary shadow-[6px_6px_0px_0px_rgba(0,108,68,1)] overflow-hidden relative">
+<!-- Decorative top bar -->
+<div class="bg-secondary text-on-secondary px-stack-md py-2 flex items-center gap-2 border-b-2 border-on-secondary-fixed">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+<h3 class="font-label-lg text-label-lg uppercase font-bold tracking-widest">Récord Personal</h3>
+</div>
+<div class="p-stack-md flex flex-row items-center justify-between bg-gradient-to-r from-secondary-fixed to-secondary-container">
+<div class="flex items-center gap-stack-md">
+<div class="w-16 h-16 bg-white rounded-xl border-2 border-secondary shadow-[2px_2px_0px_0px_rgba(0,108,68,0.5)] flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A small, stylized polaroid-style snapshot of a fisherman holding a large Mahi-Mahi on a sunny boat deck. The image should look slightly retro but vibrant, fitting the cartoonish TCG style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqdTYZDILyklLGCbOvdOi58Ww2hjMBGA-AFpsfHta5zT21nVIgPgpJ8G5nICWaFAUlrfqB2rOcZYBRRy1krol4SQJzQVKr30ti14wYn9YAF-_JBWtm0aJOFZgldHCgrWYqiaCFqQtZeV3PxwoCbvi5BcvNQ_HinYiKINCRiMdeEqoA5YfJYLKcHwic2-UTJAnS5WgTu2dgIR-7WHn5R0HEsYSLb79EFRIQ_FK_d5YzlYABD-LgXkdoRA"/>
+</div>
+<div>
+<p class="font-headline-lg text-headline-lg font-bold text-on-secondary-container leading-none mb-1">15.2 kg</p>
+<p class="font-label-sm text-label-sm text-on-secondary-container/80 uppercase font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_month</span>
+                                12 Oct 2023
+                            </p>
+</div>
+</div>
+<button class="w-12 h-12 bg-white rounded-full border-2 border-secondary text-secondary flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,108,68,1)] hover:scale-110 bouncy-press transition-transform">
+<span class="material-symbols-outlined font-bold text-xl">share</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Regions / Map -->
+<section class="w-full bg-card-bg rounded-2xl border-card border-outline-variant shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] p-stack-md">
+<h3 class="font-label-lg text-label-lg uppercase font-bold text-outline mb-stack-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">public</span>
+                Regiones de Hábitat
+            </h3>
+<div class="w-full h-48 bg-surface-container rounded-xl border-2 border-outline-variant overflow-hidden relative mb-stack-sm">
+<!-- Using data-location for map image injection as requested in prompt rules for maps -->
+<img class="w-full h-full object-cover opacity-80 mix-blend-multiply" data-alt="A stylized, vibrant cartoon map showing the Caribbean Sea and surrounding coastal regions. The map should use bright blues for water and lush greens for land, fitting the tropical TCG aesthetic, with small 'X' marks or fish icons indicating habitat zones." data-location="Caribe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBP8ZsvQFhwMn0pdN2RL4WH0P2F-ISETN1pkNRHdO3mdSOJ56GWvxM_dXp3S3IyX1BQjX_b4DD94qCSYAui2pMvAkxx8wL7PeU1fjH7m20DDGR3ysvl8QNY4wWt2jANhtbQfHVHrPaJGe8HZyTSWynu135j4StgWwugu2Or807lkFqKEHMh6GVXhbKs-Zm_30Y6xH2QTvwpyLN7QV8eml7XlkPLOxjsDlIblNpqCZh8q2aLcyhNufmng"/>
+<!-- Overlay markers (simulated) -->
+<div class="absolute top-1/3 left-1/2 w-4 h-4 bg-neon-coral rounded-full border-2 border-white shadow-lg animate-pulse"></div>
+<div class="absolute top-1/2 left-1/4 w-4 h-4 bg-neon-coral rounded-full border-2 border-white shadow-lg animate-pulse" style="animation-delay: 0.5s;"></div>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-container-high text-on-surface px-3 py-1 rounded-lg border-2 border-outline-variant font-label-sm text-label-sm font-bold uppercase">Golfo de México</span>
+<span class="bg-surface-container-high text-on-surface px-3 py-1 rounded-lg border-2 border-outline-variant font-label-sm text-label-sm font-bold uppercase">Mar Caribe</span>
+<span class="bg-surface-container-high text-on-surface px-3 py-1 rounded-lg border-2 border-outline-variant font-label-sm text-label-sm font-bold uppercase">Pacífico Central</span>
+</div>
+</section>
+<!-- Action Button -->
+<div class="w-full flex justify-center mt-stack-sm pb-stack-lg">
+<button class="bg-primary text-on-primary font-headline-md text-headline-md font-bold py-3 px-8 rounded-2xl border-chunky border-on-primary-fixed-variant shadow-[4px_4px_0px_0px_rgba(0,72,127,1)] flex items-center gap-2 hover:brightness-110 hover:scale-105 bouncy-press transition-all">
+<span class="material-symbols-outlined font-bold">add_circle</span>
+                Registrar Captura
+             </button>
+</div>
+</main>
+</body></html>

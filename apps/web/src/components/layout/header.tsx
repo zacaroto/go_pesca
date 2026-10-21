@@ -1,9 +1,10 @@
+"use client";
+
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { UserMenu } from "./user-menu";
 import { LanguageSwitcher } from "./language-switcher";
 import { RankBadge } from "@/components/rank/rank-badge";
-import { Logo } from "@/components/logo";
 import { VersionBadge } from "@/components/version-badge";
 
 type Props = {
@@ -13,36 +14,83 @@ type Props = {
 
 export function Header({ user, rankData }: Props) {
   const t = useTranslations();
+  const pathname = usePathname();
 
   return (
-    <header className="glass border-b border-white/10 dark:border-white/5 shadow-ocean sticky top-0 z-40">
-      <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+    <header
+      className="top-0 sticky z-40 w-full"
+      style={{ background: "var(--surface)", borderBottom: "1px solid var(--border)" }}
+    >
+      <div className="max-w-6xl mx-auto px-4 h-[52px] flex items-center justify-between">
+        {/* Wordmark */}
         <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2 text-xl font-bold text-primary dark:text-primary-light" style={{ fontFamily: "var(--font-fredoka)" }}>
-            <Logo size={28} />
-            <span className="hidden sm:inline">{t("common.appName")}</span>
+          <Link href="/" className="flex items-center gap-1 active:opacity-75" style={{ textDecoration: "none" }}>
+            <span
+              style={{
+                fontFamily: "var(--font-playfair), Georgia, serif",
+                fontWeight: 900,
+                fontSize: "17px",
+                color: "var(--text)",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              Go
+            </span>
+            <span
+              style={{
+                display: "inline-block",
+                width: "6px",
+                height: "6px",
+                borderRadius: "50%",
+                background: "var(--accent)",
+                margin: "0 3px",
+                flexShrink: 0,
+              }}
+            />
+            <span
+              style={{
+                fontFamily: "var(--font-playfair), Georgia, serif",
+                fontWeight: 900,
+                fontSize: "17px",
+                color: "var(--text)",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              Pesca
+            </span>
             <VersionBadge />
           </Link>
+
           {user && (
-            <nav className="hidden sm:flex items-center gap-1 text-sm font-semibold">
-              <Link href="/pokedex" className="px-3 py-1.5 rounded-xl hover:text-primary hover:bg-primary/10 transition-all duration-200">
-                {t("nav.pokedex")}
-              </Link>
-              <Link href="/catches" className="px-3 py-1.5 rounded-xl hover:text-primary hover:bg-primary/10 transition-all duration-200">
-                {t("nav.catches")}
-              </Link>
-              <Link href="/species" className="px-3 py-1.5 rounded-xl hover:text-primary hover:bg-primary/10 transition-all duration-200">
-                {t("nav.species")}
-              </Link>
-              <Link href="/community" className="px-3 py-1.5 rounded-xl hover:text-primary hover:bg-primary/10 transition-all duration-200">
-                {t("nav.community")}
-              </Link>
-              <Link href="/achievements" className="px-3 py-1.5 rounded-xl hover:text-primary hover:bg-primary/10 transition-all duration-200">
-                {t("nav.achievements")}
-              </Link>
+            <nav className="hidden sm:flex items-center gap-1 text-sm">
+              {[
+                { href: "/pokedex",    label: t("nav.pokedex") },
+                { href: "/catches",   label: t("nav.catches") },
+                { href: "/community", label: t("nav.community") },
+              ].map(({ href, label }) => {
+                const isActive = pathname === href || pathname.startsWith(href + "/");
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    className="px-3 py-1.5 rounded text-sm active:opacity-75"
+                    style={{
+                      color: isActive ? "var(--text)" : "var(--muted)",
+                      fontWeight: isActive ? 600 : 500,
+                      transition: "color var(--t-ui)",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = isActive ? "var(--text)" : "var(--muted)")}
+                  >
+                    {label}
+                  </Link>
+                );
+              })}
             </nav>
           )}
         </div>
+
+        {/* Right actions */}
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
           {user ? (
@@ -53,16 +101,23 @@ export function Header({ user, rankData }: Props) {
               <UserMenu displayName={user.display_name ?? user.email ?? ""} userId={user.id} />
             </>
           ) : (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <Link
                 href="/auth/login"
-                className="text-sm font-semibold hover:text-primary transition-colors"
+                className="text-sm font-medium active:opacity-75"
+                style={{ color: "var(--muted)" }}
               >
                 {t("common.login")}
               </Link>
               <Link
                 href="/auth/register"
-                className="text-sm bg-accent text-white px-4 py-2 rounded-xl font-bold hover:bg-accent/90 active:scale-[0.97] shadow-accent transition-all duration-200"
+                className="text-sm font-semibold px-4 py-2 rounded-lg active:opacity-75"
+                style={{
+                  background: "var(--accent)",
+                  color: "#ffffff",
+                  borderRadius: "8px",
+                  transition: "opacity var(--t-ui)",
+                }}
               >
                 {t("common.register")}
               </Link>

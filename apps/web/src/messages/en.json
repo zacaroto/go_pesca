@@ -26,6 +26,7 @@
   },
   "home": {
     "title": "Your FishyDex",
+    "hero": "The Great Adventure Starts Here!",
     "subtitle": "Log your catches and complete your species collection",
     "cta": "Log a Catch"
   },
@@ -78,7 +79,8 @@
     "filterByDate": "Filter by date",
     "edit": "Edit",
     "delete": "Delete",
-    "confirmDelete": "Are you sure you want to delete this catch?",
+    "confirmDelete": "Delete this catch?",
+    "confirmDeleteDescription": "This action cannot be undone. Your catch record and photo will be permanently removed.",
     "saving": "Saving...",
     "deleting": "Deleting...",
     "catchUpdated": "Catch updated!",
