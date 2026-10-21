@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildSpeciesIndex, countByHabitat } from "@/lib/fishydex-index";
+import { buildSpeciesIndex, countByHabitat, nextBestWeight } from "@/lib/fishydex-index";
 import type { PokedexEntry } from "@/lib/pokedex";
 
 const e = (id: number, name_es: string, habitat: string, catch_count = 0): PokedexEntry => ({
@@ -35,5 +35,18 @@ describe("countByHabitat", () => {
       freshwater: { caught: 1, total: 2 },
       brackish: { caught: 1, total: 1 },
     });
+  });
+});
+
+describe("nextBestWeight", () => {
+  it("treats zero, negative and missing weights as no weight", () => {
+    expect(nextBestWeight(null, 0)).toBeNull();
+    expect(nextBestWeight(null, -2)).toBeNull();
+    expect(nextBestWeight(null, null)).toBeNull();
+  });
+  it("keeps the maximum positive weight", () => {
+    expect(nextBestWeight(null, 3.2)).toBe(3.2);
+    expect(nextBestWeight(3.2, 0)).toBe(3.2);
+    expect(nextBestWeight(3.2, 5)).toBe(5);
   });
 });

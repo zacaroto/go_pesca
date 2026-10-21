@@ -18,7 +18,7 @@ type Props = { entries: PokedexEntry[]; locale: string };
 const HABITATS: Habitat[] = ["saltwater", "freshwater", "brackish"];
 
 const ROW_BASE =
-  "items-center gap-4 px-3 py-2.5 text-left w-full cursor-pointer border-t border-solid transition-[background-color,border-color] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none hover:bg-[var(--surface)] hover:border-t-transparent active:bg-[var(--raised)] focus-visible:outline-2 focus-visible:outline-offset-[-2px] rounded-[6px]";
+  "items-center gap-4 px-3 py-2.5 text-left w-full cursor-pointer border-t border-solid border-t-[var(--rule)] rounded-[6px] transition-[background-color,border-color] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none hover:bg-[var(--surface)] hover:border-t-transparent data-[selected=true]:bg-[var(--surface)] data-[selected=true]:border-t-transparent active:bg-[var(--raised)] data-[selected=true]:active:bg-[var(--raised)] focus-visible:outline-2 focus-visible:outline-offset-[-2px]";
 
 function initialSelection(entries: PokedexEntry[]): number {
   let best: PokedexEntry | null = null;
@@ -36,13 +36,15 @@ export function SpeciesIndex({ entries, locale }: Props) {
 
   const sections = useMemo(() => buildSpeciesIndex(entries, locale, habitat), [entries, locale, habitat]);
   const counts = useMemo(() => countByHabitat(entries), [entries]);
-  const selected = entries.find((e) => e.id === selectedId) ?? entries[0];
+  const visible = useMemo(() => sections.flatMap((s) => s.entries), [sections]);
+  const selected = visible.find((e) => e.id === selectedId) ?? visible[0] ?? null;
 
   function onKeyDown(e: React.KeyboardEvent<HTMLElement>) {
-    if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+    if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(e.key)) return;
     const rows = Array.from(listRef.current?.querySelectorAll<HTMLElement>("[data-row]") ?? []);
     const i = rows.indexOf(e.currentTarget);
-    const next = rows[i + (e.key === "ArrowDown" ? 1 : -1)];
+    const next =
+      e.key === "Home" ? rows[0] : e.key === "End" ? rows[rows.length - 1] : rows[i + (e.key === "ArrowDown" ? 1 : -1)];
     if (next) {
       e.preventDefault();
       next.focus();
@@ -109,17 +111,12 @@ export function SpeciesIndex({ entries, locale }: Props) {
                     {status(entry)}
                   </span>
                 );
-                const style = {
-                  borderTopColor: selectedRow ? "transparent" : "var(--rule)",
-                  background: selectedRow ? "var(--surface)" : undefined,
-                } as const;
                 return (
                   <div key={entry.id}>
                     {/* Below lg: link row */}
                     <Link
                       href={caught ? `/pokedex/${entry.id}` : `/species/${entry.id}`}
                       className={`${ROW_BASE} flex justify-between lg:hidden`}
-                      style={{ borderTopColor: "var(--rule)" }}
                     >
                       {nameCell}
                       {statusCell}
@@ -129,8 +126,9 @@ export function SpeciesIndex({ entries, locale }: Props) {
                       type="button"
                       data-row
                       className={`${ROW_BASE} hidden lg:grid`}
+                      data-selected={selectedRow}
+                      tabIndex={selectedRow ? 0 : -1}
                       style={{
-                        ...style,
                         gridTemplateColumns: "minmax(0,1.3fr) minmax(0,1.3fr) 90px 110px",
                       }}
                       onMouseEnter={() => setSelectedId(entry.id)}
@@ -151,11 +149,16 @@ export function SpeciesIndex({ entries, locale }: Props) {
             </section>
           ))}
         </div>
-        {selected && (
-          <div className="hidden lg:block">
+        <div className="hidden lg:block">
+          {selected ? (
             <SpeciesPlate entry={selected} locale={locale} />
-          </div>
-        )}
+          ) : (
+            <div
+              className="h-[260px] lg:sticky lg:top-[80px]"
+              style={{ background: "var(--surface)", borderRadius: "var(--r-card)" }}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

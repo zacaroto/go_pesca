@@ -41,3 +41,10 @@ export function countByHabitat(entries: PokedexEntry[]): Record<Habitat, { caugh
   }
   return out;
 }
+
+/** Running best weight: non-positive or missing weights never count. */
+export function nextBestWeight(prev: number | null, weight: number | null | undefined): number | null {
+  const w = weight != null && weight > 0 ? weight : null;
+  if (w == null) return prev;
+  return prev == null ? w : Math.max(prev, w);
+}

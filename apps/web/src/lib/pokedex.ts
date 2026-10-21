@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { nextBestWeight } from "./fishydex-index";
 import type { Database } from "./database.types";
 
 type SpeciesRow = Database["public"]["Tables"]["species"]["Row"];
@@ -51,7 +52,7 @@ export async function getPokedex(userId: string): Promise<PokedexEntry[]> {
       const existing = catchMap.get(c.species_id);
       if (existing) {
         existing.count++;
-        existing.best = Math.max(existing.best ?? 0, c.weight_kg ?? 0) || null;
+        existing.best = nextBestWeight(existing.best, c.weight_kg);
         if (c.catch_date > existing.lastDate) {
           existing.lastDate = c.catch_date;
         }
@@ -61,7 +62,7 @@ export async function getPokedex(userId: string): Promise<PokedexEntry[]> {
           firstDate: c.catch_date,
           lastDate: c.catch_date,
           firstPhoto: c.photo_url,
-          best: c.weight_kg ?? null,
+          best: nextBestWeight(null, c.weight_kg),
         });
       }
     }
