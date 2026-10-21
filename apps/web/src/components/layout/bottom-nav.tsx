@@ -63,7 +63,8 @@ export function BottomNav() {
       style={{
         background: "var(--surface)",
         borderTop: "1px solid var(--border)",
-        height: "64px",
+        minHeight: "64px",
+        paddingBottom: "env(safe-area-inset-bottom, 0px)",
       }}
     >
       {TABS.map((tab) => {
@@ -72,11 +73,11 @@ export function BottomNav() {
           <Link
             key={tab.href}
             href={tab.href}
-            className="flex flex-col items-center justify-center flex-1 gap-1 transition-colors"
+            className="flex flex-col items-center justify-center flex-1 gap-1 active:opacity-75"
             style={{
               color: active ? "var(--accent-hi)" : "var(--faint)",
               borderTop: active ? "2px solid var(--accent)" : "2px solid transparent",
-              transition: `color var(--t-ui), border-color var(--t-ui)`,
+              transition: `color var(--t-ui), border-color var(--t-ui), opacity var(--t-ui)`,
               paddingTop: "2px",
             }}
           >

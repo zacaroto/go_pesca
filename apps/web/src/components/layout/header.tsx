@@ -1,5 +1,7 @@
+"use client";
+
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { UserMenu } from "./user-menu";
 import { LanguageSwitcher } from "./language-switcher";
 import { RankBadge } from "@/components/rank/rank-badge";
@@ -12,6 +14,7 @@ type Props = {
 
 export function Header({ user, rankData }: Props) {
   const t = useTranslations();
+  const pathname = usePathname();
 
   return (
     <header
@@ -21,7 +24,7 @@ export function Header({ user, rankData }: Props) {
       <div className="max-w-6xl mx-auto px-4 h-[52px] flex items-center justify-between">
         {/* Wordmark */}
         <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-1" style={{ textDecoration: "none" }}>
+          <Link href="/" className="flex items-center gap-1 active:opacity-75" style={{ textDecoration: "none" }}>
             <span
               style={{
                 fontFamily: "var(--font-playfair), Georgia, serif",
@@ -64,22 +67,25 @@ export function Header({ user, rankData }: Props) {
                 { href: "/pokedex",    label: t("nav.pokedex") },
                 { href: "/catches",   label: t("nav.catches") },
                 { href: "/community", label: t("nav.community") },
-              ].map(({ href, label }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="px-3 py-1.5 rounded text-sm transition-colors"
-                  style={{
-                    color: "var(--muted)",
-                    fontWeight: 500,
-                    transition: "color var(--t-ui)",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted)")}
-                >
-                  {label}
-                </Link>
-              ))}
+              ].map(({ href, label }) => {
+                const isActive = pathname === href || pathname.startsWith(href + "/");
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    className="px-3 py-1.5 rounded text-sm active:opacity-75"
+                    style={{
+                      color: isActive ? "var(--text)" : "var(--muted)",
+                      fontWeight: isActive ? 600 : 500,
+                      transition: "color var(--t-ui)",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = isActive ? "var(--text)" : "var(--muted)")}
+                  >
+                    {label}
+                  </Link>
+                );
+              })}
             </nav>
           )}
         </div>
@@ -98,18 +104,19 @@ export function Header({ user, rankData }: Props) {
             <div className="flex items-center gap-3">
               <Link
                 href="/auth/login"
-                className="text-sm font-medium transition-colors"
+                className="text-sm font-medium active:opacity-75"
                 style={{ color: "var(--muted)" }}
               >
                 {t("common.login")}
               </Link>
               <Link
                 href="/auth/register"
-                className="text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+                className="text-sm font-semibold px-4 py-2 rounded-lg active:opacity-75"
                 style={{
                   background: "var(--accent)",
                   color: "#ffffff",
                   borderRadius: "8px",
+                  transition: "opacity var(--t-ui)",
                 }}
               >
                 {t("common.register")}
