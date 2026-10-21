@@ -79,15 +79,15 @@ tokens:
 
 ## Identity
 
-Go Pesca is a **professional, dark-themed** fishing log and social platform for anglers in Costa Rica. The design is inspired by high-end outdoor/fishing apps — dark, focused, and premium — not the cartoonish tropical aesthetic of v1.
+Go Pesca is a **light, field-guide** fishing log and social platform for anglers in Costa Rica. It reads like a printed naturalist's guide: calm, precise and trustworthy.
 
-**Aesthetic:** Obsidian surfaces + cobalt accent + warm typography. Like a carbon-fiber fishing reel: functional, precise, satisfying.
+**Aesthetic:** Paper ground, ink text and one cobalt hue for actions, active states and the main data element. Playfair Display carries species names and titles, with scientific names in italic; Inter carries all UI.
 
 ---
 
 ## Rules (Hard Constraints)
 
-- **Light only; one hue (cobalt) on actions, active states and the main data element.** No `dark:` prefixes, no conditional themes.
+- **Light only; one hue (cobalt) on actions, active states and the main data element.** No `dark:` prefixes, no conditional themes (`dark:` classes are neutralized by `@custom-variant dark` in globals.css and must not be added).
 - **One accent hue: cobalt.** `var(--accent)` for interactive elements, `var(--accent-hi)` for hover/pressed states. No coral, no amber, no secondary hues except habitat pills.
 - **No hardcoded color values.** Always `var(--token)` — never `#hex` or `rgb()` inline.
 - **No Material Symbols font.** Removed in redesign. All icons must be inline SVGs (`aria-hidden="true"`, `w-5 h-5` default).
@@ -134,7 +134,7 @@ Cards use `background: var(--surface)`, `border: 1px solid var(--border)`, `bord
 | Species name | Playfair Display | 22px | 700 |
 | Section heading | Playfair Display | 18px | 700 |
 | Body text | Inter | 14–15px | 400 |
-| Label (all-caps) | Inter | 10–11px | 500 uppercase |
+| Label | Inter | 12–13px | 500, sentence case, `--muted` |
 | Caption / timestamp | Inter | 11–12px | 400 |
 | Numbers | Inter | varies | 700 tabular-nums |
 
@@ -154,7 +154,7 @@ borderRadius: var(--r-card)  /* 4px */
 background: var(--raised)
 border: 1px solid var(--border)
 color: var(--text)
-borderRadius: 8px
+borderRadius: var(--r-control)
 padding: 10px 12px
 focus → borderColor: var(--accent)
 ```
@@ -178,10 +178,9 @@ active → opacity-75
 
 ### Destructive Button
 ```
-background: rgba(239,68,68,0.1)
-color: #ef4444
-border: 1px solid rgba(239,68,68,0.3)
-borderRadius: var(--r-card)
+background: var(--negative)
+color: white
+borderRadius: var(--r-control)
 ```
 
 ### Selected State (weather/tide chips, toggles)
@@ -192,9 +191,9 @@ unselected: background: var(--raised), color: var(--muted)
 
 ### Error State
 ```
-background: rgba(239,68,68,0.1)
-border: 1px solid rgba(239,68,68,0.3)
-color: #ef4444
+background: color-mix(in srgb, var(--negative) 10%, var(--surface))
+color: var(--negative)
+border: 1px solid color-mix(in srgb, var(--negative) 30%, var(--surface))
 ```
 
 ---
@@ -248,15 +247,15 @@ All icons are **inline SVGs**. No icon font, no external icon library required.
 
 ---
 
-## What Changed from v1 (Tropical Collector Voyage)
+## What Changed (v1 to v2 to v3)
 
-| v1 | v2 |
-|----|-----|
-| Fredoka + Nunito | Playfair Display + Inter |
-| Light background `#FEF9F2` | Paper ground `#f7f7f5` (v3) |
-| Ocean blue + coral + amber accents | Cobalt only |
-| `chunky-border`, `gradient-sunset` | Clean borders, no gradients |
-| Glassmorphism, shadows | Flat elevation |
-| Material Symbols font | Inline SVGs |
-| Gamified cartoon feel | Professional outdoor tool |
-| Emoji in buttons | Text + SVG icons |
+| v1 | v2 | v3 |
+|----|-----|-----|
+| Fredoka + Nunito | Playfair Display + Inter | Same, adds 500 weight and italic |
+| Light background `#FEF9F2` | Obsidian ground `#09090b` | Paper ground `#f7f7f5` |
+| Ocean blue + coral + amber accents | Cobalt only | Cobalt `#1d4ed8` on actions and main data |
+| `chunky-border`, `gradient-sunset` | Clean borders, no gradients | Same; 4px cards, 6px controls |
+| Glassmorphism, shadows | Flat dark elevation | Flat light elevation; shadows only on floating menus |
+| Material Symbols font | Inline SVGs | Same |
+| Gamified cartoon feel | Professional outdoor tool | Printed field guide |
+| Emoji in buttons | Text + SVG icons | Same; no uppercase tracked labels |
