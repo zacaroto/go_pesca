@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { pickFeatured, computeRecords, relativeDate } from "@/lib/community-mosaic";
+import { pickFeatured, communityWindows, tallyTopSpecies, relativeDate } from "@/lib/community-mosaic";
 import type { FeedCatch, FeedReactions } from "@/lib/feed";
 
 const now = new Date("2026-10-21T12:00:00Z");
@@ -25,19 +25,38 @@ describe("pickFeatured", () => {
   });
 });
 
-describe("computeRecords", () => {
-  it("finds this month's heaviest, top species and last-7-days count", () => {
-    const list = [
-      f("a", "Dorado", "2026-10-20", 8.4), f("b", "Dorado", "2026-10-05", 6),
-      f("c", "Sábalo", "2026-10-02", 31), f("d", "Marlín", "2026-09-28", 90),
-    ];
-    const out = computeRecords(list, now);
-    expect(out.heaviest?.id).toBe("c");
-    expect(out.topSpecies).toEqual({ name: "Dorado", count: 2 });
-    expect(out.weekCount).toBe(1);
+describe("communityWindows", () => {
+  it("uses the Costa Rica month on the last evening of October", () => {
+    const w = communityWindows(new Date("2026-10-31T23:30:00-06:00"));
+    expect(w).toMatchObject({ today: "2026-10-31", monthStart: "2026-10-01", nextMonthStart: "2026-11-01" });
   });
-  it("returns nulls and zero with no data", () => {
-    expect(computeRecords([], now)).toEqual({ heaviest: null, topSpecies: null, weekCount: 0 });
+  it("stays on Oct 31 when UTC has already rolled to November", () => {
+    const w = communityWindows(new Date("2026-11-01T05:30:00Z"));
+    expect(w.today).toBe("2026-10-31");
+    expect(w.monthStart).toBe("2026-10-01");
+  });
+  it("rolls the year over in December", () => {
+    const w = communityWindows(new Date("2026-12-15T12:00:00Z"));
+    expect(w.monthStart).toBe("2026-12-01");
+    expect(w.nextMonthStart).toBe("2027-01-01");
+  });
+  it("starts the 7-day window 6 days back, across a month boundary", () => {
+    expect(communityWindows(new Date("2026-11-03T12:00:00Z")).weekStart).toBe("2026-10-28");
+    expect(communityWindows(new Date("2026-10-21T12:00:00Z")).weekStart).toBe("2026-10-15");
+  });
+});
+
+describe("tallyTopSpecies", () => {
+  it("returns the most frequent species", () => {
+    const rows = [{ species_name: "Dorado" }, { species_name: "Pargo" }, { species_name: "Dorado" }];
+    expect(tallyTopSpecies(rows)).toEqual({ name: "Dorado", count: 2 });
+  });
+  it("breaks ties alphabetically", () => {
+    const rows = [{ species_name: "Wahoo" }, { species_name: "Dorado" }, { species_name: "Wahoo" }, { species_name: "Dorado" }];
+    expect(tallyTopSpecies(rows)).toEqual({ name: "Dorado", count: 2 });
+  });
+  it("returns null with no rows", () => {
+    expect(tallyTopSpecies([])).toBeNull();
   });
 });
 

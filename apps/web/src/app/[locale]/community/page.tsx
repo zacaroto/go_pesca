@@ -1,11 +1,10 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { fetchFeedCatches, fetchReactionsForCatches } from "@/lib/feed";
+import { fetchFeedCatches, fetchReactionsForCatches, fetchCommunityRecords } from "@/lib/feed";
 import { fetchAllGroupsFeedCatches } from "@/lib/group-feed";
 import { getUserGroupsServer } from "@/lib/groups.server";
 import { CommunityTabs } from "@/components/feed/magazine-grid";
-import { computeRecords } from "@/lib/community-mosaic";
 import { MyGroupsBar } from "@/components/groups/my-groups-bar";
 import { Link } from "@/i18n/navigation";
 
@@ -29,10 +28,14 @@ export default async function CommunityPage({ params }: Props) {
     redirect(`/${locale}/auth/login`);
   }
 
-  const [catches, groups, groupFeedCatches] = await Promise.all([
+  const [catches, groups, groupFeedCatches, records] = await Promise.all([
     fetchFeedCatches(locale),
     getUserGroupsServer(userId!),
     fetchAllGroupsFeedCatches(userId!, locale),
+    fetchCommunityRecords(locale).catch((err) => {
+      console.error("Failed to load community records", err);
+      return null;
+    }),
   ]);
 
   const allCatchIds = [
@@ -44,14 +47,15 @@ export default async function CommunityPage({ params }: Props) {
   const t = await getTranslations("feed");
   const tGroups = await getTranslations("groups");
   const hasGroups = groups.length > 0;
-  const weekCount = computeRecords(catches, new Date()).weekCount;
 
   return (
     <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <h1 className="font-serif-display text-[40px] sm:text-[52px] font-black leading-none text-[var(--text)]">
         {t("title")}
       </h1>
-      <p className="mt-3 mb-8 text-base text-[var(--muted)]">{t("subtitle", { count: weekCount })}</p>
+      <div className="mb-8">
+        {records && <p className="mt-3 text-base text-[var(--muted)]">{t("subtitle", { count: records.weekCount })}</p>}
+      </div>
 
       {hasGroups && <MyGroupsBar groups={groups} />}
 
@@ -61,6 +65,7 @@ export default async function CommunityPage({ params }: Props) {
         reactions={reactions}
         locale={locale}
         hasGroups={hasGroups}
+        records={records}
       />
 
       {!hasGroups && (

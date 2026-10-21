@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { MagazineTile } from "./magazine-tile";
 import { fetchMoreFeedCatches, fetchMoreReactions } from "@/lib/feed-client";
 import { fetchMoreAllGroupsFeedCatches } from "@/lib/group-feed-client";
-import { computeRecords, pickFeatured } from "@/lib/community-mosaic";
+import { pickFeatured, type CommunityRecords } from "@/lib/community-mosaic";
 import type { FeedCatch, FeedReactions } from "@/lib/feed";
 
 const PAGE_SIZE = 20;
@@ -25,9 +25,10 @@ type GridProps = {
   locale: string;
   feedType: "global" | "allGroups";
   emptyMessage?: string;
+  records: CommunityRecords | null;
 };
 
-export function MagazineGrid({ initialCatches, initialReactions, locale, feedType, emptyMessage }: GridProps) {
+export function MagazineGrid({ initialCatches, initialReactions, locale, feedType, emptyMessage, records }: GridProps) {
   const t = useTranslations("feed");
   const [catches, setCatches] = useState(initialCatches);
   const [reactions, setReactions] = useState(initialReactions);
@@ -68,7 +69,6 @@ export function MagazineGrid({ initialCatches, initialReactions, locale, feedTyp
 
   const now = new Date();
   const { featured, rest } = pickFeatured(catches, reactions, now);
-  const records = computeRecords(catches, now);
 
   return (
     <div>
@@ -102,14 +102,14 @@ export function MagazineGrid({ initialCatches, initialReactions, locale, feedTyp
       <div className="grid sm:grid-cols-3 gap-4 mt-10">
         <Record
           label={t("recordHeaviest")}
-          value={records.heaviest?.weight_kg != null ? `${records.heaviest.weight_kg.toFixed(1)} kg` : "—"}
-          detail={records.heaviest ? `${records.heaviest.species_name} · ${records.heaviest.location_name ?? "—"}` : undefined}
+          value={records?.heaviest ? `${records.heaviest.weight_kg.toFixed(1)} kg` : "—"}
+          detail={records?.heaviest ? `${records.heaviest.species_name} · ${records.heaviest.location_name ?? "—"}` : undefined}
         />
         <Record
           label={t("recordTopSpecies")}
-          value={records.topSpecies ? `${records.topSpecies.name} · ${records.topSpecies.count}` : "—"}
+          value={records?.topSpecies ? `${records.topSpecies.name} · ${records.topSpecies.count}` : "—"}
         />
-        <Record label={t("recordWeek")} value={String(records.weekCount)} />
+        <Record label={t("recordWeek")} value={records ? String(records.weekCount) : "—"} />
       </div>
     </div>
   );
@@ -133,9 +133,10 @@ type TabsProps = {
   reactions: Record<string, FeedReactions>;
   locale: string;
   hasGroups: boolean;
+  records: CommunityRecords | null;
 };
 
-export function CommunityTabs({ catches, groupFeedCatches, reactions, locale, hasGroups }: TabsProps) {
+export function CommunityTabs({ catches, groupFeedCatches, reactions, locale, hasGroups, records }: TabsProps) {
   const t = useTranslations("feed");
   const [tab, setTab] = useState<"all" | "groups">("all");
   const active = hasGroups ? tab : "all";
@@ -162,7 +163,7 @@ export function CommunityTabs({ catches, groupFeedCatches, reactions, locale, ha
         </div>
       )}
       <div hidden={active !== "all"}>
-        <MagazineGrid feedType="global" initialCatches={catches} initialReactions={reactions} locale={locale} />
+        <MagazineGrid feedType="global" initialCatches={catches} initialReactions={reactions} locale={locale} records={records} />
       </div>
       {hasGroups && (
         <div hidden={active !== "groups"}>
@@ -171,6 +172,7 @@ export function CommunityTabs({ catches, groupFeedCatches, reactions, locale, ha
             initialCatches={groupFeedCatches}
             initialReactions={reactions}
             locale={locale}
+            records={records}
             emptyMessage={t("noGroupActivity")}
           />
         </div>
