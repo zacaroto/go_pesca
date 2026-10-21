@@ -352,7 +352,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
           type="button"
           onClick={() => setShowDeleteConfirm(true)}
           disabled={deleting}
-          className="flex-1 bg-neon-coral text-white py-3 rounded-2xl font-bold chunky-border bouncy-shadow bouncy-hover bouncy-active transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+          className="flex-1 bg-accent text-white py-3 rounded-2xl font-bold chunky-border bouncy-shadow bouncy-hover bouncy-active transition-all disabled:opacity-50 flex items-center justify-center gap-2"
           style={{ fontFamily: "var(--font-fredoka)" }}
         >
           <span className="material-symbols-outlined text-xl">delete</span>
@@ -369,7 +369,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
           />
           <div className="relative bg-card-bg rounded-3xl chunky-border chunky-shadow p-6 max-w-sm w-full space-y-4 animate-float">
             <div className="flex flex-col items-center text-center space-y-3">
-              <div className="w-16 h-16 bg-neon-coral/15 rounded-full flex items-center justify-center sticker-border">
+              <div className="w-16 h-16 bg-accent/15 rounded-full flex items-center justify-center sticker-border">
                 <span className="material-symbols-outlined text-neon-coral text-4xl">warning</span>
               </div>
               <h3
@@ -394,7 +394,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
               <button
                 type="button"
                 onClick={handleDelete}
-                className="flex-1 bg-neon-coral text-white py-3 rounded-2xl font-bold chunky-border bouncy-shadow bouncy-hover bouncy-active transition-all flex items-center justify-center gap-2"
+                className="flex-1 bg-accent text-white py-3 rounded-2xl font-bold chunky-border bouncy-shadow bouncy-hover bouncy-active transition-all flex items-center justify-center gap-2"
                 style={{ fontFamily: "var(--font-fredoka)" }}
               >
                 <span className="material-symbols-outlined text-lg">delete</span>

@@ -78,7 +78,7 @@ function SpeciesDetailContent({
       ? "bg-secondary text-white"
       : species.habitat === "saltwater"
         ? "bg-primary text-white"
-        : "bg-tertiary-container text-white";
+        : "bg-accent-ink text-white";
 
   const regions = fishingRegions
     ? fishingRegions.split(",").map((r) => r.trim())
@@ -226,7 +226,7 @@ function SpeciesDetailContent({
       <div className="text-center">
         <Link
           href={`/catches/new`}
-          className="inline-flex items-center gap-2.5 bg-gradient-sunset text-white font-headline-md text-lg px-8 py-4 rounded-full chunky-border bouncy-shadow bouncy-hover bouncy-active transition-all font-bold"
+          className="inline-flex items-center gap-2.5 bg-accent text-white font-headline-md text-lg px-8 py-4 rounded-full chunky-border bouncy-shadow bouncy-hover bouncy-active transition-all font-bold"
           style={{ fontFamily: "var(--font-fredoka)" }}
         >
           <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>

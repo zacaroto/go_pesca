@@ -102,7 +102,7 @@ export function PokedexCard({ entry, locale }: Props) {
       href={`/pokedex/${entry.id}`}
       style={{
         background: "var(--surface)",
-        border: "1px solid rgba(37,99,235,0.3)",
+        border: "1px solid var(--border)",
         borderRadius: "var(--r-card)",
         overflow: "hidden",
         display: "flex",

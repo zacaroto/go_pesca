@@ -63,7 +63,7 @@ export function PokedexGrid({ entries, locale }: Props) {
               onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
               onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
               style={{
-                background: active ? "rgba(37,99,235,0.15)" : "transparent",
+                background: active ? "var(--accent-soft)" : "transparent",
                 color: active ? "var(--accent-hi)" : "var(--muted)",
                 border: "none",
                 borderRadius: "var(--r-pill)",

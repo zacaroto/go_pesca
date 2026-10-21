@@ -39,7 +39,7 @@ function PokedexContent({
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 overflow-x-hidden">
-      <h1 className="text-3xl font-extrabold mb-6 text-gradient-ocean" style={{ fontFamily: "var(--font-fredoka)" }}>
+      <h1 className="text-3xl font-extrabold mb-6" style={{ fontFamily: "var(--font-fredoka)" }}>
         {t("title")}
       </h1>
       <PokedexGrid entries={entries} locale={locale} />

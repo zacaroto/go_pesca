@@ -74,7 +74,7 @@ function CommunityContent({
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-extrabold mb-6 text-gradient-ocean" style={{ fontFamily: "var(--font-fredoka)" }}>
+      <h1 className="text-3xl font-extrabold mb-6" style={{ fontFamily: "var(--font-fredoka)" }}>
         {t("title")}
       </h1>
 
@@ -128,7 +128,7 @@ function NoGroupsCard({
   tGroups: ReturnType<typeof useTranslations<"groups">>;
 }) {
   return (
-    <div className="rounded-2xl bg-surface dark:bg-surface-alt ring-1 ring-foreground/5 dark:ring-white/5 p-6 mb-4 text-center">
+    <div className="rounded-2xl bg-surface ring-1 ring-foreground/5 dark:ring-white/5 p-6 mb-4 text-center">
       <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-primary/10 mb-4">
         <svg className="w-8 h-8 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
           <path fillRule="evenodd" d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 17.084a11.116 11.116 0 0 1 3.727-1.482 3 3 0 0 1 3.926 0 11.12 11.12 0 0 1 3.727 1.482 4.5 4.5 0 0 0-11.38 0Z" clipRule="evenodd" />
@@ -139,7 +139,7 @@ function NoGroupsCard({
       <div className="flex items-center justify-center gap-3">
         <Link
           href="/groups/new"
-          className="px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-primary hover:bg-primary-dark active:scale-[0.97] transition-all"
+          className="px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-primary hover:bg-accent-hi active:scale-[0.97] transition-all"
         >
           {tGroups("createGroup")}
         </Link>

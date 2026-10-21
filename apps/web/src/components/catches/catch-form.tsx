@@ -422,7 +422,7 @@ export function CatchForm({ locale }: Props) {
                 if (step === 1 && validateStep1()) setStep(2);
                 else if (step === 2 && validateStep2()) setStep(3);
               }}
-              className="gradient-sunset text-white font-headline-md text-sm sm:text-base font-bold py-3 px-7 rounded-2xl chunky-border chunky-shadow btn-press transition-all flex items-center gap-2"
+              className="bg-accent text-white font-headline-md text-sm sm:text-base font-bold py-3 px-7 rounded-2xl chunky-border chunky-shadow btn-press transition-all flex items-center gap-2"
             >
               Siguiente
               <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>
@@ -434,7 +434,7 @@ export function CatchForm({ locale }: Props) {
               type="button"
               onClick={handleSubmit}
               disabled={submitting}
-              className="gradient-sunset text-white font-headline-md text-base sm:text-lg font-bold py-3.5 px-8 rounded-2xl chunky-border chunky-shadow btn-press transition-all flex items-center gap-2 disabled:opacity-50"
+              className="bg-accent text-white font-headline-md text-base sm:text-lg font-bold py-3.5 px-8 rounded-2xl chunky-border chunky-shadow btn-press transition-all flex items-center gap-2 disabled:opacity-50"
             >
               <span className="material-symbols-outlined text-xl">check_circle</span>
               {submitting ? tCommon("loading") : "¡Guardar Captura!"}

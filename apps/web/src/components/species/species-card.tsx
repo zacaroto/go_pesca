@@ -31,7 +31,7 @@ export function SpeciesCard({ species, locale }: Props) {
       ? "bg-secondary text-white"
       : species.habitat === "saltwater"
         ? "bg-primary text-white"
-        : "bg-tertiary-container text-white";
+        : "bg-accent-ink text-white";
 
   return (
     <Link
