@@ -26,9 +26,11 @@ export function UserMenu({ displayName, userId }: Props) {
     <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 text-sm hover:text-blue-600 transition-colors"
+        className="flex items-center gap-2 text-sm active:opacity-75"
+        style={{ color: "var(--text)", transition: "opacity var(--t-ui)" }}
       >
-        <span className="w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-300 font-medium">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full font-semibold"
+          style={{ background: "var(--accent-soft)", color: "var(--accent-ink)" }}>
           {displayName.charAt(0).toUpperCase()}
         </span>
         <span className="hidden sm:inline">{displayName}</span>
@@ -36,25 +38,27 @@ export function UserMenu({ displayName, userId }: Props) {
       {open && (
         <>
           <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 top-full mt-1 w-48 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg z-20">
+          <div className="absolute right-0 top-full z-20 mt-1 w-48 overflow-hidden border shadow-lg"
+            style={{ background: "var(--surface)", borderColor: "var(--border)", borderRadius: "var(--r-card)", color: "var(--text)" }}>
             <Link
               href={`/profile/${userId}` as "/profile/[userId]"}
-              className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="block px-4 py-2 text-sm hover:bg-[var(--raised)]"
               onClick={() => setOpen(false)}
             >
               {t("profile.myProfile")}
             </Link>
             <Link
               href="/catches/new"
-              className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="block px-4 py-2 text-sm hover:bg-[var(--raised)]"
               onClick={() => setOpen(false)}
             >
               {t("catches.newCatch")}
             </Link>
-            <hr className="border-gray-200 dark:border-gray-700" />
+            <hr style={{ borderColor: "var(--rule)" }} />
             <button
               onClick={handleLogout}
-              className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="w-full text-left px-4 py-2 text-sm hover:bg-[var(--raised)]"
+              style={{ color: "var(--negative)" }}
             >
               {t("common.logout")}
             </button>

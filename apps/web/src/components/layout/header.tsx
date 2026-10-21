@@ -4,126 +4,82 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { UserMenu } from "./user-menu";
 import { LanguageSwitcher } from "./language-switcher";
-import { RankBadge } from "@/components/rank/rank-badge";
-import { VersionBadge } from "@/components/version-badge";
+import { FishMark } from "./fish-mark";
 
 type Props = {
   user: { id: string; email?: string; display_name?: string } | null;
   rankData?: { caught: number; total: number };
 };
 
-export function Header({ user, rankData }: Props) {
+const NAV = [
+  { href: "/", key: "home" },
+  { href: "/pokedex", key: "pokedex" },
+  { href: "/community", key: "community" },
+  { href: "/groups", key: "groups" },
+  { href: "/species", key: "species" },
+] as const;
+
+export function Header({ user }: Props) {
   const t = useTranslations();
   const pathname = usePathname();
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
 
   return (
-    <header
-      className="top-0 sticky z-40 w-full"
-      style={{ background: "var(--surface)", borderBottom: "1px solid var(--border)" }}
-    >
-      <div className="max-w-6xl mx-auto px-4 h-[52px] flex items-center justify-between">
-        {/* Wordmark */}
-        <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-1 active:opacity-75" style={{ textDecoration: "none" }}>
-            <span
-              style={{
-                fontFamily: "var(--font-playfair), Georgia, serif",
-                fontWeight: 900,
-                fontSize: "17px",
-                color: "var(--text)",
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Go
-            </span>
-            <span
-              style={{
-                display: "inline-block",
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                background: "var(--accent)",
-                margin: "0 3px",
-                flexShrink: 0,
-              }}
-            />
-            <span
-              style={{
-                fontFamily: "var(--font-playfair), Georgia, serif",
-                fontWeight: 900,
-                fontSize: "17px",
-                color: "var(--text)",
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Pesca
-            </span>
-            <VersionBadge />
-          </Link>
+    <header className="sticky top-0 z-40 w-full" style={{ background: "var(--surface)" }}>
+      <div className="mx-auto flex h-[60px] max-w-[1280px] items-center gap-3 px-4 sm:gap-7 sm:px-12">
+        <Link href="/" className="flex shrink-0 items-center gap-2.5 whitespace-nowrap active:opacity-75" style={{ color: "var(--text)" }}>
+          <span style={{ color: "var(--accent)" }}><FishMark /></span>
+          <span className="font-serif-display" style={{ fontWeight: 700, fontSize: 20 }}>Go Pesca</span>
+        </Link>
 
-          {user && (
-            <nav className="hidden sm:flex items-center gap-1 text-sm">
-              {[
-                { href: "/pokedex",    label: t("nav.pokedex") },
-                { href: "/catches",   label: t("nav.catches") },
-                { href: "/community", label: t("nav.community") },
-              ].map(({ href, label }) => {
-                const isActive = pathname === href || pathname.startsWith(href + "/");
-                return (
-                  <Link
-                    key={href}
-                    href={href}
-                    className="px-3 py-1.5 rounded text-sm active:opacity-75"
-                    style={{
-                      color: isActive ? "var(--text)" : "var(--muted)",
-                      fontWeight: isActive ? 600 : 500,
-                      transition: "color var(--t-ui)",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = isActive ? "var(--text)" : "var(--muted)")}
-                  >
-                    {label}
-                  </Link>
-                );
-              })}
-            </nav>
-          )}
-        </div>
+        {user && (
+          <nav className="hidden gap-1 sm:flex" aria-label={t("nav.home")}>
+            {NAV.map(({ href, key }) => {
+              const active = isActive(href);
+              return (
+                <Link key={href} href={href}
+                  className="rounded-full px-3 py-2 text-sm hover:bg-[var(--raised)] active:opacity-75"
+                  style={{
+                    color: active ? "var(--text)" : "var(--muted)",
+                    fontWeight: active ? 600 : 400,
+                    transition: "color var(--t-ui), background-color var(--t-ui)",
+                  }}
+                  aria-current={active ? "page" : undefined}>
+                  {t(`nav.${key}`)}
+                </Link>
+              );
+            })}
+          </nav>
+        )}
 
-        {/* Right actions */}
-        <div className="flex items-center gap-3">
-          <LanguageSwitcher />
-          {user ? (
-            <>
-              {rankData && (
-                <RankBadge caught={rankData.caught} total={rankData.total} size="sm" />
-              )}
-              <UserMenu displayName={user.display_name ?? user.email ?? ""} userId={user.id} />
-            </>
-          ) : (
-            <div className="flex items-center gap-3">
-              <Link
-                href="/auth/login"
-                className="text-sm font-medium active:opacity-75"
-                style={{ color: "var(--muted)" }}
-              >
-                {t("common.login")}
-              </Link>
-              <Link
-                href="/auth/register"
-                className="text-sm font-semibold px-4 py-2 rounded-lg active:opacity-75"
-                style={{
-                  background: "var(--accent)",
-                  color: "#ffffff",
-                  borderRadius: "8px",
-                  transition: "opacity var(--t-ui)",
-                }}
-              >
-                {t("common.register")}
-              </Link>
-            </div>
-          )}
-        </div>
+        <span className="flex-1" />
+
+        <Link href="/species" aria-label={t("common.search")} className="hidden sm:block active:opacity-75" style={{ color: "var(--muted)" }}>
+          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5" /><path d="m20 20-4.2-4.2" />
+          </svg>
+        </Link>
+
+        <LanguageSwitcher />
+
+        {user ? (
+          <>
+            <Link href="/catches/new"
+              className="hidden h-10 items-center gap-2 rounded-full px-5 text-sm font-semibold active:scale-[0.97] sm:inline-flex"
+              style={{ background: "var(--accent)", color: "var(--on-primary)", transition: "background-color var(--t-ui), transform var(--t-press)" }}>
+              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+              {t("nav.logCatch")}
+            </Link>
+            <UserMenu displayName={user.display_name ?? user.email ?? ""} userId={user.id} />
+          </>
+        ) : (
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Link href="/auth/login" className="whitespace-nowrap text-sm font-medium active:opacity-75" style={{ color: "var(--muted)" }}>{t("common.login")}</Link>
+            <Link href="/auth/register" className="inline-flex h-10 items-center whitespace-nowrap rounded-full px-4 text-sm font-semibold active:scale-[0.97] sm:px-5"
+              style={{ background: "var(--accent)", color: "var(--on-primary)" }}>{t("common.register")}</Link>
+          </div>
+        )}
       </div>
     </header>
   );

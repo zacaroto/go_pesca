@@ -1,7 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { CatchCard } from "@/components/catches/catch-card";
-import { HomeFAB } from "@/components/layout/home-fab";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -162,8 +161,6 @@ export default async function Home({ params }: Props) {
           )}
         </div>
       </div>
-
-      <HomeFAB />
     </main>
   );
 }

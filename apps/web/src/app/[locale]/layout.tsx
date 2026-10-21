@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/layout/header";
+import { SiteFooter } from "@/components/layout/site-footer";
 import { BottomNav } from "@/components/layout/bottom-nav";
 import { AchievementProvider } from "@/components/achievements/achievement-provider";
 
@@ -86,7 +87,8 @@ export default async function LocaleLayout({ children, params }: Props) {
     <NextIntlClientProvider messages={messages}>
       <AchievementProvider>
         <Header user={user} rankData={rankData} />
-        <main className="flex-1 flex flex-col pb-20 sm:pb-0">{children}</main>
+        <main className="flex flex-1 flex-col">{children}</main>
+        <SiteFooter />
         {user && <BottomNav />}
       </AchievementProvider>
     </NextIntlClientProvider>

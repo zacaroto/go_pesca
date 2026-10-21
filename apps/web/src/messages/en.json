@@ -22,7 +22,22 @@
     "species": "Species",
     "community": "Community",
     "achievements": "Achievements",
-    "profile": "Profile"
+    "profile": "Profile",
+    "groups": "Groups",
+    "logCatch": "Log catch"
+  },
+  "footer": {
+    "quote": "Every species you log helps us understand our waters better.",
+    "collection": "Collection",
+    "community": "Community",
+    "brand": "Go Pesca",
+    "ranks": "Ranks",
+    "suggestSpecies": "Suggest a species",
+    "responsible": "Responsible fishing",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "contact": "Contact",
+    "madeIn": "Made in Costa Rica"
   },
   "home": {
     "title": "Your FishyDex",

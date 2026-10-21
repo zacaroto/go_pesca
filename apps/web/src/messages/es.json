@@ -22,7 +22,22 @@
     "species": "Especies",
     "community": "Comunidad",
     "achievements": "Logros",
-    "profile": "Perfil"
+    "profile": "Perfil",
+    "groups": "Grupos",
+    "logCatch": "Registrar captura"
+  },
+  "footer": {
+    "quote": "Cada especie que registrás ayuda a conocer mejor nuestras aguas.",
+    "collection": "Colección",
+    "community": "Comunidad",
+    "brand": "Go Pesca",
+    "ranks": "Rangos",
+    "suggestSpecies": "Sugerir especie",
+    "responsible": "Pesca responsable",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "contact": "Contacto",
+    "madeIn": "Hecho en Costa Rica"
   },
   "home": {
     "title": "Tu Pescadex",

@@ -18,7 +18,8 @@ export function LanguageSwitcher() {
   return (
     <button
       onClick={switchLocale}
-      className="text-sm px-2 py-1 rounded border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+      className="h-8 shrink-0 rounded-full border px-3 text-[13px] font-medium hover:bg-[var(--raised)] active:opacity-75"
+      style={{ borderColor: "var(--border)", color: "var(--muted)", transition: "background-color var(--t-ui), opacity var(--t-ui)" }}
       title={locale === "es" ? "Switch to English" : "Cambiar a Español"}
     >
       {locale === "es" ? "EN" : "ES"}
