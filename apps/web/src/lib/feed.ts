@@ -13,6 +13,8 @@ export type FeedCatch = {
   location_name: string | null;
   catch_date: string;
   created_at: string;
+  weight_kg: number | null;
+  habitat: "freshwater" | "saltwater" | "brackish" | null;
   group_name?: string;
 };
 
@@ -47,8 +49,8 @@ export async function fetchFeedCatches(
   let query = supabase
     .from("catches")
     .select(
-      `id, user_id, photo_url, location_name, catch_date, created_at,
-       species:species_id (${nameCol}),
+      `id, user_id, photo_url, location_name, catch_date, created_at, weight_kg,
+       species:species_id (${nameCol}, habitat),
        profile:user_id (display_name, avatar_url)`
     )
     .eq("is_public", true)
@@ -75,6 +77,8 @@ export async function fetchFeedCatches(
       location_name: row.location_name as string | null,
       catch_date: row.catch_date as string,
       created_at: row.created_at as string,
+      weight_kg: row.weight_kg as number | null,
+      habitat: (species?.habitat as "freshwater" | "saltwater" | "brackish") ?? null,
     };
   });
 }
