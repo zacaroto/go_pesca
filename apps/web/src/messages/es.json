@@ -27,7 +27,7 @@
     "logCatch": "Registrar captura"
   },
   "footer": {
-    "quote": "Cada especie que registrás ayuda a conocer mejor nuestras aguas.",
+    "quote": "Cada especie que registras ayuda a conocer mejor nuestras aguas.",
     "collection": "Colección",
     "community": "Comunidad",
     "brand": "Go Pesca",
@@ -56,10 +56,11 @@
     "recentCatches": "Últimas capturas",
     "viewAll": "Ver las {count}",
     "emptyTitle": "Tu guía está en blanco",
-    "emptyBody": "Registrá tu primera captura y aparecerá aquí como la portada de tu guía.",
+    "emptyBody": "Registra tu primera captura y aparecerá aquí como la portada de tu guía.",
     "logCatch": "Registrar captura",
     "login": "Iniciar sesión",
-    "register": "Crear cuenta"
+    "register": "Crear cuenta",
+    "loadError": "No pudimos cargar tu guía. Intenta de nuevo en un momento."
   },
   "auth": {
     "loginTitle": "Iniciar Sesión",

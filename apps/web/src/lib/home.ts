@@ -6,7 +6,7 @@ export async function getHomeData(userId: string, locale: string) {
   const nameCol = locale === "en" ? "name_en" : "name_es";
   const descCol = locale === "en" ? "description_en" : "description_es";
 
-  const [{ data: rows }, { count: total }] = await Promise.all([
+  const [{ data: rows, error: catchesError }, { count: total, error: speciesError }] = await Promise.all([
     supabase
       .from("catches")
       .select(`id, species_id, photo_url, catch_date, location_name, weight_kg, length_cm, bait_lure,
@@ -15,6 +15,8 @@ export async function getHomeData(userId: string, locale: string) {
       .order("catch_date", { ascending: false }),
     supabase.from("species").select("*", { count: "exact", head: true }),
   ]);
+
+  if (catchesError || speciesError) throw catchesError ?? speciesError;
 
   const catches: HomeCatch[] = ((rows ?? []) as unknown as Record<string, unknown>[]).map((row) => {
     const s = (row.species ?? {}) as Record<string, string | null>;

@@ -59,7 +59,8 @@
     "emptyBody": "Log your first catch and it will appear here as the cover of your guide.",
     "logCatch": "Log a catch",
     "login": "Log in",
-    "register": "Create account"
+    "register": "Create account",
+    "loadError": "We couldn't load your guide. Try again in a moment."
   },
   "auth": {
     "loginTitle": "Log In",

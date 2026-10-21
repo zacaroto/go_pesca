@@ -17,9 +17,9 @@ const btnClass =
   "motion-reduce:transition-none motion-reduce:active:scale-100";
 
 const linkClass =
-  "font-medium text-[var(--accent)] hover:text-[var(--accent-hi)] focus-visible:outline-2 " +
+  "font-medium text-[var(--accent)] hover:text-[var(--accent-hi)] active:opacity-70 focus-visible:outline-2 " +
   "focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] rounded-sm " +
-  "transition-colors duration-[var(--t-ui)]";
+  "transition-[color,opacity] duration-[var(--t-ui)] motion-reduce:transition-none";
 
 function Photo({ src, alt, className }: { src: string | null; alt: string; className: string }) {
   if (!src) {
@@ -45,15 +45,40 @@ export default async function Home({ params }: Props) {
     new Date(iso).toLocaleDateString(dateLocale, { day: "numeric", month: "short", timeZone: "UTC" });
   const fmtKg = (n: number) => `${n.toFixed(1)} kg`;
 
-  let data: Awaited<ReturnType<typeof getHomeData>> | null = null;
+  let userId: string | null = null;
   try {
     const supabase = await createClient();
     const {
       data: { user },
     } = await supabase.auth.getUser();
-    if (user) data = await getHomeData(user.id, locale);
+    userId = user?.id ?? null;
   } catch {
-    data = null;
+    userId = null;
+  }
+
+  let data: Awaited<ReturnType<typeof getHomeData>> | null = null;
+  let loadFailed = false;
+  if (userId) {
+    try {
+      data = await getHomeData(userId, locale);
+    } catch (err) {
+      console.error("home: failed to load data", err);
+      loadFailed = true;
+    }
+  }
+
+  if (loadFailed) {
+    return (
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+        <p
+          role="alert"
+          className="m-0 p-5 text-base"
+          style={{ background: "var(--surface)", border: "1px solid var(--rule)", borderRadius: "var(--r-card)", color: "var(--negative)" }}
+        >
+          {t("loadError")}
+        </p>
+      </main>
+    );
   }
 
   if (!data) {
@@ -142,13 +167,13 @@ export default async function Home({ params }: Props) {
           <p className="sci-name m-0 mb-5 text-xl">{latestNew.scientific_name}</p>
           <dl className="grid grid-cols-3 gap-4 m-0 mb-6">
             {facts.map((f) => (
-              <div key={f.label} className="min-w-0">
-                <dd className="m-0 text-lg sm:text-[22px] font-semibold truncate tabular-nums" style={{ color: "var(--text)" }}>
-                  {f.value}
-                </dd>
+              <div key={f.label} className="min-w-0 flex flex-col-reverse">
                 <dt className="text-[13px] font-normal" style={{ color: "var(--muted)" }}>
                   {f.label}
                 </dt>
+                <dd className="m-0 text-lg sm:text-[22px] font-semibold truncate tabular-nums" style={{ color: "var(--text)" }}>
+                  {f.value}
+                </dd>
               </div>
             ))}
           </dl>
@@ -199,7 +224,7 @@ export default async function Home({ params }: Props) {
                 <div className="h-24 overflow-hidden" style={{ background: "var(--ground)", borderRadius: "3px" }}>
                   <Photo
                     src={c.reference_photo_url ?? c.photo_url}
-                    alt={c.species_name}
+                    alt=""
                     className="w-full h-full object-contain p-1.5"
                   />
                 </div>
@@ -240,10 +265,10 @@ export default async function Home({ params }: Props) {
               <li key={c.id} className="py-3.5" style={{ borderTop: "1px solid var(--rule)" }}>
                 <Link
                   href={`/catches/${c.id}`}
-                  className="grid grid-cols-[96px_minmax(0,1fr)_auto] sm:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 sm:gap-[18px] items-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] active:opacity-80 transition-opacity duration-[var(--t-press)]"
+                  className="grid grid-cols-[96px_minmax(0,1fr)_auto] sm:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 sm:gap-[18px] items-center rounded-sm hover:bg-[var(--surface)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] active:opacity-80 transition-[background-color,opacity] duration-[var(--t-press)] motion-reduce:transition-none"
                 >
                   <div className="h-16 sm:h-20 overflow-hidden" style={{ background: "var(--surface)", borderRadius: "3px" }}>
-                    <Photo src={c.photo_url || null} alt={c.species_name} className="w-full h-full object-cover" />
+                    <Photo src={c.photo_url || null} alt="" className="w-full h-full object-cover" />
                   </div>
                   <div className="min-w-0">
                     <p className="font-serif-display font-bold m-0 text-[19px] truncate" style={{ color: "var(--text)" }}>
