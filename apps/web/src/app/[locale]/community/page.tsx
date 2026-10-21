@@ -1,13 +1,11 @@
-import { setRequestLocale } from "next-intl/server";
-import { useTranslations } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { fetchFeedCatches, fetchReactionsForCatches } from "@/lib/feed";
 import { fetchAllGroupsFeedCatches } from "@/lib/group-feed";
 import { getUserGroupsServer } from "@/lib/groups.server";
-import type { GroupWithMemberCount } from "@/lib/groups";
-import type { FeedCatch, FeedReactions } from "@/lib/feed";
-import { FeedList } from "@/components/feed/feed-list";
+import { CommunityTabs } from "@/components/feed/magazine-grid";
+import { computeRecords } from "@/lib/community-mosaic";
 import { MyGroupsBar } from "@/components/groups/my-groups-bar";
 import { Link } from "@/i18n/navigation";
 
@@ -43,113 +41,48 @@ export default async function CommunityPage({ params }: Props) {
   ];
   const uniqueCatchIds = [...new Set(allCatchIds)];
   const reactions = await fetchReactionsForCatches(uniqueCatchIds);
-
-  return (
-    <CommunityContent
-      catches={catches}
-      groupFeedCatches={groupFeedCatches}
-      reactions={reactions}
-      groups={groups}
-      locale={locale}
-    />
-  );
-}
-
-function CommunityContent({
-  catches,
-  groupFeedCatches,
-  reactions,
-  groups,
-  locale,
-}: {
-  catches: FeedCatch[];
-  groupFeedCatches: FeedCatch[];
-  reactions: Record<string, FeedReactions>;
-  groups: GroupWithMemberCount[];
-  locale: string;
-}) {
-  const t = useTranslations("feed");
-  const tGroups = useTranslations("groups");
+  const t = await getTranslations("feed");
+  const tGroups = await getTranslations("groups");
   const hasGroups = groups.length > 0;
+  const weekCount = computeRecords(catches, new Date()).weekCount;
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-extrabold mb-6" style={{ fontFamily: "var(--font-fredoka)" }}>
+    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      <h1 className="font-serif-display text-[40px] sm:text-[52px] font-black leading-none text-[var(--text)]">
         {t("title")}
       </h1>
+      <p className="mt-3 mb-8 text-base text-[var(--muted)]">{t("subtitle", { count: weekCount })}</p>
 
-      {/* My Groups Bar — always show if user has groups */}
       {hasGroups && <MyGroupsBar groups={groups} />}
 
-      {/* Group Activity Section */}
-      {hasGroups ? (
-        <section className="mb-8">
-          <h2 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-            <svg className="w-5 h-5 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path fillRule="evenodd" d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 17.084a11.116 11.116 0 0 1 3.727-1.482 3 3 0 0 1 3.926 0 11.12 11.12 0 0 1 3.727 1.482 4.5 4.5 0 0 0-11.38 0Z" clipRule="evenodd" />
-            </svg>
-            {t("groupActivity")}
-          </h2>
-          <FeedList
-            initialCatches={groupFeedCatches}
-            initialReactions={reactions}
-            locale={locale}
-            feedType="allGroups"
-            emptyMessage={t("noGroupActivity")}
-          />
+      <CommunityTabs
+        catches={catches}
+        groupFeedCatches={groupFeedCatches}
+        reactions={reactions}
+        locale={locale}
+        hasGroups={hasGroups}
+      />
+
+      {!hasGroups && (
+        <section className="mt-10 rounded-[var(--r-card)] bg-[var(--surface)] p-6 text-center">
+          <h2 className="font-serif-display text-2xl font-bold text-[var(--text)]">{t("noGroupsTitle")}</h2>
+          <p className="mt-1 mb-5 text-sm text-[var(--muted)]">{t("noGroupsDescription")}</p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/groups/new"
+              className="px-5 py-2.5 rounded-[var(--r-pill)] text-sm font-semibold text-[var(--on-primary)] bg-[var(--accent)] transition-[background-color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none hover:bg-[var(--accent-hi)] active:scale-[0.97] motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2"
+            >
+              {tGroups("createGroup")}
+            </Link>
+            <Link
+              href="/groups/join"
+              className="px-5 py-2.5 rounded-[var(--r-pill)] text-sm font-semibold text-[var(--text)] bg-[var(--raised)] transition-[background-color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none hover:bg-[var(--border)] active:scale-[0.97] motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2"
+            >
+              {t("joinWithCode")}
+            </Link>
+          </div>
         </section>
-      ) : (
-        <NoGroupsCard t={t} tGroups={tGroups} />
       )}
-
-      {/* Divider */}
-      <div className="relative my-8">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-foreground/10" />
-        </div>
-        <div className="relative flex justify-center">
-          <span className="bg-background px-4 text-sm font-semibold text-muted">
-            {t("discover")}
-          </span>
-        </div>
-      </div>
-
-      {/* Global Feed */}
-      <FeedList initialCatches={catches} initialReactions={reactions} locale={locale} />
-    </div>
-  );
-}
-
-function NoGroupsCard({
-  t,
-  tGroups,
-}: {
-  t: ReturnType<typeof useTranslations<"feed">>;
-  tGroups: ReturnType<typeof useTranslations<"groups">>;
-}) {
-  return (
-    <div className="rounded-2xl bg-surface ring-1 ring-foreground/5 dark:ring-white/5 p-6 mb-4 text-center">
-      <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-primary/10 mb-4">
-        <svg className="w-8 h-8 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-          <path fillRule="evenodd" d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 17.084a11.116 11.116 0 0 1 3.727-1.482 3 3 0 0 1 3.926 0 11.12 11.12 0 0 1 3.727 1.482 4.5 4.5 0 0 0-11.38 0Z" clipRule="evenodd" />
-        </svg>
-      </div>
-      <h3 className="text-base font-bold text-foreground mb-1">{t("noGroupsTitle")}</h3>
-      <p className="text-sm text-muted mb-5">{t("noGroupsDescription")}</p>
-      <div className="flex items-center justify-center gap-3">
-        <Link
-          href="/groups/new"
-          className="px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-primary hover:bg-accent-hi active:scale-[0.97] transition-all"
-        >
-          {tGroups("createGroup")}
-        </Link>
-        <Link
-          href="/groups/join"
-          className="px-4 py-2.5 rounded-xl text-sm font-bold text-primary bg-primary/10 hover:bg-primary/15 active:scale-[0.97] transition-all"
-        >
-          {t("joinWithCode")}
-        </Link>
-      </div>
     </div>
   );
 }

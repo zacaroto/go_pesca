@@ -166,7 +166,7 @@
   },
   "feed": {
     "title": "Comunidad",
-    "empty": "Aún no hay capturas. ¡Sé el primero!",
+    "empty": "Todavía nadie compartió capturas. Sé el primero.",
     "loadMore": "Ver más",
     "loading": "Cargando...",
     "groupActivity": "Actividad de tus grupos",
@@ -181,7 +181,18 @@
       "trophy": "Trofeo",
       "wow": "Wow",
       "respect": "Respeto"
-    }
+    },
+    "subtitle": "{count, plural, one {# captura} other {# capturas}} en los últimos 7 días",
+    "tabAll": "Todos",
+    "tabGroups": "Mis grupos",
+    "recordHeaviest": "Más pesado del mes",
+    "recordTopSpecies": "Especie más registrada",
+    "recordWeek": "Capturas esta semana",
+    "today": "hoy",
+    "yesterday": "ayer",
+    "daysAgo": "hace {count} días",
+    "feedTabs": "Filtrar capturas",
+    "loadError": "No pudimos cargar más capturas. Inténtalo de nuevo."
   },
   "profile": {
     "title": "Perfil",

@@ -166,7 +166,7 @@
   },
   "feed": {
     "title": "Community",
-    "empty": "No catches yet. Be the first!",
+    "empty": "Nobody has shared a catch yet. Be the first.",
     "loadMore": "Load more",
     "loading": "Loading...",
     "groupActivity": "Your groups activity",
@@ -181,7 +181,18 @@
       "trophy": "Trophy",
       "wow": "Wow",
       "respect": "Respect"
-    }
+    },
+    "subtitle": "{count, plural, one {# catch} other {# catches}} in the last 7 days",
+    "tabAll": "All",
+    "tabGroups": "My groups",
+    "recordHeaviest": "Heaviest of the month",
+    "recordTopSpecies": "Most logged species",
+    "recordWeek": "Catches this week",
+    "today": "today",
+    "yesterday": "yesterday",
+    "daysAgo": "{count} days ago",
+    "feedTabs": "Filter catches",
+    "loadError": "Couldn't load more catches. Try again."
   },
   "profile": {
     "title": "Profile",

@@ -51,8 +51,8 @@ export function FeedList({ initialCatches, initialReactions, locale, fetchMoreFn
         setCatches((prev) => [...prev, ...moreCatches]);
         setReactions((prev) => ({ ...prev, ...moreReactions }));
       }
-    } catch {
-      // Silently fail — user can retry
+    } catch (err) {
+      console.error("Failed to load more catches", err);
     } finally {
       setLoading(false);
     }
@@ -61,12 +61,7 @@ export function FeedList({ initialCatches, initialReactions, locale, fetchMoreFn
   if (catches.length === 0) {
     return (
       <div className="text-center py-20">
-        <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-primary/10 mb-4">
-          <span className="text-4xl">🎣</span>
-        </div>
-        <p className="text-muted text-sm font-medium">
-          {emptyMessage ?? t("empty")}
-        </p>
+        <p className="text-[var(--muted)] text-sm">{emptyMessage ?? t("empty")}</p>
       </div>
     );
   }
@@ -85,7 +80,7 @@ export function FeedList({ initialCatches, initialReactions, locale, fetchMoreFn
         <button
           onClick={loadMore}
           disabled={loading}
-          className="w-full py-3.5 rounded-2xl text-sm font-bold text-primary bg-primary/10 hover:bg-primary/15 disabled:opacity-50 active:scale-[0.98] transition-all duration-200"
+          className="w-full py-3 rounded-[var(--r-pill)] text-sm font-semibold text-[var(--text)] bg-[var(--raised)] hover:bg-[var(--border)] disabled:opacity-60 active:scale-[0.98] motion-reduce:active:scale-100 transition-[background-color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           {loading ? t("loading") : t("loadMore")}
         </button>
