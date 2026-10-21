@@ -1,6 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { CatchCard } from "@/components/catches/catch-card";
+import { HomeFAB } from "@/components/layout/home-fab";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -161,35 +162,7 @@ export default async function Home({ params }: Props) {
         </div>
       </div>
 
-      {/* Rank card — only rendered when rankData is available */}
-      {rankData && null}
-
-      {/* Cobalt FAB */}
-      <Link
-        href="/catches/new"
-        aria-label="Nueva captura"
-        style={{
-          position: "fixed",
-          bottom: "80px",
-          right: "18px",
-          zIndex: 40,
-          width: "50px",
-          height: "50px",
-          borderRadius: "50%",
-          background: "var(--accent)",
-          color: "#ffffff",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          boxShadow: "0 4px 16px rgba(37,99,235,0.4)",
-          textDecoration: "none",
-        }}
-        className="sm:hidden"
-      >
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-          <path d="M12 5v14M5 12h14" />
-        </svg>
-      </Link>
+      <HomeFAB />
     </main>
   );
 }

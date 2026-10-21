@@ -15,6 +15,7 @@ type CatchEntry = {
   species_name: string;
   weight_kg?: number | null;
   length_cm?: number | null;
+  habitat?: string | null;
 };
 
 type Species = {

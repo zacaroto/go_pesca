@@ -101,6 +101,7 @@ export function CatchCard({ catch_entry, index = 0 }: Props) {
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
                 minWidth: 0,
+                overflowWrap: "anywhere",
               }}
             >
               {catch_entry.location_name}
