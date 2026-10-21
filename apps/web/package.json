@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@go-pesca/shared": "*",
+    "@parcel/watcher": "^2.6.0",
     "@supabase/ssr": "^0.12.4",
     "@supabase/supabase-js": "^2.112.2",
     "@types/leaflet": "^1.9.22",
