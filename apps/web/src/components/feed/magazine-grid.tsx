@@ -25,7 +25,8 @@ type GridProps = {
   locale: string;
   feedType: "global" | "allGroups";
   emptyMessage?: string;
-  records: CommunityRecords | null;
+  /** undefined hides the records row; null shows it with em dashes. */
+  records?: CommunityRecords | null;
 };
 
 export function MagazineGrid({ initialCatches, initialReactions, locale, feedType, emptyMessage, records }: GridProps) {
@@ -99,18 +100,20 @@ export function MagazineGrid({ initialCatches, initialReactions, locale, feedTyp
         </div>
       )}
 
-      <div className="grid sm:grid-cols-3 gap-4 mt-10">
-        <Record
-          label={t("recordHeaviest")}
-          value={records?.heaviest ? `${records.heaviest.weight_kg.toFixed(1)} kg` : "—"}
-          detail={records?.heaviest ? `${records.heaviest.species_name} · ${records.heaviest.location_name ?? "—"}` : undefined}
-        />
-        <Record
-          label={t("recordTopSpecies")}
-          value={records?.topSpecies ? `${records.topSpecies.name} · ${records.topSpecies.count}` : "—"}
-        />
-        <Record label={t("recordWeek")} value={records ? String(records.weekCount) : "—"} />
-      </div>
+      {records !== undefined && (
+        <div className="grid sm:grid-cols-3 gap-4 mt-10">
+          <Record
+            label={t("recordHeaviest")}
+            value={records?.heaviest ? `${records.heaviest.weight_kg.toFixed(1)} kg` : "—"}
+            detail={records?.heaviest ? `${records.heaviest.species_name} · ${records.heaviest.location_name ?? "—"}` : undefined}
+          />
+          <Record
+            label={t("recordTopSpecies")}
+            value={records?.topSpecies ? `${records.topSpecies.name} · ${records.topSpecies.count}` : "—"}
+          />
+          <Record label={t("recordWeek")} value={records ? String(records.weekCount) : "—"} />
+        </div>
+      )}
     </div>
   );
 }
@@ -172,7 +175,6 @@ export function CommunityTabs({ catches, groupFeedCatches, reactions, locale, ha
             initialCatches={groupFeedCatches}
             initialReactions={reactions}
             locale={locale}
-            records={records}
             emptyMessage={t("noGroupActivity")}
           />
         </div>

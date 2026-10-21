@@ -20,6 +20,12 @@ describe("pickFeatured", () => {
     const list = [f("x", "Dorado", "2026-09-01", 8), f("y", "Pargo", "2026-08-01", 3)];
     expect(pickFeatured(list, {}, now).featured?.id).toBe("x");
   });
+  it("uses the Costa Rica day for the 7-day window", () => {
+    // 23:30 on Oct 21 in CR (05:30Z on the 22nd): Oct 14 is 7 days back (recent), Oct 13 is 8 (not)
+    const late = new Date("2026-10-22T05:30:00Z");
+    const list = [f("old", "Pargo", "2026-10-13", 3), f("edge", "Dorado", "2026-10-14", 8)];
+    expect(pickFeatured(list, { old: r(50), edge: r(1) }, late).featured?.id).toBe("edge");
+  });
   it("handles an empty feed", () => {
     expect(pickFeatured([], {}, now)).toEqual({ featured: null, rest: [] });
   });
@@ -69,8 +75,8 @@ describe("relativeDate", () => {
     expect(relativeDate("2026-10-17", now, "es", t)).toBe('daysAgo:{"count":4}');
   });
   it("uses calendar days in the viewer's local time", () => {
-    expect(relativeDate("2026-10-21", new Date(2026, 9, 21, 23, 30), "es", t)).toBe("today");
-    expect(relativeDate("2026-10-20", new Date(2026, 9, 21, 0, 10), "es", t)).toBe("yesterday");
+    expect(relativeDate("2026-10-21", new Date("2026-10-22T05:30:00Z"), "es", t)).toBe("today");
+    expect(relativeDate("2026-10-20", new Date("2026-10-21T06:10:00Z"), "es", t)).toBe("yesterday");
   });
   it("falls back to a localized short date after a week", () => {
     expect(relativeDate("2026-10-01", now, "en", t)).toBe("Oct 1");

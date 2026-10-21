@@ -7,12 +7,14 @@ export function totalReactions(r: FeedReactions | undefined): number {
   return Object.values(r.counts).reduce((sum, n) => sum + n, 0);
 }
 
-/** Whole calendar days between the catch date and the viewer's local "today". */
+const dayMs = (iso: string) => {
+  const [y, m, d] = iso.slice(0, 10).split("-").map(Number);
+  return Date.UTC(y, m - 1, d);
+};
+
+/** Whole calendar days between a catch date and "today" in Costa Rica (same on server and client). */
 function daysAgo(dateStr: string, now: Date): number {
-  const [y, m, d] = dateStr.slice(0, 10).split("-").map(Number);
-  const catchDay = Date.UTC(y, m - 1, d);
-  const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
-  return Math.round((today - catchDay) / DAY);
+  return Math.round((dayMs(communityWindows(now).today) - dayMs(dateStr)) / DAY);
 }
 
 type Translate = (key: string, values?: Record<string, string | number>) => string;
@@ -32,7 +34,8 @@ export function relativeDate(dateStr: string, now: Date, locale: string, t: Tran
 
 export function pickFeatured(catches: FeedCatch[], reactions: Record<string, FeedReactions>, now: Date) {
   if (catches.length === 0) return { featured: null, rest: [] as FeedCatch[] };
-  const recent = catches.filter((c) => daysAgo(c.catch_date, now) <= 7);
+  const today = dayMs(communityWindows(now).today);
+  const recent = catches.filter((c) => (today - dayMs(c.catch_date)) / DAY <= 7);
   const featured = recent.length
     ? recent.reduce((best, c) => {
         const diff = totalReactions(reactions[c.id]) - totalReactions(reactions[best.id]);
