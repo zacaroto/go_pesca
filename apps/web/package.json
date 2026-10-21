@@ -21,6 +21,10 @@
     "react-dom": "19.2.8",
     "react-leaflet": "^5.0.0"
   },
+  "optionalDependencies": {
+    "@swc/core-linux-x64-gnu": "*",
+    "@swc/core-linux-x64-musl": "*"
+  },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
