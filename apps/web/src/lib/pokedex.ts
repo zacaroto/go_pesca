@@ -15,6 +15,9 @@ export type PokedexEntry = {
   first_catch_date: string | null;
   last_catch_date: string | null;
   first_catch_photo: string | null;
+  description_es: string | null;
+  description_en: string | null;
+  best_weight_kg: number | null;
 };
 
 export async function getPokedex(userId: string): Promise<PokedexEntry[]> {
@@ -32,15 +35,15 @@ export async function getPokedex(userId: string): Promise<PokedexEntry[]> {
   // Get user's catches grouped by species
   const { data: catchesData } = await supabase
     .from("catches")
-    .select("species_id, catch_date, photo_url")
+    .select("species_id, catch_date, photo_url, weight_kg")
     .eq("user_id", userId)
     .order("catch_date", { ascending: true });
 
-  const catches = (catchesData ?? []) as Pick<CatchRow, "species_id" | "catch_date" | "photo_url">[];
+  const catches = (catchesData ?? []) as Pick<CatchRow, "species_id" | "catch_date" | "photo_url" | "weight_kg">[];
 
   const catchMap = new Map<
     number,
-    { count: number; firstDate: string; lastDate: string; firstPhoto: string }
+    { count: number; firstDate: string; lastDate: string; firstPhoto: string; best: number | null }
   >();
 
   {
@@ -48,6 +51,7 @@ export async function getPokedex(userId: string): Promise<PokedexEntry[]> {
       const existing = catchMap.get(c.species_id);
       if (existing) {
         existing.count++;
+        existing.best = Math.max(existing.best ?? 0, c.weight_kg ?? 0) || null;
         if (c.catch_date > existing.lastDate) {
           existing.lastDate = c.catch_date;
         }
@@ -57,6 +61,7 @@ export async function getPokedex(userId: string): Promise<PokedexEntry[]> {
           firstDate: c.catch_date,
           lastDate: c.catch_date,
           firstPhoto: c.photo_url,
+          best: c.weight_kg ?? null,
         });
       }
     }
@@ -75,6 +80,9 @@ export async function getPokedex(userId: string): Promise<PokedexEntry[]> {
       first_catch_date: catchData?.firstDate ?? null,
       last_catch_date: catchData?.lastDate ?? null,
       first_catch_photo: catchData?.firstPhoto ?? null,
+      description_es: s.description_es,
+      description_en: s.description_en,
+      best_weight_kg: catchData?.best ?? null,
     };
   });
 }

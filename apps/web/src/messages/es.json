@@ -85,7 +85,21 @@
     "firstCatch": "Primera captura",
     "lastCatch": "Última captura",
     "totalCatches": "Total de capturas",
-    "noCatches": "Aún no has capturado esta especie"
+    "noCatches": "Aún no has capturado esta especie",
+    "subtitle": "{caught} de {total} especies",
+    "saltwater": "Agua salada",
+    "freshwater": "Agua dulce",
+    "brackish": "Salobre",
+    "undiscovered": "Por descubrir",
+    "yourBest": "Tu mejor",
+    "where": "Dónde",
+    "habitat": "Hábitat",
+    "released": "Liberado",
+    "viewMyCatches": "Ver mis capturas",
+    "whereToFish": "Ver ficha de la especie",
+    "timesCaught": "{count, plural, one {# captura} other {# capturas}}",
+    "level": "Nivel {level}",
+    "timesCaughtLabel": "Veces capturada"
   },
   "catches": {
     "title": "Mis Capturas",

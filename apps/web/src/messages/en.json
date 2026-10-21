@@ -85,7 +85,21 @@
     "firstCatch": "First catch",
     "lastCatch": "Last catch",
     "totalCatches": "Total catches",
-    "noCatches": "You haven't caught this species yet"
+    "noCatches": "You haven't caught this species yet",
+    "subtitle": "{caught} of {total} species",
+    "saltwater": "Saltwater",
+    "freshwater": "Freshwater",
+    "brackish": "Brackish",
+    "undiscovered": "Undiscovered",
+    "yourBest": "Your best",
+    "where": "Where",
+    "habitat": "Habitat",
+    "released": "Released",
+    "viewMyCatches": "View my catches",
+    "whereToFish": "View species guide",
+    "timesCaught": "{count, plural, one {# catch} other {# catches}}",
+    "level": "Level {level}",
+    "timesCaughtLabel": "Times caught"
   },
   "catches": {
     "title": "My Catches",
