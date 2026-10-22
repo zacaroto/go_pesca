@@ -18,7 +18,9 @@ export function SpeciesPlate({ entry, locale }: Props) {
   const name = speciesName(entry, locale);
   const description =
     locale === "en" ? entry.description_en : entry.description_es;
-  const photo = entry.reference_photo_url ?? entry.first_catch_photo;
+  // Once caught, the plate shows the angler's own best catch; the reference photo is the fallback.
+  const catchPhoto = caught ? (entry.best_catch_photo ?? entry.first_catch_photo) : null;
+  const photo = catchPhoto ?? entry.reference_photo_url;
   const habitatKey = HABITAT_KEYS.find((k) => k === entry.habitat);
   // Remote reference photos can fail (hotlink limits, dead URLs); fall back to the silhouette.
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
@@ -37,13 +39,18 @@ export function SpeciesPlate({ entry, locale }: Props) {
           <img
             src={photo}
             alt={name}
-            className="h-full w-full object-contain"
+            className={`h-full w-full ${photo === catchPhoto ? "object-cover" : "object-contain"}`}
             onError={() => setFailedSrc(photo)}
           />
         ) : (
           <FishMark className="h-24 w-24 text-silhouette" />
         )}
         <RegulationTag regulation={entry.regulation ?? null} className="absolute top-3 left-3" />
+        {caught && photo === catchPhoto && failedSrc !== photo && (
+          <span className="absolute bottom-3 left-3 rounded-[var(--r-pill)] bg-surface px-3 py-1 text-[13px] font-semibold text-text">
+            {t("yourBestCatch")}
+          </span>
+        )}
       </div>
       {/* Fixed-height text area: name and description are clamped and the facts + CTA are pinned to
           the bottom, so hovering species with longer copy never resizes the plate or moves the button. */}

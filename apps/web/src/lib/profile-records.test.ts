@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { isTrophy, personalRecords, type RecordCatch, type RecordSpecies } from "@/lib/profile-records";
+import { isBetterCatch, isTrophy, personalRecords, type RecordCatch, type RecordSpecies } from "@/lib/profile-records";
 
 const robalo: RecordSpecies = { id: 3, name: "Róbalo", trophy_weight_kg: 11, trophy_length_cm: 100 };
 const jurel: RecordSpecies = { id: 14, name: "Jurel", trophy_weight_kg: 10, trophy_length_cm: 85 };
@@ -46,5 +46,13 @@ describe("personalRecords", () => {
 
   it("skips catches of species that are not in the catalog", () => {
     expect(personalRecords([c("1", 99, 3, 30)], species)).toEqual([]);
+  });
+});
+
+describe("isBetterCatch", () => {
+  it("prefers weight, then length", () => {
+    expect(isBetterCatch({ weight_kg: 3, length_cm: 40 }, { weight_kg: 2, length_cm: 90 })).toBe(true);
+    expect(isBetterCatch({ weight_kg: null, length_cm: 60 }, { weight_kg: null, length_cm: 50 })).toBe(true);
+    expect(isBetterCatch({ weight_kg: null, length_cm: 99 }, { weight_kg: 0.4, length_cm: null })).toBe(false);
   });
 });

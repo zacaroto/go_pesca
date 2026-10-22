@@ -31,8 +31,10 @@ export function isTrophy(c: RecordCatch, species: RecordSpecies | undefined): bo
   return byWeight || byLength;
 }
 
-/** Heavier wins; length breaks ties and ranks catches that were never weighed. */
-function beats(a: RecordCatch, b: RecordCatch): boolean {
+type Measured = { weight_kg: number | null; length_cm: number | null };
+
+/** True when `a` is a better catch than `b`: heavier wins; length breaks ties and ranks catches never weighed. */
+export function isBetterCatch(a: Measured, b: Measured): boolean {
   const aw = a.weight_kg ?? -1;
   const bw = b.weight_kg ?? -1;
   if (aw !== bw) return aw > bw;
@@ -46,7 +48,7 @@ export function personalRecords(catches: RecordCatch[], species: RecordSpecies[]
   for (const c of catches) {
     if (!byId.has(c.species_id)) continue;
     const current = best.get(c.species_id);
-    if (!current || beats(c, current)) best.set(c.species_id, c);
+    if (!current || isBetterCatch(c, current)) best.set(c.species_id, c);
   }
   const records = [...best.values()].map((c) => {
     const s = byId.get(c.species_id)!;

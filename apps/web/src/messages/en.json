@@ -101,7 +101,8 @@
     "allHabitats": "All habitats",
     "statusFilterLabel": "Filter by catch status",
     "habitatFilterLabel": "Filter by habitat",
-    "noMatches": "No species match these filters."
+    "noMatches": "No species match these filters.",
+    "yourBestCatch": "Your best catch"
   },
   "catches": {
     "back": "Back",

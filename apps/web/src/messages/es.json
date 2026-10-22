@@ -101,7 +101,8 @@
     "allHabitats": "Todos los hábitats",
     "statusFilterLabel": "Filtrar por captura",
     "habitatFilterLabel": "Filtrar por hábitat",
-    "noMatches": "Ninguna especie coincide con estos filtros."
+    "noMatches": "Ninguna especie coincide con estos filtros.",
+    "yourBestCatch": "Tu mejor captura"
   },
   "catches": {
     "back": "Atrás",
