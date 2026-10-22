@@ -212,7 +212,12 @@
     "maxWeight": "Max weight",
     "maxLength": "Max length",
     "registerCatchOf": "Log a catch of {name}",
-    "resultCount": "{count, plural, one {# species} other {# species}}"
+    "resultCount": "{count, plural, one {# species} other {# species}}",
+    "pagerLabel": "Other species",
+    "prevSpecies": "Previous species: {name}",
+    "nextSpecies": "Next species: {name}",
+    "previous": "Previous",
+    "next": "Next"
   },
   "feed": {
     "title": "Community",

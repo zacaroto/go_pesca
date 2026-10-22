@@ -212,7 +212,12 @@
     "maxWeight": "Peso máximo",
     "maxLength": "Longitud máxima",
     "registerCatchOf": "Registrar captura de {name}",
-    "resultCount": "{count, plural, one {# especie} other {# especies}}"
+    "resultCount": "{count, plural, one {# especie} other {# especies}}",
+    "pagerLabel": "Otras especies",
+    "prevSpecies": "Especie anterior: {name}",
+    "nextSpecies": "Especie siguiente: {name}",
+    "previous": "Anterior",
+    "next": "Siguiente"
   },
   "feed": {
     "title": "Comunidad",

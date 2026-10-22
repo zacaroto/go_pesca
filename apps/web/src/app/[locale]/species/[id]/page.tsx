@@ -4,6 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { FishMark } from "@/components/layout/fish-mark";
+import { SpeciesPagerBottom, SpeciesPagerTop } from "@/components/species/species-pager";
+import { speciesNeighbors, type SpeciesLink } from "@/lib/species-neighbors";
 import {
   ArrowLeftIcon,
   HookIcon,
@@ -40,15 +42,18 @@ export default async function SpeciesDetailPage({ params }: Props) {
   setRequestLocale(locale);
 
   let species: Species | null = null;
+  let all: SpeciesLink[] = [];
 
   try {
     const supabase = await createClient();
-    const { data } = await supabase
-      .from("species")
-      .select("*")
-      .eq("id", parseInt(id))
-      .single();
+    const nameCol = locale === "en" ? "name_en" : "name_es";
+    const [{ data }, { data: list, error: listError }] = await Promise.all([
+      supabase.from("species").select("*").eq("id", parseInt(id)).single(),
+      supabase.from("species").select(`id, ${nameCol}`),
+    ]);
     if (data) species = data as Species;
+    if (listError) console.error("species: failed to load catalog for prev/next", listError);
+    all = ((list ?? []) as Record<string, unknown>[]).map((r) => ({ id: r.id as number, name: (r[nameCol] as string) ?? "" }));
   } catch {
     // Supabase error handling
   }
@@ -57,15 +62,18 @@ export default async function SpeciesDetailPage({ params }: Props) {
     notFound();
   }
 
-  return <SpeciesDetailContent species={species} locale={locale} />;
+  const neighbors = speciesNeighbors(all, species.id, locale);
+  return <SpeciesDetailContent species={species} locale={locale} neighbors={neighbors} />;
 }
 
 function SpeciesDetailContent({
   species,
   locale,
+  neighbors,
 }: {
   species: Species;
   locale: string;
+  neighbors: ReturnType<typeof speciesNeighbors>;
 }) {
   const t = useTranslations("species");
   const name = locale === "es" ? species.name_es : species.name_en;
@@ -104,13 +112,16 @@ function SpeciesDetailContent({
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-6 pb-24">
+      <div className="mb-6 flex items-center justify-between gap-3">
       <Link
-        href="/species"
-        className="inline-flex items-center gap-2 text-sm font-medium text-muted hover:text-text active:text-text active:scale-[0.98] mb-6 py-2 rounded-[var(--r-control)] transition-[color,transform] duration-[var(--t-press)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100"
-      >
-        <ArrowLeftIcon className="h-4 w-4" />
-        {t("backToCatalog")}
-      </Link>
+          href="/species"
+          className="inline-flex items-center gap-2 text-sm font-medium text-muted hover:text-text active:text-text active:scale-[0.98] py-2 rounded-[var(--r-control)] transition-[color,transform] duration-[var(--t-press)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100"
+        >
+          <ArrowLeftIcon className="h-4 w-4" />
+          {t("backToCatalog")}
+        </Link>
+        {neighbors && <SpeciesPagerTop prev={neighbors.prev} next={neighbors.next} />}
+      </div>
 
       <div className={`${card} sm:p-8 mb-6`}>
         <div className="flex flex-col md:flex-row gap-6 items-center">
@@ -228,6 +239,11 @@ function SpeciesDetailContent({
           {t("registerCatchOf", { name })}
         </Link>
       </div>
+      {neighbors && (
+        <div className="mt-10">
+          <SpeciesPagerBottom prev={neighbors.prev} next={neighbors.next} />
+        </div>
+      )}
     </div>
   );
 }
