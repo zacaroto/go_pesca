@@ -32,7 +32,16 @@
     "groups": "Grupos",
     "logCatch": "Registrar captura",
     "main": "Navegación principal",
-    "learn": "Aprender"
+    "learn": "Aprender",
+    "myCatches": "Mis capturas",
+    "more": "Más",
+    "moreTitle": "Más secciones",
+    "close": "Cerrar",
+    "sections": {
+      "myFishing": "Mi pesca",
+      "explore": "Explorar",
+      "community": "Comunidad"
+    }
   },
   "footer": {
     "quote": "Cada especie que registras ayuda a conocer mejor nuestras aguas.",

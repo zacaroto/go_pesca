@@ -32,7 +32,16 @@
     "groups": "Groups",
     "logCatch": "Log catch",
     "main": "Main navigation",
-    "learn": "Learn"
+    "learn": "Learn",
+    "myCatches": "My catches",
+    "more": "More",
+    "moreTitle": "More sections",
+    "close": "Close",
+    "sections": {
+      "myFishing": "My fishing",
+      "explore": "Explore",
+      "community": "Community"
+    }
   },
   "footer": {
     "quote": "Every species you log helps us understand our waters better.",

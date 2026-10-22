@@ -10,7 +10,7 @@ const COLS = [
 export function SiteFooter() {
   const t = useTranslations();
   return (
-    <footer className="overflow-hidden px-4 pb-20 pt-14 sm:px-12 md:pb-7" style={{ background: "var(--footer-bg)", color: "var(--footer-text)" }}>
+    <footer className="overflow-hidden px-4 pb-24 pt-14 sm:px-12 lg:pb-7" style={{ background: "var(--footer-bg)", color: "var(--footer-text)" }}>
       <div className="mx-auto max-w-[1280px]">
         <div className="grid grid-cols-2 gap-9 sm:grid-cols-[2fr_1fr_1fr]">
           <p className="col-span-2 m-0 max-w-[22ch] font-serif-display text-subhead leading-tight sm:col-span-1 sm:text-heading">
