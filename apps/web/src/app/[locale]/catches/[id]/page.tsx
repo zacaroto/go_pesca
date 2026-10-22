@@ -65,7 +65,7 @@ export default async function CatchDetailPage({ params }: Props) {
         href="/catches"
         className="text-sm font-medium text-accent-ink hover:underline active:underline underline-offset-2 mb-4 inline-block"
       >
-        &larr; {t("back")}
+        &larr; {t("backToCatches")}
       </Link>
       <CatchDetail
         locale={locale}

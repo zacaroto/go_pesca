@@ -2,6 +2,7 @@ import type { PokedexEntry } from "./pokedex";
 
 export type Habitat = "saltwater" | "freshwater" | "brackish";
 export type HabitatFilter = Habitat | "all";
+export type StatusFilter = "all" | "caught" | "undiscovered";
 export type IndexSection = { letter: string; entries: PokedexEntry[] };
 
 const FOLD: Record<string, string> = { Á: "A", É: "E", Í: "I", Ó: "O", Ú: "U", Ü: "U" };
@@ -10,10 +11,16 @@ export function speciesName(e: Pick<PokedexEntry, "name_es" | "name_en">, locale
   return locale === "en" ? e.name_en : e.name_es;
 }
 
-export function buildSpeciesIndex(entries: PokedexEntry[], locale: string, habitat: HabitatFilter): IndexSection[] {
+export function buildSpeciesIndex(
+  entries: PokedexEntry[],
+  locale: string,
+  habitat: HabitatFilter,
+  status: StatusFilter = "all",
+): IndexSection[] {
   const collator = new Intl.Collator(locale, { sensitivity: "base" });
   const sorted = entries
     .filter((e) => habitat === "all" || e.habitat === habitat)
+    .filter((e) => status === "all" || (status === "caught") === e.catch_count > 0)
     .sort((a, b) => collator.compare(speciesName(a, locale), speciesName(b, locale)));
 
   const sections: IndexSection[] = [];

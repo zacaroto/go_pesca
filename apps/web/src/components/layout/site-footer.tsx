@@ -28,7 +28,7 @@ export function SiteFooter() {
             </div>
           ))}
         </div>
-        <p aria-hidden="true" className="m-0 mb-5 mt-12 font-serif-display font-black leading-[0.85] tracking-[-0.04em] text-[clamp(64px,14vw,180px)]" style={{ color: "var(--surface)" }}>
+        <p aria-hidden="true" className="m-0 mb-5 mt-12 font-serif-display font-black leading-[0.85] tracking-[-0.04em] text-[clamp(44px,7vw,96px)]" style={{ color: "var(--surface)" }}>
           Go Pesca
         </p>
         <div className="flex justify-between gap-4 text-xs" style={{ color: "var(--footer-muted)" }}>

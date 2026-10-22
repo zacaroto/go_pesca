@@ -95,10 +95,15 @@
     "whereToFish": "View species guide",
     "timesCaught": "{count, plural, one {# catch} other {# catches}}",
     "level": "Level {level}",
-    "timesCaughtLabel": "Times caught"
+    "timesCaughtLabel": "Times caught",
+    "caughtFilter": "Caught",
+    "allHabitats": "All habitats",
+    "statusFilterLabel": "Filter by catch status",
+    "habitatFilterLabel": "Filter by habitat",
+    "noMatches": "No species match these filters."
   },
   "catches": {
-    "back": "Back to my catches",
+    "back": "Back",
     "title": "My Catches",
     "newCatch": "New Catch",
     "photo": "Photo",
@@ -145,7 +150,6 @@
     "insightKnownBody": "Your best: {kg} kg.",
     "insightKnownNoWeight": "You haven't logged its weight yet.",
     "next": "Next",
-    "back": "Back",
     "searchSpecies": "Search among {count} species",
     "errorPhoto": "Please add a photo of your catch",
     "errorSpecies": "Please select a species",
@@ -169,7 +173,8 @@
     "loadingMap": "Loading map...",
     "detectingGps": "Detecting location...",
     "errorLoadSpecies": "Could not load species",
-    "deleteError": "Could not delete the catch. Please try again."
+    "deleteError": "Could not delete the catch. Please try again.",
+    "backToCatches": "Back to my catches"
   },
   "rank": {
     "title": "Rank",
@@ -351,6 +356,8 @@
     "joinError": "Error joining group",
     "myGroups": "My Groups",
     "noGroups": "No groups yet",
-    "createFirst": "Create or join a group to share catches with your crew!"
+    "createFirst": "Create or join a group to share catches with your crew!",
+    "groupCount": "{count, plural, one {# group} other {# groups}}",
+    "loadError": "We couldn't load your groups. Try again in a moment."
   }
 }

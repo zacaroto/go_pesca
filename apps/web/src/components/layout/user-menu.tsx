@@ -35,7 +35,7 @@ export function UserMenu({ displayName, userId }: Props) {
           style={{ background: "var(--accent-soft)", color: "var(--accent-ink)" }}>
           {displayName.charAt(0).toUpperCase()}
         </span>
-        <span className="hidden max-w-[16ch] truncate lg:inline">{displayName}</span>
+        <span className="hidden max-w-[12ch] truncate xl:inline">{displayName}</span>
       </button>
       {open && (
         <>

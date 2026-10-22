@@ -9,6 +9,7 @@ import {
   speciesName,
   type Habitat,
   type HabitatFilter,
+  type StatusFilter,
 } from "@/lib/fishydex-index";
 import type { PokedexEntry } from "@/lib/pokedex";
 import { SpeciesPlate } from "./species-plate";
@@ -31,11 +32,16 @@ function initialSelection(entries: PokedexEntry[]): number {
 export function SpeciesIndex({ entries, locale }: Props) {
   const t = useTranslations("pokedex");
   const [habitat, setHabitat] = useState<HabitatFilter>("all");
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [selectedId, setSelectedId] = useState<number>(() => initialSelection(entries));
   const listRef = useRef<HTMLDivElement>(null);
 
-  const sections = useMemo(() => buildSpeciesIndex(entries, locale, habitat), [entries, locale, habitat]);
+  const sections = useMemo(
+    () => buildSpeciesIndex(entries, locale, habitat, statusFilter),
+    [entries, locale, habitat, statusFilter],
+  );
   const counts = useMemo(() => countByHabitat(entries), [entries]);
+  const caughtTotal = useMemo(() => entries.filter((e) => e.catch_count > 0).length, [entries]);
   const visible = useMemo(() => sections.flatMap((s) => s.entries), [sections]);
   const selected = visible.find((e) => e.id === selectedId) ?? visible[0] ?? null;
 
@@ -58,14 +64,13 @@ export function SpeciesIndex({ entries, locale }: Props) {
     return t("released");
   }
 
-  const chip = (key: HabitatFilter, label: string) => {
-    const active = habitat === key;
+  const chip = (key: string, label: string, active: boolean, onSelect: () => void) => {
     return (
       <button
         key={key}
         type="button"
         aria-pressed={active}
-        onClick={() => setHabitat(key)}
+        onClick={onSelect}
         className="px-3.5 py-1.5 text-sm font-medium transition-[background-color,color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100 hover:brightness-95 focus-visible:outline-2"
         style={{
           background: active ? "var(--text)" : "var(--raised)",
@@ -80,12 +85,31 @@ export function SpeciesIndex({ entries, locale }: Props) {
 
   return (
     <div>
-      <div className="mb-6 flex flex-wrap gap-2">
-        {chip("all", t("all"))}
-        {HABITATS.map((h) => chip(h, `${t(h)} ${counts[h].caught}/${counts[h].total}`))}
+      <div className="mb-6 flex flex-col gap-3">
+        <div role="group" aria-label={t("statusFilterLabel")} className="flex flex-wrap gap-2">
+          {chip("status-all", t("all"), statusFilter === "all", () => setStatusFilter("all"))}
+          {chip("status-caught", `${t("caughtFilter")} ${caughtTotal}`, statusFilter === "caught", () => setStatusFilter("caught"))}
+          {chip(
+            "status-undiscovered",
+            `${t("undiscovered")} ${entries.length - caughtTotal}`,
+            statusFilter === "undiscovered",
+            () => setStatusFilter("undiscovered"),
+          )}
+        </div>
+        <div role="group" aria-label={t("habitatFilterLabel")} className="flex flex-wrap gap-2">
+          {chip("habitat-all", t("allHabitats"), habitat === "all", () => setHabitat("all"))}
+          {HABITATS.map((h) =>
+            chip(`habitat-${h}`, `${t(h)} ${counts[h].caught}/${counts[h].total}`, habitat === h, () => setHabitat(h)),
+          )}
+        </div>
       </div>
       <div className="grid items-start gap-10 lg:grid-cols-[7fr_5fr]">
         <div ref={listRef}>
+          {sections.length === 0 && (
+            <p className="py-6" style={{ color: "var(--muted)" }}>
+              {t("noMatches")}
+            </p>
+          )}
           {sections.map((s) => (
             <section key={s.letter} aria-label={s.letter}>
               <h3

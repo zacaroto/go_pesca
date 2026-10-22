@@ -26,7 +26,7 @@ export function Header({ user }: Props) {
 
   return (
     <header className="sticky top-0 z-40 w-full" style={{ background: "var(--surface)" }}>
-      <div className="mx-auto flex h-[60px] max-w-[1280px] items-center gap-2 px-3 sm:gap-3 sm:px-4 lg:gap-7 lg:px-12">
+      <div className="mx-auto flex h-[60px] max-w-[1280px] items-center gap-2 px-3 sm:gap-3 sm:px-4 lg:gap-5 lg:px-8 xl:gap-7 xl:px-12">
         <Link href="/" className="flex shrink-0 items-center gap-2 whitespace-nowrap sm:gap-2.5 active:opacity-75" style={{ color: "var(--text)" }}>
           <span style={{ color: "var(--accent)" }}><FishMark /></span>
           <span className="font-serif-display text-[18px] font-bold sm:text-xl">Go Pesca</span>

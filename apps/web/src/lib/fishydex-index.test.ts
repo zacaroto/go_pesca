@@ -23,6 +23,13 @@ describe("buildSpeciesIndex", () => {
     const names = buildSpeciesIndex(list, "es", "saltwater").flatMap((s) => s.entries.map((x) => x.name_es));
     expect(names).toEqual(["Atún aleta amarilla", "Barracuda", "Sábalo"]);
   });
+  it("filters by caught status, combined with habitat", () => {
+    const names = (status: "caught" | "undiscovered", habitat: "all" | "saltwater") =>
+      buildSpeciesIndex(list, "es", habitat, status).flatMap((s) => s.entries.map((x) => x.name_es));
+    expect(names("caught", "all")).toEqual(["Atún aleta amarilla", "Guapote", "Róbalo", "Sábalo"]);
+    expect(names("undiscovered", "all")).toEqual(["Barracuda", "Ñato"]);
+    expect(names("caught", "saltwater")).toEqual(["Atún aleta amarilla", "Sábalo"]);
+  });
   it("returns no sections when nothing matches", () => {
     expect(buildSpeciesIndex([], "es", "all")).toEqual([]);
   });
