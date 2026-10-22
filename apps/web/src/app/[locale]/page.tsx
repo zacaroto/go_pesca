@@ -4,6 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 import { getHomeData } from "@/lib/home";
 import type { HomeCatch } from "@/lib/home-data";
 import { FishMark } from "@/components/layout/fish-mark";
+import { Landing } from "@/components/landing/landing";
+import { getFeaturedSpecies } from "@/lib/species-facts";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -39,7 +41,6 @@ export default async function Home({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("home");
-  const ta = await getTranslations("auth");
   const dateLocale = locale === "en" ? "en" : "es-CR";
   const fmtDate = (iso: string) =>
     new Date(iso).toLocaleDateString(dateLocale, { day: "numeric", month: "short", timeZone: "UTC" });
@@ -82,27 +83,8 @@ export default async function Home({ params }: Props) {
   }
 
   if (!data) {
-    return (
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
-        <h1
-          className="font-serif-display font-black"
-          style={{ fontSize: "clamp(40px,6vw,64px)", lineHeight: 1, color: "var(--text)" }}
-        >
-          {t("hero")}
-        </h1>
-        <p className="mt-4 text-lg max-w-[44ch]" style={{ color: "var(--muted)" }}>
-          {t("subtitle")}
-        </p>
-        <div className="mt-8 flex flex-wrap items-center gap-6">
-          <Link href="/auth/register" className={btnClass}>
-            {t("register")}
-          </Link>
-          <Link href="/auth/login" className={linkClass}>
-            {ta("loginTitle")}
-          </Link>
-        </div>
-      </div>
-    );
+    const [species, totalSpecies] = await Promise.all([getFeaturedSpecies(locale), countSpecies()]);
+    return <Landing species={species} totalSpecies={totalSpecies} />;
   }
 
   const { catches, latestNew, caught, total } = data;
@@ -289,4 +271,17 @@ export default async function Home({ params }: Props) {
       </section>
     </div>
   );
+}
+
+/** Catalog size for the landing copy; falls back to 40 (the seeded catalog) if the count fails. */
+async function countSpecies(): Promise<number> {
+  try {
+    const supabase = await createClient();
+    const { count, error } = await supabase.from("species").select("*", { count: "exact", head: true });
+    if (error) throw error;
+    return count ?? 40;
+  } catch (err) {
+    console.error("home: failed to count species", err);
+    return 40;
+  }
 }

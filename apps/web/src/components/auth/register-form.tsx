@@ -54,7 +54,7 @@ export function RegisterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-sm bg-surface border border-border rounded-[var(--r-card)] p-6">
+    <form onSubmit={handleSubmit} className="space-y-4 w-full">
       <div>
         <label htmlFor="displayName" className="block text-sm font-medium mb-1">
           {t("displayName")}

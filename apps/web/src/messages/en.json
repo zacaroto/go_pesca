@@ -42,8 +42,6 @@
   },
   "home": {
     "title": "Your FishyDex",
-    "hero": "The Great Adventure Starts Here!",
-    "subtitle": "Log your catches and complete your species collection",
     "cta": "Log a Catch",
     "latestSpecies": "Your latest species",
     "length": "Length",
@@ -59,7 +57,6 @@
     "emptyTitle": "Your guide is blank",
     "emptyBody": "Log your first catch and it will appear here as the cover of your guide.",
     "logCatch": "Log a catch",
-    "register": "Create account",
     "loadError": "We couldn't load your guide. Try again in a moment."
   },
   "auth": {
@@ -74,7 +71,11 @@
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
     "invalidCredentials": "Invalid credentials",
-    "registrationSuccess": "Account created. Check your email to confirm."
+    "registrationSuccess": "Account created. Check your email to confirm.",
+    "loginHeading": "Welcome back",
+    "loginLede": "Your FishyDex is waiting.",
+    "registerHeading": "Start your FishyDex",
+    "registerLede": "Create your free account and log your first catch."
   },
   "pokedex": {
     "title": "My FishyDex",
@@ -372,5 +373,25 @@
     "inviteHelp": "Share the link. Groups hold up to {max} anglers.",
     "copyError": "Couldn't copy. Share the code {code}.",
     "leaveError": "We couldn't remove you from the group. Try again."
+  },
+  "landing": {
+    "title": "Your fishing guide to Costa Rica.",
+    "lede": "Log every catch, complete your FishyDex of {count} species and fish with your crew, from the Caribbean to the Pacific.",
+    "createAccount": "Create a free account",
+    "haveAccount": "I already have an account",
+    "meta": "{count} species · salt, fresh and brackish water",
+    "carouselLabel": "Costa Rican species",
+    "didYouKnow": "Did you know?",
+    "dexTitle": "Complete your FishyDex",
+    "dexLede": "Every new species you log is revealed in your collection. The rest wait as silhouettes.",
+    "undiscovered": "Undiscovered",
+    "stepsTitle": "Logging a catch takes a minute",
+    "stepsLede": "Photo, species and place. The rest adds to your logbook.",
+    "stepPhotoTitle": "Photo",
+    "stepPhotoBody": "Your catch, straight out of the water.",
+    "stepSpeciesTitle": "Species",
+    "stepSpeciesBody": "Pick from {count} species, each with its own profile.",
+    "stepPlaceTitle": "Place",
+    "stepPlaceBody": "Drop a pin on the map. Nobody else sees your coordinates."
   }
 }

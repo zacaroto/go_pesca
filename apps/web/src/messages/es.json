@@ -42,8 +42,6 @@
   },
   "home": {
     "title": "Tu Pescadex",
-    "hero": "¡La Gran Aventura Comienza Aquí!",
-    "subtitle": "Registra tus capturas y completa tu colección de especies",
     "cta": "Registrar Captura",
     "latestSpecies": "Tu especie más reciente",
     "length": "Largo",
@@ -59,7 +57,6 @@
     "emptyTitle": "Tu guía está en blanco",
     "emptyBody": "Registra tu primera captura y aparecerá aquí como la portada de tu guía.",
     "logCatch": "Registrar captura",
-    "register": "Crear cuenta",
     "loadError": "No pudimos cargar tu guía. Intenta de nuevo en un momento."
   },
   "auth": {
@@ -74,7 +71,11 @@
     "noAccount": "¿No tienes cuenta?",
     "hasAccount": "¿Ya tienes cuenta?",
     "invalidCredentials": "Credenciales inválidas",
-    "registrationSuccess": "Cuenta creada. Revisa tu correo para confirmar."
+    "registrationSuccess": "Cuenta creada. Revisa tu correo para confirmar.",
+    "loginHeading": "Bienvenido de vuelta",
+    "loginLede": "Tu FishyDex te está esperando.",
+    "registerHeading": "Empieza tu FishyDex",
+    "registerLede": "Crea tu cuenta gratis y registra tu primera captura."
   },
   "pokedex": {
     "title": "Mi Pescadex",
@@ -372,5 +373,25 @@
     "inviteHelp": "Comparte el enlace. El grupo admite hasta {max} pescadores.",
     "copyError": "No se pudo copiar. Comparte el código {code}.",
     "leaveError": "No pudimos sacarte del grupo. Intenta de nuevo."
+  },
+  "landing": {
+    "title": "Tu guía de pesca de Costa Rica.",
+    "lede": "Registra cada captura, completa tu FishyDex de {count} especies y pesca con tu crew, del Caribe al Pacífico.",
+    "createAccount": "Crear cuenta gratis",
+    "haveAccount": "Ya tengo cuenta",
+    "meta": "{count} especies · agua salada, dulce y salobre",
+    "carouselLabel": "Especies de Costa Rica",
+    "didYouKnow": "¿Sabías que?",
+    "dexTitle": "Completa tu FishyDex",
+    "dexLede": "Cada especie nueva que registras se revela en tu colección. Las que faltan esperan como silueta.",
+    "undiscovered": "Por descubrir",
+    "stepsTitle": "Registrar una captura toma un minuto",
+    "stepsLede": "Foto, especie y lugar. El resto suma a tu bitácora.",
+    "stepPhotoTitle": "Foto",
+    "stepPhotoBody": "Tu captura, como salió del agua.",
+    "stepSpeciesTitle": "Especie",
+    "stepSpeciesBody": "Elige entre {count} especies, cada una con su ficha.",
+    "stepPlaceTitle": "Lugar",
+    "stepPlaceBody": "Marca el punto en el mapa. Nadie más ve tus coordenadas."
   }
 }
