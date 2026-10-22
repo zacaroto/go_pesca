@@ -3,20 +3,6 @@ import { createClient } from "@/lib/supabase/client";
 export type NewAchievement = {
   id: string;
   achievement_id: string;
-  icon: string;
-};
-
-// Achievement definition with its icon
-const ACHIEVEMENT_ICONS: Record<string, string> = {
-  first_blood: "🩸",
-  species_5: "🗺️",
-  species_10: "🔬",
-  species_20: "🏆",
-  big_catch: "💪",
-  night_owl: "🦉",
-  early_bird: "🌅",
-  catch_10: "🎯",
-  catch_50: "👑",
 };
 
 export async function checkAndAwardAchievements(
@@ -134,7 +120,6 @@ export async function checkAndAwardAchievements(
     (a: { id: string; achievement_id: string }) => ({
       id: a.id,
       achievement_id: a.achievement_id,
-      icon: ACHIEVEMENT_ICONS[a.achievement_id] ?? "🏅",
     })
   );
 }

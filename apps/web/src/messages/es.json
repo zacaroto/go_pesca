@@ -374,7 +374,11 @@
         "name": "Leyenda",
         "description": "Registra 50 capturas en total"
       }
-    }
+    },
+    "summary": "{earned} de {total} sellos en tu libreta",
+    "nextLabel": "Tu próximo sello",
+    "sealedOn": "Sellado el {date}",
+    "progress": "{current} de {total}"
   },
   "groups": {
     "title": "Grupos",

@@ -374,7 +374,11 @@
         "name": "Legend",
         "description": "Log 50 total catches"
       }
-    }
+    },
+    "summary": "{earned} of {total} stamps in your book",
+    "nextLabel": "Your next stamp",
+    "sealedOn": "Stamped on {date}",
+    "progress": "{current} of {total}"
   },
   "groups": {
     "title": "Groups",

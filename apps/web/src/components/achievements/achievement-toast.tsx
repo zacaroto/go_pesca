@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import type { NewAchievement } from "@/lib/achievements";
+import { AchievementIcon } from "./achievement-icon";
 
 type Props = {
   achievement: NewAchievement;
@@ -43,7 +44,9 @@ export function AchievementToast({ achievement, onDismiss }: Props) {
     >
       <div className="flex items-center gap-3 bg-surface border border-border rounded-[var(--r-card)] shadow-xl px-5 py-4 min-w-[280px] max-w-[340px]">
         {/* Animated icon */}
-        <span className="text-heading">{achievement.icon}</span>
+        <span className="grid h-11 w-11 shrink-0 -rotate-6 place-items-center rounded-full border-2 border-accent text-accent motion-safe:animate-[badge-pop_400ms_var(--ease-spring)]">
+          <AchievementIcon id={achievement.achievement_id} className="h-5 w-5" />
+        </span>
 
         <div className="flex-1 min-w-0">
           <p className="text-label font-semibold text-accent-ink">
