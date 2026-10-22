@@ -49,14 +49,15 @@ export default async function LocaleLayout({ children, params }: Props) {
     if (authUser) {
       const { data: profile } = await supabase
         .from("profiles")
-        .select("display_name")
+        .select("display_name, avatar_url")
         .eq("id", authUser.id)
         .single();
-      const displayName = (profile as { display_name: string | null } | null)?.display_name;
+      const row = profile as { display_name: string | null; avatar_url: string | null } | null;
       user = {
         id: authUser.id,
         email: authUser.email,
-        display_name: displayName ?? undefined,
+        display_name: row?.display_name ?? undefined,
+        avatar_url: row?.avatar_url ?? undefined,
       };
     }
   } catch {

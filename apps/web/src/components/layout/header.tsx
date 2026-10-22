@@ -7,7 +7,7 @@ import { LanguageSwitcher } from "./language-switcher";
 import { FishMark } from "./fish-mark";
 
 type Props = {
-  user: { id: string; email?: string; display_name?: string } | null;
+  user: { id: string; email?: string; display_name?: string; avatar_url?: string } | null;
 };
 
 const NAV = [
@@ -69,7 +69,7 @@ export function Header({ user }: Props) {
               <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
               <span className="hidden lg:inline">{t("nav.logCatch")}</span>
             </Link>
-            <UserMenu displayName={user.display_name ?? user.email?.split("@")[0] ?? ""} userId={user.id} />
+            <UserMenu displayName={user.display_name ?? user.email?.split("@")[0] ?? ""} avatarUrl={user.avatar_url} userId={user.id} />
           </>
         ) : (
           <div className="flex items-center gap-2.5 sm:gap-3">

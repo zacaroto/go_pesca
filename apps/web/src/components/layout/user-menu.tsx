@@ -7,13 +7,16 @@ import { useRouter, Link } from "@/i18n/navigation";
 
 type Props = {
   displayName: string;
+  avatarUrl?: string;
   userId: string;
 };
 
-export function UserMenu({ displayName, userId }: Props) {
+export function UserMenu({ displayName, avatarUrl, userId }: Props) {
   const t = useTranslations();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  // If the profile photo fails to load (deleted file, expired URL), fall back to the initial.
+  const [photoFailed, setPhotoFailed] = useState(false);
 
   async function handleLogout() {
     const supabase = createClient();
@@ -31,10 +34,20 @@ export function UserMenu({ displayName, userId }: Props) {
         className="flex items-center gap-2 rounded-full text-sm hover:opacity-80 active:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2"
         style={{ color: "var(--text)", transition: "opacity var(--t-ui)" }}
       >
-        <span className="flex h-8 w-8 items-center justify-center rounded-full font-semibold"
-          style={{ background: "var(--accent-soft)", color: "var(--accent-ink)" }}>
-          {displayName.charAt(0).toUpperCase()}
-        </span>
+        {avatarUrl && !photoFailed ? (
+          // eslint-disable-next-line @next/next/no-img-element -- user-uploaded photo from Supabase Storage
+          <img
+            src={avatarUrl}
+            alt=""
+            className="h-8 w-8 shrink-0 rounded-full object-cover ring-1 ring-border"
+            onError={() => setPhotoFailed(true)}
+          />
+        ) : (
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-semibold"
+            style={{ background: "var(--accent-soft)", color: "var(--accent-ink)" }}>
+            {displayName.charAt(0).toUpperCase()}
+          </span>
+        )}
         <span className="hidden max-w-[12ch] truncate xl:inline">{displayName}</span>
       </button>
       {open && (
