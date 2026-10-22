@@ -50,8 +50,8 @@ export function RankRing({ caught, total }: Props) {
         </text>
       </svg>
       <div className="min-w-0">
-        <p className="m-0 font-serif-display text-2xl font-bold leading-tight text-text">
-          {t(rank.key)} <span className="text-lg text-faint">{ROMAN[rank.level]}</span>
+        <p className="m-0 font-serif-display text-subhead font-bold leading-tight text-text">
+          {t(rank.key)} <span className="text-name text-faint">{ROMAN[rank.level]}</span>
         </p>
         <div className="my-2 flex gap-1" aria-hidden="true">
           {([1, 2, 3] as const).map((level) => (
@@ -61,7 +61,7 @@ export function RankRing({ caught, total }: Props) {
             />
           ))}
         </div>
-        <p className="m-0 text-[13px] text-muted tabular-nums">{nextText}</p>
+        <p className="m-0 text-label text-muted tabular-nums">{nextText}</p>
       </div>
     </div>
   );

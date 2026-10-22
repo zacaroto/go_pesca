@@ -61,11 +61,11 @@ export function SuggestionReview({ suggestion, onUpdated }: Props) {
         )}
         <div className="flex-1">
           <h3 className="font-semibold">{suggestion.common_name}</h3>
-          <p className="text-[13px] text-muted">
+          <p className="text-label text-muted">
             {new Date(suggestion.created_at).toLocaleDateString()}
           </p>
           {suggestion.notes && (
-            <p className="text-sm text-muted mt-1">
+            <p className="text-small text-muted mt-1">
               {suggestion.notes}
             </p>
           )}
@@ -75,14 +75,14 @@ export function SuggestionReview({ suggestion, onUpdated }: Props) {
         <button
           onClick={() => handleAction("approved")}
           disabled={loading}
-          className="btn-primary px-4 py-1.5 text-sm"
+          className="btn-primary px-4 py-1.5 text-small"
         >
           Approve
         </button>
         <button
           onClick={() => handleAction("rejected")}
           disabled={loading}
-          className="btn-danger px-4 py-1.5 text-sm"
+          className="btn-danger px-4 py-1.5 text-small"
         >
           Reject
         </button>

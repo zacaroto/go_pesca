@@ -120,8 +120,8 @@ function SpeciesDetailContent({
     ? bestBait.split(",").map((b) => b.trim())
     : [];
 
-  const factLabel = "text-[12px] sm:text-[13px] font-medium text-muted leading-tight";
-  const factValue = "font-serif-display text-lg sm:text-3xl font-bold text-text leading-tight";
+  const factLabel = "text-label font-medium text-muted leading-tight";
+  const factValue = "font-serif-display text-name sm:text-heading font-bold text-text leading-tight";
   const card = "bg-surface rounded-[var(--r-card)] p-5";
   const factCard = "bg-surface rounded-[var(--r-card)] p-3 sm:p-5 min-w-0";
 
@@ -130,7 +130,7 @@ function SpeciesDetailContent({
       <div className="mb-6 flex items-center justify-between gap-3">
       <Link
           href="/species"
-          className="inline-flex items-center gap-2 text-sm font-medium text-muted hover:text-text active:text-text active:scale-[0.98] py-2 rounded-[var(--r-control)] transition-[color,transform] duration-[var(--t-press)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100"
+          className="inline-flex items-center gap-2 text-small font-medium text-muted hover:text-text active:text-text active:scale-[0.98] py-2 rounded-[var(--r-control)] transition-[color,transform] duration-[var(--t-press)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100"
         >
           <ArrowLeftIcon className="h-4 w-4" />
           {t("backToCatalog")}
@@ -148,7 +148,7 @@ function SpeciesDetailContent({
               fallbackClassName="h-20 w-20"
             />
             <div className="absolute top-3 left-3 flex flex-col items-start gap-1.5">
-              <span className={`text-[13px] font-semibold px-3 py-1 rounded-[var(--r-pill)] ${habitatPill}`}>
+              <span className={`text-label font-semibold px-3 py-1 rounded-[var(--r-pill)] ${habitatPill}`}>
                 {habitatLabel}
               </span>
               <RegulationTag regulation={regulation} />
@@ -156,15 +156,15 @@ function SpeciesDetailContent({
           </div>
 
           <div className="w-full md:w-1/2 flex flex-col justify-center">
-            <p className="text-[13px] font-medium text-muted mb-2">
+            <p className="text-label font-medium text-muted mb-2">
               {t("plateNumber", { n: species.id.toString().padStart(3, "0") })}
             </p>
-            <h1 className="font-serif-display text-4xl sm:text-5xl text-text mb-1">
+            <h1 className="font-serif-display text-heading sm:text-title text-text mb-1">
               {name}
             </h1>
-            <p className="sci-name text-base mb-4">{species.scientific_name}</p>
+            <p className="sci-name text-body mb-4">{species.scientific_name}</p>
             {description && (
-              <p className="text-sm sm:text-base text-text leading-relaxed">
+              <p className="text-small sm:text-body text-text leading-relaxed">
                 {description}
               </p>
             )}
@@ -219,7 +219,7 @@ function SpeciesDetailContent({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         {regions.length > 0 && (
           <div className={card}>
-            <h2 className="font-serif-display text-lg font-bold text-text flex items-center gap-2 mb-3">
+            <h2 className="font-serif-display text-name font-bold text-text flex items-center gap-2 mb-3">
               <PinIcon className="h-5 w-5 text-muted" />
               {t("fishingRegions")}
             </h2>
@@ -227,7 +227,7 @@ function SpeciesDetailContent({
               {regions.map((region) => (
                 <span
                   key={region}
-                  className="pill-salt px-3 py-1 rounded-[var(--r-pill)] text-[13px] font-medium"
+                  className="pill-salt px-3 py-1 rounded-[var(--r-pill)] text-label font-medium"
                 >
                   {region}
                 </span>
@@ -238,7 +238,7 @@ function SpeciesDetailContent({
 
         {baits.length > 0 && (
           <div className={card}>
-            <h2 className="font-serif-display text-lg font-bold text-text flex items-center gap-2 mb-3">
+            <h2 className="font-serif-display text-name font-bold text-text flex items-center gap-2 mb-3">
               <HookIcon className="h-5 w-5 text-muted" />
               {t("bestBait")}
             </h2>
@@ -246,7 +246,7 @@ function SpeciesDetailContent({
               {baits.map((bait) => (
                 <span
                   key={bait}
-                  className="pill-brack px-3 py-1 rounded-[var(--r-pill)] text-[13px] font-medium"
+                  className="pill-brack px-3 py-1 rounded-[var(--r-pill)] text-label font-medium"
                 >
                   {bait}
                 </span>
@@ -259,7 +259,7 @@ function SpeciesDetailContent({
       <div className="text-center">
         <Link
           href="/catches/new"
-          className="inline-flex items-center gap-2 bg-accent text-on-primary text-base font-semibold px-6 py-3 rounded-[var(--r-control)] hover:bg-accent-hi active:bg-accent-hi active:scale-[0.98] transition-[background-color,transform] duration-[var(--t-press)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100"
+          className="inline-flex items-center gap-2 bg-accent text-on-primary text-body font-semibold px-6 py-3 rounded-[var(--r-control)] hover:bg-accent-hi active:bg-accent-hi active:scale-[0.98] transition-[background-color,transform] duration-[var(--t-press)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100"
         >
           <PlusIcon className="h-5 w-5" />
           {t("registerCatchOf", { name })}

@@ -11,21 +11,21 @@ export function InvitePanel({ inviteCode, locale, memberCount }: { inviteCode: s
 
   return (
     <section className="rounded-[var(--r-card)] bg-surface p-5" aria-labelledby="group-invite-title">
-      <h2 id="group-invite-title" className="m-0 mb-1.5 font-serif-display text-xl font-bold">
+      <h2 id="group-invite-title" className="m-0 mb-1.5 font-serif-display text-subhead font-bold">
         {t("inviteTitle")}
       </h2>
-      <p className="m-0 mb-3 text-[13px] text-muted">{full ? t("groupFull") : t("inviteHelp", { max: MAX_MEMBERS })}</p>
+      <p className="m-0 mb-3 text-label text-muted">{full ? t("groupFull") : t("inviteHelp", { max: MAX_MEMBERS })}</p>
       {!full && (
         <button
           type="button"
           onClick={copy}
-          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-full bg-accent text-sm font-semibold text-on-primary hover:bg-accent-hi active:scale-[0.98] transition-[background-color,transform] duration-[var(--t-press)] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2"
+          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-full bg-accent text-small font-semibold text-on-primary hover:bg-accent-hi active:scale-[0.98] transition-[background-color,transform] duration-[var(--t-press)] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           <span aria-live="polite">{copied ? t("copied") : t("copyLink")}</span>
         </button>
       )}
       {failed && (
-        <p role="alert" className="mt-2 mb-0 text-[13px] text-negative">
+        <p role="alert" className="mt-2 mb-0 text-label text-negative">
           {t("copyError", { code: inviteCode })}
         </p>
       )}

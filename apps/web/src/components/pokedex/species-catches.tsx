@@ -31,16 +31,16 @@ export function SpeciesCatches({ catches, locale }: Props) {
     <div>
       <div className="grid grid-cols-3 gap-4 mb-6 text-center">
         <div>
-          <p className="text-2xl font-bold">{catches.length}</p>
-          <p className="text-[13px] text-muted">{t("totalCatches")}</p>
+          <p className="text-subhead font-bold">{catches.length}</p>
+          <p className="text-label text-muted">{t("totalCatches")}</p>
         </div>
         <div>
-          <p className="text-sm font-medium">{firstDate}</p>
-          <p className="text-[13px] text-muted">{t("firstCatch")}</p>
+          <p className="text-small font-medium">{firstDate}</p>
+          <p className="text-label text-muted">{t("firstCatch")}</p>
         </div>
         <div>
-          <p className="text-sm font-medium">{lastDate}</p>
-          <p className="text-[13px] text-muted">{t("lastCatch")}</p>
+          <p className="text-small font-medium">{lastDate}</p>
+          <p className="text-label text-muted">{t("lastCatch")}</p>
         </div>
       </div>
 
@@ -56,19 +56,19 @@ export function SpeciesCatches({ catches, locale }: Props) {
               className="w-20 h-20 object-cover rounded-[var(--r-control)]"
             />
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium">{fmt(c.catch_date)}</p>
+              <p className="text-small font-medium">{fmt(c.catch_date)}</p>
               {c.location_name && (
-                <p className="text-[13px] text-muted">
+                <p className="text-label text-muted">
                   {tCatches("location")}: {c.location_name}
                 </p>
               )}
               {c.weight_kg && (
-                <p className="text-[13px] text-muted">
+                <p className="text-label text-muted">
                   {tCatches("weight")}: {c.weight_kg}
                 </p>
               )}
               {c.length_cm && (
-                <p className="text-[13px] text-muted">
+                <p className="text-label text-muted">
                   {tCatches("length")}: {c.length_cm}
                 </p>
               )}

@@ -48,7 +48,7 @@ export function PhotoUpload({ onSelect, value }: Props) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={preview} alt={t("photoAlt")} className="w-full h-48 object-cover rounded-[var(--r-card)]" />
           <div
-            className={`absolute bottom-2 right-2 h-[34px] px-3.5 inline-flex items-center rounded-[var(--r-control)] bg-[var(--surface)] text-[var(--text)] text-[13px] font-medium cursor-pointer overflow-hidden hover:bg-[var(--raised)] active:bg-[var(--raised)] transition-[background-color] duration-[var(--t-ui)] motion-reduce:transition-none ${focusRing}`}
+            className={`absolute bottom-2 right-2 h-[34px] px-3.5 inline-flex items-center rounded-[var(--r-control)] bg-[var(--surface)] text-[var(--text)] text-label font-medium cursor-pointer overflow-hidden hover:bg-[var(--raised)] active:bg-[var(--raised)] transition-[background-color] duration-[var(--t-ui)] motion-reduce:transition-none ${focusRing}`}
           >
             <span>{t("changePhoto")}</span>
             <input
@@ -68,7 +68,7 @@ export function PhotoUpload({ onSelect, value }: Props) {
             <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
             <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
           </svg>
-          <span className="text-sm pointer-events-none">{t("uploadPhoto")}</span>
+          <span className="text-small pointer-events-none">{t("uploadPhoto")}</span>
           <input
             type="file"
             accept="image/*"

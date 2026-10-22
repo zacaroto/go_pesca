@@ -25,10 +25,10 @@ type Props = {
 type Step = 1 | 2 | 3;
 
 const INPUT_CLASS =
-  "h-[42px] w-full rounded-[var(--r-control)] bg-[var(--ground)] px-3.5 text-sm text-[var(--text)] outline-none placeholder:text-[var(--faint)] focus:shadow-[inset_0_0_0_1.5px_var(--accent)] transition-[box-shadow] duration-[var(--t-ui)] motion-reduce:transition-none";
-const LABEL_CLASS = "block text-[13px] font-medium text-[var(--text)] mb-1.5";
+  "h-[42px] w-full rounded-[var(--r-control)] bg-[var(--ground)] px-3.5 text-small text-[var(--text)] outline-none placeholder:text-[var(--faint)] focus:shadow-[inset_0_0_0_1.5px_var(--accent)] transition-[box-shadow] duration-[var(--t-ui)] motion-reduce:transition-none";
+const LABEL_CLASS = "block text-label font-medium text-[var(--text)] mb-1.5";
 const BTN_BASE =
-  "inline-flex items-center justify-center gap-2 h-11 px-6 rounded-[var(--r-control)] text-sm font-semibold cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] transition-[background-color,transform,opacity] duration-[var(--t-ui)] ease-[var(--ease-out)] active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100";
+  "inline-flex items-center justify-center gap-2 h-11 px-6 rounded-[var(--r-control)] text-small font-semibold cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] transition-[background-color,transform,opacity] duration-[var(--t-ui)] ease-[var(--ease-out)] active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100";
 
 /** Today's calendar date in Costa Rica (YYYY-MM-DD), so evenings don't roll over to tomorrow. */
 function todayInCostaRica(): string {
@@ -44,8 +44,8 @@ function Toggle({ checked, onChange, title, help }: { checked: boolean; onChange
   return (
     <div className="flex items-center justify-between gap-4 py-3 border-t border-[var(--rule)]">
       <div className="min-w-0">
-        <b className="block text-sm font-semibold text-[var(--text)]">{title}</b>
-        <span className="block text-xs text-[var(--muted)]">{help}</span>
+        <b className="block text-small font-semibold text-[var(--text)]">{title}</b>
+        <span className="block text-label text-[var(--muted)]">{help}</span>
       </div>
       <button
         type="button"
@@ -222,10 +222,10 @@ export function CatchForm({ locale }: Props) {
       <div className="grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] gap-12 items-start">
         <div>
           <header className="mb-6">
-            <h1 className="font-serif-display font-black text-4xl sm:text-5xl leading-tight text-[var(--text)]">
+            <h1 className="font-serif-display font-black text-heading sm:text-title leading-tight text-[var(--text)]">
               {t("newCatch")}
             </h1>
-            <p className="mt-2 text-sm text-[var(--muted)]">{t("requiredHint")}</p>
+            <p className="mt-2 text-small text-[var(--muted)]">{t("requiredHint")}</p>
           </header>
 
           <StepBar steps={stepNames} current={step} label={t("stepsLabel")} onSelect={goToStep} />
@@ -365,7 +365,7 @@ export function CatchForm({ locale }: Props) {
                     placeholder={t("notesPlaceholder")}
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    className="w-full rounded-[var(--r-control)] bg-[var(--ground)] px-3.5 py-2.5 text-sm text-[var(--text)] outline-none resize-none placeholder:text-[var(--faint)] focus:shadow-[inset_0_0_0_1.5px_var(--accent)] transition-[box-shadow] duration-[var(--t-ui)] motion-reduce:transition-none"
+                    className="w-full rounded-[var(--r-control)] bg-[var(--ground)] px-3.5 py-2.5 text-small text-[var(--text)] outline-none resize-none placeholder:text-[var(--faint)] focus:shadow-[inset_0_0_0_1.5px_var(--accent)] transition-[box-shadow] duration-[var(--t-ui)] motion-reduce:transition-none"
                   />
                 </section>
 
@@ -384,7 +384,7 @@ export function CatchForm({ locale }: Props) {
             </div>
 
             {error && (
-              <p role="alert" className="text-sm font-medium text-[var(--negative)]">
+              <p role="alert" className="text-small font-medium text-[var(--negative)]">
                 {error}
               </p>
             )}

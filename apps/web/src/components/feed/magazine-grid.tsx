@@ -67,7 +67,7 @@ export function MagazineGrid({ initialCatches, initialReactions, locale, feedTyp
   if (catches.length === 0) {
     return (
       <div className="py-20 text-center">
-        <p className="font-serif-display text-2xl font-bold text-[var(--text)]">{emptyMessage ?? t("empty")}</p>
+        <p className="font-serif-display text-subhead font-bold text-[var(--text)]">{emptyMessage ?? t("empty")}</p>
       </div>
     );
   }
@@ -92,12 +92,12 @@ export function MagazineGrid({ initialCatches, initialReactions, locale, feedTyp
             type="button"
             onClick={loadMore}
             disabled={loading}
-            className="px-6 py-2.5 rounded-[var(--r-pill)] text-sm font-semibold text-[var(--text)] bg-[var(--raised)] cursor-pointer transition-[background-color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none hover:bg-[var(--border)] active:scale-[0.97] motion-reduce:active:scale-100 disabled:opacity-60 disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2"
+            className="px-6 py-2.5 rounded-[var(--r-pill)] text-small font-semibold text-[var(--text)] bg-[var(--raised)] cursor-pointer transition-[background-color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none hover:bg-[var(--border)] active:scale-[0.97] motion-reduce:active:scale-100 disabled:opacity-60 disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             {loading ? t("loading") : t("loadMore")}
           </button>
           {loadError && (
-            <p role="alert" className="text-[13px] text-[var(--negative)]">
+            <p role="alert" className="text-label text-[var(--negative)]">
               {t("loadError")}
             </p>
           )}
@@ -125,11 +125,11 @@ export function MagazineGrid({ initialCatches, initialReactions, locale, feedTyp
 function Record({ label, value, detail }: { label: string; value: string; detail?: string }) {
   return (
     <div className="rounded-[var(--r-card)] bg-[var(--surface)] px-5 py-[18px]">
-      <span className="block text-[13px] text-[var(--muted)]">{label}</span>
-      <b className="block text-[30px] font-semibold tracking-tight tabular-nums text-[var(--text)] [overflow-wrap:anywhere]">
+      <span className="block text-label text-[var(--muted)]">{label}</span>
+      <b className="block text-heading font-semibold tracking-tight tabular-nums text-[var(--text)] [overflow-wrap:anywhere]">
         {value}
       </b>
-      {detail && <span className="block text-[13px] text-[var(--muted)]">{detail}</span>}
+      {detail && <span className="block text-label text-[var(--muted)]">{detail}</span>}
     </div>
   );
 }
@@ -155,7 +155,7 @@ export function CommunityTabs({ catches, groupFeedCatches, reactions, locale, ha
       onClick={() => setTab(id)}
       aria-pressed={active === id}
       data-active={active === id}
-      className="px-4 py-1.5 text-sm font-medium cursor-pointer rounded-[var(--r-pill)] bg-[var(--raised)] text-[var(--text)] transition-[background-color,color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none hover:bg-[var(--border)] active:scale-[0.97] motion-reduce:active:scale-100 data-[active=true]:bg-[var(--accent)] data-[active=true]:text-[var(--on-primary)] data-[active=true]:hover:bg-[var(--accent-hi)] focus-visible:outline-2 focus-visible:outline-offset-2"
+      className="px-4 py-1.5 text-small font-medium cursor-pointer rounded-[var(--r-pill)] bg-[var(--raised)] text-[var(--text)] transition-[background-color,color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none hover:bg-[var(--border)] active:scale-[0.97] motion-reduce:active:scale-100 data-[active=true]:bg-[var(--accent)] data-[active=true]:text-[var(--on-primary)] data-[active=true]:hover:bg-[var(--accent-hi)] focus-visible:outline-2 focus-visible:outline-offset-2"
     >
       {label}
     </button>

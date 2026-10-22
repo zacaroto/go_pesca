@@ -38,7 +38,7 @@ export function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 w-full">
       <div>
-        <label htmlFor="email" className="block text-sm font-medium mb-1">
+        <label htmlFor="email" className="block text-small font-medium mb-1">
           {t("email")}
         </label>
         <input
@@ -51,7 +51,7 @@ export function LoginForm() {
         />
       </div>
       <div>
-        <label htmlFor="password" className="block text-sm font-medium mb-1">
+        <label htmlFor="password" className="block text-small font-medium mb-1">
           {t("password")}
         </label>
         <input
@@ -64,7 +64,7 @@ export function LoginForm() {
           className="field"
         />
       </div>
-      {error && <p className="text-negative text-sm">{error}</p>}
+      {error && <p className="text-negative text-small">{error}</p>}
       <button
         type="submit"
         disabled={loading}
@@ -72,7 +72,7 @@ export function LoginForm() {
       >
         {loading ? "..." : t("loginButton")}
       </button>
-      <p className="text-sm text-center text-muted">
+      <p className="text-small text-center text-muted">
         {t("noAccount")}{" "}
         <Link href="/auth/register" className="text-accent-ink font-medium underline-offset-2 hover:underline active:underline">
           {t("registerButton")}

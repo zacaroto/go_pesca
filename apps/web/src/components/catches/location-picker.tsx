@@ -20,7 +20,7 @@ function MapPlaceholder({ labelKey }: { labelKey: "loadingMap" | "detectingGps" 
   const t = useTranslations("catches");
   return (
     <div className="w-full h-64 bg-[var(--ground)] rounded-[var(--r-card)] flex items-center justify-center">
-      <span className="text-sm text-[var(--muted)]">{t(labelKey)}</span>
+      <span className="text-small text-[var(--muted)]">{t(labelKey)}</span>
     </div>
   );
 }
@@ -79,7 +79,7 @@ export function LocationPicker({
         onChange={(e) => onLocationNameChange(e.target.value)}
         placeholder={t("pickLocation")}
         aria-label={t("placeName")}
-        className="mt-3 h-[42px] w-full rounded-[var(--r-control)] bg-[var(--ground)] px-3.5 text-sm text-[var(--text)] outline-none placeholder:text-[var(--faint)] focus:shadow-[inset_0_0_0_1.5px_var(--accent)] transition-[box-shadow] duration-[var(--t-ui)] motion-reduce:transition-none"
+        className="mt-3 h-[42px] w-full rounded-[var(--r-control)] bg-[var(--ground)] px-3.5 text-small text-[var(--text)] outline-none placeholder:text-[var(--faint)] focus:shadow-[inset_0_0_0_1.5px_var(--accent)] transition-[box-shadow] duration-[var(--t-ui)] motion-reduce:transition-none"
       />
     </div>
   );

@@ -47,7 +47,7 @@ export function SpeciesPlate({ entry, locale }: Props) {
         )}
         <RegulationTag regulation={entry.regulation ?? null} className="absolute top-3 left-3" />
         {caught && photo === catchPhoto && failedSrc !== photo && (
-          <span className="absolute bottom-3 left-3 rounded-[var(--r-pill)] bg-surface px-3 py-1 text-[13px] font-semibold text-text">
+          <span className="absolute bottom-3 left-3 rounded-[var(--r-pill)] bg-surface px-3 py-1 text-label font-semibold text-text">
             {t("yourBestCatch")}
           </span>
         )}
@@ -58,7 +58,7 @@ export function SpeciesPlate({ entry, locale }: Props) {
         <h2
           className="font-serif-display font-display m-0 line-clamp-2"
           style={{
-            fontSize: 40,
+            fontSize: "var(--text-title)",
             lineHeight: 1,
             color: "var(--text)",
           }}
@@ -66,13 +66,13 @@ export function SpeciesPlate({ entry, locale }: Props) {
         >
           {name}
         </h2>
-        <p className="sci-name mt-1.5 mb-4 truncate" style={{ fontSize: 18 }}>
+        <p className="sci-name mt-1.5 mb-4 truncate" style={{ fontSize: "var(--text-name)" }}>
           {entry.scientific_name || "—"}
         </p>
         {description && (
           <p
             className="line-clamp-3"
-            style={{ fontSize: 15, color: "var(--text)" }}
+            style={{ fontSize: "var(--text-body)", color: "var(--text)" }}
             title={description}
           >
             {description}
@@ -101,7 +101,7 @@ export function SpeciesPlate({ entry, locale }: Props) {
           </dl>
           <Link
             href={caught ? `/pokedex/${entry.id}` : `/species/${entry.id}`}
-            className="block w-full px-4 py-3 text-center text-[15px] font-semibold hover:brightness-95 active:scale-[0.98] focus-visible:outline-2 transition-[background-color,transform] duration-[var(--t-press)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100"
+            className="block w-full px-4 py-3 text-center text-body font-semibold hover:brightness-95 active:scale-[0.98] focus-visible:outline-2 transition-[background-color,transform] duration-[var(--t-press)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100"
             style={{
               background: "var(--accent)",
               color: "var(--on-primary)",
@@ -120,13 +120,13 @@ function Fact({ value, label }: { value: string; label: string }) {
   return (
     <div>
       <dd
-        className="m-0 truncate text-[18px] font-semibold"
+        className="m-0 truncate text-name font-semibold"
         style={{ color: "var(--text)" }}
         title={value}
       >
         {value}
       </dd>
-      <dt className="text-xs" style={{ color: "var(--muted)" }}>
+      <dt className="text-label" style={{ color: "var(--muted)" }}>
         {label}
       </dt>
     </div>

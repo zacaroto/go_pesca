@@ -76,11 +76,11 @@ export default async function AchievementsPage({ params }: Props) {
   return (
     <div className="max-w-5xl mx-auto px-5 md:px-10 py-8 space-y-8">
       <div className="flex items-center justify-between">
-        <h1 className="font-serif-display text-3xl font-bold text-text flex items-center gap-2">
+        <h1 className="font-serif-display text-heading font-bold text-text flex items-center gap-2">
           <TrophyIcon className="h-7 w-7 text-muted" />
           {t("title")}
         </h1>
-        <span className="text-sm font-semibold text-accent-ink bg-accent-soft px-4 py-1.5 rounded-[var(--r-pill)]">
+        <span className="text-small font-semibold text-accent-ink bg-accent-soft px-4 py-1.5 rounded-[var(--r-pill)]">
           {earnedCount}/{ACHIEVEMENT_DEFS.length}
         </span>
       </div>

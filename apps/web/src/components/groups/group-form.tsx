@@ -59,7 +59,7 @@ export function GroupForm({ locale, mode, groupId, initialValues }: Props) {
     <form onSubmit={handleSubmit} className="space-y-5">
       {/* Name */}
       <section className="rounded-[var(--r-card)] bg-surface border border-border p-4">
-        <label className="block text-sm font-semibold text-text mb-2">
+        <label className="block text-small font-semibold text-text mb-2">
           {t("name")} *
         </label>
         <input
@@ -74,7 +74,7 @@ export function GroupForm({ locale, mode, groupId, initialValues }: Props) {
 
       {/* Description */}
       <section className="rounded-[var(--r-card)] bg-surface border border-border p-4">
-        <label className="block text-sm font-semibold text-text mb-2">
+        <label className="block text-small font-semibold text-text mb-2">
           {t("description")}
         </label>
         <textarea
@@ -88,14 +88,14 @@ export function GroupForm({ locale, mode, groupId, initialValues }: Props) {
 
       {/* Avatar */}
       <section className="rounded-[var(--r-card)] bg-surface border border-border p-4">
-        <label className="block text-sm font-semibold text-text mb-2">
+        <label className="block text-small font-semibold text-text mb-2">
           {t("avatar")}
         </label>
         <input
           type="file"
           accept="image/*"
           onChange={(e) => setAvatar(e.target.files?.[0] ?? null)}
-          className="text-sm text-muted"
+          className="text-small text-muted"
         />
       </section>
 
@@ -103,10 +103,10 @@ export function GroupForm({ locale, mode, groupId, initialValues }: Props) {
       <section className="rounded-[var(--r-card)] bg-surface border border-border p-4">
         <label className="flex items-center justify-between cursor-pointer">
           <div>
-            <span className="text-sm font-semibold text-text">
+            <span className="text-small font-semibold text-text">
               {t("publicGroup")}
             </span>
-            <span className="text-[13px] text-muted mt-0.5 block">
+            <span className="text-label text-muted mt-0.5 block">
               {t("publicGroupHelp")}
             </span>
           </div>
@@ -130,7 +130,7 @@ export function GroupForm({ locale, mode, groupId, initialValues }: Props) {
       </section>
 
       {error && (
-        <div role="alert" className="flex items-center gap-2 text-negative text-sm border border-negative rounded-[var(--r-control)] px-4 py-3">
+        <div role="alert" className="flex items-center gap-2 text-negative text-small border border-negative rounded-[var(--r-control)] px-4 py-3">
           <svg aria-hidden="true" className="w-4 h-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
             <path fillRule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clipRule="evenodd" />
           </svg>

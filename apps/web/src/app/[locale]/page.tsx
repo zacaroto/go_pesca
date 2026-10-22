@@ -73,7 +73,7 @@ export default async function Home({ params }: Props) {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
         <p
           role="alert"
-          className="m-0 p-5 text-base"
+          className="m-0 p-5 text-body"
           style={{ background: "var(--surface)", border: "1px solid var(--rule)", borderRadius: "var(--r-card)", color: "var(--negative)" }}
         >
           {t("loadError")}
@@ -94,11 +94,11 @@ export default async function Home({ params }: Props) {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
         <h1
           className="font-serif-display font-black"
-          style={{ fontSize: "clamp(40px,6vw,64px)", lineHeight: 1, color: "var(--text)" }}
+          style={{ fontSize: "clamp(var(--text-title),6vw,var(--text-display))", lineHeight: 1, color: "var(--text)" }}
         >
           {t("emptyTitle")}
         </h1>
-        <p className="mt-4 text-lg max-w-[44ch]" style={{ color: "var(--muted)" }}>
+        <p className="mt-4 text-name max-w-[44ch]" style={{ color: "var(--muted)" }}>
           {t("emptyBody")}
         </p>
         <div className="mt-8">
@@ -142,25 +142,25 @@ export default async function Home({ params }: Props) {
           </p>
           <h1
             className="font-serif-display font-black m-0 mb-1.5 break-words"
-            style={{ fontSize: "clamp(40px,6vw,64px)", lineHeight: 0.98, letterSpacing: "-0.03em", color: "var(--text)" }}
+            style={{ fontSize: "clamp(var(--text-title),6vw,var(--text-display))", lineHeight: 0.98, letterSpacing: "-0.03em", color: "var(--text)" }}
           >
             {latestNew.species_name}
           </h1>
-          <p className="sci-name m-0 mb-5 text-xl">{latestNew.scientific_name}</p>
+          <p className="sci-name m-0 mb-5 text-subhead">{latestNew.scientific_name}</p>
           <dl className="grid grid-cols-3 gap-4 m-0 mb-6">
             {facts.map((f) => (
               <div key={f.label} className="min-w-0 flex flex-col-reverse">
-                <dt className="text-[13px] font-normal" style={{ color: "var(--muted)" }}>
+                <dt className="text-label font-normal" style={{ color: "var(--muted)" }}>
                   {f.label}
                 </dt>
-                <dd className="m-0 text-lg sm:text-[22px] font-semibold truncate tabular-nums" style={{ color: "var(--text)" }}>
+                <dd className="m-0 text-name sm:text-subhead font-semibold truncate tabular-nums" style={{ color: "var(--text)" }}>
                   {f.value}
                 </dd>
               </div>
             ))}
           </dl>
           {latestNew.description && (
-            <p className="m-0 mb-5 max-w-[44ch] text-base" style={{ color: "var(--text)" }}>
+            <p className="m-0 mb-5 max-w-[44ch] text-body" style={{ color: "var(--text)" }}>
               {latestNew.description}
             </p>
           )}
@@ -186,7 +186,7 @@ export default async function Home({ params }: Props) {
         style={{ background: "var(--surface)", borderRadius: "var(--r-card)" }}
       >
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-4">
-          <h2 className="font-serif-display font-bold m-0 text-[30px]" style={{ color: "var(--text)" }}>
+          <h2 className="font-serif-display font-bold m-0 text-heading" style={{ color: "var(--text)" }}>
             {t("yourFishyDex")}
           </h2>
           <p className="m-0 tabular-nums" style={{ color: "var(--muted)" }}>
@@ -210,7 +210,7 @@ export default async function Home({ params }: Props) {
                     className="w-full h-full object-contain p-1.5"
                   />
                 </div>
-                <p className="font-serif-display font-bold m-0 mt-2 text-base truncate" style={{ color: "var(--text)" }}>
+                <p className="font-serif-display font-bold m-0 mt-2 text-body truncate" style={{ color: "var(--text)" }}>
                   {c.species_name}
                 </p>
               </Link>
@@ -233,7 +233,7 @@ export default async function Home({ params }: Props) {
       {/* Recent catches */}
       <section>
         <div className="flex items-baseline justify-between gap-4 mb-4">
-          <h2 className="font-serif-display font-bold m-0 text-[30px]" style={{ color: "var(--text)" }}>
+          <h2 className="font-serif-display font-bold m-0 text-heading" style={{ color: "var(--text)" }}>
             {t("recentCatches")}
           </h2>
           <Link href="/catches" className={linkClass}>
@@ -253,14 +253,14 @@ export default async function Home({ params }: Props) {
                     <Photo src={c.photo_url || null} alt="" className="w-full h-full object-cover" />
                   </div>
                   <div className="min-w-0">
-                    <p className="font-serif-display font-bold m-0 text-[19px] truncate" style={{ color: "var(--text)" }}>
+                    <p className="font-serif-display font-bold m-0 text-name truncate" style={{ color: "var(--text)" }}>
                       {c.species_name}
                     </p>
-                    <p className="m-0 text-[13px] truncate" style={{ color: "var(--muted)" }}>
+                    <p className="m-0 text-label truncate" style={{ color: "var(--muted)" }}>
                       {meta}
                     </p>
                   </div>
-                  <p className="m-0 text-xl font-semibold text-right tabular-nums" style={{ color: "var(--text)" }}>
+                  <p className="m-0 text-subhead font-semibold text-right tabular-nums" style={{ color: "var(--text)" }}>
                     {c.weight_kg != null ? fmtKg(c.weight_kg) : "—"}
                   </p>
                 </Link>

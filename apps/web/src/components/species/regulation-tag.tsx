@@ -23,7 +23,7 @@ export function RegulationTag({ regulation, className = "" }: TagProps) {
   return (
     <span
       data-regulation={regulation}
-      className={`pill-regulation inline-flex items-center gap-1.5 rounded-[var(--r-pill)] px-3 py-1 text-[13px] font-semibold ${className}`}
+      className={`pill-regulation inline-flex items-center gap-1.5 rounded-[var(--r-pill)] px-3 py-1 text-label font-semibold ${className}`}
     >
       <svg className="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         {ICON[regulation]}
@@ -45,20 +45,20 @@ export function RegulationCard({ regulation, note, sourceUrl }: CardProps) {
       data-regulation={regulation}
       className="pill-regulation mb-6 rounded-[var(--r-card)] p-5 sm:p-6"
     >
-      <h2 id="regulation-title" className="m-0 flex items-center gap-2 font-serif-display text-xl font-bold">
+      <h2 id="regulation-title" className="m-0 flex items-center gap-2 font-serif-display text-subhead font-bold">
         <svg className="h-6 w-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           {ICON[regulation]}
         </svg>
         {t(regulation === "release" ? "releaseTitle" : "regulatedTitle")}
       </h2>
       {regulation === "release" && <p className="mt-2 mb-0 font-semibold text-text">{t("releaseHint")}</p>}
-      {note && <p className="mt-2 mb-0 text-[15px] text-text">{note}</p>}
+      {note && <p className="mt-2 mb-0 text-body text-text">{note}</p>}
       {sourceUrl && (
         <a
           href={sourceUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-2 inline-block text-[13px] font-medium underline-offset-2 hover:underline active:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2"
+          className="mt-2 inline-block text-label font-medium underline-offset-2 hover:underline active:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           {t("source")}
         </a>

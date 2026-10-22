@@ -63,7 +63,7 @@ export default async function CatchDetailPage({ params }: Props) {
     <div className="max-w-2xl mx-auto px-4 py-8">
       <Link
         href="/catches"
-        className="text-sm font-medium text-accent-ink hover:underline active:underline underline-offset-2 mb-4 inline-block"
+        className="text-small font-medium text-accent-ink hover:underline active:underline underline-offset-2 mb-4 inline-block"
       >
         &larr; {t("backToCatches")}
       </Link>

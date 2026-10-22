@@ -38,8 +38,8 @@ export function CatchInsightBlock({
   if (insight.kind === "none" && !trophy) return null;
 
   const trophyBlock = trophy && (
-    <div role="status" className="pill-trophy rounded-[var(--r-control)] px-3.5 py-3 text-[13px] motion-safe:animate-[badge-pop_400ms_var(--ease-spring)]">
-      <b className="block text-sm font-semibold">{t("trophyCatchTitle")}</b>
+    <div role="status" className="pill-trophy rounded-[var(--r-control)] px-3.5 py-3 text-label motion-safe:animate-[badge-pop_400ms_var(--ease-spring)]">
+      <b className="block text-small font-semibold">{t("trophyCatchTitle")}</b>
       <span>{t("trophyCatchBody")}</span>
     </div>
   );
@@ -61,11 +61,11 @@ export function CatchInsightBlock({
       {trophyBlock}
       <div
         role="status"
-        className={`rounded-[var(--r-control)] px-3.5 py-3 text-[13px] ${
+        className={`rounded-[var(--r-control)] px-3.5 py-3 text-label ${
           accent ? "bg-[var(--accent-soft)] text-[var(--accent-ink)]" : "bg-[var(--ground)] text-[var(--muted)]"
         }`}
       >
-        <b className="block text-sm font-semibold">{title}</b>
+        <b className="block text-small font-semibold">{title}</b>
         <span className="tabular-nums">{body}</span>
         {rankUp && (
           <span className="mt-1.5 block font-semibold motion-safe:animate-[rank-up_500ms_var(--ease-spring)]">
@@ -92,7 +92,7 @@ export function CatchPreview({ photoUrl, species, weightKg, lengthCm, locationNa
 
   return (
     <aside className="hidden lg:block lg:sticky lg:top-20 bg-[var(--surface)] rounded-[var(--r-card)] p-6">
-      <p className="text-[13px] text-[var(--muted)] mb-3">{t("previewTitle")}</p>
+      <p className="text-label text-[var(--muted)] mb-3">{t("previewTitle")}</p>
       <div className="h-[220px] rounded-[3px] overflow-hidden mb-[18px] bg-[var(--ground)] flex items-center justify-center text-[var(--silhouette)]">
         {photoUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -101,27 +101,27 @@ export function CatchPreview({ photoUrl, species, weightKg, lengthCm, locationNa
           <FishMark className="w-16 h-16" />
         )}
       </div>
-      <h2 className="font-serif-display font-display text-[40px] leading-none text-[var(--text)] break-words">
+      <h2 className="font-serif-display font-display text-title leading-none text-[var(--text)] break-words">
         {species?.name ?? dash}
       </h2>
-      {species && <p className="sci-name text-sm mt-1.5">{species.scientific_name}</p>}
+      {species && <p className="sci-name text-small mt-1.5">{species.scientific_name}</p>}
       {species?.regulation && <RegulationTag regulation={species.regulation} className="mt-3" />}
 
-      <dl className="grid grid-cols-3 gap-3 mt-5 text-sm tabular-nums">
+      <dl className="grid grid-cols-3 gap-3 mt-5 text-small tabular-nums">
         <div>
-          <dt className="text-xs text-[var(--muted)]">{t("weight")}</dt>
+          <dt className="text-label text-[var(--muted)]">{t("weight")}</dt>
           <dd className="font-semibold text-[var(--text)]">{weightKg || dash}</dd>
         </div>
         <div>
-          <dt className="text-xs text-[var(--muted)]">{t("length")}</dt>
+          <dt className="text-label text-[var(--muted)]">{t("length")}</dt>
           <dd className="font-semibold text-[var(--text)]">{lengthCm || dash}</dd>
         </div>
         <div className="min-w-0">
-          <dt className="text-xs text-[var(--muted)]">{t("location")}</dt>
+          <dt className="text-label text-[var(--muted)]">{t("location")}</dt>
           <dd className="font-semibold text-[var(--text)] truncate">{locationName || dash}</dd>
         </div>
       </dl>
-      {meta && <p className="mt-3 text-[13px] text-[var(--muted)]">{meta}</p>}
+      {meta && <p className="mt-3 text-label text-[var(--muted)]">{meta}</p>}
 
       {(insight.kind !== "none" || trophy) && (
         <div className="mt-4">

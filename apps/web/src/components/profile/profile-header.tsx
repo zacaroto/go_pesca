@@ -44,17 +44,17 @@ export function ProfileHeader({ profile, isOwner, onEdit }: Props) {
           // eslint-disable-next-line @next/next/no-img-element
           <img src={profile.avatar_url} alt="" className="h-full w-full object-cover" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-accent-soft font-serif-display text-5xl font-black text-accent-ink">
+          <div className="flex h-full w-full items-center justify-center bg-accent-soft font-serif-display text-title font-black text-accent-ink">
             {letter}
           </div>
         )}
       </div>
 
       <div>
-        <h1 className="font-serif-display text-3xl font-bold text-text break-words">
+        <h1 className="font-serif-display text-heading font-bold text-text break-words">
           {profile.display_name ?? "Angler"}
         </h1>
-        <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted">
+        <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-small text-muted">
           <span className="inline-flex items-center gap-1">
             <CalendarIcon className="h-4 w-4" />
             {t("memberSince")} {joinYear}
@@ -68,14 +68,14 @@ export function ProfileHeader({ profile, isOwner, onEdit }: Props) {
         </p>
       </div>
 
-      {profile.bio && <p className="m-0 text-[15px] text-text">{profile.bio}</p>}
+      {profile.bio && <p className="m-0 text-body text-text">{profile.bio}</p>}
 
       {profile.fishing_tags.length > 0 && (
         <div className="flex flex-wrap gap-1.5">
           {profile.fishing_tags.map((tag) => (
             <span
               key={tag}
-              className={`text-[13px] font-medium px-2.5 py-1 rounded-[var(--r-pill)] ${TAG_COLORS[tag] ?? "bg-raised text-muted"}`}
+              className={`text-label font-medium px-2.5 py-1 rounded-[var(--r-pill)] ${TAG_COLORS[tag] ?? "bg-raised text-muted"}`}
             >
               {t(`tags.${tag}` as Parameters<typeof t>[0])}
             </span>
@@ -88,7 +88,7 @@ export function ProfileHeader({ profile, isOwner, onEdit }: Props) {
           {profile.favorite_spots.map((spot) => (
             <span
               key={spot}
-              className="inline-flex items-center gap-1 text-[13px] font-medium px-3 py-1 rounded-[var(--r-pill)] bg-raised text-muted"
+              className="inline-flex items-center gap-1 text-label font-medium px-3 py-1 rounded-[var(--r-pill)] bg-raised text-muted"
             >
               <PinIcon className="h-3.5 w-3.5" />
               {spot}
@@ -144,7 +144,7 @@ export function ProfileHeader({ profile, isOwner, onEdit }: Props) {
         <button
           type="button"
           onClick={onEdit}
-          className="inline-flex items-center justify-center gap-2 rounded-[var(--r-control)] bg-raised px-4 py-2.5 text-sm font-semibold text-text hover:bg-border active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 transition-[background-color,transform] duration-[var(--t-press)] motion-reduce:transition-none motion-reduce:active:scale-100"
+          className="inline-flex items-center justify-center gap-2 rounded-[var(--r-control)] bg-raised px-4 py-2.5 text-small font-semibold text-text hover:bg-border active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 transition-[background-color,transform] duration-[var(--t-press)] motion-reduce:transition-none motion-reduce:active:scale-100"
         >
           <EditIcon className="h-4 w-4" />
           {t("editProfile")}

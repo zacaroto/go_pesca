@@ -84,7 +84,7 @@ export function SpeciesCarousel({ species, variant = "plate" }: Props) {
           </div>
         ))}
         {current.photoCredit && current.photoUrl && !failed.has(current.id) && (
-          <small className="absolute right-2 bottom-2 max-w-[80%] truncate rounded-full bg-[rgb(18_19_20/0.55)] px-2.5 py-0.5 text-[11px] text-white">
+          <small className="absolute right-2 bottom-2 max-w-[80%] truncate rounded-full bg-[rgb(18_19_20/0.55)] px-2.5 py-0.5 text-label text-white">
             {t("photoCredit", { credit: current.photoCredit })}
           </small>
         )}
@@ -93,10 +93,10 @@ export function SpeciesCarousel({ species, variant = "plate" }: Props) {
       <figcaption className="shrink-0 px-6 pt-5 pb-6 sm:px-8 sm:pt-6 sm:pb-7" aria-live={paused ? "polite" : "off"}>
         <div className="flex items-end justify-between gap-4">
           <div className="min-w-0">
-            <b className="block truncate font-serif-display font-display text-[32px] leading-none tracking-[-0.02em] sm:text-[40px]">
+            <b className="block truncate font-serif-display font-display text-heading leading-none tracking-[-0.02em] sm:text-title">
               {current.name}
             </b>
-            <span className="sci-name block truncate text-base sm:text-lg">{current.scientificName}</span>
+            <span className="sci-name block truncate text-body sm:text-name">{current.scientificName}</span>
           </div>
           <div className="flex shrink-0 gap-1.5" role="group" aria-label={t("carouselLabel")}>
             {species.map((s, i) => (
@@ -126,7 +126,7 @@ export function SpeciesCarousel({ species, variant = "plate" }: Props) {
         {/* Reserved 3-line slot so a longer fact never shifts the plate. */}
         <p
           key={`${current.id}-${fact}`}
-          className="mt-3 mb-0 line-clamp-3 h-[4.5em] max-w-[56ch] text-[15px] leading-[1.5] text-text motion-safe:animate-[fact-in_500ms_var(--ease-out)]"
+          className="mt-3 mb-0 line-clamp-3 h-[4.5em] max-w-[56ch] text-body leading-[1.5] text-text motion-safe:animate-[fact-in_500ms_var(--ease-out)]"
           title={fact ?? undefined}
         >
           {fact && (

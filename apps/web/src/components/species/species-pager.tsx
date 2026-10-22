@@ -19,7 +19,7 @@ function Chevron({ children }: { children: React.ReactNode }) {
 }
 
 const PILL =
-  "inline-flex h-9 max-w-[14rem] items-center gap-1.5 rounded-full bg-surface px-3 text-sm font-medium text-text hover:bg-raised active:scale-[0.97] transition-[background-color,transform] duration-[var(--t-ui)] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2";
+  "inline-flex h-9 max-w-[14rem] items-center gap-1.5 rounded-full bg-surface px-3 text-small font-medium text-text hover:bg-raised active:scale-[0.97] transition-[background-color,transform] duration-[var(--t-ui)] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2";
 
 /** Compact prev/next pills for the top bar; ←/→ keys navigate too (ignored while typing). */
 export function SpeciesPagerTop({ prev, next }: Props) {
@@ -61,18 +61,18 @@ export function SpeciesPagerBottom({ prev, next }: Props) {
   return (
     <nav aria-label={t("pagerLabel")} className="grid grid-cols-2 gap-4">
       <Link href={`/species/${prev.id}`} className={CARD}>
-        <span className="flex items-center gap-1.5 text-[13px] text-muted">
+        <span className="flex items-center gap-1.5 text-label text-muted">
           <Chevron>{CHEVRON_L}</Chevron>
           {t("previous")}
         </span>
-        <span className="truncate font-serif-display text-xl font-bold sm:text-2xl">{prev.name}</span>
+        <span className="truncate font-serif-display text-subhead font-bold">{prev.name}</span>
       </Link>
       <Link href={`/species/${next.id}`} className={`${CARD} items-end text-right`}>
-        <span className="flex items-center gap-1.5 text-[13px] text-muted">
+        <span className="flex items-center gap-1.5 text-label text-muted">
           {t("next")}
           <Chevron>{CHEVRON_R}</Chevron>
         </span>
-        <span className="max-w-full truncate font-serif-display text-xl font-bold sm:text-2xl">{next.name}</span>
+        <span className="max-w-full truncate font-serif-display text-subhead font-bold">{next.name}</span>
       </Link>
     </nav>
   );

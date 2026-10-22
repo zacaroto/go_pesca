@@ -57,7 +57,7 @@ export function SuggestionForm({ locale }: Props) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label className="block text-sm font-medium mb-1">
+        <label className="block text-small font-medium mb-1">
           {t("commonName")} *
         </label>
         <input
@@ -72,7 +72,7 @@ export function SuggestionForm({ locale }: Props) {
       <PhotoUpload onSelect={setPhoto} />
 
       <div>
-        <label className="block text-sm font-medium mb-1">
+        <label className="block text-small font-medium mb-1">
           {t("suggestionNotes")}
         </label>
         <textarea
@@ -83,7 +83,7 @@ export function SuggestionForm({ locale }: Props) {
         />
       </div>
 
-      {error && <p className="text-negative text-sm">{error}</p>}
+      {error && <p className="text-negative text-small">{error}</p>}
 
       <button
         type="submit"

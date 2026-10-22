@@ -38,7 +38,7 @@ export function AchievementCard({
       <div className="flex items-start gap-3">
         {/* Icon (achievement emoji is content) */}
         <div
-          className={`flex items-center justify-center w-14 h-14 rounded-full text-2xl flex-shrink-0 ${
+          className={`flex items-center justify-center w-14 h-14 rounded-full text-subhead flex-shrink-0 ${
             earned
               ? "bg-accent-soft"
               : "bg-raised border border-dashed border-border text-faint"
@@ -49,18 +49,18 @@ export function AchievementCard({
 
         <div className="flex-1 min-w-0">
           <p
-            className={`font-serif-display text-base font-bold truncate ${
+            className={`font-serif-display text-body font-bold truncate ${
               earned ? "text-text" : "text-muted"
             }`}
           >
             {name}
           </p>
-          <p className="text-[13px] text-muted mt-0.5">
+          <p className="text-label text-muted mt-0.5">
             {description}
           </p>
 
           {earned && awardedAt && (
-            <p className="text-[13px] text-accent-ink font-medium mt-2 flex items-center gap-1">
+            <p className="text-label text-accent-ink font-medium mt-2 flex items-center gap-1">
               <CheckCircleIcon className="h-4 w-4" />
               {new Date(awardedAt).toLocaleDateString()}
             </p>
@@ -69,8 +69,8 @@ export function AchievementCard({
           {!earned && progress && (
             <div className="mt-2.5">
               <div className="flex items-center justify-between mb-1">
-                <span className="text-[13px] text-muted font-medium">{progress}</span>
-                <span className="text-[13px] text-muted font-medium">{progressPct}%</span>
+                <span className="text-label text-muted font-medium">{progress}</span>
+                <span className="text-label text-muted font-medium">{progressPct}%</span>
               </div>
               <div
                 role="progressbar"

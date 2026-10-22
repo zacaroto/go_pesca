@@ -41,12 +41,12 @@ export function MagazineTile({ entry, reactions, featured = false }: Props) {
         <div className="px-[14px] pt-[10px] pb-[12px]">
           <span
             className={`font-serif-display block truncate text-[var(--text)] ${
-              featured ? "text-[34px] font-black" : "text-[18px] font-bold"
+              featured ? "text-heading font-black" : "text-name font-bold"
             }`}
           >
             {entry.species_name}
           </span>
-          <span className="block truncate text-xs text-[var(--muted)]">{meta}</span>
+          <span className="block truncate text-label text-[var(--muted)]">{meta}</span>
         </div>
       </Link>
       {featured && (

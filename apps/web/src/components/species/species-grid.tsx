@@ -48,7 +48,7 @@ export function SpeciesGrid({ species, locale }: Props) {
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t("searchPlaceholder")}
             aria-label={t("searchPlaceholder")}
-            className="min-w-0 flex-1 bg-transparent text-[15px] text-text outline-none placeholder:text-faint"
+            className="min-w-0 flex-1 bg-transparent text-body text-text outline-none placeholder:text-faint"
           />
         </label>
         <div role="group" aria-label={t("sortLabel")} className="inline-flex rounded-[var(--r-pill)] bg-raised p-1">
@@ -58,7 +58,7 @@ export function SpeciesGrid({ species, locale }: Props) {
               type="button"
               aria-pressed={sort === key}
               onClick={() => setSort(key)}
-              className={`rounded-[var(--r-pill)] px-3.5 py-1.5 text-[13px] font-medium text-muted hover:text-text aria-pressed:bg-surface aria-pressed:text-text ${pressable}`}
+              className={`rounded-[var(--r-pill)] px-3.5 py-1.5 text-label font-medium text-muted hover:text-text aria-pressed:bg-surface aria-pressed:text-text ${pressable}`}
             >
               {key === "az" ? t("sortAZ") : t("sortLargest")}
             </button>
@@ -73,7 +73,7 @@ export function SpeciesGrid({ species, locale }: Props) {
             type="button"
             aria-pressed={filter === key}
             onClick={() => setFilter(key)}
-            className={`rounded-[var(--r-pill)] bg-surface px-3.5 py-2 text-sm font-medium text-text hover:bg-raised aria-pressed:bg-accent aria-pressed:text-on-primary ${pressable}`}
+            className={`rounded-[var(--r-pill)] bg-surface px-3.5 py-2 text-small font-medium text-text hover:bg-raised aria-pressed:bg-accent aria-pressed:text-on-primary ${pressable}`}
           >
             {filterLabel[key]}
             <span className="ml-1.5 tabular-nums opacity-70">{counts[key]}</span>
@@ -81,7 +81,7 @@ export function SpeciesGrid({ species, locale }: Props) {
         ))}
       </div>
 
-      <p className="m-0 text-[13px] text-muted" aria-live="polite">
+      <p className="m-0 text-label text-muted" aria-live="polite">
         {t("resultCount", { count: visible.length })}
       </p>
 

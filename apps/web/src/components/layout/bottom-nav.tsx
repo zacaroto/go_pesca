@@ -73,7 +73,7 @@ export function BottomNav() {
         {tab.icon(active)}
         <span
           style={{
-            fontSize: "11px",
+            fontSize: "var(--text-label)",
             fontWeight: "inherit",
             lineHeight: 1,
           }}

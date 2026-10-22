@@ -50,11 +50,11 @@ export default async function CommunityPage({ params }: Props) {
 
   return (
     <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 sm:py-12">
-      <h1 className="font-serif-display text-[40px] sm:text-[52px] font-black leading-none text-[var(--text)]">
+      <h1 className="font-serif-display text-title font-black leading-none text-[var(--text)]">
         {t("title")}
       </h1>
       <div className="mb-8">
-        {records && <p className="mt-3 text-base text-[var(--muted)]">{t("subtitle", { count: records.weekCount })}</p>}
+        {records && <p className="mt-3 text-body text-[var(--muted)]">{t("subtitle", { count: records.weekCount })}</p>}
       </div>
 
       {hasGroups && <MyGroupsBar groups={groups} />}
@@ -70,18 +70,18 @@ export default async function CommunityPage({ params }: Props) {
 
       {!hasGroups && (
         <section className="mt-10 rounded-[var(--r-card)] bg-[var(--surface)] p-6 text-center">
-          <h2 className="font-serif-display text-2xl font-bold text-[var(--text)]">{t("noGroupsTitle")}</h2>
-          <p className="mt-1 mb-5 text-sm text-[var(--muted)]">{t("noGroupsDescription")}</p>
+          <h2 className="font-serif-display text-subhead font-bold text-[var(--text)]">{t("noGroupsTitle")}</h2>
+          <p className="mt-1 mb-5 text-small text-[var(--muted)]">{t("noGroupsDescription")}</p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/groups/new"
-              className="px-5 py-2.5 rounded-[var(--r-pill)] text-sm font-semibold text-[var(--on-primary)] bg-[var(--accent)] transition-[background-color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none hover:bg-[var(--accent-hi)] active:scale-[0.97] motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2"
+              className="px-5 py-2.5 rounded-[var(--r-pill)] text-small font-semibold text-[var(--on-primary)] bg-[var(--accent)] transition-[background-color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none hover:bg-[var(--accent-hi)] active:scale-[0.97] motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               {tGroups("createGroup")}
             </Link>
             <Link
               href="/groups/join"
-              className="px-5 py-2.5 rounded-[var(--r-pill)] text-sm font-semibold text-[var(--text)] bg-[var(--raised)] transition-[background-color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none hover:bg-[var(--border)] active:scale-[0.97] motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2"
+              className="px-5 py-2.5 rounded-[var(--r-pill)] text-small font-semibold text-[var(--text)] bg-[var(--raised)] transition-[background-color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none hover:bg-[var(--border)] active:scale-[0.97] motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               {t("joinWithCode")}
             </Link>

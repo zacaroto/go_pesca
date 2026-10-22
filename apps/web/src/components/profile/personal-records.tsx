@@ -7,7 +7,7 @@ type Props = { records: PersonalRecord[]; locale: string };
 export function TrophyPill({ className = "" }: { className?: string }) {
   const t = useTranslations("profile");
   return (
-    <span className={`inline-flex items-center rounded-[var(--r-pill)] px-2.5 py-0.5 text-[13px] font-semibold pill-trophy ${className}`}>
+    <span className={`inline-flex items-center rounded-[var(--r-pill)] px-2.5 py-0.5 text-label font-semibold pill-trophy ${className}`}>
       {t("trophy")}
     </span>
   );
@@ -19,17 +19,17 @@ export function PersonalRecords({ records, locale }: Props) {
   const num = new Intl.NumberFormat(locale === "en" ? "en" : "es-CR", { maximumFractionDigits: 1 });
   const date = (d: string) =>
     new Date(`${d}T00:00:00Z`).toLocaleDateString(locale, { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
-  const th = "px-2 py-2 text-left text-[13px] font-medium text-muted";
+  const th = "px-2 py-2 text-left text-label font-medium text-muted";
   const td = "px-2 py-3";
 
   return (
     <section className="rounded-[var(--r-card)] bg-surface p-5 sm:p-6">
-      <h2 className="m-0 mb-2 font-serif-display text-2xl font-bold">{t("records")}</h2>
+      <h2 className="m-0 mb-2 font-serif-display text-subhead font-bold">{t("records")}</h2>
       {records.length === 0 ? (
         <p className="m-0 text-muted">{t("recordsEmpty")}</p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[480px] border-collapse text-sm tabular-nums">
+          <table className="w-full min-w-[480px] border-collapse text-small tabular-nums">
             <thead>
               <tr className="border-b border-rule">
                 <th className={th}>{t("colSpecies")}</th>
@@ -45,7 +45,7 @@ export function PersonalRecords({ records, locale }: Props) {
                   <td className={td}>
                     <Link
                       href={`/species/${r.speciesId}`}
-                      className="font-serif-display text-base font-bold text-text underline-offset-2 hover:underline active:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2"
+                      className="font-serif-display text-body font-bold text-text underline-offset-2 hover:underline active:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2"
                     >
                       {r.speciesName}
                     </Link>

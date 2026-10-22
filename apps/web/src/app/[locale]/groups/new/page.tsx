@@ -28,7 +28,7 @@ function NewGroupContent({ locale }: { locale: string }) {
 
   return (
     <div className="max-w-xl mx-auto px-4 py-8">
-      <h1 className="font-serif-display text-3xl font-bold mb-6">{t("createGroup")}</h1>
+      <h1 className="font-serif-display text-heading font-bold mb-6">{t("createGroup")}</h1>
       <GroupForm locale={locale} mode="create" />
     </div>
   );

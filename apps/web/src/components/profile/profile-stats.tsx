@@ -16,8 +16,8 @@ type Props = {
 };
 
 const statCard = "rounded-[var(--r-card)] bg-surface p-4";
-const statValue = "block font-serif-display text-4xl font-black leading-none text-text tabular-nums";
-const statLabel = "mt-1.5 block text-[13px] text-muted";
+const statValue = "block font-serif-display text-heading font-black leading-none text-text tabular-nums";
+const statLabel = "mt-1.5 block text-label text-muted";
 
 /** Rank ring plus the angler's headline numbers. */
 export function ProfileStats({ stats, rankData }: Props) {
@@ -37,7 +37,7 @@ export function ProfileStats({ stats, rankData }: Props) {
         <div className={statCard}>
           <span className={statValue}>
             {stats.speciesCaught}
-            <span className="font-sans text-base font-medium text-muted">/{rankData.total}</span>
+            <span className="font-sans text-body font-medium text-muted">/{rankData.total}</span>
           </span>
           <span className={statLabel}>{t("speciesCaught")}</span>
         </div>

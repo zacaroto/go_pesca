@@ -74,9 +74,9 @@ export function ReactionBar({ catchId, counts: initialCounts, userReaction: init
             aria-label={`${label}${count > 0 ? ` (${count})` : ""}`}
             title={label}
             data-active={isActive}
-            className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold tabular-nums cursor-pointer rounded-[var(--r-pill)] bg-[var(--raised)] text-[var(--muted)] transition-[background-color,color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none hover:bg-[var(--border)] hover:text-[var(--text)] active:scale-95 motion-reduce:active:scale-100 data-[active=true]:bg-[var(--accent)] data-[active=true]:text-[var(--on-primary)] data-[active=true]:hover:bg-[var(--accent-hi)] disabled:opacity-60 disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2"
+            className="inline-flex items-center gap-1 px-2.5 py-1.5 text-label font-semibold tabular-nums cursor-pointer rounded-[var(--r-pill)] bg-[var(--raised)] text-[var(--muted)] transition-[background-color,color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none hover:bg-[var(--border)] hover:text-[var(--text)] active:scale-95 motion-reduce:active:scale-100 data-[active=true]:bg-[var(--accent)] data-[active=true]:text-[var(--on-primary)] data-[active=true]:hover:bg-[var(--accent-hi)] disabled:opacity-60 disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2"
           >
-            <span aria-hidden="true" className="text-sm leading-none">{emoji}</span>
+            <span aria-hidden="true" className="text-small leading-none">{emoji}</span>
             {count > 0 && <span aria-hidden="true">{count}</span>}
           </button>
         );

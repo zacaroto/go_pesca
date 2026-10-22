@@ -11,7 +11,7 @@ type Props = {
 };
 
 const BTN =
-  "inline-flex h-10 items-center gap-2 rounded-full bg-accent px-5 text-sm font-semibold text-on-primary hover:bg-accent-hi active:bg-accent-hi active:scale-[0.97] transition-[background-color,transform] duration-[var(--t-press)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2";
+  "inline-flex h-10 items-center gap-2 rounded-full bg-accent px-5 text-small font-semibold text-on-primary hover:bg-accent-hi active:bg-accent-hi active:scale-[0.97] transition-[background-color,transform] duration-[var(--t-press)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2";
 
 export default async function GroupsPage({ params }: Props) {
   const { locale } = await params;
@@ -46,7 +46,7 @@ function GroupsContent({ groups, loadFailed }: { groups: GroupWithMemberCount[];
     <div className="mx-auto w-full max-w-[1280px] px-4 py-10 sm:px-12">
       <div className="mb-8 flex flex-wrap items-end gap-4">
         <div className="min-w-0 flex-1">
-          <h1 className="font-serif-display text-4xl font-black leading-none sm:text-[52px]">{t("title")}</h1>
+          <h1 className="font-serif-display text-heading font-black leading-none sm:text-title">{t("title")}</h1>
           {groups.length > 0 && (
             <p className="mt-2 text-muted">{t("groupCount", { count: groups.length })}</p>
           )}
@@ -61,7 +61,7 @@ function GroupsContent({ groups, loadFailed }: { groups: GroupWithMemberCount[];
         <p role="alert" className="rounded-[var(--r-card)] bg-surface p-6 text-negative">{t("loadError")}</p>
       ) : groups.length === 0 ? (
         <div className="rounded-[var(--r-card)] bg-surface p-8">
-          <h2 className="font-serif-display text-2xl font-bold">{t("noGroups")}</h2>
+          <h2 className="font-serif-display text-subhead font-bold">{t("noGroups")}</h2>
           <p className="mt-2 max-w-[52ch] text-muted">{t("createFirst")}</p>
         </div>
       ) : (
@@ -76,16 +76,16 @@ function GroupsContent({ groups, loadFailed }: { groups: GroupWithMemberCount[];
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={group.avatar_url} alt="" className="h-14 w-14 shrink-0 rounded-[var(--r-card)] object-cover" />
                 ) : (
-                  <span aria-hidden="true" className="grid h-14 w-14 shrink-0 place-items-center rounded-[var(--r-card)] bg-accent-soft text-xl font-bold text-accent-ink">
+                  <span aria-hidden="true" className="grid h-14 w-14 shrink-0 place-items-center rounded-[var(--r-card)] bg-accent-soft text-subhead font-bold text-accent-ink">
                     {group.name.charAt(0).toUpperCase()}
                   </span>
                 )}
                 <span className="min-w-0">
-                  <span className="block truncate font-serif-display text-xl font-bold">{group.name}</span>
+                  <span className="block truncate font-serif-display text-subhead font-bold">{group.name}</span>
                   {group.description && (
-                    <span className="mt-1 line-clamp-2 block text-sm text-muted">{group.description}</span>
+                    <span className="mt-1 line-clamp-2 block text-small text-muted">{group.description}</span>
                   )}
-                  <span className="mt-2 block text-[13px] text-muted tabular-nums">
+                  <span className="mt-2 block text-label text-muted tabular-nums">
                     {t("memberCount", { count: group.member_count })}
                   </span>
                 </span>

@@ -69,15 +69,15 @@ function PokedexSpeciesContent({
     <div className="max-w-2xl mx-auto px-4 py-8">
       <Link
         href="/pokedex"
-        className="text-sm font-medium text-accent-ink hover:underline active:underline underline-offset-2 mb-4 inline-block"
+        className="text-small font-medium text-accent-ink hover:underline active:underline underline-offset-2 mb-4 inline-block"
       >
         &larr; {t("title")}
       </Link>
 
       <div className="rounded-[var(--r-card)] bg-surface p-6 mb-6">
-        <h1 className="font-serif-display text-2xl font-bold mb-1">{name}</h1>
+        <h1 className="font-serif-display text-subhead font-bold mb-1">{name}</h1>
         <p className="sci-name mb-1">{species.scientific_name}</p>
-        <p className="text-sm text-muted">{tSpecies("habitat")}: {
+        <p className="text-small text-muted">{tSpecies("habitat")}: {
           species.habitat === "freshwater"
             ? tSpecies("freshwater")
             : species.habitat === "saltwater"
@@ -86,7 +86,7 @@ function PokedexSpeciesContent({
         }</p>
       </div>
 
-      <h2 className="font-serif-display text-xl font-bold mb-4">{t("totalCatches")}</h2>
+      <h2 className="font-serif-display text-subhead font-bold mb-4">{t("totalCatches")}</h2>
       <SpeciesCatches catches={catches} locale={locale} />
     </div>
   );

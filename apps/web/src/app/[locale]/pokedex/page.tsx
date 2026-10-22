@@ -46,11 +46,11 @@ function PokedexContent({
         <div>
           <h1
             className="font-serif-display m-0"
-            style={{ fontSize: "clamp(36px, 6vw, 52px)", lineHeight: 1, color: "var(--text)" }}
+            style={{ fontSize: "clamp(var(--text-heading), 6vw, var(--text-title))", lineHeight: 1, color: "var(--text)" }}
           >
             {t("title")}
           </h1>
-          <p className="mt-2 mb-0 text-[15px]" style={{ color: "var(--muted)" }}>
+          <p className="mt-2 mb-0 text-body" style={{ color: "var(--muted)" }}>
             {t("subtitle", { caught, total })}
           </p>
         </div>

@@ -24,7 +24,7 @@ type Props = {
 };
 
 const inputClass = "field";
-const labelClass = "block text-sm font-semibold text-text";
+const labelClass = "block text-small font-semibold text-text";
 
 const FISHING_TAGS = ["shore", "kayak", "offshore", "fly", "river", "lake", "spearfishing"] as const;
 const REGIONS = ["pacific", "caribbean", "centralValley", "northernPlains", "southPacific"] as const;
@@ -110,7 +110,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
         <div className="flex-shrink-0 pt-3 pb-2 px-5 border-b border-border">
           <div className="w-10 h-1.5 rounded-full bg-border mx-auto mb-3" />
           <div className="flex items-center justify-between">
-            <h2 className="font-serif-display text-xl font-bold text-text">
+            <h2 className="font-serif-display text-subhead font-bold text-text">
               {t("editProfile")}
             </h2>
             <button
@@ -171,7 +171,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
                   type="button"
                   onClick={() => toggleTag(tag)}
                   aria-pressed={fishingTags.includes(tag)}
-                  className={`text-[13px] font-medium px-3 py-1.5 rounded-[var(--r-pill)] border transition-[background-color,border-color,transform] duration-[var(--t-press)] ease-[var(--ease-out)] active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100 ${
+                  className={`text-label font-medium px-3 py-1.5 rounded-[var(--r-pill)] border transition-[background-color,border-color,transform] duration-[var(--t-press)] ease-[var(--ease-out)] active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100 ${
                     fishingTags.includes(tag)
                       ? "bg-accent text-on-primary border-accent"
                       : "bg-surface text-muted border-border hover:border-faint active:bg-raised"
@@ -193,7 +193,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
                 {favoriteSpots.map((spot) => (
                   <span
                     key={spot}
-                    className="inline-flex items-center gap-1 text-[13px] font-medium px-3 py-1.5 rounded-[var(--r-pill)] pill-brack"
+                    className="inline-flex items-center gap-1 text-label font-medium px-3 py-1.5 rounded-[var(--r-pill)] pill-brack"
                   >
                     <PinIcon className="h-3.5 w-3.5" />
                     {spot}
@@ -223,14 +223,14 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
                   type="button"
                   onClick={addSpot}
                   disabled={!spotInput.trim()}
-                  className="btn-secondary flex-shrink-0 px-4 py-2 text-[13px]"
+                  className="btn-secondary flex-shrink-0 px-4 py-2 text-label"
                 >
                   {t("addSpot")}
                 </button>
               </div>
             )}
             {favoriteSpots.length >= MAX_SPOTS && (
-              <p className="text-[13px] text-muted mt-1">{t("maxSpots")}</p>
+              <p className="text-label text-muted mt-1">{t("maxSpots")}</p>
             )}
           </div>
 
@@ -259,7 +259,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
               {t("socialLinks")}
             </label>
             <div className="flex items-center gap-2">
-              <span className="text-[13px] font-medium text-muted w-20 flex-shrink-0">{t("instagram")}</span>
+              <span className="text-label font-medium text-muted w-20 flex-shrink-0">{t("instagram")}</span>
               <input
                 type="text"
                 value={instagram}
@@ -269,7 +269,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
               />
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[13px] font-medium text-muted w-20 flex-shrink-0">{t("youtube")}</span>
+              <span className="text-label font-medium text-muted w-20 flex-shrink-0">{t("youtube")}</span>
               <input
                 type="text"
                 value={youtube}
@@ -279,7 +279,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
               />
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[13px] font-medium text-muted w-20 flex-shrink-0">{t("other")}</span>
+              <span className="text-label font-medium text-muted w-20 flex-shrink-0">{t("other")}</span>
               <input
                 type="text"
                 value={other}
@@ -294,7 +294,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
         {/* Save button (sticky bottom) */}
         <div className="flex-shrink-0 px-5 py-4 border-t border-border">
           {saveError && (
-            <p role="alert" className="mb-3 text-sm text-negative">
+            <p role="alert" className="mb-3 text-small text-negative">
               {saveError}
             </p>
           )}

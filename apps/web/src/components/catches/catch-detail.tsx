@@ -133,7 +133,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
     return (
       <div className="space-y-6">
         <div>
-          <p className="text-[13px] text-muted mb-1">{t("photo")}</p>
+          <p className="text-label text-muted mb-1">{t("photo")}</p>
           <PhotoUpload onSelect={setNewPhoto} />
           {!newPhoto && (
             <img
@@ -147,7 +147,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
         <SpeciesPicker locale={locale} value={speciesId} onChange={setSpeciesId} />
 
         <div>
-          <label className="block text-sm font-medium mb-1">{t("date")} *</label>
+          <label className="block text-small font-medium mb-1">{t("date")} *</label>
           <input
             type="date"
             value={catchDate}
@@ -159,7 +159,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium mb-1">{t("weight")}</label>
+            <label className="block text-small font-medium mb-1">{t("weight")}</label>
             <input
               type="number"
               step="0.01"
@@ -169,7 +169,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">{t("length")}</label>
+            <label className="block text-small font-medium mb-1">{t("length")}</label>
             <input
               type="number"
               step="0.1"
@@ -181,7 +181,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">{t("bait")}</label>
+          <label className="block text-small font-medium mb-1">{t("bait")}</label>
           <input
             type="text"
             value={baitLure}
@@ -192,7 +192,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium mb-1">{t("weather")}</label>
+            <label className="block text-small font-medium mb-1">{t("weather")}</label>
             <input
               type="text"
               value={weather}
@@ -201,7 +201,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">{t("tide")}</label>
+            <label className="block text-small font-medium mb-1">{t("tide")}</label>
             <input
               type="text"
               value={tide}
@@ -212,7 +212,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">{t("time")}</label>
+          <label className="block text-small font-medium mb-1">{t("time")}</label>
           <input
             type="time"
             value={timeOfDay}
@@ -222,7 +222,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">{t("notes")}</label>
+          <label className="block text-small font-medium mb-1">{t("notes")}</label>
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
@@ -234,8 +234,8 @@ export function CatchDetail({ catch_data, locale }: Props) {
         <div>
           <label className="flex items-center justify-between cursor-pointer">
             <div>
-              <span className="block text-sm font-medium">{t("isPublic")}</span>
-              <span className="text-[13px] text-muted">{t("isPublicHelp")}</span>
+              <span className="block text-small font-medium">{t("isPublic")}</span>
+              <span className="text-label text-muted">{t("isPublicHelp")}</span>
             </div>
             <div
               role="switch"
@@ -257,7 +257,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
         </div>
 
         {error && (
-          <p role="alert" className="text-sm text-negative border border-negative px-3 py-2 rounded-[var(--r-control)]">
+          <p role="alert" className="text-small text-negative border border-negative px-3 py-2 rounded-[var(--r-control)]">
             {error}
           </p>
         )}
@@ -301,7 +301,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
   return (
     <div className="space-y-6">
       {error && (
-        <p role="alert" className="text-sm text-negative border border-negative px-3 py-2 rounded-[var(--r-control)]">
+        <p role="alert" className="text-small text-negative border border-negative px-3 py-2 rounded-[var(--r-control)]">
           {error}
         </p>
       )}
@@ -312,7 +312,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
       />
 
       <div>
-        <h1 className="font-serif-display text-2xl font-bold">{catch_data.species_name}</h1>
+        <h1 className="font-serif-display text-subhead font-bold">{catch_data.species_name}</h1>
         <p className="text-muted">
           {t("date")}: {dateLabel}
         </p>
@@ -337,8 +337,8 @@ export function CatchDetail({ catch_data, locale }: Props) {
             (f) =>
               f.value && (
                 <div key={f.label}>
-                  <p className="text-[13px] text-muted">{f.label}</p>
-                  <p className="text-sm font-medium">{f.value}</p>
+                  <p className="text-label text-muted">{f.label}</p>
+                  <p className="text-small font-medium">{f.value}</p>
                 </div>
               )
           )}
@@ -347,8 +347,8 @@ export function CatchDetail({ catch_data, locale }: Props) {
 
       {catch_data.notes && (
         <div>
-          <p className="text-[13px] text-muted">{t("notes")}</p>
-          <p className="text-sm">{catch_data.notes}</p>
+          <p className="text-label text-muted">{t("notes")}</p>
+          <p className="text-small">{catch_data.notes}</p>
         </div>
       )}
 
@@ -381,10 +381,10 @@ export function CatchDetail({ catch_data, locale }: Props) {
           <div className="relative bg-surface border border-border rounded-[var(--r-card)] shadow-xl p-6 max-w-sm w-full space-y-4">
             <div className="flex flex-col items-center text-center space-y-3">
               <WarningIcon className="h-10 w-10 text-negative" />
-              <h3 className="font-serif-display text-xl font-bold text-text">
+              <h3 className="font-serif-display text-subhead font-bold text-text">
                 {t("confirmDelete")}
               </h3>
-              <p className="text-base text-muted">
+              <p className="text-body text-muted">
                 {t("confirmDeleteDescription")}
               </p>
             </div>

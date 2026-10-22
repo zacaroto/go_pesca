@@ -59,14 +59,14 @@ export function GroupHeader({ group, members, isCreator, locale }: Props) {
       ) : (
         <span
           aria-hidden="true"
-          className="grid h-[72px] w-[72px] shrink-0 place-items-center rounded-[var(--r-card)] bg-accent-soft font-serif-display text-3xl font-black text-accent-ink"
+          className="grid h-[72px] w-[72px] shrink-0 place-items-center rounded-[var(--r-card)] bg-accent-soft font-serif-display text-heading font-black text-accent-ink"
         >
           {group.name.charAt(0).toUpperCase()}
         </span>
       )}
 
       <div className="min-w-0 flex-1 basis-64">
-        <h1 className="m-0 font-serif-display text-4xl font-black leading-none tracking-[-0.03em] sm:text-5xl [overflow-wrap:anywhere]">
+        <h1 className="m-0 font-serif-display text-heading font-black leading-none tracking-[-0.03em] sm:text-title [overflow-wrap:anywhere]">
           {group.name}
         </h1>
         <p className="mt-2 mb-0 text-muted">
@@ -78,21 +78,21 @@ export function GroupHeader({ group, members, isCreator, locale }: Props) {
 
       <div className="flex items-center" aria-hidden="true">
         {members.slice(0, FACES).map((m, i) => (
-          <MemberAvatar key={m.user_id} member={m} className={`h-[30px] w-[30px] text-[11px] ring-2 ring-ground ${i ? "-ml-2" : ""}`} />
+          <MemberAvatar key={m.user_id} member={m} className={`h-[30px] w-[30px] text-label ring-2 ring-ground ${i ? "-ml-2" : ""}`} />
         ))}
         {extra > 0 && (
-          <span className="-ml-2 grid h-[30px] w-[30px] place-items-center rounded-full bg-raised text-[11px] font-semibold text-muted ring-2 ring-ground">
+          <span className="-ml-2 grid h-[30px] w-[30px] place-items-center rounded-full bg-raised text-label font-semibold text-muted ring-2 ring-ground">
             +{extra}
           </span>
         )}
       </div>
 
       <div className="flex items-center gap-2 rounded-full bg-surface py-1 pr-1 pl-3.5">
-        <code className="text-[13px] font-semibold tracking-[0.04em]">{group.invite_code}</code>
+        <code className="text-label font-semibold tracking-[0.04em]">{group.invite_code}</code>
         <button
           type="button"
           onClick={copy}
-          className="inline-flex h-8 items-center gap-1.5 rounded-full bg-accent px-3 text-sm font-semibold text-on-primary hover:bg-accent-hi active:scale-[0.97] transition-[background-color,transform] duration-[var(--t-press)] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2"
+          className="inline-flex h-8 items-center gap-1.5 rounded-full bg-accent px-3 text-small font-semibold text-on-primary hover:bg-accent-hi active:scale-[0.97] transition-[background-color,transform] duration-[var(--t-press)] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <rect x="8" y="8" width="12" height="12" rx="2" />
@@ -114,13 +114,13 @@ export function GroupHeader({ group, members, isCreator, locale }: Props) {
           type="button"
           onClick={handleLeave}
           disabled={leaving}
-          className="h-10 rounded-full bg-raised px-4 text-sm font-semibold text-text hover:bg-border active:scale-[0.97] disabled:opacity-60 transition-[background-color,transform] duration-[var(--t-ui)] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2"
+          className="h-10 rounded-full bg-raised px-4 text-small font-semibold text-text hover:bg-border active:scale-[0.97] disabled:opacity-60 transition-[background-color,transform] duration-[var(--t-ui)] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           {t("leave")}
         </button>
       )}
       {leaveError && (
-        <p role="alert" className="m-0 basis-full text-[13px] text-negative">
+        <p role="alert" className="m-0 basis-full text-label text-negative">
           {t("leaveError")}
         </p>
       )}

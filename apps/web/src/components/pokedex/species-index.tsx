@@ -72,7 +72,7 @@ export function SpeciesIndex({ entries, locale }: Props) {
       aria-pressed={statusFilter === key}
       data-active={statusFilter === key}
       onClick={() => setStatusFilter(key)}
-      className="inline-flex h-8 items-center gap-1.5 rounded-full px-3.5 text-sm text-muted hover:text-text active:scale-[0.97] data-[active=true]:bg-surface data-[active=true]:font-semibold data-[active=true]:text-text transition-[background-color,color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-1"
+      className="inline-flex h-8 items-center gap-1.5 rounded-full px-3.5 text-small text-muted hover:text-text active:scale-[0.97] data-[active=true]:bg-surface data-[active=true]:font-semibold data-[active=true]:text-text transition-[background-color,color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-1"
     >
       {label}
       {count !== undefined && <span className="tabular-nums text-faint">{count}</span>}
@@ -87,7 +87,7 @@ export function SpeciesIndex({ entries, locale }: Props) {
       aria-pressed={habitat === key}
       data-active={habitat === key}
       onClick={() => setHabitat(key)}
-      className="inline-flex h-8 items-center gap-1.5 border-b-2 border-transparent text-sm text-muted hover:text-text active:opacity-70 data-[active=true]:border-accent data-[active=true]:font-semibold data-[active=true]:text-text transition-[color,border-color,opacity] duration-[var(--t-ui)] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2"
+      className="inline-flex h-8 items-center gap-1.5 border-b-2 border-transparent text-small text-muted hover:text-text active:opacity-70 data-[active=true]:border-accent data-[active=true]:font-semibold data-[active=true]:text-text transition-[color,border-color,opacity] duration-[var(--t-ui)] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2"
     >
       {label}
       {progress && <span className="tabular-nums text-faint">{progress}</span>}
@@ -118,7 +118,7 @@ export function SpeciesIndex({ entries, locale }: Props) {
             <section key={s.letter} aria-label={s.letter}>
               <h3
                 className="font-serif-display mt-[18px] mb-1"
-                style={{ fontSize: 22, fontWeight: 700, color: "var(--accent)" }}
+                style={{ fontSize: "var(--text-subhead)", fontWeight: 700, color: "var(--accent)" }}
               >
                 {s.letter}
               </h3>
@@ -130,12 +130,12 @@ export function SpeciesIndex({ entries, locale }: Props) {
                   ? t(entry.habitat as Habitat)
                   : "—";
                 const nameCell = (
-                  <span className="font-serif-display" style={{ fontWeight: 700, fontSize: 17, color: "var(--text)" }}>
+                  <span className="font-serif-display" style={{ fontWeight: 700, fontSize: "var(--text-name)", color: "var(--text)" }}>
                     {name}
                   </span>
                 );
                 const statusCell = (
-                  <span className="text-right text-[13px]" style={{ color: "var(--text)" }}>
+                  <span className="text-right text-label" style={{ color: "var(--text)" }}>
                     {status(entry)}
                   </span>
                 );
@@ -165,8 +165,8 @@ export function SpeciesIndex({ entries, locale }: Props) {
                       onKeyDown={onKeyDown}
                     >
                       {nameCell}
-                      <span className="sci-name truncate text-[15px]">{entry.scientific_name || "—"}</span>
-                      <span className="text-xs" style={{ color: "var(--muted)" }}>
+                      <span className="sci-name truncate text-body">{entry.scientific_name || "—"}</span>
+                      <span className="text-label" style={{ color: "var(--muted)" }}>
                         {habitatLabel}
                       </span>
                       {statusCell}

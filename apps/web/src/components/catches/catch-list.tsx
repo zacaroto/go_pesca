@@ -59,7 +59,7 @@ export function CatchList({ catches, species }: Props) {
             style={{
               fontFamily: "var(--font-caslon), Georgia, serif",
               fontWeight: 700,
-              fontSize: "22px",
+              fontSize: "var(--text-subhead)",
               color: "var(--text)",
               margin: 0,
               letterSpacing: "-0.01em",
@@ -67,7 +67,7 @@ export function CatchList({ catches, species }: Props) {
           >
             {t("title")}
           </h1>
-          <p style={{ fontSize: "13px", color: "var(--faint)", margin: "4px 0 0" }}>
+          <p style={{ fontSize: "var(--text-label)", color: "var(--faint)", margin: "4px 0 0" }}>
             {filtered.length} capturas registradas
           </p>
         </div>
@@ -94,7 +94,7 @@ export function CatchList({ catches, species }: Props) {
             border: "1px solid var(--border)",
             borderRadius: "var(--r-card)",
             color: "var(--text)",
-            fontSize: "14px",
+            fontSize: "var(--text-small)",
             padding: "10px 14px 10px 40px",
             outline: "none",
             boxSizing: "border-box",
@@ -128,7 +128,7 @@ export function CatchList({ catches, species }: Props) {
             marginTop: "16px",
           }}
         >
-          <p style={{ color: "var(--muted)", fontSize: "14px", margin: 0 }}>
+          <p style={{ color: "var(--muted)", fontSize: "var(--text-small)", margin: 0 }}>
             No hay capturas que coincidan con tu búsqueda.
           </p>
         </div>

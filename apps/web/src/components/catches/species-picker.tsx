@@ -113,12 +113,12 @@ export function SpeciesPicker({ locale, value, onChange, onSpeciesMeta }: Props)
           onChange={(e) => setSearch(e.target.value)}
           placeholder={t("searchSpecies", { count: species.length })}
           aria-label={t("selectSpecies")}
-          className="flex-1 min-w-0 bg-transparent outline-none text-sm text-[var(--text)] placeholder:text-[var(--faint)]"
+          className="flex-1 min-w-0 bg-transparent outline-none text-small text-[var(--text)] placeholder:text-[var(--faint)]"
         />
       </label>
 
       {loadError && (
-        <p role="alert" className="mt-3 text-sm text-[var(--negative)]">{t("errorLoadSpecies")}</p>
+        <p role="alert" className="mt-3 text-small text-[var(--negative)]">{t("errorLoadSpecies")}</p>
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3">
@@ -140,10 +140,10 @@ export function SpeciesPicker({ locale, value, onChange, onSpeciesMeta }: Props)
               )}
             </span>
             <span className="min-w-0">
-              <span className="font-serif-display font-bold text-[15px] leading-tight block truncate text-[var(--text)]">
+              <span className="font-serif-display font-bold text-body leading-tight block truncate text-[var(--text)]">
                 {getName(s)}
               </span>
-              <span className="sci-name text-[11px] block truncate">{s.scientific_name}</span>
+              <span className="sci-name text-label block truncate">{s.scientific_name}</span>
             </span>
           </button>
         ))}
@@ -160,7 +160,7 @@ export function SpeciesPicker({ locale, value, onChange, onSpeciesMeta }: Props)
       )}
 
       {species.length > 0 && visible.length === 0 && (
-        <p className="mt-3 text-sm text-[var(--muted)]">{t("noSpeciesFound")}</p>
+        <p className="mt-3 text-small text-[var(--muted)]">{t("noSpeciesFound")}</p>
       )}
     </div>
   );

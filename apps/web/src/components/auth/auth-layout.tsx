@@ -11,7 +11,7 @@ export function AuthLayout({ title, lede, species, children }: { title: string; 
       <div className="flex items-center px-4 py-12 sm:px-12 lg:py-16">
         <div className={`w-full max-w-[400px] ${withPanel ? "lg:ml-auto lg:mr-16" : "mx-auto"}`}>
           <Reveal>
-            <h1 className="m-0 font-serif-display text-[40px] font-black leading-none tracking-[-0.03em] sm:text-5xl">{title}</h1>
+            <h1 className="m-0 font-serif-display text-title font-black leading-none tracking-[-0.03em]">{title}</h1>
           </Reveal>
           <Reveal delay={1}>
             <p className="mt-2.5 mb-6 text-muted">{lede}</p>

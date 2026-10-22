@@ -33,7 +33,7 @@ export function AvatarUpload({ currentUrl, displayName, onSelect }: Props) {
           className="w-36 h-36 rounded-full object-cover border border-border"
         />
       ) : (
-        <div className="w-36 h-36 rounded-full bg-accent-soft text-accent-ink flex items-center justify-center text-4xl font-bold border border-border">
+        <div className="w-36 h-36 rounded-full bg-accent-soft text-accent-ink flex items-center justify-center text-heading font-bold border border-border">
           {letter}
         </div>
       )}

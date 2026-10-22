@@ -30,7 +30,7 @@ export function GroupDetailContent({ group, members, catches, reactions, userId,
       <GroupHeader group={group} members={members} isCreator={isCreator} locale={locale} />
       <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
         <section aria-labelledby="group-catches-title" className="min-w-0">
-          <h2 id="group-catches-title" className="m-0 mb-3.5 font-serif-display text-[26px] font-bold">
+          <h2 id="group-catches-title" className="m-0 mb-3.5 font-serif-display text-heading font-bold">
             {t("groupFeed")}
           </h2>
           <MagazineGrid

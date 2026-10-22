@@ -43,16 +43,16 @@ export function AchievementToast({ achievement, onDismiss }: Props) {
     >
       <div className="flex items-center gap-3 bg-surface border border-border rounded-[var(--r-card)] shadow-xl px-5 py-4 min-w-[280px] max-w-[340px]">
         {/* Animated icon */}
-        <span className="text-3xl">{achievement.icon}</span>
+        <span className="text-heading">{achievement.icon}</span>
 
         <div className="flex-1 min-w-0">
-          <p className="text-[13px] font-semibold text-accent-ink">
+          <p className="text-label font-semibold text-accent-ink">
             {t("unlocked")}
           </p>
-          <p className="font-serif-display text-base font-bold text-text truncate">
+          <p className="font-serif-display text-body font-bold text-text truncate">
             {name}
           </p>
-          <p className="text-[13px] text-muted truncate">
+          <p className="text-label text-muted truncate">
             {description}
           </p>
         </div>

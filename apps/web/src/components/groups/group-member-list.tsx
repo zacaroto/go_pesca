@@ -33,10 +33,10 @@ export function GroupMemberList({ members }: { members: GroupMember[] }) {
   return (
     <section className="rounded-[var(--r-card)] bg-surface p-5" aria-labelledby="group-members-title">
       <div className="mb-1.5 flex items-baseline gap-3">
-        <h2 id="group-members-title" className="m-0 font-serif-display text-xl font-bold">
+        <h2 id="group-members-title" className="m-0 font-serif-display text-subhead font-bold">
           {t("members")}
         </h2>
-        <span className="text-[13px] text-muted tabular-nums">{t("membersOf", { count: members.length, max: MAX_MEMBERS })}</span>
+        <span className="text-label text-muted tabular-nums">{t("membersOf", { count: members.length, max: MAX_MEMBERS })}</span>
       </div>
       <ul className="m-0 list-none p-0">
         {shown.map((m) => (
@@ -49,11 +49,11 @@ export function GroupMemberList({ members }: { members: GroupMember[] }) {
               <span className="min-w-0">
                 <b className="block truncate font-semibold">{m.display_name || t("anonymousAngler")}</b>
                 {m.joined_at && (
-                  <small className="block text-xs text-muted">{t("joinedOn", { date: joinedDate(m.joined_at, locale) })}</small>
+                  <small className="block text-label text-muted">{t("joinedOn", { date: joinedDate(m.joined_at, locale) })}</small>
                 )}
               </span>
               {m.role === "creator" ? (
-                <span className="rounded-full bg-accent-soft px-2 py-px text-[11px] font-semibold text-accent-ink">{t("creator")}</span>
+                <span className="rounded-full bg-accent-soft px-2 py-px text-label font-semibold text-accent-ink">{t("creator")}</span>
               ) : (
                 <span />
               )}
@@ -66,7 +66,7 @@ export function GroupMemberList({ members }: { members: GroupMember[] }) {
           type="button"
           aria-expanded={expanded}
           onClick={() => setExpanded((v) => !v)}
-          className="mt-2 text-sm font-medium text-accent hover:text-accent-hi active:opacity-70 transition-[color,opacity] duration-[var(--t-ui)] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2"
+          className="mt-2 text-small font-medium text-accent hover:text-accent-hi active:opacity-70 transition-[color,opacity] duration-[var(--t-ui)] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           {expanded ? t("showLess") : t("viewAllMembers", { count: members.length })}
         </button>

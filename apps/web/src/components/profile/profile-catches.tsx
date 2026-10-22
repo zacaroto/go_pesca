@@ -21,7 +21,7 @@ export function ProfileCatches({ catches, isOwner, locale }: Props) {
 
   return (
     <section>
-      <h2 className="m-0 mb-3 font-serif-display text-2xl font-bold">{t("catches")}</h2>
+      <h2 className="m-0 mb-3 font-serif-display text-subhead font-bold">{t("catches")}</h2>
       {catches.length === 0 ? (
         <p className="m-0 rounded-[var(--r-card)] bg-surface p-5 text-muted">{t("catchesEmpty")}</p>
       ) : (
@@ -41,8 +41,8 @@ export function ProfileCatches({ catches, isOwner, locale }: Props) {
                   )}
                   {c.trophy && <TrophyPill className="absolute top-2 left-2" />}
                 </div>
-                <p className="m-0 mt-2 truncate font-serif-display text-base font-bold text-text">{c.speciesName}</p>
-                {meta && <p className="m-0 truncate text-[13px] text-muted">{meta}</p>}
+                <p className="m-0 mt-2 truncate font-serif-display text-body font-bold text-text">{c.speciesName}</p>
+                {meta && <p className="m-0 truncate text-label text-muted">{meta}</p>}
               </>
             );
             return (

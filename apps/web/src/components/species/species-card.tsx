@@ -47,7 +47,7 @@ export function SpeciesCard({ species, locale }: Props) {
           className="h-full w-full object-cover transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
         />
         <div className="absolute inset-x-2 top-2 flex flex-wrap items-start justify-between gap-1.5">
-          <span className={`rounded-[var(--r-pill)] px-2.5 py-0.5 text-[12px] font-semibold sm:text-[13px] ${HABITAT_PILL[habitatKey]}`}>
+          <span className={`rounded-[var(--r-pill)] px-2.5 py-0.5 text-label font-semibold ${HABITAT_PILL[habitatKey]}`}>
             {t(habitatKey)}
           </span>
           <RegulationTag regulation={parseRegulation(species.regulation)} className="hidden sm:inline-flex" />
@@ -55,11 +55,11 @@ export function SpeciesCard({ species, locale }: Props) {
       </div>
 
       <div className="min-w-0 px-0.5">
-        <h3 className="m-0 truncate font-serif-display text-base font-bold leading-tight text-text sm:text-lg">{name}</h3>
-        <p className="sci-name m-0 mt-0.5 truncate text-sm">{species.scientific_name}</p>
+        <h3 className="m-0 truncate font-serif-display text-body font-bold leading-tight text-text sm:text-name">{name}</h3>
+        <p className="sci-name m-0 mt-0.5 truncate text-small">{species.scientific_name}</p>
       </div>
 
-      <dl className="m-0 mt-auto flex justify-between gap-2 border-t border-rule px-0.5 pt-2 text-[12px] text-muted sm:text-[13px]">
+      <dl className="m-0 mt-auto flex justify-between gap-2 border-t border-rule px-0.5 pt-2 text-label text-muted">
         <div className="min-w-0">
           <dt className="sr-only">{t("maxWeight")}</dt>
           <dd className="m-0 truncate">
