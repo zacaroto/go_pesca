@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
-/* Light only: neutralise OS-driven dark: variants (opt-in via .dark class) */
-@custom-variant dark (&:where(.dark, .dark *));
+/* dark: variants follow the resolved theme (explicit data-theme, else the OS setting). Colors
+   themselves switch through the tokens below, so components rarely need dark: at all. */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 /* ========================================
    GO PESCA — Field Guide Design System
@@ -73,10 +74,50 @@
   --on-background:    var(--text);
   --primary:          var(--accent);
   --on-primary:       #ffffff;
+  --footer-wordmark:  #ffffff;
+
+  color-scheme: light;
   --outline:          var(--faint);
   --outline-variant:  var(--border);
   --muted-legacy:     var(--muted);
 }
+
+/* Dark theme: night-sea navy. Same token names, so every component follows. Applied when the
+   angler picks "dark", or picks "system" (no data-theme) on a dark OS. Keep both blocks in sync. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0e1424; --surface: #161d30; --raised: #222a40; --border: #283048; --rule: #283048;
+    --text: #eef0f5; --muted: #a6adbd; --faint: #6f7790; --silhouette: #3a4258;
+    --accent: #8fb0f5; --accent-hi: #a9c3f8; --accent-soft: #1e2a4a; --accent-ink: #c3d4fa; --on-primary: #0e1424;
+    --progress: #2dd4bf; --positive: #4ade80; --negative: #f87171;
+    --pill-salt-bg: #123446; --pill-salt-ink: #9fd3e6; --pill-fresh-bg: #15301f; --pill-fresh-ink: #a6e3bb;
+    --pill-brack-bg: #3a3220; --pill-brack-ink: #e2cf9c; --pill-trophy-bg: #3a2e10; --pill-trophy-ink: #f0cf86; --trophy-soft: #241e0d;
+    --pill-release-bg: #3d1a1c; --pill-release-ink: #f5a3a6; --pill-regulated-bg: #222a40; --pill-regulated-ink: #eef0f5;
+    --footer-bg: #090d18; --footer-text: #e3e6ee; --footer-muted: #8a90a0; --footer-wordmark: #e3e6ee;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #0e1424; --surface: #161d30; --raised: #222a40; --border: #283048; --rule: #283048;
+  --text: #eef0f5; --muted: #a6adbd; --faint: #6f7790; --silhouette: #3a4258;
+  --accent: #8fb0f5; --accent-hi: #a9c3f8; --accent-soft: #1e2a4a; --accent-ink: #c3d4fa; --on-primary: #0e1424;
+  --progress: #2dd4bf; --positive: #4ade80; --negative: #f87171;
+  --pill-salt-bg: #123446; --pill-salt-ink: #9fd3e6; --pill-fresh-bg: #15301f; --pill-fresh-ink: #a6e3bb;
+  --pill-brack-bg: #3a3220; --pill-brack-ink: #e2cf9c; --pill-trophy-bg: #3a2e10; --pill-trophy-ink: #f0cf86; --trophy-soft: #241e0d;
+  --pill-release-bg: #3d1a1c; --pill-release-ink: #f5a3a6; --pill-regulated-bg: #222a40; --pill-regulated-ink: #eef0f5;
+  --footer-bg: #090d18; --footer-text: #e3e6ee; --footer-muted: #8a90a0; --footer-wordmark: #e3e6ee;
+  color-scheme: dark;
+}
+
+/* Header theme button: moon while light, sun while dark, decided by CSS before hydration. */
+.theme-icon-moon { display: inline-flex; }
+.theme-icon-sun { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-icon-moon { display: none; }
+  :root:not([data-theme="light"]) .theme-icon-sun { display: inline-flex; }
+}
+:root[data-theme="dark"] .theme-icon-moon { display: none; }
+:root[data-theme="dark"] .theme-icon-sun { display: inline-flex; }
 
 /* Type scale v4: eight named steps, used as text-label … text-display (and var(--text-*) inline).
    label 13 · small 14 · body 16 · name 18 · subhead 22 · heading 30 · title 44 · display 64 */
@@ -134,7 +175,7 @@
   --color-on-surface:       var(--text);
   --color-on-background:    var(--text);
   --color-primary:          var(--accent);
-  --color-on-primary:       #ffffff;
+  --color-on-primary:       var(--on-primary);
   --color-secondary:        var(--accent-hi);
   --color-secondary-container: var(--accent-soft);
   --color-on-secondary-container: var(--accent-hi);
@@ -152,7 +193,7 @@
   --color-on-primary-fixed-variant: var(--accent-hi);
   --color-primary-fixed-dim: var(--accent-soft);
   --color-primary-container: var(--accent);
-  --color-on-primary-container: #ffffff;
+  --color-on-primary-container: var(--on-primary);
 
   /* Fonts */
   --font-sans:    var(--font-inter), system-ui, sans-serif;

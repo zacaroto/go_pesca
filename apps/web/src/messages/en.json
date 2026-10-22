@@ -452,5 +452,12 @@
     "regulatedTitle": "Regulated species",
     "releaseHint": "In Costa Rica's Pacific waters the law requires you to release it alive.",
     "source": "View source"
+  },
+  "theme": {
+    "label": "Theme",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark",
+    "toggle": "Switch between light and dark theme"
   }
 }

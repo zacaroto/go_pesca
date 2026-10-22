@@ -452,5 +452,12 @@
     "regulatedTitle": "Pesca regulada",
     "releaseHint": "En el Pacífico de Costa Rica la ley te obliga a devolverlo al agua con vida.",
     "source": "Ver fuente"
+  },
+  "theme": {
+    "label": "Tema",
+    "system": "Sistema",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "toggle": "Cambiar entre tema claro y oscuro"
   }
 }

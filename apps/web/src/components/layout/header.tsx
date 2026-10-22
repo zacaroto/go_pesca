@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { UserMenu } from "./user-menu";
 import { LanguageSwitcher } from "./language-switcher";
+import { ThemeButton } from "./theme-toggle";
 import { FishMark } from "./fish-mark";
 
 type Props = {
@@ -61,6 +62,7 @@ export function Header({ user }: Props) {
         <span className={user ? "contents" : "contents max-[374px]:hidden"}>
           <LanguageSwitcher />
         </span>
+        <ThemeButton />
 
         {user ? (
           <>
