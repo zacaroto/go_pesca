@@ -26,14 +26,16 @@ export function UserMenu({ displayName, userId }: Props) {
     <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 text-sm active:opacity-75"
+        aria-label={displayName}
+        aria-expanded={open}
+        className="flex items-center gap-2 rounded-full text-sm hover:opacity-80 active:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2"
         style={{ color: "var(--text)", transition: "opacity var(--t-ui)" }}
       >
         <span className="flex h-8 w-8 items-center justify-center rounded-full font-semibold"
           style={{ background: "var(--accent-soft)", color: "var(--accent-ink)" }}>
           {displayName.charAt(0).toUpperCase()}
         </span>
-        <span className="hidden sm:inline">{displayName}</span>
+        <span className="hidden max-w-[16ch] truncate lg:inline">{displayName}</span>
       </button>
       {open && (
         <>

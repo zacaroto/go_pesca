@@ -86,7 +86,7 @@ export function BottomNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 w-full flex justify-around items-stretch z-50 sm:hidden"
+      className="fixed bottom-0 left-0 w-full flex justify-around items-stretch z-50 md:hidden"
       style={{
         background: "var(--surface)",
         minHeight: "64px",

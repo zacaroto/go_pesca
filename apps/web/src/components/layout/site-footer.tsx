@@ -4,15 +4,14 @@ import { Link } from "@/i18n/navigation";
 const COLS = [
   { title: "collection", links: [["/pokedex", "nav.pokedex"], ["/species", "nav.species"], ["/achievements", "nav.achievements"]] },
   { title: "community", links: [["/community", "nav.community"], ["/groups", "nav.groups"], ["/species/suggest", "footer.suggestSpecies"]] },
-  { title: "brand", links: [["/", "footer.responsible"], ["/", "footer.privacy"], ["/", "footer.terms"], ["/", "footer.contact"]] },
 ] as const;
 
 export function SiteFooter() {
   const t = useTranslations();
   return (
-    <footer className="overflow-hidden px-4 pb-20 pt-14 sm:px-12 sm:pb-7" style={{ background: "var(--footer-bg)", color: "var(--footer-text)" }}>
+    <footer className="overflow-hidden px-4 pb-20 pt-14 sm:px-12 md:pb-7" style={{ background: "var(--footer-bg)", color: "var(--footer-text)" }}>
       <div className="mx-auto max-w-[1280px]">
-        <div className="grid grid-cols-2 gap-9 sm:grid-cols-[2fr_1fr_1fr_1fr]">
+        <div className="grid grid-cols-2 gap-9 sm:grid-cols-[2fr_1fr_1fr]">
           <p className="col-span-2 m-0 max-w-[22ch] font-serif-display text-[22px] leading-tight sm:col-span-1 sm:text-[26px]">
             {t("footer.quote")}
           </p>

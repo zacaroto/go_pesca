@@ -37,12 +37,7 @@
     "quote": "Every species you log helps us understand our waters better.",
     "collection": "Collection",
     "community": "Community",
-    "brand": "Go Pesca",
     "suggestSpecies": "Suggest a species",
-    "responsible": "Responsible fishing",
-    "privacy": "Privacy",
-    "terms": "Terms",
-    "contact": "Contact",
     "madeIn": "Made in Costa Rica"
   },
   "home": {
@@ -103,6 +98,7 @@
     "timesCaughtLabel": "Times caught"
   },
   "catches": {
+    "back": "Back to my catches",
     "title": "My Catches",
     "newCatch": "New Catch",
     "photo": "Photo",

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { FishMark } from "@/components/layout/fish-mark";
 import { speciesName } from "@/lib/fishydex-index";

@@ -26,7 +26,7 @@ export function MagazineTile({ entry, reactions, featured = false }: Props) {
       }`}
     >
       <Link
-        href={`/catches/${entry.id}` as "/catches/[id]"}
+        href={`/profile/${entry.user_id}` as "/profile/[userId]"}
         className="group flex flex-col flex-1 min-h-0 transition-colors duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none hover:bg-[var(--raised)] active:bg-[var(--raised)] focus-visible:outline-2 focus-visible:outline-offset-[-2px]"
       >
         <div className="flex-1 min-h-0 overflow-hidden bg-[var(--raised)]">

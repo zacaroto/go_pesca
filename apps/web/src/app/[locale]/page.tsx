@@ -69,7 +69,7 @@ export default async function Home({ params }: Props) {
 
   if (loadFailed) {
     return (
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
         <p
           role="alert"
           className="m-0 p-5 text-base"
@@ -77,13 +77,13 @@ export default async function Home({ params }: Props) {
         >
           {t("loadError")}
         </p>
-      </main>
+      </div>
     );
   }
 
   if (!data) {
     return (
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
         <h1
           className="font-serif-display font-black"
           style={{ fontSize: "clamp(40px,6vw,64px)", lineHeight: 1, color: "var(--text)" }}
@@ -101,7 +101,7 @@ export default async function Home({ params }: Props) {
             {ta("loginTitle")}
           </Link>
         </div>
-      </main>
+      </div>
     );
   }
 
@@ -109,7 +109,7 @@ export default async function Home({ params }: Props) {
 
   if (catches.length === 0 || !latestNew) {
     return (
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
         <h1
           className="font-serif-display font-black"
           style={{ fontSize: "clamp(40px,6vw,64px)", lineHeight: 1, color: "var(--text)" }}
@@ -124,7 +124,7 @@ export default async function Home({ params }: Props) {
             {t("logCatch")}
           </Link>
         </div>
-      </main>
+      </div>
     );
   }
 
@@ -151,7 +151,7 @@ export default async function Home({ params }: Props) {
   ];
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-8 lg:pt-10 pb-14 overflow-x-hidden">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-8 lg:pt-10 pb-14 overflow-x-hidden">
       {/* Hero */}
       <section className="grid lg:grid-cols-[5fr_7fr] gap-8 lg:gap-12 items-center mb-14">
         <div className="min-w-0">
@@ -287,6 +287,6 @@ export default async function Home({ params }: Props) {
           })}
         </ul>
       </section>
-    </main>
+    </div>
   );
 }

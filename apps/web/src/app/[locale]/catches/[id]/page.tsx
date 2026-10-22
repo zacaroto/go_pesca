@@ -1,7 +1,7 @@
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { notFound, redirect } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { CatchDetail } from "@/components/catches/catch-detail";
 import type { Database } from "@/lib/database.types";
 
@@ -16,68 +16,78 @@ export default async function CatchDetailPage({ params }: Props) {
   const { locale, id } = await params;
   setRequestLocale(locale);
 
+  let user = null as { id: string } | null;
+  let catchData = null as CatchRow | null;
+  let speciesData = null as Pick<SpeciesRow, "name_es" | "name_en"> | null;
   try {
     const supabase = await createClient();
     const {
-      data: { user },
+      data: { user: authUser },
     } = await supabase.auth.getUser();
-    if (!user) redirect(`/${locale}/auth/login`);
-
-    const { data: catchData } = await supabase
-      .from("catches")
-      .select("*")
-      .eq("id", id)
-      .eq("user_id", user.id)
-      .single();
-
-    if (!catchData) notFound();
-    const c = catchData as CatchRow;
-
-    const { data: speciesData } = await supabase
-      .from("species")
-      .select("name_es, name_en")
-      .eq("id", c.species_id)
-      .single();
-
-    const s = speciesData as Pick<SpeciesRow, "name_es" | "name_en"> | null;
-    const speciesName = s
-      ? locale === "es"
-        ? s.name_es
-        : s.name_en
-      : "";
-
-    return (
-      <div className="max-w-2xl mx-auto px-4 py-8">
-        <Link
-          href={`/${locale}/catches`}
-          className="text-sm font-medium text-accent-ink hover:underline active:underline underline-offset-2 mb-4 inline-block"
-        >
-          &larr; Back
-        </Link>
-        <CatchDetail
-          locale={locale}
-          catch_data={{
-            id: c.id,
-            photo_url: c.photo_url,
-            catch_date: c.catch_date,
-            latitude: c.latitude,
-            longitude: c.longitude,
-            location_name: c.location_name,
-            weight_kg: c.weight_kg,
-            length_cm: c.length_cm,
-            bait_lure: c.bait_lure,
-            weather: c.weather,
-            tide: c.tide,
-            time_of_day: c.time_of_day,
-            notes: c.notes,
-            species_name: speciesName,
-            species_id: c.species_id,
-            is_public: c.is_public,
-          }}
-        />
-      </div>
-    );
+    user = authUser;
+    if (user) {
+      const { data } = await supabase
+        .from("catches")
+        .select("*")
+        .eq("id", id)
+        .eq("user_id", user.id)
+        .single();
+      catchData = (data as CatchRow | null) ?? null;
+      if (catchData) {
+        const { data: sp } = await supabase
+          .from("species")
+          .select("name_es, name_en")
+          .eq("id", catchData.species_id)
+          .single();
+        speciesData = sp as typeof speciesData;
+      }
+    }
   } catch {
-    redirect(`/${locale}/auth/login`);
+    // auth or data failure: treat as signed out
+    user = null;
   }
+
+  // Control-flow calls live outside try/catch so Next can handle them.
+  if (!user) redirect(`/${locale}/auth/login`);
+  if (!catchData) notFound();
+  const c = catchData;
+  const t = await getTranslations("catches");
+  const s = speciesData;
+  const speciesName = s
+    ? locale === "es"
+      ? s.name_es
+      : s.name_en
+    : "";
+
+  return (
+    <div className="max-w-2xl mx-auto px-4 py-8">
+      <Link
+        href="/catches"
+        className="text-sm font-medium text-accent-ink hover:underline active:underline underline-offset-2 mb-4 inline-block"
+      >
+        &larr; {t("back")}
+      </Link>
+      <CatchDetail
+        locale={locale}
+        catch_data={{
+          id: c.id,
+          photo_url: c.photo_url,
+          catch_date: c.catch_date,
+          latitude: c.latitude,
+          longitude: c.longitude,
+          location_name: c.location_name,
+          weight_kg: c.weight_kg,
+          length_cm: c.length_cm,
+          bait_lure: c.bait_lure,
+          weather: c.weather,
+          tide: c.tide,
+          time_of_day: c.time_of_day,
+          notes: c.notes,
+          species_name: speciesName,
+          species_id: c.species_id,
+          is_public: c.is_public,
+        }}
+      />
+    </div>
+  );
 }

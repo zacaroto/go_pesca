@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/client";
 import type { SpeciesBest } from "./catch-insight";
+import { nextBestWeight } from "./fishydex-index";
 
 /**
  * Best weight per species for the signed-in user.
@@ -15,9 +16,7 @@ export async function fetchSpeciesBests(): Promise<SpeciesBest[] | null> {
     if (error) throw error;
     const best = new Map<number, number | null>();
     for (const row of (data ?? []) as { species_id: number; weight_kg: number | null }[]) {
-      const prev = best.get(row.species_id) ?? null;
-      const w = row.weight_kg;
-      best.set(row.species_id, w === null ? prev : prev === null ? w : Math.max(prev, w));
+      best.set(row.species_id, nextBestWeight(best.get(row.species_id) ?? null, row.weight_kg));
     }
     return [...best].map(([speciesId, bestWeightKg]) => ({ speciesId, bestWeightKg }));
   } catch (err) {
