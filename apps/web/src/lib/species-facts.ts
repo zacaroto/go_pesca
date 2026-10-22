@@ -11,7 +11,7 @@ export async function getFeaturedSpecies(locale: string): Promise<FeaturedSpecie
     const { data, error } = await supabase
       .from("species_facts")
       .select(
-        "fact_es, fact_en, sort_order, species:species_id (id, name_es, name_en, scientific_name, reference_photo_url)",
+        "fact_es, fact_en, sort_order, species:species_id (id, name_es, name_en, scientific_name, reference_photo_url, photo_credit)",
       )
       .eq("is_published", true)
       .order("species_id")

@@ -83,6 +83,11 @@ export function SpeciesCarousel({ species, variant = "plate" }: Props) {
             )}
           </div>
         ))}
+        {current.photoCredit && current.photoUrl && !failed.has(current.id) && (
+          <small className="absolute right-2 bottom-2 max-w-[80%] truncate rounded-full bg-[rgb(18_19_20/0.55)] px-2.5 py-0.5 text-[11px] text-white">
+            {t("photoCredit", { credit: current.photoCredit })}
+          </small>
+        )}
       </div>
 
       <figcaption className="shrink-0 px-6 pt-5 pb-6 sm:px-8 sm:pt-6 sm:pb-7" aria-live={paused ? "polite" : "off"}>

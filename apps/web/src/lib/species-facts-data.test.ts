@@ -25,7 +25,7 @@ describe("groupFacts", () => {
   });
   it("uses the English name and fact for en", () => {
     const out = groupFacts([row(sp(1, "Dorado"), 1, "dato")], "en");
-    expect(out[0]).toMatchObject({ name: "Dorado EN", facts: ["dato EN"] });
+    expect(out[0]).toMatchObject({ name: "Dorado EN", facts: ["dato EN"], photoCredit: null });
   });
   it("skips rows whose species did not join", () => {
     expect(groupFacts([row(null, 1, "huérfano")], "es")).toEqual([]);

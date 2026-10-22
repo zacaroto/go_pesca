@@ -392,6 +392,7 @@
     "stepSpeciesTitle": "Species",
     "stepSpeciesBody": "Pick from {count} species, each with its own profile.",
     "stepPlaceTitle": "Place",
-    "stepPlaceBody": "Drop a pin on the map. Nobody else sees your coordinates."
+    "stepPlaceBody": "Drop a pin on the map. Nobody else sees your coordinates.",
+    "photoCredit": "Photo: {credit}"
   }
 }

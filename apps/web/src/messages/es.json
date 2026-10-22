@@ -392,6 +392,7 @@
     "stepSpeciesTitle": "Especie",
     "stepSpeciesBody": "Elige entre {count} especies, cada una con su ficha.",
     "stepPlaceTitle": "Lugar",
-    "stepPlaceBody": "Marca el punto en el mapa. Nadie más ve tus coordenadas."
+    "stepPlaceBody": "Marca el punto en el mapa. Nadie más ve tus coordenadas.",
+    "photoCredit": "Foto: {credit}"
   }
 }

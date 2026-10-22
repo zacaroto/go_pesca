@@ -3,6 +3,7 @@ export type FeaturedSpecies = {
   name: string;
   scientificName: string;
   photoUrl: string | null;
+  photoCredit: string | null;
   facts: string[];
 };
 
@@ -16,6 +17,7 @@ export type FactRow = {
     name_en: string;
     scientific_name: string;
     reference_photo_url: string | null;
+    photo_credit?: string | null;
   } | null;
 };
 
@@ -33,6 +35,7 @@ export function groupFacts(rows: FactRow[], locale: string): FeaturedSpecies[] {
           name: locale === "en" ? s.name_en : s.name_es,
           scientificName: s.scientific_name,
           photoUrl: s.reference_photo_url,
+          photoCredit: s.photo_credit ?? null,
           facts: [],
         },
         facts: [],
