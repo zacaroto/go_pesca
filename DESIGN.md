@@ -7,41 +7,43 @@ description: "Light field-guide design system for Go Pesca — a social fishing 
 tokens:
   # Source of truth: apps/web/src/app/globals.css
   elevation:
-    ground:   "#f7f7f5"   # --ground  — page background
+    ground:   "#f4f5f7"   # --ground  — page background
     surface:  "#ffffff"   # --surface — cards, sheets
-    raised:   "#ececea"   # --raised  — inputs, hover, tabs
+    raised:   "#e9ebf0"   # --raised  — inputs, hover, tabs
 
   borders:
-    border:   "#e6e6e3"   # --border
-    rule:     "#e6e6e3"   # --rule
+    border:   "#e2e4ea"   # --border
+    rule:     "#e2e4ea"   # --rule
 
   text:
-    text:     "#121314"   # --text
-    muted:    "#5c5f63"   # --muted
-    faint:    "#8a8d91"   # --faint
+    text:     "#0e1424"   # --text
+    muted:    "#545b6b"   # --muted
+    faint:    "#858b99"   # --faint
 
   accent:
-    accent:      "#1d4ed8"  # --accent      — actions, active states, main data element
-    accent-hi:   "#1a43bd"  # --accent-hi   — hover/pressed
-    accent-soft: "#eef2fd"  # --accent-soft — selected backgrounds
-    accent-ink:  "#1a3a99"  # --accent-ink
+    accent:      "#0f2f6b"  # --accent      — deep navy: actions, links, active states only
+    accent-hi:   "#0b2455"  # --accent-hi   — hover/pressed
+    accent-soft: "#e6ecf7"  # --accent-soft — selected backgrounds
+    accent-ink:  "#0f2f6b"  # --accent-ink
+    progress:    "#14b8a6"  # --progress    — turquoise: rank ring, carousel, bars (never text)
 
-  silhouette: "#c9cac6"     # --silhouette — uncaught species outlines
+  silhouette: "#c5c9d3"     # --silhouette — uncaught species outlines
 
   status:
     positive: "#15803d"
     negative: "#c4242a"
 
   habitat-pills:
-    salt:  { bg: "#eef2fd", ink: "#1a3a99" }
+    salt:  { bg: "#e0eef5", ink: "#0e4f6e" }
     fresh: { bg: "#e8f5ec", ink: "#14532d" }
-    brack: { bg: "#fdf6e3", ink: "#7a4b0b" }
+    brack: { bg: "#f1ede2", ink: "#6b5320" }
+    trophy: { bg: "#fbefc8", ink: "#7a5300", soft: "#fdf8e8" }
 
   footer:
-    footer-bg: "#121314"
+    footer-bg: "#0e1424"
     footer-text: "#e8e8e6"
     footer-muted: "#9a9c9f"
-    footer-link-hover: "#9db7ff"
+    footer-link-hover: "#5eead4"
 
   shape:
     r-card: "4px"
@@ -51,7 +53,8 @@ tokens:
     pad: "24px"
 
   typography:
-    heading: "Playfair Display, Georgia, serif"   # --font-serif — species names, page titles
+    display: "Libre Caslon Display, Georgia, serif"  # h1 and .font-display — titles, big names (400 only)
+    heading: "Libre Caslon Text, Georgia, serif"      # .font-serif-display — names, numbers, sci names (400/700)
     body:    "Inter, system-ui, sans-serif"        # --font-sans  — all UI text
     mono:    "ui-monospace, monospace"
     weights:
@@ -81,7 +84,7 @@ tokens:
 
 Go Pesca is a **light, field-guide** fishing log and social platform for anglers in Costa Rica. It reads like a printed naturalist's guide: calm, precise and trustworthy.
 
-**Aesthetic:** Paper ground, ink text and one cobalt hue for actions, active states and the main data element. Playfair Display carries species names and titles, with scientific names in italic; Inter carries all UI.
+**Aesthetic:** Cool paper ground, navy ink, deep navy for actions only, turquoise for progress and gold for trophies. Libre Caslon Display carries page titles and big names, Libre Caslon Text carries names, numbers and italic scientific names; Inter carries all UI.
 
 ---
 
@@ -91,7 +94,7 @@ Go Pesca is a **light, field-guide** fishing log and social platform for anglers
 - **One accent hue: cobalt.** `var(--accent)` for interactive elements, `var(--accent-hi)` for hover/pressed states. No coral, no amber, no secondary hues except habitat pills.
 - **No hardcoded color values.** Always `var(--token)` — never `#hex` or `rgb()` inline.
 - **No Material Symbols font.** Removed in redesign. All icons must be inline SVGs (`aria-hidden="true"`, `w-5 h-5` default).
-- **No Fredoka, no Nunito.** Playfair Display for headings/species names, Inter for all UI.
+- **No Fredoka, no Nunito.** Libre Caslon (Display + Text) for headings/species names, Inter for all UI. No Playfair.
 - **`tabular-nums` on all numbers** — weights, dates, counts.
 - **`overflow-wrap: anywhere`** on location and species text (long names on mobile).
 - **`:active` feedback** on every tappable surface — `active:opacity-75` or `scale(0.95)` on `mousedown`.
