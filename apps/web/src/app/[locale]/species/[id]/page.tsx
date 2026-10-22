@@ -3,9 +3,9 @@ import { setRequestLocale } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
-import { FishMark } from "@/components/layout/fish-mark";
 import { SpeciesPagerBottom, SpeciesPagerTop } from "@/components/species/species-pager";
 import { TrophyCard } from "@/components/species/trophy-card";
+import { SpeciesPhoto } from "@/components/species/species-photo";
 import { RegulationCard, RegulationTag } from "@/components/species/regulation-tag";
 import { parseRegulation } from "@/lib/regulation";
 import { speciesNeighbors, type SpeciesLink } from "@/lib/species-neighbors";
@@ -120,9 +120,10 @@ function SpeciesDetailContent({
     ? bestBait.split(",").map((b) => b.trim())
     : [];
 
-  const factLabel = "text-[13px] font-medium text-muted";
-  const factValue = "font-serif-display text-2xl sm:text-3xl font-bold text-text";
-  const card = "bg-surface border border-border rounded-[var(--r-card)] p-5";
+  const factLabel = "text-[12px] sm:text-[13px] font-medium text-muted leading-tight";
+  const factValue = "font-serif-display text-lg sm:text-3xl font-bold text-text leading-tight";
+  const card = "bg-surface rounded-[var(--r-card)] p-5";
+  const factCard = "bg-surface rounded-[var(--r-card)] p-3 sm:p-5 min-w-0";
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-6 pb-24">
@@ -140,16 +141,12 @@ function SpeciesDetailContent({
       <div className={`${card} sm:p-8 mb-6`}>
         <div className="flex flex-col md:flex-row gap-6 items-center">
           <div className="w-full md:w-1/2 aspect-[4/3] rounded-[var(--r-card)] overflow-hidden bg-ground relative flex items-center justify-center">
-            {species.reference_photo_url ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={species.reference_photo_url}
-                alt={name}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <FishMark className="h-20 w-20 text-silhouette" />
-            )}
+            <SpeciesPhoto
+              src={species.reference_photo_url}
+              alt={name}
+              className="w-full h-full object-cover"
+              fallbackClassName="h-20 w-20"
+            />
             <div className="absolute top-3 left-3 flex flex-col items-start gap-1.5">
               <span className={`text-[13px] font-semibold px-3 py-1 rounded-[var(--r-pill)] ${habitatPill}`}>
                 {habitatLabel}
@@ -175,10 +172,10 @@ function SpeciesDetailContent({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-        <div className={card}>
+      <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6">
+        <div className={factCard}>
           <div className="flex items-center gap-2 text-muted mb-2">
-            <ScaleIcon className="h-5 w-5" />
+            <ScaleIcon className="hidden h-5 w-5 shrink-0 sm:block" />
             <span className={factLabel}>{t("maxWeight")}</span>
           </div>
           <p className={factValue}>
@@ -186,9 +183,9 @@ function SpeciesDetailContent({
           </p>
         </div>
 
-        <div className={card}>
+        <div className={factCard}>
           <div className="flex items-center gap-2 text-muted mb-2">
-            <RulerIcon className="h-5 w-5" />
+            <RulerIcon className="hidden h-5 w-5 shrink-0 sm:block" />
             <span className={factLabel}>{t("maxLength")}</span>
           </div>
           <p className={factValue}>
@@ -196,9 +193,9 @@ function SpeciesDetailContent({
           </p>
         </div>
 
-        <div className={`${card} sm:col-span-2 md:col-span-1`}>
+        <div className={factCard}>
           <div className="flex items-center gap-2 text-muted mb-2">
-            <WaterIcon className="h-5 w-5" />
+            <WaterIcon className="hidden h-5 w-5 shrink-0 sm:block" />
             <span className={factLabel}>{t("habitat")}</span>
           </div>
           <p className={factValue}>{habitatLabel}</p>

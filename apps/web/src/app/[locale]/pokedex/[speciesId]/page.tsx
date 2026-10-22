@@ -74,7 +74,7 @@ function PokedexSpeciesContent({
         &larr; {t("title")}
       </Link>
 
-      <div className="rounded-[var(--r-card)] border border-border bg-surface p-6 mb-6">
+      <div className="rounded-[var(--r-card)] bg-surface p-6 mb-6">
         <h1 className="font-serif-display text-2xl font-bold mb-1">{name}</h1>
         <p className="sci-name mb-1">{species.scientific_name}</p>
         <p className="text-sm text-muted">{tSpecies("habitat")}: {

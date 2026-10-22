@@ -31,7 +31,7 @@ export function AchievementCard({
 
   return (
     <div
-      className={`relative bg-surface border border-border rounded-[var(--r-card)] p-4 ${
+      className={`relative bg-surface rounded-[var(--r-card)] p-4 ${
         earned ? "" : "opacity-80"
       }`}
     >

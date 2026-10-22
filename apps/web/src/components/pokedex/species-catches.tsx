@@ -48,7 +48,7 @@ export function SpeciesCatches({ catches, locale }: Props) {
         {catches.map((c) => (
           <div
             key={c.id}
-            className="flex gap-4 rounded-[var(--r-card)] border border-border bg-surface p-3"
+            className="flex gap-4 rounded-[var(--r-card)] bg-surface p-3"
           >
             <img
               src={c.photo_url}
