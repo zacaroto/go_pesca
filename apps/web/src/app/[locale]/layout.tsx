@@ -68,7 +68,9 @@ export default async function LocaleLayout({ children, params }: Props) {
     <NextIntlClientProvider messages={messages}>
       <AchievementProvider>
         <Header user={user} />
-        <main className="flex flex-1 flex-col">{children}</main>
+        {/* *:w-full: pages center themselves with mx-auto + max-w-*, and auto margins on a flex item
+            disable stretching, so without it each page shrinks to its content and jumps as content changes. */}
+        <main className="flex flex-1 flex-col *:w-full">{children}</main>
         <SiteFooter />
         {user && <BottomNav />}
       </AchievementProvider>
