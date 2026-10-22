@@ -190,7 +190,7 @@
     "rankUp": "¡Con esta subes a {rank}!"
   },
   "species": {
-    "title": "Catálogo de Especies",
+    "title": "Catálogo de especies",
     "habitat": "Hábitat",
     "freshwater": "Agua dulce",
     "saltwater": "Agua salada",
@@ -223,7 +223,19 @@
     "trophyFrom": "Desde {value}",
     "trophyOr": " o ",
     "trophyNone": "No se considera pez trofeo",
-    "trophySource": "Ver fuente"
+    "trophySource": "Ver fuente",
+    "catalogIntro": "Las {count} especies de Go Pesca, de los ríos de montaña al mar abierto: cuánto crecen, desde cuándo son trofeo y cuáles hay que devolver al agua.",
+    "searchPlaceholder": "Buscar por nombre o nombre científico",
+    "sortLabel": "Ordenar",
+    "sortAZ": "A–Z",
+    "sortLargest": "Más grandes",
+    "filterLabel": "Filtrar especies",
+    "filterAll": "Todas",
+    "filterRelease": "Captura y suelta",
+    "upTo": "Hasta <b>{value}</b>",
+    "trophyMark": "Trofeo <b>{value}</b>",
+    "missingTitle": "¿Falta una especie?",
+    "missingBody": "Si pescaste algo que no está en el catálogo, sugiérela y la revisamos."
   },
   "feed": {
     "title": "Comunidad",

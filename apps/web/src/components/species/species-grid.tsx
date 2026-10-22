@@ -3,68 +3,101 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { FishMark } from "@/components/layout/fish-mark";
-import { SpeciesCard } from "./species-card";
-import { SpeciesFilter } from "./species-filter";
-import { SpeciesSearch } from "./species-search";
-
-type Species = {
-  id: number;
-  name_es: string;
-  name_en: string;
-  scientific_name: string;
-  habitat: string;
-  description_es: string | null;
-  description_en: string | null;
-  reference_photo_url: string | null;
-};
+import { SpeciesCard, type CatalogCardSpecies } from "./species-card";
+import { catalogCounts, filterCatalog, type CatalogFilter, type CatalogSort } from "@/lib/species-catalog";
 
 type Props = {
-  species: Species[];
+  species: CatalogCardSpecies[];
   locale: string;
 };
 
+const FILTERS: CatalogFilter[] = ["all", "saltwater", "freshwater", "brackish", "release"];
+
+const pressable =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 active:scale-[0.97] transition-[background-color,color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100";
+
+/** "Láminas": search, sort and filter chips over a grid of species plates. */
 export function SpeciesGrid({ species, locale }: Props) {
   const t = useTranslations("species");
   const tCommon = useTranslations("common");
-  const [search, setSearch] = useState("");
-  const [habitat, setHabitat] = useState("");
+  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState<CatalogFilter>("all");
+  const [sort, setSort] = useState<CatalogSort>("az");
 
-  const filtered = species.filter((s) => {
-    const name = locale === "es" ? s.name_es : s.name_en;
-    const matchesSearch =
-      !search ||
-      name.toLowerCase().includes(search.toLowerCase()) ||
-      s.scientific_name.toLowerCase().includes(search.toLowerCase());
-    const matchesHabitat = !habitat || s.habitat === habitat;
-    return matchesSearch && matchesHabitat;
-  });
+  const counts = catalogCounts(species);
+  const visible = filterCatalog(species, { query, filter, sort }, locale);
+  const filterLabel: Record<CatalogFilter, string> = {
+    all: t("filterAll"),
+    saltwater: t("saltwater"),
+    freshwater: t("freshwater"),
+    brackish: t("brackish"),
+    release: t("filterRelease"),
+  };
 
   return (
-    <div>
-      {/* Search & Filters */}
-      <div className="space-y-3 mb-5">
-        <SpeciesSearch value={search} onChange={setSearch} />
-        <div className="flex items-center gap-2">
-          <SpeciesFilter value={habitat} onChange={setHabitat} />
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-wrap items-center gap-3">
+        <label className="flex h-11 min-w-0 flex-[1_1_260px] items-center gap-2 rounded-[var(--r-pill)] bg-surface px-4 focus-within:shadow-[inset_0_0_0_1.5px_var(--accent)] transition-[box-shadow] duration-[var(--t-ui)] motion-reduce:transition-none">
+          <svg className="h-4 w-4 shrink-0 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.5-3.5" />
+          </svg>
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={t("searchPlaceholder")}
+            aria-label={t("searchPlaceholder")}
+            className="min-w-0 flex-1 bg-transparent text-[15px] text-text outline-none placeholder:text-faint"
+          />
+        </label>
+        <div role="group" aria-label={t("sortLabel")} className="inline-flex rounded-[var(--r-pill)] bg-raised p-1">
+          {(["az", "largest"] as const).map((key) => (
+            <button
+              key={key}
+              type="button"
+              aria-pressed={sort === key}
+              onClick={() => setSort(key)}
+              className={`rounded-[var(--r-pill)] px-3.5 py-1.5 text-[13px] font-medium text-muted hover:text-text aria-pressed:bg-surface aria-pressed:text-text ${pressable}`}
+            >
+              {key === "az" ? t("sortAZ") : t("sortLargest")}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Results count */}
-      <p className="text-[13px] text-muted mb-3">
-        {t("resultCount", { count: filtered.length })}
+      <div role="group" aria-label={t("filterLabel")} className="flex flex-wrap gap-2">
+        {FILTERS.map((key) => (
+          <button
+            key={key}
+            type="button"
+            aria-pressed={filter === key}
+            onClick={() => setFilter(key)}
+            className={`rounded-[var(--r-pill)] bg-surface px-3.5 py-2 text-sm font-medium text-text hover:bg-raised aria-pressed:bg-accent aria-pressed:text-on-primary ${pressable}`}
+          >
+            {filterLabel[key]}
+            <span className="ml-1.5 tabular-nums opacity-70">{counts[key]}</span>
+          </button>
+        ))}
+      </div>
+
+      <p className="m-0 text-[13px] text-muted" aria-live="polite">
+        {t("resultCount", { count: visible.length })}
       </p>
 
-      {filtered.length === 0 ? (
-        <div className="text-center py-16">
+      {visible.length === 0 ? (
+        <div className="py-16 text-center">
           <FishMark className="mx-auto mb-3 h-10 w-10 text-silhouette" />
           <p className="text-muted">{tCommon("noResults")}</p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {filtered.map((s) => (
-            <SpeciesCard key={s.id} species={s} locale={locale} />
+        <ul className="m-0 grid list-none grid-cols-2 gap-3 p-0 md:grid-cols-3 lg:grid-cols-4 sm:gap-4">
+          {visible.map((s) => (
+            <li key={s.id} className="min-w-0">
+              <SpeciesCard species={s} locale={locale} />
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   );

@@ -190,7 +190,7 @@
     "rankUp": "This one takes you to {rank}!"
   },
   "species": {
-    "title": "Species Catalog",
+    "title": "Species catalog",
     "habitat": "Habitat",
     "freshwater": "Freshwater",
     "saltwater": "Saltwater",
@@ -223,7 +223,19 @@
     "trophyFrom": "From {value}",
     "trophyOr": " or ",
     "trophyNone": "Not considered a trophy fish",
-    "trophySource": "View source"
+    "trophySource": "View source",
+    "catalogIntro": "All {count} Go Pesca species, from mountain rivers to the open sea: how big they get, when they count as a trophy and which ones go back in the water.",
+    "searchPlaceholder": "Search by common or scientific name",
+    "sortLabel": "Sort",
+    "sortAZ": "A–Z",
+    "sortLargest": "Largest",
+    "filterLabel": "Filter species",
+    "filterAll": "All",
+    "filterRelease": "Catch & release",
+    "upTo": "Up to <b>{value}</b>",
+    "trophyMark": "Trophy <b>{value}</b>",
+    "missingTitle": "Missing a species?",
+    "missingBody": "If you caught something that isn't in the catalog, suggest it and we'll review it."
   },
   "feed": {
     "title": "Community",
