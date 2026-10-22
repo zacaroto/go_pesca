@@ -291,7 +291,18 @@
     "favoriteSpotsPlaceholder": "Add a spot...",
     "addSpot": "Add",
     "maxSpots": "Max 10 spots",
-    "websiteLink": "Website or link"
+    "websiteLink": "Website or link",
+    "trophies": "Trophies",
+    "trophy": "Trophy",
+    "records": "Personal records",
+    "recordsEmpty": "Once you log catches, your best fish of each species shows up here.",
+    "colSpecies": "Species",
+    "colWeight": "Best weight",
+    "colLength": "Length",
+    "colDate": "Date",
+    "catches": "Catches",
+    "catchesEmpty": "No catches yet.",
+    "notFound": "We couldn't find this profile."
   },
   "achievements": {
     "title": "Achievements",

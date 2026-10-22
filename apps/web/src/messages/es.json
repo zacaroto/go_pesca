@@ -291,7 +291,18 @@
     "favoriteSpotsPlaceholder": "Agregar un spot...",
     "addSpot": "Agregar",
     "maxSpots": "Máximo 10 spots",
-    "websiteLink": "Sitio web o enlace"
+    "websiteLink": "Sitio web o enlace",
+    "trophies": "Trofeos",
+    "trophy": "Trofeo",
+    "records": "Récords personales",
+    "recordsEmpty": "Cuando registres capturas, aquí aparece tu mejor pieza de cada especie.",
+    "colSpecies": "Especie",
+    "colWeight": "Mejor peso",
+    "colLength": "Largo",
+    "colDate": "Fecha",
+    "catches": "Capturas",
+    "catchesEmpty": "Todavía no hay capturas.",
+    "notFound": "No encontramos este perfil."
   },
   "achievements": {
     "title": "Logros",

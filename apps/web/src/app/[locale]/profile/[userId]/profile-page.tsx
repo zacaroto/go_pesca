@@ -13,33 +13,32 @@ type Props = {
   stats: {
     totalCatches: number;
     speciesCaught: number;
-    achievements: number;
+    trophies: number;
+    achievements: number | null;
   };
   rankData: { caught: number; total: number };
   isOwner: boolean;
+  /** Records table and catches grid, rendered on the server. */
+  children: React.ReactNode;
 };
 
-export function ProfilePage({ profile, stats, rankData, isOwner }: Props) {
+/** "Ficha del pescador": identity column on the left; rank, numbers, records and catches on the right. */
+export function ProfilePage({ profile, stats, rankData, isOwner, children }: Props) {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
-    <div className="max-w-5xl mx-auto px-5 md:px-10 py-8 space-y-8">
-      <ProfileHeader
-        profile={profile}
-        isOwner={isOwner}
-        onEdit={() => setDrawerOpen(true)}
-      />
-      <ProfileStats
-        stats={stats}
-        memberSince={profile.created_at}
-        rankData={rankData}
-      />
+    <div className="mx-auto max-w-6xl px-4 py-8 pb-24 md:px-10">
+      <div className="grid items-start gap-5 lg:grid-cols-[300px_minmax(0,1fr)]">
+        <div className="lg:sticky lg:top-20">
+          <ProfileHeader profile={profile} isOwner={isOwner} onEdit={() => setDrawerOpen(true)} />
+        </div>
+        <div className="flex min-w-0 flex-col gap-5">
+          <ProfileStats stats={stats} rankData={rankData} />
+          {children}
+        </div>
+      </div>
       {isOwner && (
-        <ProfileEditDrawer
-          open={drawerOpen}
-          onClose={() => setDrawerOpen(false)}
-          profile={profile}
-        />
+        <ProfileEditDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} profile={profile} />
       )}
     </div>
   );
