@@ -103,7 +103,17 @@
     "statusFilterLabel": "Filter by catch status",
     "habitatFilterLabel": "Filter by habitat",
     "noMatches": "No species match these filters.",
-    "yourBestCatch": "Your best catch"
+    "yourBestCatch": "Your best catch",
+    "logAnother": "Log another",
+    "speciesPage": "See species page",
+    "statsLabel": "Your numbers with this species",
+    "bestWeight": "Best weight",
+    "longest": "Longest",
+    "trophyRoad": "Road to a trophy",
+    "trophyDone": "You already have a trophy of this species!",
+    "trophyProgress": "Your best: {best} · trophy from {target}",
+    "trophyLeft": "{value} to go",
+    "yourCatches": "Your catches"
   },
   "catches": {
     "back": "Back",

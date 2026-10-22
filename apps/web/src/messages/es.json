@@ -103,7 +103,17 @@
     "statusFilterLabel": "Filtrar por captura",
     "habitatFilterLabel": "Filtrar por hábitat",
     "noMatches": "Ninguna especie coincide con estos filtros.",
-    "yourBestCatch": "Tu mejor captura"
+    "yourBestCatch": "Tu mejor captura",
+    "logAnother": "Registrar otra",
+    "speciesPage": "Ver ficha de la especie",
+    "statsLabel": "Tus números con esta especie",
+    "bestWeight": "Mejor peso",
+    "longest": "Mayor largo",
+    "trophyRoad": "Camino al trofeo",
+    "trophyDone": "¡Ya tienes un trofeo de esta especie!",
+    "trophyProgress": "Tu mejor: {best} · trofeo desde {target}",
+    "trophyLeft": "te faltan {value}",
+    "yourCatches": "Tus capturas"
   },
   "catches": {
     "back": "Atrás",
