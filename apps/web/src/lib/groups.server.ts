@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import type { GroupWithMemberCount } from "@/lib/groups";
+import type { OverviewCatch } from "@/lib/group-overview";
 
 export async function getUserGroupsServer(userId: string): Promise<GroupWithMemberCount[]> {
   const supabase = await createClient();
@@ -114,4 +115,52 @@ export async function isGroupMember(groupId: string, userId: string): Promise<bo
   if (error) return false;
 
   return (count ?? 0) > 0;
+}
+
+export type GroupOverviewMember = { user_id: string; display_name: string; avatar_url: string | null };
+
+/**
+ * Members (with profiles) of several groups and the newest catches they shared to groups, in two
+ * queries, for the groups index cards. Never selects latitude or longitude.
+ */
+export async function getGroupsOverviewData(groupIds: string[], locale: string, limit = 80) {
+  if (groupIds.length === 0) return { members: new Map<string, GroupOverviewMember[]>(), catches: [] as OverviewCatch[] };
+  const supabase = await createClient();
+  const { data: rows, error } = await supabase
+    .from("group_members")
+    .select("group_id, user_id, joined_at, profile:user_id (display_name, avatar_url)")
+    .in("group_id", groupIds)
+    .order("joined_at", { ascending: true });
+  if (error) throw error;
+
+  const members = new Map<string, GroupOverviewMember[]>();
+  for (const row of (rows ?? []) as Record<string, unknown>[]) {
+    const profile = row.profile as { display_name?: string; avatar_url?: string | null } | null;
+    const list = members.get(row.group_id as string) ?? [];
+    list.push({ user_id: row.user_id as string, display_name: profile?.display_name ?? "", avatar_url: profile?.avatar_url ?? null });
+    members.set(row.group_id as string, list);
+  }
+
+  const memberIds = [...new Set([...members.values()].flat().map((m) => m.user_id))];
+  const nameCol = locale === "en" ? "name_en" : "name_es";
+  const { data: catchRows, error: catchError } = await supabase
+    .from("catches")
+    .select(`id, user_id, photo_url, catch_date, created_at, weight_kg, species:species_id (${nameCol}), profile:user_id (display_name)`)
+    .in("user_id", memberIds)
+    .eq("share_to_groups", true)
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  if (catchError) throw catchError;
+
+  const catches: OverviewCatch[] = ((catchRows ?? []) as Record<string, unknown>[]).map((r) => ({
+    id: r.id as string,
+    user_id: r.user_id as string,
+    photo_url: (r.photo_url as string | null) ?? null,
+    species_name: (r.species as Record<string, string> | null)?.[nameCol] ?? "",
+    weight_kg: (r.weight_kg as number | null) ?? null,
+    catch_date: r.catch_date as string,
+    created_at: r.created_at as string,
+    display_name: (r.profile as { display_name?: string } | null)?.display_name ?? "",
+  }));
+  return { members, catches };
 }

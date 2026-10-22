@@ -453,7 +453,15 @@
     "inviteTitle": "Invite your crew",
     "inviteHelp": "Share the link. Groups hold up to {max} anglers.",
     "copyError": "Couldn't copy. Share the code {code}.",
-    "leaveError": "We couldn't remove you from the group. Try again."
+    "leaveError": "We couldn't remove you from the group. Try again.",
+    "joinPrompt": "Got an invite?",
+    "joinPlaceholder": "Paste the invite link or code",
+    "joinInvalid": "That link or code doesn't look right. Check you copied all of it.",
+    "newThisWeek": "{count} new",
+    "latestCatch": "{name} logged {species}",
+    "latestCatchWeight": "{name} logged {species}, {weight}",
+    "quietGroup": "No catches shared in this group yet.",
+    "weekActivity": "{count, plural, one {# new catch} other {# new catches}} this week"
   },
   "landing": {
     "title": "Your fishing guide to Costa Rica.",

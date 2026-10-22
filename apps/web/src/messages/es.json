@@ -453,7 +453,15 @@
     "inviteTitle": "Invita a tu crew",
     "inviteHelp": "Comparte el enlace. El grupo admite hasta {max} pescadores.",
     "copyError": "No se pudo copiar. Comparte el código {code}.",
-    "leaveError": "No pudimos sacarte del grupo. Intenta de nuevo."
+    "leaveError": "No pudimos sacarte del grupo. Intenta de nuevo.",
+    "joinPrompt": "¿Te invitaron?",
+    "joinPlaceholder": "Pega el enlace o el código de invitación",
+    "joinInvalid": "Ese enlace o código no parece válido. Revisa que lo hayas copiado completo.",
+    "newThisWeek": "{count, plural, one {# nueva} other {# nuevas}}",
+    "latestCatch": "{name} registró {species}",
+    "latestCatchWeight": "{name} registró {species} de {weight}",
+    "quietGroup": "Todavía no hay capturas compartidas en este grupo.",
+    "weekActivity": "{count, plural, one {# captura nueva} other {# capturas nuevas}} esta semana"
   },
   "landing": {
     "title": "Tu guía de pesca de Costa Rica.",
