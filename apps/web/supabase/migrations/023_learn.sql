@@ -87,6 +87,5 @@ create policy "Users view own learn progress" on public.learn_progress for selec
 create policy "Users add own learn progress" on public.learn_progress for insert with check (auth.uid() = user_id);
 create policy "Users remove own learn progress" on public.learn_progress for delete using (auth.uid() = user_id);
 
--- Public bucket for knot diagrams.
+-- Public bucket for knot diagrams (public buckets serve files without a select policy, like "species").
 insert into storage.buckets (id, name, public) values ('learn', 'learn', true) on conflict (id) do nothing;
-create policy "Anyone can view learn images" on storage.objects for select using (bucket_id = 'learn');
