@@ -76,6 +76,9 @@
   --on-primary:       #ffffff;
   --footer-wordmark:  #ffffff;
 
+  /* Season heatmap (Aprender): 0 off … 3 peak, on the progress hue */
+  --heat-0: #e9ebf0; --heat-1: #c7ece6; --heat-2: #5fd0c0; --heat-3: #14b8a6;
+
   color-scheme: light;
   --outline:          var(--faint);
   --outline-variant:  var(--border);
@@ -94,6 +97,7 @@
     --pill-brack-bg: #3a3220; --pill-brack-ink: #e2cf9c; --pill-trophy-bg: #3a2e10; --pill-trophy-ink: #f0cf86; --trophy-soft: #241e0d;
     --pill-release-bg: #3d1a1c; --pill-release-ink: #f5a3a6; --pill-regulated-bg: #222a40; --pill-regulated-ink: #eef0f5;
     --footer-bg: #090d18; --footer-text: #e3e6ee; --footer-muted: #8a90a0; --footer-wordmark: #e3e6ee;
+    --heat-0: #222a40; --heat-1: #174a48; --heat-2: #1f8f84; --heat-3: #2dd4bf;
     color-scheme: dark;
   }
 }
@@ -106,6 +110,7 @@
   --pill-brack-bg: #3a3220; --pill-brack-ink: #e2cf9c; --pill-trophy-bg: #3a2e10; --pill-trophy-ink: #f0cf86; --trophy-soft: #241e0d;
   --pill-release-bg: #3d1a1c; --pill-release-ink: #f5a3a6; --pill-regulated-bg: #222a40; --pill-regulated-ink: #eef0f5;
   --footer-bg: #090d18; --footer-text: #e3e6ee; --footer-muted: #8a90a0; --footer-wordmark: #e3e6ee;
+    --heat-0: #222a40; --heat-1: #174a48; --heat-2: #1f8f84; --heat-3: #2dd4bf;
   color-scheme: dark;
 }
 

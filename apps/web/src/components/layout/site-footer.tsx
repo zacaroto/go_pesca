@@ -3,7 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { ThemeSwitch } from "./theme-toggle";
 
 const COLS = [
-  { title: "collection", links: [["/pokedex", "nav.pokedex"], ["/species", "nav.species"], ["/achievements", "nav.achievements"]] },
+  { title: "collection", links: [["/pokedex", "nav.pokedex"], ["/species", "nav.species"], ["/achievements", "nav.achievements"], ["/learn", "nav.learn"]] },
   { title: "community", links: [["/community", "nav.community"], ["/groups", "nav.groups"], ["/species/suggest", "footer.suggestSpecies"]] },
 ] as const;
 

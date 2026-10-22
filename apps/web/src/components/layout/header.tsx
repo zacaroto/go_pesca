@@ -17,6 +17,7 @@ const NAV = [
   { href: "/community", key: "community" },
   { href: "/groups", key: "groups" },
   { href: "/species", key: "species" },
+  { href: "/learn", key: "learn" },
 ] as const;
 
 export function Header({ user }: Props) {
