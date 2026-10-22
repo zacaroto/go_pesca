@@ -7,11 +7,12 @@ import dynamic from "next/dynamic";
 import { PhotoUpload } from "./photo-upload";
 import { SpeciesPicker } from "./species-picker";
 import { deleteCatch, updateCatch } from "@/lib/catches";
+import { TrashIcon, WarningIcon } from "@/components/icons";
 
 const MapComponent = dynamic(() => import("./location-map"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-48 bg-gray-100 dark:bg-gray-800 rounded-lg" />
+    <div className="w-full h-48 bg-raised rounded-[var(--r-card)]" />
   ),
 });
 
@@ -71,7 +72,9 @@ export function CatchDetail({ catch_data, locale }: Props) {
     try {
       await deleteCatch(catch_data.id, catch_data.photo_url);
       router.push(`/${locale}/catches`);
-    } catch {
+    } catch (err) {
+      console.error("Failed to delete catch:", err);
+      setError(t("deleteError"));
       setDeleting(false);
     }
   }
@@ -124,20 +127,19 @@ export function CatchDetail({ catch_data, locale }: Props) {
     }
   }
 
-  const inputClass =
-    "w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm dark:bg-gray-900";
+  const inputClass = "field";
 
   if (editing) {
     return (
       <div className="space-y-6">
         <div>
-          <p className="text-xs text-gray-500 mb-1">{t("photo")}</p>
+          <p className="text-label text-muted mb-1">{t("photo")}</p>
           <PhotoUpload onSelect={setNewPhoto} />
           {!newPhoto && (
             <img
               src={catch_data.photo_url}
               alt={catch_data.species_name}
-              className="w-full h-48 object-cover rounded-lg mt-2 opacity-60"
+              className="w-full h-48 object-cover rounded-[var(--r-card)] mt-2 opacity-60"
             />
           )}
         </div>
@@ -145,7 +147,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
         <SpeciesPicker locale={locale} value={speciesId} onChange={setSpeciesId} />
 
         <div>
-          <label className="block text-sm font-medium mb-1">{t("date")} *</label>
+          <label className="block text-small font-medium mb-1">{t("date")} *</label>
           <input
             type="date"
             value={catchDate}
@@ -157,7 +159,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium mb-1">{t("weight")}</label>
+            <label className="block text-small font-medium mb-1">{t("weight")}</label>
             <input
               type="number"
               step="0.01"
@@ -167,7 +169,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">{t("length")}</label>
+            <label className="block text-small font-medium mb-1">{t("length")}</label>
             <input
               type="number"
               step="0.1"
@@ -179,7 +181,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">{t("bait")}</label>
+          <label className="block text-small font-medium mb-1">{t("bait")}</label>
           <input
             type="text"
             value={baitLure}
@@ -190,7 +192,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium mb-1">{t("weather")}</label>
+            <label className="block text-small font-medium mb-1">{t("weather")}</label>
             <input
               type="text"
               value={weather}
@@ -199,7 +201,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">{t("tide")}</label>
+            <label className="block text-small font-medium mb-1">{t("tide")}</label>
             <input
               type="text"
               value={tide}
@@ -210,7 +212,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">{t("time")}</label>
+          <label className="block text-small font-medium mb-1">{t("time")}</label>
           <input
             type="time"
             value={timeOfDay}
@@ -220,7 +222,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">{t("notes")}</label>
+          <label className="block text-small font-medium mb-1">{t("notes")}</label>
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
@@ -232,8 +234,8 @@ export function CatchDetail({ catch_data, locale }: Props) {
         <div>
           <label className="flex items-center justify-between cursor-pointer">
             <div>
-              <span className="block text-sm font-medium">{t("isPublic")}</span>
-              <span className="text-xs text-gray-500 dark:text-gray-400">{t("isPublicHelp")}</span>
+              <span className="block text-small font-medium">{t("isPublic")}</span>
+              <span className="text-label text-muted">{t("isPublicHelp")}</span>
             </div>
             <div
               role="switch"
@@ -241,12 +243,12 @@ export function CatchDetail({ catch_data, locale }: Props) {
               onClick={() => setIsPublic(!isPublic)}
               onKeyDown={(e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setIsPublic(!isPublic); } }}
               tabIndex={0}
-              className={`relative inline-flex h-6 w-11 flex-shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out cursor-pointer ${
-                isPublic ? "bg-cyan-600" : "bg-gray-300 dark:bg-gray-600"
+              className={`relative inline-flex h-6 w-11 flex-shrink-0 rounded-full border-2 border-transparent transition-colors duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none cursor-pointer ${
+                isPublic ? "bg-accent" : "bg-silhouette"
               }`}
             >
               <span
-                className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-surface ring-0 transition-transform duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none ${
                   isPublic ? "translate-x-5" : "translate-x-0"
                 }`}
               />
@@ -255,7 +257,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
         </div>
 
         {error && (
-          <p className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-3 py-2 rounded-lg">
+          <p role="alert" className="text-small text-negative border border-negative px-3 py-2 rounded-[var(--r-control)]">
             {error}
           </p>
         )}
@@ -265,7 +267,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
             type="button"
             onClick={handleSave}
             disabled={saving}
-            className="flex-1 bg-cyan-600 text-white py-2.5 rounded-lg font-medium hover:bg-cyan-700 disabled:opacity-50 transition-colors"
+            className="btn-primary flex-1"
           >
             {saving ? t("saving") : tCommon("save")}
           </button>
@@ -273,7 +275,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
             type="button"
             onClick={handleCancel}
             disabled={saving}
-            className="flex-1 border border-gray-300 dark:border-gray-600 py-2.5 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
+            className="btn-secondary flex-1"
           >
             {tCommon("cancel")}
           </button>
@@ -291,21 +293,31 @@ export function CatchDetail({ catch_data, locale }: Props) {
     { label: t("time"), value: catch_data.time_of_day },
   ];
 
+  const dateLabel = new Intl.DateTimeFormat(locale, {
+    dateStyle: "long",
+    timeZone: "UTC",
+  }).format(new Date(`${catch_data.catch_date}T00:00:00Z`));
+
   return (
     <div className="space-y-6">
+      {error && (
+        <p role="alert" className="text-small text-negative border border-negative px-3 py-2 rounded-[var(--r-control)]">
+          {error}
+        </p>
+      )}
       <img
         src={catch_data.photo_url}
         alt={catch_data.species_name}
-        className="w-full h-64 object-cover rounded-lg"
+        className="w-full h-64 object-cover rounded-[var(--r-card)]"
       />
 
       <div>
-        <h1 className="text-2xl font-bold">{catch_data.species_name}</h1>
-        <p className="text-gray-500">
-          {t("date")}: {catch_data.catch_date}
+        <h1 className="font-serif-display text-subhead font-bold">{catch_data.species_name}</h1>
+        <p className="text-muted">
+          {t("date")}: {dateLabel}
         </p>
         {catch_data.location_name && (
-          <p className="text-gray-500">
+          <p className="text-muted">
             {t("location")}: {catch_data.location_name}
           </p>
         )}
@@ -325,8 +337,8 @@ export function CatchDetail({ catch_data, locale }: Props) {
             (f) =>
               f.value && (
                 <div key={f.label}>
-                  <p className="text-xs text-gray-500">{f.label}</p>
-                  <p className="text-sm font-medium">{f.value}</p>
+                  <p className="text-label text-muted">{f.label}</p>
+                  <p className="text-small font-medium">{f.value}</p>
                 </div>
               )
           )}
@@ -335,8 +347,8 @@ export function CatchDetail({ catch_data, locale }: Props) {
 
       {catch_data.notes && (
         <div>
-          <p className="text-xs text-gray-500">{t("notes")}</p>
-          <p className="text-sm">{catch_data.notes}</p>
+          <p className="text-label text-muted">{t("notes")}</p>
+          <p className="text-small">{catch_data.notes}</p>
         </div>
       )}
 
@@ -344,7 +356,7 @@ export function CatchDetail({ catch_data, locale }: Props) {
         <button
           type="button"
           onClick={() => setEditing(true)}
-          className="flex-1 bg-cyan-600 text-white py-2.5 rounded-lg font-medium hover:bg-cyan-700 transition-colors"
+          className="btn-primary flex-1"
         >
           {t("edit")}
         </button>
@@ -352,10 +364,9 @@ export function CatchDetail({ catch_data, locale }: Props) {
           type="button"
           onClick={() => setShowDeleteConfirm(true)}
           disabled={deleting}
-          className="flex-1 bg-neon-coral text-white py-3 rounded-2xl font-bold chunky-border bouncy-shadow bouncy-hover bouncy-active transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-          style={{ fontFamily: "var(--font-fredoka)" }}
+          className="btn-danger flex-1"
         >
-          <span className="material-symbols-outlined text-xl">delete</span>
+          <TrashIcon className="h-5 w-5" />
           {deleting ? t("deleting") : t("delete")}
         </button>
       </div>
@@ -364,21 +375,16 @@ export function CatchDetail({ catch_data, locale }: Props) {
       {showDeleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
-            className="absolute inset-0 bg-on-surface/40 backdrop-blur-sm"
+            className="absolute inset-0 bg-text/40"
             onClick={() => setShowDeleteConfirm(false)}
           />
-          <div className="relative bg-card-bg rounded-3xl chunky-border chunky-shadow p-6 max-w-sm w-full space-y-4 animate-float">
+          <div className="relative bg-surface border border-border rounded-[var(--r-card)] shadow-xl p-6 max-w-sm w-full space-y-4">
             <div className="flex flex-col items-center text-center space-y-3">
-              <div className="w-16 h-16 bg-neon-coral/15 rounded-full flex items-center justify-center sticker-border">
-                <span className="material-symbols-outlined text-neon-coral text-4xl">warning</span>
-              </div>
-              <h3
-                className="text-headline-md text-on-surface"
-                style={{ fontFamily: "var(--font-fredoka)" }}
-              >
+              <WarningIcon className="h-10 w-10 text-negative" />
+              <h3 className="font-serif-display text-subhead font-bold text-text">
                 {t("confirmDelete")}
               </h3>
-              <p className="text-body-md text-muted">
+              <p className="text-body text-muted">
                 {t("confirmDeleteDescription")}
               </p>
             </div>
@@ -386,18 +392,16 @@ export function CatchDetail({ catch_data, locale }: Props) {
               <button
                 type="button"
                 onClick={() => setShowDeleteConfirm(false)}
-                className="flex-1 bg-surface-container text-on-surface py-3 rounded-2xl font-bold chunky-border bouncy-shadow bouncy-hover bouncy-active transition-all"
-                style={{ fontFamily: "var(--font-fredoka)" }}
+                className="btn-secondary flex-1"
               >
                 {tCommon("cancel")}
               </button>
               <button
                 type="button"
                 onClick={handleDelete}
-                className="flex-1 bg-neon-coral text-white py-3 rounded-2xl font-bold chunky-border bouncy-shadow bouncy-hover bouncy-active transition-all flex items-center justify-center gap-2"
-                style={{ fontFamily: "var(--font-fredoka)" }}
+                className="btn-danger flex-1"
               >
-                <span className="material-symbols-outlined text-lg">delete</span>
+                <TrashIcon className="h-5 w-5" />
                 {t("delete")}
               </button>
             </div>

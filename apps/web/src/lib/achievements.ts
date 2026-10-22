@@ -1,22 +1,10 @@
 import { createClient } from "@/lib/supabase/client";
+import { isTrophy } from "@/lib/profile-records";
+import { LEARN_GOALS } from "@/lib/achievement-defs";
 
 export type NewAchievement = {
   id: string;
   achievement_id: string;
-  icon: string;
-};
-
-// Achievement definition with its icon
-const ACHIEVEMENT_ICONS: Record<string, string> = {
-  first_blood: "🩸",
-  species_5: "🗺️",
-  species_10: "🔬",
-  species_20: "🏆",
-  big_catch: "💪",
-  night_owl: "🦉",
-  early_bird: "🌅",
-  catch_10: "🎯",
-  catch_50: "👑",
 };
 
 export async function checkAndAwardAchievements(
@@ -34,7 +22,7 @@ export async function checkAndAwardAchievements(
         .eq("user_id", userId),
       supabase
         .from("catches")
-        .select("id, species_id, weight_kg, time_of_day")
+        .select("id, species_id, weight_kg, length_cm, time_of_day")
         .eq("user_id", userId),
     ]);
 
@@ -55,7 +43,9 @@ export async function checkAndAwardAchievements(
   ) as
     | {
         id: string;
+        species_id: number;
         weight_kg: number | null;
+        length_cm: number | null;
         time_of_day: string | null;
       }
     | undefined;
@@ -103,6 +93,19 @@ export async function checkAndAwardAchievements(
     }
   }
 
+  // trophy_catch / release_catch: depend on the caught species' trophy threshold and legal rule.
+  if (triggeringCatch && (!earned.has("trophy_catch") || !earned.has("release_catch"))) {
+    // "*" so this keeps working on databases without the trophy/regulation columns.
+    const { data: species } = await supabase.from("species").select("*").eq("id", triggeringCatch.species_id).maybeSingle();
+    const s = species as { trophy_weight_kg?: number | null; trophy_length_cm?: number | null; regulation?: string | null } | null;
+    if (!earned.has("trophy_catch") && s && isTrophy(triggeringCatch, { trophy_weight_kg: s.trophy_weight_kg ?? null, trophy_length_cm: s.trophy_length_cm ?? null })) {
+      newAchievementIds.push("trophy_catch");
+    }
+    if (!earned.has("release_catch") && s?.regulation === "release") {
+      newAchievementIds.push("release_catch");
+    }
+  }
+
   // catch_10/50: total catch milestones
   if (!earned.has("catch_10") && totalCatches >= 10) {
     newAchievementIds.push("catch_10");
@@ -111,10 +114,29 @@ export async function checkAndAwardAchievements(
     newAchievementIds.push("catch_50");
   }
 
-  if (newAchievementIds.length === 0) return [];
+  return insertAchievements(userId, newAchievementIds, catchId);
+}
 
-  // Insert all new achievements
-  const rows = newAchievementIds.map((achievementId) => ({
+/** Awards the Aprender milestones (guides read, knots learned) once the angler reaches them. */
+export async function checkLearnAchievements(userId: string): Promise<NewAchievement[]> {
+  const supabase = createClient();
+  const [{ data: existing }, { data: progress }] = await Promise.all([
+    supabase.from("user_achievements").select("achievement_id").eq("user_id", userId),
+    supabase.from("learn_progress").select("item_type").eq("user_id", userId),
+  ]);
+  const earned = new Set(((existing ?? []) as { achievement_id: string }[]).map((a) => a.achievement_id));
+  // learn_progress isn't in the generated Database types yet (migration 023).
+  const items = (progress ?? []) as unknown as { item_type: string }[];
+  const ids = LEARN_GOALS.filter(
+    (g) => !earned.has(g.id) && items.filter((i) => i.item_type === g.itemType).length >= g.threshold,
+  ).map((g) => g.id);
+  return insertAchievements(userId, ids, null);
+}
+
+async function insertAchievements(userId: string, achievementIds: string[], catchId: string | null): Promise<NewAchievement[]> {
+  if (achievementIds.length === 0) return [];
+  const supabase = createClient();
+  const rows = achievementIds.map((achievementId) => ({
     user_id: userId,
     achievement_id: achievementId,
     catch_id: catchId,
@@ -134,7 +156,6 @@ export async function checkAndAwardAchievements(
     (a: { id: string; achievement_id: string }) => ({
       id: a.id,
       achievement_id: a.achievement_id,
-      icon: ACHIEVEMENT_ICONS[a.achievement_id] ?? "🏅",
     })
   );
 }

@@ -2,83 +2,58 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { RankBadge } from "@/components/rank/rank-badge";
+import { RankRing } from "@/components/rank/rank-ring";
 
 type Props = {
   stats: {
     totalCatches: number;
     speciesCaught: number;
-    achievements: number;
+    trophies: number;
+    /** Null for visitors: achievements are only readable by their owner. */
+    achievements: number | null;
   };
-  memberSince: string;
   rankData: { caught: number; total: number };
 };
 
-export function ProfileStats({ stats, memberSince, rankData }: Props) {
+const statCard = "rounded-[var(--r-card)] bg-surface p-4";
+const statValue = "block font-serif-display text-heading font-black leading-none text-text tabular-nums";
+const statLabel = "mt-1.5 block text-label text-muted";
+
+/** Rank ring plus the angler's headline numbers. */
+export function ProfileStats({ stats, rankData }: Props) {
   const t = useTranslations("profile");
 
   return (
-    <div className="space-y-8">
-      {/* Rank badge */}
-      <div className="flex justify-center">
-        <RankBadge caught={rankData.caught} total={rankData.total} size="lg" />
-      </div>
+    <div className="flex flex-col gap-4">
+      <section className="rounded-[var(--r-card)] bg-surface p-5">
+        <RankRing caught={rankData.caught} total={rankData.total} />
+      </section>
 
-      {/* Stats Grid (Bento Style) */}
-      <section className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {/* Catches Card */}
-        <div className="bg-card-bg rounded-xl chunky-border p-4 flex flex-col items-center text-center chunky-shadow hover:-translate-y-1 transition-transform cursor-pointer relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-br from-sunny-yellow/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="bg-sunny-yellow text-on-surface p-3 rounded-full mb-3 border-2 border-on-surface chunky-shadow transform group-hover:rotate-12 transition-transform relative z-10">
-            <span className="material-symbols-outlined text-3xl">set_meal</span>
-          </div>
-          <span
-            className="text-display-lg text-on-surface leading-none mb-1 relative z-10"
-            style={{ fontFamily: "var(--font-fredoka)" }}
-          >
-            {stats.totalCatches.toLocaleString()}
-          </span>
-          <span className="text-label-sm text-muted uppercase tracking-wider relative z-10">
-            {t("totalCatches")}
-          </span>
+      <section className={`grid grid-cols-2 gap-3 ${stats.achievements != null ? "md:grid-cols-4" : "md:grid-cols-3"}`}>
+        <div className={statCard}>
+          <span className={statValue}>{stats.totalCatches.toLocaleString()}</span>
+          <span className={statLabel}>{t("totalCatches")}</span>
         </div>
-
-        {/* Species Card */}
-        <div className="bg-card-bg rounded-xl chunky-border p-4 flex flex-col items-center text-center chunky-shadow hover:-translate-y-1 transition-transform cursor-pointer relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-br from-secondary-container/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="bg-secondary-container text-on-secondary-container p-3 rounded-full mb-3 border-2 border-on-surface chunky-shadow transform group-hover:-rotate-12 transition-transform relative z-10">
-            <span className="material-symbols-outlined text-3xl">20mp</span>
-          </div>
-          <span
-            className="text-display-lg text-on-surface leading-none mb-1 relative z-10"
-            style={{ fontFamily: "var(--font-fredoka)" }}
-          >
+        <div className={statCard}>
+          <span className={statValue}>
             {stats.speciesCaught}
+            <span className="font-sans text-body font-medium text-muted">/{rankData.total}</span>
           </span>
-          <span className="text-label-sm text-muted uppercase tracking-wider relative z-10">
-            {t("speciesCaught")}
-          </span>
+          <span className={statLabel}>{t("speciesCaught")}</span>
         </div>
-
-        {/* Achievements Card */}
-        <Link
-          href="/achievements"
-          className="bg-card-bg rounded-xl chunky-border p-4 flex flex-col items-center text-center chunky-shadow hover:-translate-y-1 transition-transform cursor-pointer relative overflow-hidden group"
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-electric-purple/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="bg-electric-purple text-on-primary p-3 rounded-full mb-3 border-2 border-on-surface chunky-shadow transform group-hover:rotate-180 transition-transform duration-500 relative z-10">
-            <span className="material-symbols-outlined text-3xl">military_tech</span>
-          </div>
-          <span
-            className="text-display-lg text-on-surface leading-none mb-1 relative z-10"
-            style={{ fontFamily: "var(--font-fredoka)" }}
+        <div className={statCard}>
+          <span className={statValue}>{stats.trophies}</span>
+          <span className={statLabel}>{t("trophies")}</span>
+        </div>
+        {stats.achievements != null && (
+          <Link
+            href="/achievements"
+            className={`${statCard} hover:bg-raised active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 transition-[background-color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100`}
           >
-            {stats.achievements}
-          </span>
-          <span className="text-label-sm text-muted uppercase tracking-wider relative z-10">
-            {t("achievements")} &rsaquo;
-          </span>
-        </Link>
+            <span className={statValue}>{stats.achievements}</span>
+            <span className={statLabel}>{t("achievements")} &rsaquo;</span>
+          </Link>
+        )}
       </section>
     </div>
   );

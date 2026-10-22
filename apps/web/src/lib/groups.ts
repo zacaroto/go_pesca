@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/client";
 
-const MAX_MEMBERS = 20;
+export const MAX_MEMBERS = 20;
 
 function generateInviteCode(): string {
   const chars = "abcdefghijklmnopqrstuvwxyz0123456789";

@@ -1,4 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
+import { nextBestWeight } from "./fishydex-index";
+import { parseRegulation, type Regulation } from "./regulation";
+import { isBetterCatch } from "./profile-records";
 import type { Database } from "./database.types";
 
 type SpeciesRow = Database["public"]["Tables"]["species"]["Row"];
@@ -15,6 +18,12 @@ export type PokedexEntry = {
   first_catch_date: string | null;
   last_catch_date: string | null;
   first_catch_photo: string | null;
+  description_es: string | null;
+  description_en: string | null;
+  best_weight_kg: number | null;
+  regulation?: Regulation | null;
+  /** Photo of the heaviest (or, unweighed, longest) catch of this species. */
+  best_catch_photo?: string | null;
 };
 
 export async function getPokedex(userId: string): Promise<PokedexEntry[]> {
@@ -32,15 +41,15 @@ export async function getPokedex(userId: string): Promise<PokedexEntry[]> {
   // Get user's catches grouped by species
   const { data: catchesData } = await supabase
     .from("catches")
-    .select("species_id, catch_date, photo_url")
+    .select("species_id, catch_date, photo_url, weight_kg, length_cm")
     .eq("user_id", userId)
     .order("catch_date", { ascending: true });
 
-  const catches = (catchesData ?? []) as Pick<CatchRow, "species_id" | "catch_date" | "photo_url">[];
+  const catches = (catchesData ?? []) as Pick<CatchRow, "species_id" | "catch_date" | "photo_url" | "weight_kg" | "length_cm">[];
 
   const catchMap = new Map<
     number,
-    { count: number; firstDate: string; lastDate: string; firstPhoto: string }
+    { count: number; firstDate: string; lastDate: string; firstPhoto: string; best: number | null; bestCatch: (typeof catches)[number] }
   >();
 
   {
@@ -48,6 +57,8 @@ export async function getPokedex(userId: string): Promise<PokedexEntry[]> {
       const existing = catchMap.get(c.species_id);
       if (existing) {
         existing.count++;
+        existing.best = nextBestWeight(existing.best, c.weight_kg);
+        if (isBetterCatch(c, existing.bestCatch)) existing.bestCatch = c;
         if (c.catch_date > existing.lastDate) {
           existing.lastDate = c.catch_date;
         }
@@ -57,6 +68,8 @@ export async function getPokedex(userId: string): Promise<PokedexEntry[]> {
           firstDate: c.catch_date,
           lastDate: c.catch_date,
           firstPhoto: c.photo_url,
+          best: nextBestWeight(null, c.weight_kg),
+          bestCatch: c,
         });
       }
     }
@@ -75,6 +88,12 @@ export async function getPokedex(userId: string): Promise<PokedexEntry[]> {
       first_catch_date: catchData?.firstDate ?? null,
       last_catch_date: catchData?.lastDate ?? null,
       first_catch_photo: catchData?.firstPhoto ?? null,
+      description_es: s.description_es,
+      description_en: s.description_en,
+      best_weight_kg: catchData?.best ?? null,
+      best_catch_photo: catchData?.bestCatch.photo_url ?? null,
+      // Not in the generated types yet (added by migration 020).
+      regulation: parseRegulation((s as { regulation?: unknown }).regulation),
     };
   });
 }

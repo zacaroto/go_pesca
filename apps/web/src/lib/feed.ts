@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import type { Database } from "./database.types";
+import { communityWindows, tallyTopSpecies, type CommunityRecords } from "./community-mosaic";
 
 type ReactionRow = Database["public"]["Tables"]["catch_reactions"]["Row"];
 
@@ -129,4 +130,58 @@ export async function fetchReactionsForCatches(
   }
 
   return result;
+}
+
+/**
+ * Community records over ALL public catches (server-side): heaviest and top species of the
+ * current Costa Rica month, plus the number of catches in the last 7 calendar days.
+ * Never selects latitude or longitude.
+ * Scale-up path: move the top-species tally into a Postgres RPC (group by species) instead of
+ * fetching up to 5000 rows.
+ */
+export async function fetchCommunityRecords(locale: string, now = new Date()): Promise<CommunityRecords> {
+  const supabase = await createClient();
+  const nameCol = locale === "en" ? "name_en" : "name_es";
+  const { today, weekStart, monthStart, nextMonthStart } = communityWindows(now);
+
+  const [week, heavy, month] = await Promise.all([
+    supabase
+      .from("catches")
+      .select("id", { count: "exact", head: true })
+      .eq("is_public", true)
+      .gte("catch_date", weekStart)
+      .lte("catch_date", today),
+    supabase
+      .from("catches")
+      .select(`weight_kg, location_name, species:species_id (${nameCol})`)
+      .eq("is_public", true)
+      .gte("catch_date", monthStart)
+      .lt("catch_date", nextMonthStart)
+      .not("weight_kg", "is", null)
+      .order("weight_kg", { ascending: false })
+      .limit(1),
+    supabase
+      .from("catches")
+      .select(`species:species_id (${nameCol})`)
+      .eq("is_public", true)
+      .gte("catch_date", monthStart)
+      .lt("catch_date", nextMonthStart)
+      .limit(5000),
+  ]);
+
+  if (week.error) throw week.error;
+  if (heavy.error) throw heavy.error;
+  if (month.error) throw month.error;
+
+  const nameOf = (row: unknown) =>
+    ((row as { species: Record<string, string> | null }).species?.[nameCol] ?? "") as string;
+
+  const top = heavy.data?.[0] as { weight_kg: number; location_name: string | null } | undefined;
+  return {
+    weekCount: week.count ?? 0,
+    heaviest: top
+      ? { weight_kg: top.weight_kg, location_name: top.location_name, species_name: nameOf(top) }
+      : null,
+    topSpecies: tallyTopSpecies((month.data ?? []).map((r) => ({ species_name: nameOf(r) })).filter((r) => r.species_name)),
+  };
 }
