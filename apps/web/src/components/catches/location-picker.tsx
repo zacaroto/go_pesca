@@ -16,12 +16,19 @@ type Props = {
 const DEFAULT_LAT = 9.93;
 const DEFAULT_LNG = -84.08;
 
+function MapPlaceholder({ labelKey }: { labelKey: "loadingMap" | "detectingGps" }) {
+  const t = useTranslations("catches");
+  return (
+    <div className="w-full h-64 bg-[var(--ground)] rounded-[var(--r-card)] flex items-center justify-center">
+      <span className="text-small text-[var(--muted)]">{t(labelKey)}</span>
+    </div>
+  );
+}
+
 const MapComponent = dynamic(() => import("./location-map"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-64 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
-      <span className="text-gray-500">Loading map...</span>
-    </div>
+    <MapPlaceholder labelKey="loadingMap" />
   ),
 });
 
@@ -57,13 +64,8 @@ export function LocationPicker({
 
   return (
     <div>
-      <label className="block text-sm font-medium mb-1">
-        {t("location")} *
-      </label>
       {gpsLoading ? (
-        <div className="w-full h-64 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
-          <span className="text-gray-500">📍 Detecting GPS...</span>
-        </div>
+        <MapPlaceholder labelKey="detectingGps" />
       ) : (
         <MapComponent
           latitude={latitude ?? DEFAULT_LAT}
@@ -76,7 +78,8 @@ export function LocationPicker({
         value={locationName}
         onChange={(e) => onLocationNameChange(e.target.value)}
         placeholder={t("pickLocation")}
-        className="mt-2 w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm dark:bg-gray-900"
+        aria-label={t("placeName")}
+        className="mt-3 h-[42px] w-full rounded-[var(--r-control)] bg-[var(--ground)] px-3.5 text-small text-[var(--text)] outline-none placeholder:text-[var(--faint)] focus:shadow-[inset_0_0_0_1.5px_var(--accent)] transition-[box-shadow] duration-[var(--t-ui)] motion-reduce:transition-none"
       />
     </div>
   );

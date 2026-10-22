@@ -3,106 +3,164 @@
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { FishMark } from "@/components/layout/fish-mark";
+import { RegulationCard } from "@/components/species/regulation-tag";
+import { parseRegulation, type Regulation } from "@/lib/regulation";
 
 type Species = {
   id: number;
   name_es: string;
   name_en: string;
   scientific_name: string;
+  reference_photo_url: string | null;
+  regulation?: string | null;
+  regulation_note_es?: string | null;
+  regulation_note_en?: string | null;
+  regulation_source_url?: string | null;
+  trophy_weight_kg?: number | null;
+  trophy_length_cm?: number | null;
+};
+
+export type PickedSpecies = {
+  id: number;
+  name: string;
+  scientific_name: string;
+  reference_photo_url: string | null;
+  regulation: Regulation | null;
+  trophy_weight_kg: number | null;
+  trophy_length_cm: number | null;
 };
 
 type Props = {
   locale: string;
   value: number | null;
   onChange: (id: number) => void;
+  onSpeciesMeta?: (meta: PickedSpecies) => void;
 };
 
-export function SpeciesPicker({ locale, value, onChange }: Props) {
+const INITIAL_COUNT = 8;
+
+export function SpeciesPicker({ locale, value, onChange, onSpeciesMeta }: Props) {
   const t = useTranslations("catches");
   const [species, setSpecies] = useState<Species[]>([]);
   const [search, setSearch] = useState("");
-  const [open, setOpen] = useState(false);
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
     async function load() {
       try {
         const supabase = createClient();
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from("species")
-          .select("id, name_es, name_en, scientific_name")
+          // "*" so the picker keeps working before the regulation columns exist.
+          .select("*")
           .order("name_es");
+        if (error) throw error;
         if (data) setSpecies(data);
-      } catch {
-        // Supabase not configured
+      } catch (err) {
+        console.error("SpeciesPicker: failed to load species", err);
+        setLoadError(true);
       }
     }
     load();
   }, []);
 
-  const getName = (s: Species) =>
-    locale === "es" ? s.name_es : s.name_en;
+  const getName = (s: Species) => (locale === "es" ? s.name_es : s.name_en);
 
-  const filtered = species.filter((s) => {
-    if (!search) return true;
-    const q = search.toLowerCase();
-    return (
-      s.name_es.toLowerCase().includes(q) ||
-      s.name_en.toLowerCase().includes(q) ||
-      s.scientific_name.toLowerCase().includes(q)
-    );
-  });
+  const q = search.trim().toLowerCase();
+  const filtered = q
+    ? species.filter(
+        (s) =>
+          s.name_es.toLowerCase().includes(q) ||
+          s.name_en.toLowerCase().includes(q) ||
+          s.scientific_name.toLowerCase().includes(q)
+      )
+    : species.slice(0, INITIAL_COUNT);
 
+  // Keep the chosen species visible even when it falls outside the first 8.
   const selected = species.find((s) => s.id === value);
+  const visible =
+    !q && selected && !filtered.some((s) => s.id === selected.id)
+      ? [selected, ...filtered.slice(0, INITIAL_COUNT - 1)]
+      : filtered;
+
+  function pick(s: Species) {
+    onChange(s.id);
+    onSpeciesMeta?.({
+      id: s.id,
+      name: getName(s),
+      scientific_name: s.scientific_name,
+      reference_photo_url: s.reference_photo_url,
+      regulation: parseRegulation(s.regulation),
+      trophy_weight_kg: s.trophy_weight_kg ?? null,
+      trophy_length_cm: s.trophy_length_cm ?? null,
+    });
+  }
 
   return (
-    <div className="relative">
-      <label className="block text-sm font-medium mb-1">
-        {t("species")} *
-      </label>
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        className="w-full text-left rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm dark:bg-gray-900"
+    <div>
+      <label
+        className="flex items-center gap-2 h-[42px] px-3.5 rounded-[var(--r-pill)] bg-[var(--ground)] focus-within:shadow-[inset_0_0_0_1.5px_var(--accent)] transition-[box-shadow] duration-[var(--t-ui)] motion-reduce:transition-none"
       >
-        {selected ? getName(selected) : t("selectSpecies")}
-      </button>
-      {open && (
-        <div className="absolute z-50 mt-1 w-full bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-md shadow-lg max-h-60 overflow-auto">
-          <div className="p-2 sticky top-0 bg-white dark:bg-gray-900">
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder={`${t("selectSpecies")}...`}
-              className="w-full rounded border border-gray-300 dark:border-gray-700 px-2 py-1 text-sm dark:bg-gray-800"
-              autoFocus
-            />
-          </div>
-          {filtered.map((s) => (
-            <button
-              key={s.id}
-              type="button"
-              onClick={() => {
-                onChange(s.id);
-                setOpen(false);
-                setSearch("");
-              }}
-              className={`w-full text-left px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800 ${
-                s.id === value ? "bg-blue-50 dark:bg-blue-900/30" : ""
-              }`}
-            >
-              <span className="font-medium">{getName(s)}</span>
-              <span className="text-gray-500 ml-2 text-xs italic">
-                {s.scientific_name}
+        <svg className="w-4 h-4 shrink-0 text-[var(--muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          strokeWidth={1.8} strokeLinecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.5-3.5" />
+        </svg>
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder={t("searchSpecies", { count: species.length })}
+          aria-label={t("selectSpecies")}
+          className="flex-1 min-w-0 bg-transparent outline-none text-small text-[var(--text)] placeholder:text-[var(--faint)]"
+        />
+      </label>
+
+      {loadError && (
+        <p role="alert" className="mt-3 text-small text-[var(--negative)]">{t("errorLoadSpecies")}</p>
+      )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3">
+        {visible.map((s) => (
+          <button
+            key={s.id}
+            type="button"
+            onClick={() => pick(s)}
+            aria-pressed={s.id === value}
+            data-selected={s.id === value}
+            className="grid grid-cols-[52px_minmax(0,1fr)] gap-3 items-center p-2 rounded-md text-left cursor-pointer bg-[var(--ground)] hover:bg-[var(--raised)] active:bg-[var(--raised)] active:scale-[0.99] data-[selected=true]:bg-[var(--accent-soft)] data-[selected=true]:shadow-[inset_0_0_0_1.5px_var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] transition-[background-color,box-shadow,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100"
+          >
+            <span className="h-9 rounded-[3px] overflow-hidden bg-[var(--surface)] flex items-center justify-center text-[var(--silhouette)]">
+              {s.reference_photo_url ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={s.reference_photo_url} alt="" className="w-full h-full object-cover" />
+              ) : (
+                <FishMark className="w-6 h-6" />
+              )}
+            </span>
+            <span className="min-w-0">
+              <span className="font-serif-display font-bold text-body leading-tight block truncate text-[var(--text)]">
+                {getName(s)}
               </span>
-            </button>
-          ))}
-          {filtered.length === 0 && (
-            <p className="px-3 py-2 text-sm text-gray-500">
-              {t("selectSpecies")}
-            </p>
-          )}
+              <span className="sci-name text-label block truncate">{s.scientific_name}</span>
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {selected && parseRegulation(selected.regulation) && (
+        <div className="mt-3">
+          <RegulationCard
+            regulation={parseRegulation(selected.regulation)}
+            note={(locale === "en" ? selected.regulation_note_en : selected.regulation_note_es) ?? null}
+            sourceUrl={selected.regulation_source_url ?? null}
+          />
         </div>
+      )}
+
+      {species.length > 0 && visible.length === 0 && (
+        <p className="mt-3 text-small text-[var(--muted)]">{t("noSpeciesFound")}</p>
       )}
     </div>
   );

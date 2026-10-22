@@ -4,7 +4,9 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/layout/header";
+import { SiteFooter } from "@/components/layout/site-footer";
 import { BottomNav } from "@/components/layout/bottom-nav";
+import { Sidebar } from "@/components/layout/sidebar";
 import { AchievementProvider } from "@/components/achievements/achievement-provider";
 
 type Props = {
@@ -48,45 +50,33 @@ export default async function LocaleLayout({ children, params }: Props) {
     if (authUser) {
       const { data: profile } = await supabase
         .from("profiles")
-        .select("display_name")
+        .select("display_name, avatar_url")
         .eq("id", authUser.id)
         .single();
-      const displayName = (profile as { display_name: string | null } | null)?.display_name;
+      const row = profile as { display_name: string | null; avatar_url: string | null } | null;
       user = {
         id: authUser.id,
         email: authUser.email,
-        display_name: displayName ?? undefined,
+        display_name: row?.display_name ?? undefined,
+        avatar_url: row?.avatar_url ?? undefined,
       };
     }
   } catch {
     // Supabase not configured yet — continue without auth
   }
 
-  let rankData: { caught: number; total: number } | undefined;
-  if (user) {
-    try {
-      const supabase = await createClient();
-      const [{ count: totalCount }, { data: caughtRows }] = await Promise.all([
-        supabase.from("species").select("*", { count: "exact", head: true }),
-        supabase
-          .from("catches")
-          .select("species_id")
-          .eq("user_id", user.id),
-      ]);
-      const distinctSpecies = new Set(
-        (caughtRows ?? []).map((r: { species_id: number }) => r.species_id)
-      );
-      rankData = { caught: distinctSpecies.size, total: totalCount ?? 0 };
-    } catch {
-      // Continue without rank data
-    }
-  }
-
   return (
     <NextIntlClientProvider messages={messages}>
       <AchievementProvider>
-        <Header user={user} rankData={rankData} />
-        <main className="flex-1 flex flex-col pb-20 sm:pb-0">{children}</main>
+        {user && <Sidebar />}
+        {/* Signed in on desktop, everything shifts right of the fixed 15rem sidebar. */}
+        <div className={`flex flex-1 flex-col ${user ? "lg:pl-60" : ""}`}>
+          <Header user={user} />
+          {/* *:w-full: pages center themselves with mx-auto + max-w-*, and auto margins on a flex item
+              disable stretching, so without it each page shrinks to its content and jumps as content changes. */}
+          <main className="flex flex-1 flex-col *:w-full">{children}</main>
+          <SiteFooter />
+        </div>
         {user && <BottomNav />}
       </AchievementProvider>
     </NextIntlClientProvider>

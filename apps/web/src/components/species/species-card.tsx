@@ -1,77 +1,82 @@
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import { SpeciesPhoto } from "./species-photo";
+import { RegulationTag } from "./regulation-tag";
+import { parseRegulation } from "@/lib/regulation";
+import type { CatalogSpecies } from "@/lib/species-catalog";
 
-type Species = {
-  id: number;
-  name_es: string;
-  name_en: string;
-  scientific_name: string;
-  habitat: string;
+export type CatalogCardSpecies = CatalogSpecies & {
   reference_photo_url: string | null;
+  trophy_weight_kg?: number | null;
+  trophy_length_cm?: number | null;
 };
 
 type Props = {
-  species: Species;
+  species: CatalogCardSpecies;
   locale: string;
 };
 
+const HABITAT_PILL: Record<string, string> = {
+  freshwater: "pill-fresh",
+  saltwater: "pill-salt",
+  brackish: "pill-brack",
+};
+
+/** Catalog plate: photo with habitat and legal tags, names, then max size and trophy mark. */
 export function SpeciesCard({ species, locale }: Props) {
   const t = useTranslations("species");
-  const name = locale === "es" ? species.name_es : species.name_en;
-
-  const habitatLabel =
-    species.habitat === "freshwater"
-      ? t("freshwater")
-      : species.habitat === "saltwater"
-        ? t("saltwater")
-        : t("brackish");
-
-  const habitatBadgeStyle =
-    species.habitat === "freshwater"
-      ? "bg-secondary text-white"
-      : species.habitat === "saltwater"
-        ? "bg-primary text-white"
-        : "bg-tertiary-container text-white";
+  const name = locale === "en" ? species.name_en : species.name_es;
+  const num = new Intl.NumberFormat(locale === "en" ? "en" : "es-CR", { maximumFractionDigits: 1 });
+  const habitatKey = species.habitat === "freshwater" || species.habitat === "saltwater" ? species.habitat : "brackish";
+  const trophy =
+    species.trophy_weight_kg != null
+      ? `${num.format(species.trophy_weight_kg)} kg`
+      : species.trophy_length_cm != null
+        ? `${num.format(species.trophy_length_cm)} cm`
+        : null;
 
   return (
     <Link
       href={`/species/${species.id}`}
-      className="card-foil group block rounded-3xl overflow-hidden bg-card-bg chunky-border chunky-shadow hover:scale-105 active:translate-y-0.5 active:translate-x-0.5 transition-all p-3.5 flex flex-col gap-3 relative"
+      className="group flex h-full flex-col gap-3 rounded-[var(--r-card)] bg-surface p-2.5 hover:bg-raised active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 transition-[background-color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100 sm:p-3"
     >
-      {/* Image Area */}
-      <div className="relative aspect-[4/3] rounded-2xl bg-surface-container flex items-center justify-center overflow-hidden border-2 border-white/60 shadow-inner">
-        {species.reference_photo_url ? (
-          <img
-            src={species.reference_photo_url}
-            alt={name}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-          />
-        ) : (
-          <div className="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center">
-            <span className="text-3xl">🐟</span>
+      <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[3px] bg-ground">
+        <SpeciesPhoto
+          src={species.reference_photo_url}
+          alt={name}
+          className="h-full w-full object-cover transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+        />
+        <div className="absolute inset-x-2 top-2 flex flex-wrap items-start justify-between gap-1.5">
+          <span className={`rounded-[var(--r-pill)] px-2.5 py-0.5 text-label font-semibold ${HABITAT_PILL[habitatKey]}`}>
+            {t(habitatKey)}
+          </span>
+          <RegulationTag regulation={parseRegulation(species.regulation)} className="hidden sm:inline-flex" />
+        </div>
+      </div>
+
+      <div className="min-w-0 px-0.5">
+        <h3 className="m-0 truncate font-serif-display text-body font-bold leading-tight text-text sm:text-name">{name}</h3>
+        <p className="sci-name m-0 mt-0.5 truncate text-small">{species.scientific_name}</p>
+      </div>
+
+      <dl className="m-0 mt-auto flex justify-between gap-2 border-t border-rule px-0.5 pt-2 text-label text-muted">
+        <div className="min-w-0">
+          <dt className="sr-only">{t("maxWeight")}</dt>
+          <dd className="m-0 truncate">
+            {species.max_weight_kg != null
+              ? t.rich("upTo", { value: `${num.format(species.max_weight_kg)} kg`, b: (c) => <b className="font-semibold text-text">{c}</b> })
+              : "—"}
+          </dd>
+        </div>
+        {trophy && (
+          <div className="min-w-0 text-right">
+            <dt className="sr-only">{t("trophyTitle")}</dt>
+            <dd className="m-0 truncate">
+              {t.rich("trophyMark", { value: trophy, b: (c) => <b className="font-semibold text-text">{c}</b> })}
+            </dd>
           </div>
         )}
-
-        {/* Habitat badge */}
-        <span
-          className={`absolute top-2.5 right-2.5 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm border border-white/40 ${habitatBadgeStyle}`}
-        >
-          {habitatLabel}
-        </span>
-      </div>
-
-      {/* Info Body */}
-      <div className="flex flex-col">
-        <h3
-          className="font-headline-md text-base sm:text-lg font-bold text-on-surface leading-tight truncate"
-          style={{ fontFamily: "var(--font-fredoka)" }}
-        >
-          {name}
-        </h3>
-        <p className="font-label-sm text-xs text-outline italic truncate mt-0.5">
-          {species.scientific_name}
-        </p>
-      </div>
+      </dl>
     </Link>
   );
 }

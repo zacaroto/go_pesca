@@ -38,12 +38,12 @@ export function SuggestionList() {
   }, [load]);
 
   if (loading) {
-    return <p className="text-gray-500 text-center py-8">Loading...</p>;
+    return <p className="text-muted text-center py-8">Loading...</p>;
   }
 
   if (suggestions.length === 0) {
     return (
-      <p className="text-gray-500 text-center py-8">
+      <p className="text-muted text-center py-8">
         No pending suggestions.
       </p>
     );

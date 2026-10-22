@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { CameraIcon } from "@/components/icons";
 
 type Props = {
   currentUrl?: string | null;
@@ -29,15 +30,15 @@ export function AvatarUpload({ currentUrl, displayName, onSelect }: Props) {
         <img
           src={src}
           alt=""
-          className="w-36 h-36 rounded-full object-cover sticker-border"
+          className="w-36 h-36 rounded-full object-cover border border-border"
         />
       ) : (
-        <div className="w-36 h-36 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-white text-4xl font-bold sticker-border">
+        <div className="w-36 h-36 rounded-full bg-accent-soft text-accent-ink flex items-center justify-center text-heading font-bold border border-border">
           {letter}
         </div>
       )}
-      <label className="absolute bottom-1 right-1 w-10 h-10 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center cursor-pointer sticker-border hover:scale-105 transition-transform active:translate-y-0.5 active:translate-x-0.5">
-        <span className="material-symbols-outlined text-xl">photo_camera</span>
+      <label className="absolute bottom-1 right-1 w-10 h-10 rounded-full bg-surface text-text border border-border flex items-center justify-center cursor-pointer hover:border-faint active:bg-raised focus-within:outline focus-within:outline-2 focus-within:outline-accent transition-colors duration-[var(--t-press)] motion-reduce:transition-none">
+        <CameraIcon className="h-5 w-5" />
         <input
           type="file"
           accept="image/*"

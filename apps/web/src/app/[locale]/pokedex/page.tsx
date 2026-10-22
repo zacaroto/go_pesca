@@ -2,8 +2,9 @@ import { setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { getPokedex } from "@/lib/pokedex";
-import { PokedexGrid } from "@/components/pokedex/pokedex-grid";
+import { getPokedex, type PokedexEntry } from "@/lib/pokedex";
+import { RankRing } from "@/components/rank/rank-ring";
+import { SpeciesIndex } from "@/components/pokedex/species-index";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -13,7 +14,7 @@ export default async function PokedexPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  let entries = [];
+  let entries: PokedexEntry[] = [];
   try {
     const supabase = await createClient();
     const {
@@ -32,17 +33,30 @@ function PokedexContent({
   entries,
   locale,
 }: {
-  entries: Awaited<ReturnType<typeof getPokedex>>;
+  entries: PokedexEntry[];
   locale: string;
 }) {
   const t = useTranslations("pokedex");
+  const caught = entries.filter((e) => e.catch_count > 0).length;
+  const total = entries.length;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 overflow-x-hidden">
-      <h1 className="text-3xl font-extrabold mb-6 text-gradient-ocean" style={{ fontFamily: "var(--font-fredoka)" }}>
-        {t("title")}
-      </h1>
-      <PokedexGrid entries={entries} locale={locale} />
+    <div className="mx-auto max-w-[1280px] px-4 py-10 sm:px-12">
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
+        <div>
+          <h1
+            className="font-serif-display m-0"
+            style={{ fontSize: "clamp(var(--text-heading), 6vw, var(--text-title))", lineHeight: 1, color: "var(--text)" }}
+          >
+            {t("title")}
+          </h1>
+          <p className="mt-2 mb-0 text-body" style={{ color: "var(--muted)" }}>
+            {t("subtitle", { caught, total })}
+          </p>
+        </div>
+        <RankRing caught={caught} total={total} />
+      </div>
+      <SpeciesIndex entries={entries} locale={locale} />
     </div>
   );
 }

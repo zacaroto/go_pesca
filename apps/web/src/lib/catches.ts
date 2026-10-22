@@ -66,7 +66,12 @@ export async function submitCatch(photo: File, data: CatchData) {
     .insert(row as never)
     .select()
     .single();
-  if (insertError) throw insertError;
+  if (insertError) {
+    console.error("submitCatch: insert failed, removing uploaded photo", insertError);
+    const { error: removeError } = await supabase.storage.from("catches").remove([fileName]);
+    if (removeError) console.error("submitCatch: could not remove orphaned photo", removeError);
+    throw insertError;
+  }
 
   return catchRecord;
 }
