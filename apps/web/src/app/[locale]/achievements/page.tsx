@@ -41,6 +41,8 @@ export default async function AchievementsPage({ params }: Props) {
   };
   const next = nextAchievement(ACHIEVEMENT_DEFS, new Set(awarded.keys()), stats);
   const nextProgress = next ? achievementProgress(next, stats) : null;
+  const now = new Date().getTime();
+  const isFresh = (awardedAt: string | undefined) => Boolean(awardedAt) && now - Date.parse(awardedAt!) < 86_400_000;
   const item = (id: string, field: "name" | "description") => t(`items.${id}.${field}` as Parameters<typeof t>[0]);
 
   return (
@@ -80,6 +82,7 @@ export default async function AchievementsPage({ params }: Props) {
             awardedAt={awarded.get(def.id)}
             progress={achievementProgress(def, stats)}
             tilt={stampTilt(def.id)}
+            fresh={isFresh(awarded.get(def.id))}
             locale={locale}
             labels={{
               sealedOn: (date) => t("sealedOn", { date }),

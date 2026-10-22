@@ -296,6 +296,72 @@ h1.font-serif-display,
   .reveal[data-reveal="hidden"] { opacity: 1; transform: none; }
 }
 
+/* Achievements: a newly earned stamp presses down onto the page once (tilt comes from --tilt). */
+@keyframes stamp-press {
+  0%   { opacity: 0; transform: rotate(var(--tilt, 0deg)) scale(1.25); }
+  60%  { opacity: 1; transform: rotate(var(--tilt, 0deg)) scale(0.96); }
+  100% { opacity: 1; transform: rotate(var(--tilt, 0deg)) scale(1); }
+}
+
+/* Aprender "mark as learned": the check draws itself (path uses pathLength="1"). */
+@keyframes draw-check {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+.draw-check { stroke-dasharray: 1; animation: draw-check var(--t-enter) var(--ease-out) both; }
+
+/* Phone "Más" sheet: rises from the bottom edge and leaves the same way; the scrim fades.
+   Always mounted; visibility flips after the exit so closed sheets can't be tabbed into. */
+.sheet-scrim {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--t-ui) var(--ease-out), visibility 0s linear 200ms;
+}
+.sheet-scrim[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--t-ui) var(--ease-out);
+}
+.sheet-panel {
+  transform: translateY(100%);
+  transition: transform 200ms var(--ease-out);
+}
+.sheet-scrim[data-open="true"] .sheet-panel {
+  transform: translateY(0);
+  transition: transform var(--t-enter) cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Popover that grows out of its trigger (user menu: top-right). */
+.popover {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.97);
+  transform-origin: top right;
+  transition: opacity 120ms var(--ease-out), transform 120ms var(--ease-out), visibility 0s linear 120ms;
+}
+.popover[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition: opacity var(--t-ui) var(--ease-out), transform var(--t-ui) var(--ease-out);
+}
+
+/* Theme switch: a short cross-fade through the View Transitions API (see lib/theme.ts). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 200ms;
+  animation-timing-function: var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Gentler, not zero: the sheet and popover only fade; stamps and checks appear in place. */
+  .sheet-panel,
+  .sheet-scrim[data-open="true"] .sheet-panel { transform: none; transition: none; }
+  .popover,
+  .popover[data-open="true"] { transform: none; }
+  .draw-check { animation: none; }
+}
+
 /* ── Habitat pill helper classes ── */
 .pill-salt  { background: var(--pill-salt-bg);  color: var(--pill-salt-ink); }
 .pill-fresh { background: var(--pill-fresh-bg); color: var(--pill-fresh-ink); }

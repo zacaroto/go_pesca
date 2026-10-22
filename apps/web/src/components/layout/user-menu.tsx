@@ -50,10 +50,9 @@ export function UserMenu({ displayName, avatarUrl, userId }: Props) {
         )}
         <span className="hidden max-w-[12ch] truncate xl:inline">{displayName}</span>
       </button>
-      {open && (
-        <>
-          <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 top-full z-20 mt-1 w-48 overflow-hidden border shadow-lg"
+      {open && <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />}
+      {/* Always mounted so it can grow from the avatar and shrink back; inert while closed. */}
+      <div data-open={open} inert={!open} className="popover absolute right-0 top-full z-20 mt-1 w-48 overflow-hidden border shadow-lg"
             style={{ background: "var(--surface)", borderColor: "var(--border)", borderRadius: "var(--r-card)", color: "var(--text)" }}>
             <Link
               href={`/profile/${userId}` as "/profile/[userId]"}
@@ -77,9 +76,7 @@ export function UserMenu({ displayName, avatarUrl, userId }: Props) {
             >
               {t("common.logout")}
             </button>
-          </div>
-        </>
-      )}
+      </div>
     </div>
   );
 }

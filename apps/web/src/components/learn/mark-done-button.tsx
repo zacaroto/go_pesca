@@ -15,6 +15,7 @@ export function MarkDoneButton({ itemType, slug, initiallyDone, signedIn }: Prop
   const [done, setDone] = useState(initiallyDone);
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [justMarked, setJustMarked] = useState(false);
   const { showAchievements } = useAchievements();
 
   if (!signedIn) {
@@ -40,6 +41,7 @@ export function MarkDoneButton({ itemType, slug, initiallyDone, signedIn }: Prop
           await supabase.from("learn_progress").insert({ user_id: user.id, item_type: itemType, slug } as never);
       if (error) throw error;
       setDone(!done);
+      setJustMarked(!done);
       if (!done) showAchievements(await checkLearnAchievements(user.id));
     } catch (err) {
       console.error("learn: failed to save progress", err);
@@ -60,7 +62,8 @@ export function MarkDoneButton({ itemType, slug, initiallyDone, signedIn }: Prop
       >
         {done && (
           <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="m5 12 5 5 9-10" />
+            {/* Draws itself only when just marked, not when the page loads already done. */}
+            <path d="m5 12 5 5 9-10" pathLength={1} className={justMarked ? "draw-check" : undefined} />
           </svg>
         )}
         {done ? t("learned") : t(itemType === "knot" ? "markKnot" : "markGuide")}

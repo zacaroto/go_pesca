@@ -15,8 +15,14 @@ export const themeInitScript = `try{var t=localStorage.getItem("${THEME_KEY}");i
 
 export function applyTheme(choice: ThemeChoice) {
   const root = document.documentElement;
-  if (choice === "system") delete root.dataset.theme;
-  else root.dataset.theme = choice;
+  const swap = () => {
+    if (choice === "system") delete root.dataset.theme;
+    else root.dataset.theme = choice;
+  };
+  // Cross-fade the colors where the View Transitions API exists; elsewhere (or with reduced motion) swap at once.
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reduce && typeof document.startViewTransition === "function") document.startViewTransition(swap);
+  else swap();
   try {
     if (choice === "system") localStorage.removeItem(THEME_KEY);
     else localStorage.setItem(THEME_KEY, choice);
