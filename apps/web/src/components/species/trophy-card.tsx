@@ -35,7 +35,7 @@ export function TrophyCard({ weightKg, lengthCm, note, sourceUrl, locale }: Prop
               {t("trophyFrom", { value: thresholds.join(t("trophyOr")) })}
             </p>
           ) : (
-            <p className="mt-1 mb-0 font-semibold text-text">{t("trophyNone")}</p>
+            !note && <p className="mt-1 mb-0 font-semibold text-text">{t("trophyNone")}</p>
           )}
           {note && <p className="mt-2 mb-0 text-[15px] text-text">{note}</p>}
           {sourceUrl && (
