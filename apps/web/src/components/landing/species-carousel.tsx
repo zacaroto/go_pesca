@@ -49,7 +49,7 @@ export function SpeciesCarousel({ species, variant = "plate" }: Props) {
 
   return (
     <figure
-      className={`relative m-0 overflow-hidden bg-surface ${panel ? "h-full min-h-[560px]" : "h-[440px] rounded-[var(--r-card)] sm:h-[520px]"}`}
+      className={`m-0 flex flex-col overflow-hidden bg-surface ${panel ? "h-full min-h-[600px]" : "h-[480px] rounded-[var(--r-card)] sm:h-[540px]"}`}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
@@ -57,30 +57,35 @@ export function SpeciesCarousel({ species, variant = "plate" }: Props) {
       aria-roledescription="carousel"
       aria-label={t("carouselLabel")}
     >
-      {species.map((s, i) => (
-        <div
-          key={s.id}
-          aria-hidden={i !== index}
-          className={`absolute inset-x-6 top-6 bottom-[170px] grid place-items-center transition-[opacity,transform] duration-700 ease-[var(--ease-out)] motion-reduce:transition-none sm:inset-x-10 sm:top-10 ${
-            i === index ? "translate-x-0 opacity-100" : "translate-x-6 opacity-0"
-          }`}
-        >
-          {s.photoUrl && !failed.has(s.id) ? (
-            // eslint-disable-next-line @next/next/no-img-element -- remote reference photo (fishbase)
-            <img
-              src={s.photoUrl}
-              alt={s.name}
-              className="h-full w-full object-contain"
-              loading={i === 0 ? "eager" : "lazy"}
-              onError={() => setFailed((prev) => new Set(prev).add(s.id))}
-            />
-          ) : (
-            <FishMark className="h-28 w-28 text-silhouette" />
-          )}
-        </div>
-      ))}
+      {/* Fixed frame: every photo fills the same box (cropped to center), whatever its original size. */}
+      <div className="relative min-h-0 flex-1 overflow-hidden bg-ground">
+        {species.map((s, i) => (
+          <div
+            key={s.id}
+            aria-hidden={i !== index}
+            className={`absolute inset-0 grid place-items-center transition-opacity duration-700 ease-[var(--ease-out)] motion-reduce:transition-none ${
+              i === index ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            {s.photoUrl && !failed.has(s.id) ? (
+              // eslint-disable-next-line @next/next/no-img-element -- remote reference photo (fishbase)
+              <img
+                src={s.photoUrl}
+                alt={s.name}
+                className={`h-full w-full object-cover object-center transition-transform duration-[5000ms] ease-out motion-reduce:transition-none ${
+                  i === index ? "scale-100" : "scale-[1.06]"
+                }`}
+                loading={i === 0 ? "eager" : "lazy"}
+                onError={() => setFailed((prev) => new Set(prev).add(s.id))}
+              />
+            ) : (
+              <FishMark className="h-28 w-28 text-silhouette" />
+            )}
+          </div>
+        ))}
+      </div>
 
-      <figcaption className="absolute inset-x-6 bottom-6 sm:inset-x-10 sm:bottom-8" aria-live={paused ? "polite" : "off"}>
+      <figcaption className="shrink-0 px-6 pt-5 pb-6 sm:px-8 sm:pt-6 sm:pb-7" aria-live={paused ? "polite" : "off"}>
         <div className="flex items-end justify-between gap-4">
           <div className="min-w-0">
             <b className="block truncate font-serif-display text-[32px] font-black leading-none tracking-[-0.02em] sm:text-[40px]">
@@ -113,12 +118,19 @@ export function SpeciesCarousel({ species, variant = "plate" }: Props) {
             ))}
           </div>
         </div>
-        {fact && (
-          <p key={`${current.id}-${fact}`} className="mt-3 mb-0 max-w-[52ch] text-[15px] text-text motion-safe:animate-[fact-in_500ms_var(--ease-out)]">
-            <span className="font-semibold text-accent-ink">{t("didYouKnow")} </span>
-            {fact}
-          </p>
-        )}
+        {/* Reserved 3-line slot so a longer fact never shifts the plate. */}
+        <p
+          key={`${current.id}-${fact}`}
+          className="mt-3 mb-0 line-clamp-3 h-[4.5em] max-w-[56ch] text-[15px] leading-[1.5] text-text motion-safe:animate-[fact-in_500ms_var(--ease-out)]"
+          title={fact ?? undefined}
+        >
+          {fact && (
+            <>
+              <span className="font-semibold text-accent-ink">{t("didYouKnow")} </span>
+              {fact}
+            </>
+          )}
+        </p>
       </figcaption>
     </figure>
   );

@@ -73,7 +73,7 @@ export async function Landing({ species, totalSpecies }: { species: FeaturedSpec
                 <div className="grid h-16 place-items-center overflow-hidden rounded-[3px] bg-surface">
                   {s?.photoUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element -- remote reference photo (fishbase)
-                    <img src={s.photoUrl} alt="" loading="lazy" className="h-full w-full object-contain" />
+                    <img src={s.photoUrl} alt="" loading="lazy" className="h-full w-full object-cover" />
                   ) : (
                     <FishMark className="h-9 w-9 text-silhouette" />
                   )}
