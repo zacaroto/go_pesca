@@ -13,7 +13,7 @@ import { submitCatch } from "@/lib/catches";
 import { checkAndAwardAchievements } from "@/lib/achievements";
 import { useAchievements } from "@/components/achievements/achievement-provider";
 import { getUserGroups } from "@/lib/groups";
-import { getCatchInsight, type SpeciesBest } from "@/lib/catch-insight";
+import { getCatchInsight, type CatchInsight, type SpeciesBest } from "@/lib/catch-insight";
 import { fetchSpeciesBests } from "@/lib/species-bests-client";
 
 type Props = {
@@ -77,7 +77,7 @@ export function CatchForm({ locale }: Props) {
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [speciesId, setSpeciesId] = useState<number | null>(null);
   const [speciesMeta, setSpeciesMeta] = useState<PickedSpecies | null>(null);
-  const [bests, setBests] = useState<SpeciesBest[]>([]);
+  const [bests, setBests] = useState<SpeciesBest[] | null>(null);
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
   const [locationName, setLocationName] = useState("");
@@ -117,7 +117,9 @@ export function CatchForm({ locale }: Props) {
     return () => URL.revokeObjectURL(url);
   }, [photo]);
 
-  const insight = getCatchInsight(speciesId, weightKg ? Number(weightKg) : null, bests);
+  const insight: CatchInsight = bests
+    ? getCatchInsight(speciesId, weightKg ? Number(weightKg) : null, bests)
+    : { kind: "none" };
 
   function handleLocationChange(lat: number, lng: number) {
     setLatitude(lat);
@@ -225,7 +227,7 @@ export function CatchForm({ locale }: Props) {
               <div className="space-y-6">
                 <section>
                   <span className={LABEL_CLASS}>{t("photo")} *</span>
-                  <PhotoUpload onSelect={setPhoto} />
+                  <PhotoUpload value={photo} onSelect={setPhoto} />
                 </section>
                 <section>
                   <span className={LABEL_CLASS}>{t("species")} *</span>
@@ -337,17 +339,13 @@ export function CatchForm({ locale }: Props) {
                 </section>
 
                 <section>
-                  <span className={LABEL_CLASS}>{t("timeOfDay")}</span>
-                  <Segmented
-                    label={t("timeOfDay")}
+                  <label htmlFor="timeOfDay" className={LABEL_CLASS}>{t("time")}</label>
+                  <input
+                    id="timeOfDay"
+                    type="time"
                     value={timeOfDay}
-                    onChange={(v) => setTimeOfDay(v === timeOfDay ? "" : v)}
-                    options={[
-                      { value: "Madrugada", label: t("timeDawn") },
-                      { value: "Mañana", label: t("timeMorning") },
-                      { value: "Tarde", label: t("timeAfternoon") },
-                      { value: "Noche", label: t("timeNight") },
-                    ]}
+                    onChange={(e) => setTimeOfDay(e.target.value)}
+                    className={`${INPUT_CLASS} tabular-nums`}
                   />
                 </section>
 

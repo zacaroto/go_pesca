@@ -5,11 +5,18 @@ import { useTranslations } from "next-intl";
 
 type Props = {
   onSelect: (file: File) => void;
+  /** Optional controlled file, so the preview survives a remount. */
+  value?: File | null;
 };
 
-export function PhotoUpload({ onSelect }: Props) {
+export function PhotoUpload({ onSelect, value }: Props) {
   const t = useTranslations("catches");
-  const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<File | null>(value ?? null);
+  const [prevValue, setPrevValue] = useState(value);
+  if (value !== prevValue) {
+    setPrevValue(value);
+    if (value) setFile(value);
+  }
   const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {
