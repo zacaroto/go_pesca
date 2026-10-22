@@ -68,9 +68,9 @@ export function Header({ user }: Props) {
         {user ? (
           <>
             <Link href="/catches/new" aria-label={t("nav.logCatch")}
-              className="hidden h-10 w-10 items-center justify-center gap-2 rounded-full bg-accent px-0 lg:w-auto lg:px-5 text-small font-semibold text-on-primary hover:bg-accent-hi active:bg-accent-hi active:scale-[0.97] transition-[background-color,transform] duration-[var(--t-press)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2 sm:inline-flex">
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
-              <span className="hidden lg:inline">{t("nav.logCatch")}</span>
+              title={t("nav.logCatch")}
+              className="hidden h-10 w-10 items-center justify-center rounded-full bg-accent text-on-primary hover:bg-accent-hi active:bg-accent-hi active:scale-[0.97] transition-[background-color,transform] duration-[var(--t-press)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2 sm:inline-flex">
+              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
             </Link>
             <UserMenu displayName={user.display_name ?? user.email?.split("@")[0] ?? ""} avatarUrl={user.avatar_url} userId={user.id} />
           </>
