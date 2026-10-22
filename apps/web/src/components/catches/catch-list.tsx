@@ -57,8 +57,8 @@ export function CatchList({ catches, species }: Props) {
         <div>
           <h1
             style={{
-              fontFamily: "var(--font-playfair), Georgia, serif",
-              fontWeight: 900,
+              fontFamily: "var(--font-caslon), Georgia, serif",
+              fontWeight: 700,
               fontSize: "22px",
               color: "var(--text)",
               margin: 0,

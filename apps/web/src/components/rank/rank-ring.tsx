@@ -41,11 +41,11 @@ export function RankRing({ caught, total }: Props) {
           fill="none"
           strokeWidth="8"
           strokeLinecap="round"
-          className="stroke-accent origin-center -rotate-90 transition-[stroke-dashoffset] duration-700 ease-[var(--ease-out)] motion-reduce:transition-none"
+          className="stroke-progress origin-center -rotate-90 transition-[stroke-dashoffset] duration-700 ease-[var(--ease-out)] motion-reduce:transition-none"
           strokeDasharray={CIRCUMFERENCE}
           strokeDashoffset={CIRCUMFERENCE * (1 - drawn)}
         />
-        <text x="50" y="57" textAnchor="middle" className="fill-text font-serif-display" style={{ fontSize: 22, fontWeight: 900 }}>
+        <text x="50" y="57" textAnchor="middle" className="fill-text font-serif-display" style={{ fontSize: 22, fontWeight: 700 }}>
           {percent}%
         </text>
       </svg>
@@ -57,7 +57,7 @@ export function RankRing({ caught, total }: Props) {
           {([1, 2, 3] as const).map((level) => (
             <span
               key={level}
-              className={`h-1 w-4 rounded-sm ${level <= rank.level ? "bg-accent" : "bg-raised"}`}
+              className={`h-1 w-4 rounded-sm ${level <= rank.level ? "bg-progress" : "bg-raised"}`}
             />
           ))}
         </div>

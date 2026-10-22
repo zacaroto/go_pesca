@@ -81,7 +81,7 @@ export function CatchPreview({ photoUrl, species, weightKg, lengthCm, locationNa
           <FishMark className="w-16 h-16" />
         )}
       </div>
-      <h2 className="font-serif-display font-black text-[40px] leading-none text-[var(--text)] break-words">
+      <h2 className="font-serif-display font-display text-[40px] leading-none text-[var(--text)] break-words">
         {species?.name ?? dash}
       </h2>
       {species && <p className="sci-name text-sm mt-1.5">{species.scientific_name}</p>}

@@ -8,43 +8,49 @@
    ======================================== */
 
 :root {
-  /* Field Guide v3 — light paper, ink, one cobalt hue */
-  --ground:    #f7f7f5;
+  /* Field Guide v4 — cool paper, navy ink, deep-navy actions, turquoise progress */
+  --ground:    #f4f5f7;
   --surface:   #ffffff;
-  --raised:    #ececea;
+  --raised:    #e9ebf0;
 
-  --border:    #e6e6e3;
-  --rule:      #e6e6e3;
+  --border:    #e2e4ea;
+  --rule:      #e2e4ea;
 
-  --text:      #121314;
-  --muted:     #5c5f63;
-  --faint:     #8a8d91;
+  --text:      #0e1424;
+  --muted:     #545b6b;
+  --faint:     #858b99;
 
-  --accent:      #1d4ed8;
-  --accent-hi:   #1a43bd;
-  --accent-soft: #eef2fd;
-  --accent-ink:  #1a3a99;
+  --accent:      #0f2f6b;
+  --accent-hi:   #0b2455;
+  --accent-soft: #e6ecf7;
+  --accent-ink:  #0f2f6b;
 
-  --silhouette: #c9cac6;
+  /* Progress (rank ring, carousel, bars): never used for text */
+  --progress:    #14b8a6;
+
+  --silhouette: #c5c9d3;
 
   --positive:  #15803d;
   --negative:  #c4242a;
 
-  --pill-salt-bg:   #eef2fd;
-  --pill-salt-ink:  #1a3a99;
+  --pill-salt-bg:   #e0eef5;
+  --pill-salt-ink:  #0e4f6e;
   --pill-fresh-bg:  #e8f5ec;
   --pill-fresh-ink: #14532d;
-  --pill-brack-bg:  #fdf6e3;
-  --pill-brack-ink: #7a4b0b;
+  --pill-brack-bg:  #f1ede2;
+  --pill-brack-ink: #6b5320;
+  --pill-trophy-bg:  #fbefc8;
+  --pill-trophy-ink: #7a5300;
+  --trophy-soft:     #fdf8e8;
   --pill-release-bg:   #fdecec;
   --pill-release-ink:  #8f1d22;
-  --pill-regulated-bg:  #ececea;
-  --pill-regulated-ink: #121314;
+  --pill-regulated-bg:  #e9ebf0;
+  --pill-regulated-ink: #0e1424;
 
-  --footer-bg:         #121314;
+  --footer-bg:         #0e1424;
   --footer-text:       #e8e8e6;
   --footer-muted:      #9a9c9f;
-  --footer-link-hover: #9db7ff;
+  --footer-link-hover: #5eead4;
 
   --r-card:    4px;
   --r-pill:    999px;
@@ -92,6 +98,7 @@
   --color-accent-hi: var(--accent-hi);
   --color-accent-soft: var(--accent-soft);
   --color-accent-ink: var(--accent-ink);
+  --color-progress:  var(--progress);
   --color-silhouette: var(--silhouette);
 
   /* Status */
@@ -128,12 +135,12 @@
 
   /* Fonts */
   --font-sans:    var(--font-inter), system-ui, sans-serif;
-  --font-serif:   var(--font-playfair), Georgia, serif;
+  --font-serif:   var(--font-caslon), Georgia, serif;
   /* Legacy font aliases */
-  --font-heading:      var(--font-playfair), Georgia, serif;
-  --font-display-lg:   var(--font-playfair), Georgia, serif;
-  --font-headline-lg:  var(--font-playfair), Georgia, serif;
-  --font-headline-md:  var(--font-playfair), Georgia, serif;
+  --font-heading:      var(--font-caslon), Georgia, serif;
+  --font-display-lg:   var(--font-caslon), Georgia, serif;
+  --font-headline-lg:  var(--font-caslon), Georgia, serif;
+  --font-headline-md:  var(--font-caslon), Georgia, serif;
   --font-body-lg:      var(--font-inter), system-ui, sans-serif;
   --font-body-md:      var(--font-inter), system-ui, sans-serif;
   --font-label-sm:     var(--font-inter), system-ui, sans-serif;
@@ -155,14 +162,25 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* Libre Caslon Text: names, numbers and headings at reading sizes (400/700). */
 .font-serif-display {
-  font-family: var(--font-playfair), Georgia, serif;
-  letter-spacing: -0.02em;
+  font-family: var(--font-caslon), Georgia, serif;
+  letter-spacing: -0.01em;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+/* Libre Caslon Display for page titles and big names. It ships one weight, so the weight is
+   pinned to 400 to stop the browser faking bold over font-bold/font-black. Unlayered, so it
+   beats the Tailwind weight utilities. */
+h1.font-serif-display,
+.font-display {
+  font-family: var(--font-caslon-display), var(--font-caslon), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.015em;
 }
 .sci-name {
-  font-family: var(--font-playfair), Georgia, serif;
+  font-family: var(--font-caslon), Georgia, serif;
   font-style: italic;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--muted);
 }
 :focus-visible {
@@ -215,6 +233,7 @@ body {
 .pill-salt  { background: var(--pill-salt-bg);  color: var(--pill-salt-ink); }
 .pill-fresh { background: var(--pill-fresh-bg); color: var(--pill-fresh-ink); }
 .pill-brack { background: var(--pill-brack-bg); color: var(--pill-brack-ink); }
+.pill-trophy { background: var(--pill-trophy-bg); color: var(--pill-trophy-ink); }
 .pill-regulation[data-regulation="release"]   { background: var(--pill-release-bg);   color: var(--pill-release-ink); }
 .pill-regulation[data-regulation="regulated"] { background: var(--pill-regulated-bg); color: var(--pill-regulated-ink); }
 

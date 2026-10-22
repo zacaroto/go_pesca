@@ -62,7 +62,7 @@ export async function Landing({ species, totalSpecies }: { species: FeaturedSpec
       <section className="bg-surface py-20 lg:py-24">
         <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-12">
           <Reveal>
-            <h2 className="m-0 font-serif-display text-4xl font-black leading-none tracking-[-0.03em] sm:text-[52px]">{t("dexTitle")}</h2>
+            <h2 className="m-0 font-serif-display font-display text-4xl leading-none sm:text-[52px]">{t("dexTitle")}</h2>
           </Reveal>
           <Reveal delay={1}>
             <p className="mt-3.5 mb-0 max-w-[50ch] text-lg text-muted">{t("dexLede")}</p>
@@ -89,7 +89,7 @@ export async function Landing({ species, totalSpecies }: { species: FeaturedSpec
 
       <section className="mx-auto w-full max-w-[1280px] px-4 py-20 sm:px-12 lg:py-24">
         <Reveal>
-          <h2 className="m-0 font-serif-display text-4xl font-black leading-none tracking-[-0.03em] sm:text-[52px]">{t("stepsTitle")}</h2>
+          <h2 className="m-0 font-serif-display font-display text-4xl leading-none sm:text-[52px]">{t("stepsTitle")}</h2>
         </Reveal>
         <Reveal delay={1}>
           <p className="mt-3.5 mb-0 max-w-[50ch] text-lg text-muted">{t("stepsLede")}</p>

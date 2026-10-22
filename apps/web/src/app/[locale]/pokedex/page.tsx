@@ -46,7 +46,7 @@ function PokedexContent({
         <div>
           <h1
             className="font-serif-display m-0"
-            style={{ fontSize: "clamp(36px, 6vw, 52px)", fontWeight: 900, lineHeight: 1, color: "var(--text)" }}
+            style={{ fontSize: "clamp(36px, 6vw, 52px)", lineHeight: 1, color: "var(--text)" }}
           >
             {t("title")}
           </h1>

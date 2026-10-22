@@ -20,7 +20,7 @@ export function TrophyCard({ weightKg, lengthCm, note, sourceUrl, locale }: Prop
   ].filter(Boolean) as string[];
 
   return (
-    <section aria-labelledby="trophy-title" className="mb-6 rounded-[var(--r-card)] bg-accent-soft p-5 text-accent-ink sm:p-6">
+    <section aria-labelledby="trophy-title" className="mb-6 rounded-[var(--r-card)] bg-[var(--trophy-soft)] p-5 text-[var(--pill-trophy-ink)] sm:p-6">
       <div className="flex items-start gap-4">
         <svg className="mt-1 h-7 w-7 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path d="M7 4h10v5a5 5 0 0 1-10 0z" />

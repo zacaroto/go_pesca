@@ -93,7 +93,7 @@ export function SpeciesCarousel({ species, variant = "plate" }: Props) {
       <figcaption className="shrink-0 px-6 pt-5 pb-6 sm:px-8 sm:pt-6 sm:pb-7" aria-live={paused ? "polite" : "off"}>
         <div className="flex items-end justify-between gap-4">
           <div className="min-w-0">
-            <b className="block truncate font-serif-display text-[32px] font-black leading-none tracking-[-0.02em] sm:text-[40px]">
+            <b className="block truncate font-serif-display font-display text-[32px] leading-none tracking-[-0.02em] sm:text-[40px]">
               {current.name}
             </b>
             <span className="sci-name block truncate text-base sm:text-lg">{current.scientificName}</span>
@@ -112,7 +112,7 @@ export function SpeciesCarousel({ species, variant = "plate" }: Props) {
                   {i === index && (
                     <span
                       key={`${tick}-${paused}`}
-                      className={`absolute inset-0 origin-left bg-accent ${
+                      className={`absolute inset-0 origin-left bg-progress ${
                         paused || reduced ? "" : "animate-[carousel-fill_var(--carousel-ms)_linear_forwards]"
                       }`}
                       style={{ ["--carousel-ms" as string]: `${INTERVAL_MS}ms` }}

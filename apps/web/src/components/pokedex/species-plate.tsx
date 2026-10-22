@@ -56,10 +56,9 @@ export function SpeciesPlate({ entry, locale }: Props) {
           the bottom, so hovering species with longer copy never resizes the plate or moves the button. */}
       <div className="flex h-[320px] flex-col">
         <h2
-          className="font-serif-display m-0 line-clamp-2"
+          className="font-serif-display font-display m-0 line-clamp-2"
           style={{
             fontSize: 40,
-            fontWeight: 900,
             lineHeight: 1,
             color: "var(--text)",
           }}

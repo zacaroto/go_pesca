@@ -7,7 +7,7 @@ type Props = { records: PersonalRecord[]; locale: string };
 export function TrophyPill({ className = "" }: { className?: string }) {
   const t = useTranslations("profile");
   return (
-    <span className={`inline-flex items-center rounded-[var(--r-pill)] px-2.5 py-0.5 text-[13px] font-semibold pill-brack ${className}`}>
+    <span className={`inline-flex items-center rounded-[var(--r-pill)] px-2.5 py-0.5 text-[13px] font-semibold pill-trophy ${className}`}>
       {t("trophy")}
     </span>
   );

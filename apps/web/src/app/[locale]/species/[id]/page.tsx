@@ -159,7 +159,7 @@ function SpeciesDetailContent({
             <p className="text-[13px] font-medium text-muted mb-2">
               {t("plateNumber", { n: species.id.toString().padStart(3, "0") })}
             </p>
-            <h1 className="font-serif-display text-3xl sm:text-4xl font-bold text-text mb-1">
+            <h1 className="font-serif-display text-4xl sm:text-5xl text-text mb-1">
               {name}
             </h1>
             <p className="sci-name text-base mb-4">{species.scientific_name}</p>

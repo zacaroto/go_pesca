@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Libre_Caslon_Display, Libre_Caslon_Text } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,11 +8,17 @@ const inter = Inter({
   weight: ["400", "500", "600", "700"],
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const caslon = Libre_Caslon_Text({
+  variable: "--font-caslon",
   subsets: ["latin"],
-  weight: ["500", "700", "900"],
+  weight: ["400", "700"],
   style: ["normal", "italic"],
+});
+
+const caslonDisplay = Libre_Caslon_Display({
+  variable: "--font-caslon-display",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -28,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html className={`${inter.variable} ${playfair.variable} h-full antialiased`}>
+    <html className={`${inter.variable} ${caslon.variable} ${caslonDisplay.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-ground text-text">
         {children}
       </body>
