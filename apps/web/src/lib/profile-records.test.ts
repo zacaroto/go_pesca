@@ -19,6 +19,9 @@ describe("isTrophy", () => {
     expect(isTrophy(c("b", 3, 5, 104), robalo)).toBe(true);
     expect(isTrophy(c("c", 3, 10.9, 99), robalo)).toBe(false);
   });
+  it("works on a catch still being typed in (no id or date)", () => {
+    expect(isTrophy({ weight_kg: 46, length_cm: null }, { trophy_weight_kg: 45, trophy_length_cm: 270 })).toBe(true);
+  });
   it("is never a trophy without thresholds or measurements", () => {
     expect(isTrophy(c("d", 21, 0.5, 30), mojarra)).toBe(false);
     expect(isTrophy(c("e", 3, null, null), robalo)).toBe(false);

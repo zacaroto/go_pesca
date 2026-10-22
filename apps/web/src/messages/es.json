@@ -176,7 +176,9 @@
     "detectingGps": "Detectando ubicación...",
     "errorLoadSpecies": "No se pudieron cargar las especies",
     "deleteError": "No se pudo eliminar la captura. Intenta de nuevo.",
-    "backToCatches": "Volver a mis capturas"
+    "backToCatches": "Volver a mis capturas",
+    "trophyCatchTitle": "¡Captura trofeo!",
+    "trophyCatchBody": "Pasa el umbral de trofeo de esta especie."
   },
   "rank": {
     "title": "Rango",

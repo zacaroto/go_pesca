@@ -17,6 +17,8 @@ type Species = {
   regulation_note_es?: string | null;
   regulation_note_en?: string | null;
   regulation_source_url?: string | null;
+  trophy_weight_kg?: number | null;
+  trophy_length_cm?: number | null;
 };
 
 export type PickedSpecies = {
@@ -25,6 +27,8 @@ export type PickedSpecies = {
   scientific_name: string;
   reference_photo_url: string | null;
   regulation: Regulation | null;
+  trophy_weight_kg: number | null;
+  trophy_length_cm: number | null;
 };
 
 type Props = {
@@ -88,6 +92,8 @@ export function SpeciesPicker({ locale, value, onChange, onSpeciesMeta }: Props)
       scientific_name: s.scientific_name,
       reference_photo_url: s.reference_photo_url,
       regulation: parseRegulation(s.regulation),
+      trophy_weight_kg: s.trophy_weight_kg ?? null,
+      trophy_length_cm: s.trophy_length_cm ?? null,
     });
   }
 

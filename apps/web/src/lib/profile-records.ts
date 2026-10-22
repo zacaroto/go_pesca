@@ -23,15 +23,15 @@ export type PersonalRecord = {
   trophy: boolean;
 };
 
+type Measured = { weight_kg: number | null; length_cm: number | null };
+
 /** A catch is a trophy when it reaches its species' weight or length threshold. */
-export function isTrophy(c: RecordCatch, species: RecordSpecies | undefined): boolean {
+export function isTrophy(c: Measured, species: Pick<RecordSpecies, "trophy_weight_kg" | "trophy_length_cm"> | undefined): boolean {
   if (!species) return false;
   const byWeight = species.trophy_weight_kg != null && c.weight_kg != null && c.weight_kg >= species.trophy_weight_kg;
   const byLength = species.trophy_length_cm != null && c.length_cm != null && c.length_cm >= species.trophy_length_cm;
   return byWeight || byLength;
 }
-
-type Measured = { weight_kg: number | null; length_cm: number | null };
 
 /** True when `a` is a better catch than `b`: heavier wins; length breaks ties and ranks catches never weighed. */
 export function isBetterCatch(a: Measured, b: Measured): boolean {

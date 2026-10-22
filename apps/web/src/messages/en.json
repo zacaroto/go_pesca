@@ -176,7 +176,9 @@
     "detectingGps": "Detecting location...",
     "errorLoadSpecies": "Could not load species",
     "deleteError": "Could not delete the catch. Please try again.",
-    "backToCatches": "Back to my catches"
+    "backToCatches": "Back to my catches",
+    "trophyCatchTitle": "Trophy catch!",
+    "trophyCatchBody": "It beats this species' trophy threshold."
   },
   "rank": {
     "title": "Rank",

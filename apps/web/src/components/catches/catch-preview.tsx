@@ -19,14 +19,31 @@ type Props = {
   bait: string;
   insight: CatchInsight;
   rankUp?: RankInfo | null;
+  trophy?: boolean;
   locale: string;
 };
 
 /** Insight block, also rendered alone above the Next button on phones. */
-export function CatchInsightBlock({ insight, rankUp = null }: { insight: CatchInsight; rankUp?: RankInfo | null }) {
+export function CatchInsightBlock({
+  insight,
+  rankUp = null,
+  trophy = false,
+}: {
+  insight: CatchInsight;
+  rankUp?: RankInfo | null;
+  trophy?: boolean;
+}) {
   const t = useTranslations("catches");
   const tRank = useTranslations("rank");
-  if (insight.kind === "none") return null;
+  if (insight.kind === "none" && !trophy) return null;
+
+  const trophyBlock = trophy && (
+    <div role="status" className="pill-trophy rounded-[var(--r-control)] px-3.5 py-3 text-[13px] motion-safe:animate-[badge-pop_400ms_var(--ease-spring)]">
+      <b className="block text-sm font-semibold">{t("trophyCatchTitle")}</b>
+      <span>{t("trophyCatchBody")}</span>
+    </div>
+  );
+  if (insight.kind === "none") return trophyBlock;
 
   const accent = insight.kind === "new" || insight.kind === "record";
   const title =
@@ -40,19 +57,22 @@ export function CatchInsightBlock({ insight, rankUp = null }: { insight: CatchIn
     : t("insightKnownBody", { kg: insight.bestKg });
 
   return (
-    <div
-      role="status"
-      className={`rounded-[var(--r-control)] px-3.5 py-3 text-[13px] ${
-        accent ? "bg-[var(--accent-soft)] text-[var(--accent-ink)]" : "bg-[var(--ground)] text-[var(--muted)]"
-      }`}
-    >
-      <b className="block text-sm font-semibold">{title}</b>
-      <span className="tabular-nums">{body}</span>
-      {rankUp && (
-        <span className="mt-1.5 block font-semibold motion-safe:animate-[rank-up_500ms_var(--ease-spring)]">
-          {tRank("rankUp", { rank: `${tRank(rankUp.key)} ${ROMAN[rankUp.level]}` })}
-        </span>
-      )}
+    <div className="flex flex-col gap-2">
+      {trophyBlock}
+      <div
+        role="status"
+        className={`rounded-[var(--r-control)] px-3.5 py-3 text-[13px] ${
+          accent ? "bg-[var(--accent-soft)] text-[var(--accent-ink)]" : "bg-[var(--ground)] text-[var(--muted)]"
+        }`}
+      >
+        <b className="block text-sm font-semibold">{title}</b>
+        <span className="tabular-nums">{body}</span>
+        {rankUp && (
+          <span className="mt-1.5 block font-semibold motion-safe:animate-[rank-up_500ms_var(--ease-spring)]">
+            {tRank("rankUp", { rank: `${tRank(rankUp.key)} ${ROMAN[rankUp.level]}` })}
+          </span>
+        )}
+      </div>
     </div>
   );
 }
@@ -64,7 +84,7 @@ function formatDate(dateStr: string, locale: string): string {
   return d.toLocaleDateString(locale, { day: "numeric", month: "long", timeZone: "UTC" });
 }
 
-export function CatchPreview({ photoUrl, species, weightKg, lengthCm, locationName, catchDate, bait, insight, rankUp = null, locale }: Props) {
+export function CatchPreview({ photoUrl, species, weightKg, lengthCm, locationName, catchDate, bait, insight, rankUp = null, trophy = false, locale }: Props) {
   const t = useTranslations("catches");
   const dash = "—";
   const date = formatDate(catchDate, locale);
@@ -103,9 +123,9 @@ export function CatchPreview({ photoUrl, species, weightKg, lengthCm, locationNa
       </dl>
       {meta && <p className="mt-3 text-[13px] text-[var(--muted)]">{meta}</p>}
 
-      {insight.kind !== "none" && (
+      {(insight.kind !== "none" || trophy) && (
         <div className="mt-4">
-          <CatchInsightBlock insight={insight} rankUp={rankUp} />
+          <CatchInsightBlock insight={insight} rankUp={rankUp} trophy={trophy} />
         </div>
       )}
     </aside>
