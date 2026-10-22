@@ -18,10 +18,8 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Go Pesca",
   description: "Tu Pescadex de Pesca",
-  icons: {
-    icon: "/logo.svg",
-    apple: "/logo.svg",
-  },
+  // apple-icon.png and favicon.ico in this folder are picked up by convention.
+  icons: { icon: "/icon.svg" },
 };
 
 export default function RootLayout({
