@@ -15,6 +15,7 @@ import { useAchievements } from "@/components/achievements/achievement-provider"
 import { getUserGroups } from "@/lib/groups";
 import { getCatchInsight, type CatchInsight, type SpeciesBest } from "@/lib/catch-insight";
 import { fetchSpeciesBests } from "@/lib/species-bests-client";
+import { rankUpAfter } from "@/lib/rank";
 
 type Props = {
   locale: string;
@@ -120,6 +121,8 @@ export function CatchForm({ locale }: Props) {
   const insight: CatchInsight = bests
     ? getCatchInsight(speciesId, weightKg ? Number(weightKg) : null, bests)
     : { kind: "none" };
+  // A new species may push the angler to the next rank step; bests.length is the species caught so far.
+  const rankUp = insight.kind === "new" && bests ? rankUpAfter(bests.length) : null;
 
   function handleLocationChange(lat: number, lng: number) {
     setLatitude(lat);
@@ -372,7 +375,7 @@ export function CatchForm({ locale }: Props) {
 
             {/* Phone: no preview card, only the insight above the actions */}
             <div className="lg:hidden empty:hidden">
-              <CatchInsightBlock insight={insight} />
+              <CatchInsightBlock insight={insight} rankUp={rankUp} />
             </div>
 
             {error && (
@@ -425,6 +428,7 @@ export function CatchForm({ locale }: Props) {
           catchDate={catchDate}
           bait={baitLure}
           insight={insight}
+          rankUp={rankUp}
           locale={locale}
         />
       </div>

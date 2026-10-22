@@ -182,7 +182,10 @@
     "tilapia": "Tilapia",
     "robalo": "Róbalo",
     "dorado": "Dorado",
-    "marlinAzul": "Marlín Azul"
+    "marlinAzul": "Marlín Azul",
+    "nextStep": "{count, plural, one {# especie más} other {# especies más}} para {rank}",
+    "maxRank": "Rango máximo alcanzado",
+    "rankUp": "¡Con esta subes a {rank}!"
   },
   "species": {
     "title": "Catálogo de Especies",

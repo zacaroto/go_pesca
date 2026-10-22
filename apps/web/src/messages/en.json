@@ -182,7 +182,10 @@
     "tilapia": "Tilapia",
     "robalo": "Róbalo / Snook",
     "dorado": "Dorado / Mahi-Mahi",
-    "marlinAzul": "Blue Marlin"
+    "marlinAzul": "Blue Marlin",
+    "nextStep": "{count, plural, one {# more species} other {# more species}} to {rank}",
+    "maxRank": "Top rank reached",
+    "rankUp": "This one takes you to {rank}!"
   },
   "species": {
     "title": "Species Catalog",

@@ -3,7 +3,10 @@
 import { useTranslations } from "next-intl";
 import { FishMark } from "@/components/layout/fish-mark";
 import type { CatchInsight } from "@/lib/catch-insight";
+import type { RankInfo } from "@/lib/rank";
 import type { PickedSpecies } from "./species-picker";
+
+const ROMAN = { 1: "I", 2: "II", 3: "III" } as const;
 
 type Props = {
   photoUrl: string | null;
@@ -14,12 +17,14 @@ type Props = {
   catchDate: string;
   bait: string;
   insight: CatchInsight;
+  rankUp?: RankInfo | null;
   locale: string;
 };
 
 /** Insight block, also rendered alone above the Next button on phones. */
-export function CatchInsightBlock({ insight }: { insight: CatchInsight }) {
+export function CatchInsightBlock({ insight, rankUp = null }: { insight: CatchInsight; rankUp?: RankInfo | null }) {
   const t = useTranslations("catches");
+  const tRank = useTranslations("rank");
   if (insight.kind === "none") return null;
 
   const accent = insight.kind === "new" || insight.kind === "record";
@@ -42,6 +47,11 @@ export function CatchInsightBlock({ insight }: { insight: CatchInsight }) {
     >
       <b className="block text-sm font-semibold">{title}</b>
       <span className="tabular-nums">{body}</span>
+      {rankUp && (
+        <span className="mt-1.5 block font-semibold motion-safe:animate-[rank-up_500ms_var(--ease-spring)]">
+          {tRank("rankUp", { rank: `${tRank(rankUp.key)} ${ROMAN[rankUp.level]}` })}
+        </span>
+      )}
     </div>
   );
 }
@@ -53,7 +63,7 @@ function formatDate(dateStr: string, locale: string): string {
   return d.toLocaleDateString(locale, { day: "numeric", month: "long", timeZone: "UTC" });
 }
 
-export function CatchPreview({ photoUrl, species, weightKg, lengthCm, locationName, catchDate, bait, insight, locale }: Props) {
+export function CatchPreview({ photoUrl, species, weightKg, lengthCm, locationName, catchDate, bait, insight, rankUp = null, locale }: Props) {
   const t = useTranslations("catches");
   const dash = "—";
   const date = formatDate(catchDate, locale);
@@ -93,7 +103,7 @@ export function CatchPreview({ photoUrl, species, weightKg, lengthCm, locationNa
 
       {insight.kind !== "none" && (
         <div className="mt-4">
-          <CatchInsightBlock insight={insight} />
+          <CatchInsightBlock insight={insight} rankUp={rankUp} />
         </div>
       )}
     </aside>

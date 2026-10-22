@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { RankBadge } from "@/components/rank/rank-badge";
+import { RankRing } from "@/components/rank/rank-ring";
 
 type Props = {
   stats: {
@@ -26,7 +26,7 @@ export function ProfileStats({ stats, rankData }: Props) {
     <div className="space-y-8">
       {/* Rank badge */}
       <div className="flex justify-center">
-        <RankBadge caught={rankData.caught} total={rankData.total} size="lg" />
+        <RankRing caught={rankData.caught} total={rankData.total} />
       </div>
 
       <section className="grid grid-cols-2 md:grid-cols-3 gap-4">

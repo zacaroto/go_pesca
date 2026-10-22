@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { getPokedex, type PokedexEntry } from "@/lib/pokedex";
-import { getRank } from "@/lib/rank";
+import { RankRing } from "@/components/rank/rank-ring";
 import { SpeciesIndex } from "@/components/pokedex/species-index";
 
 type Props = {
@@ -37,14 +37,12 @@ function PokedexContent({
   locale: string;
 }) {
   const t = useTranslations("pokedex");
-  const tRank = useTranslations("rank");
   const caught = entries.filter((e) => e.catch_count > 0).length;
   const total = entries.length;
-  const rank = getRank(caught, total);
 
   return (
     <div className="mx-auto max-w-[1280px] px-4 py-10 sm:px-12">
-      <div className="mb-8 flex flex-wrap items-end justify-between gap-x-8 gap-y-2">
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
         <div>
           <h1
             className="font-serif-display m-0"
@@ -56,9 +54,7 @@ function PokedexContent({
             {t("subtitle", { caught, total })}
           </p>
         </div>
-        <p className="m-0 text-[15px] font-semibold" style={{ color: "var(--text)" }}>
-          {tRank(rank.key)} · {t("level", { level: rank.level })}
-        </p>
+        <RankRing caught={caught} total={total} />
       </div>
       <SpeciesIndex entries={entries} locale={locale} />
     </div>

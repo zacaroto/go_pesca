@@ -180,6 +180,12 @@ body {
   to   { opacity: 1; transform: scale(1); }
 }
 
+/* Rank-up line in the catch preview (spring overshoot) */
+@keyframes rank-up {
+  0%   { opacity: 0; transform: translateY(4px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 /* ── Habitat pill helper classes ── */
 .pill-salt  { background: var(--pill-salt-bg);  color: var(--pill-salt-ink); }
 .pill-fresh { background: var(--pill-fresh-bg); color: var(--pill-fresh-ink); }
