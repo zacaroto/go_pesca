@@ -63,30 +63,10 @@ export default async function LocaleLayout({ children, params }: Props) {
     // Supabase not configured yet — continue without auth
   }
 
-  let rankData: { caught: number; total: number } | undefined;
-  if (user) {
-    try {
-      const supabase = await createClient();
-      const [{ count: totalCount }, { data: caughtRows }] = await Promise.all([
-        supabase.from("species").select("*", { count: "exact", head: true }),
-        supabase
-          .from("catches")
-          .select("species_id")
-          .eq("user_id", user.id),
-      ]);
-      const distinctSpecies = new Set(
-        (caughtRows ?? []).map((r: { species_id: number }) => r.species_id)
-      );
-      rankData = { caught: distinctSpecies.size, total: totalCount ?? 0 };
-    } catch {
-      // Continue without rank data
-    }
-  }
-
   return (
     <NextIntlClientProvider messages={messages}>
       <AchievementProvider>
-        <Header user={user} rankData={rankData} />
+        <Header user={user} />
         <main className="flex flex-1 flex-col">{children}</main>
         <SiteFooter />
         {user && <BottomNav />}

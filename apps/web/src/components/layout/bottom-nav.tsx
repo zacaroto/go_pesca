@@ -65,12 +65,10 @@ export function BottomNav() {
       <Link
         key={tab.href}
         href={tab.href}
-        className="flex flex-col items-center justify-center flex-1 gap-1 active:opacity-75"
-        style={{
-          color: active ? "var(--text)" : "var(--muted)",
-          fontWeight: active ? 600 : 400,
-          transition: "color var(--t-ui), opacity var(--t-ui)",
-        }}
+        aria-current={active ? "page" : undefined}
+        className={`flex flex-col items-center justify-center flex-1 gap-1 hover:text-text active:opacity-75 transition-[color,opacity] duration-[var(--t-ui)] motion-reduce:transition-none ${
+          active ? "font-semibold text-text" : "font-normal text-muted"
+        }`}
       >
         {tab.icon(active)}
         <span

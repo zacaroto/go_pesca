@@ -74,7 +74,7 @@ describe("relativeDate", () => {
     expect(relativeDate("2026-10-20", now, "es", t)).toBe("yesterday");
     expect(relativeDate("2026-10-17", now, "es", t)).toBe('daysAgo:{"count":4}');
   });
-  it("uses calendar days in the viewer's local time", () => {
+  it("uses calendar days in Costa Rica time, not UTC", () => {
     expect(relativeDate("2026-10-21", new Date("2026-10-22T05:30:00Z"), "es", t)).toBe("today");
     expect(relativeDate("2026-10-20", new Date("2026-10-21T06:10:00Z"), "es", t)).toBe("yesterday");
   });
