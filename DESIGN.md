@@ -80,6 +80,10 @@ tokens:
 
 # Go Pesca Design System v3 — Field Guide
 
+## Dark theme
+
+Night-sea navy: same token names redefined under `prefers-color-scheme: dark` and `[data-theme="dark"]` in globals.css (ground #0e1424, surface #161d30, accent #8fb0f5 with dark text on it, progress #2dd4bf). Default follows the OS; the footer switch stores System/Light/Dark in localStorage (`gp-theme`), applied before first paint by an inline script. Never add a color without its dark value.
+
 ## Identity
 
 Go Pesca is a **light, field-guide** fishing log and social platform for anglers in Costa Rica. It reads like a printed naturalist's guide: calm, precise and trustworthy.
