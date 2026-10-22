@@ -107,7 +107,7 @@ export function SpeciesIndex({ entries, locale }: Props) {
           {HABITATS.map((h) => habitatTab(h, t(h), `${counts[h].caught}/${counts[h].total}`))}
         </div>
       </div>
-      <div className="grid items-start gap-10 lg:grid-cols-[7fr_5fr]">
+      <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
         <div ref={listRef}>
           {sections.length === 0 && (
             <p className="py-6" style={{ color: "var(--muted)" }}>
