@@ -361,6 +361,16 @@
     "noGroups": "No groups yet",
     "createFirst": "Create or join a group to share catches with your crew!",
     "groupCount": "{count, plural, one {# group} other {# groups}}",
-    "loadError": "We couldn't load your groups. Try again in a moment."
+    "loadError": "We couldn't load your groups. Try again in a moment.",
+    "invite": "Invite",
+    "membersOf": "{count} of {max}",
+    "joinedOn": "Joined {date}",
+    "viewAllMembers": "View all {count}",
+    "showLess": "Show less",
+    "anonymousAngler": "Angler",
+    "inviteTitle": "Invite your crew",
+    "inviteHelp": "Share the link. Groups hold up to {max} anglers.",
+    "copyError": "Couldn't copy. Share the code {code}.",
+    "leaveError": "We couldn't remove you from the group. Try again."
   }
 }

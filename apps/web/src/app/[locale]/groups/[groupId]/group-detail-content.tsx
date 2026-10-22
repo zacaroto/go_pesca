@@ -3,45 +3,50 @@
 import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { GroupHeader } from "@/components/groups/group-header";
-import { GroupMemberList } from "@/components/groups/group-member-list";
-import { FeedList } from "@/components/feed/feed-list";
+import { GroupMemberList, type GroupMember } from "@/components/groups/group-member-list";
+import { InvitePanel } from "@/components/groups/invite-panel";
+import { MagazineGrid } from "@/components/feed/magazine-grid";
 import { createGroupFeedFetcher } from "@/lib/group-feed-client";
 import type { FeedCatch, FeedReactions } from "@/lib/feed";
 import type { GroupWithMemberCount } from "@/lib/groups";
 
 type Props = {
   group: GroupWithMemberCount;
-  members: {
-    user_id: string;
-    role: string;
-    display_name: string;
-    avatar_url: string | null;
-  }[];
+  members: GroupMember[];
   catches: FeedCatch[];
   reactions: Record<string, FeedReactions>;
   userId: string;
   locale: string;
 };
 
+/** "Bitácora del grupo": the group's catches as a magazine, with members and invite in a side rail. */
 export function GroupDetailContent({ group, members, catches, reactions, userId, locale }: Props) {
   const t = useTranslations("groups");
   const isCreator = group.created_by === userId;
   const fetchMore = useMemo(() => createGroupFeedFetcher(group.id), [group.id]);
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8 space-y-4">
-      <GroupHeader group={group} isCreator={isCreator} locale={locale} />
-      <GroupMemberList members={members} />
-      <h2 className="font-serif-display text-xl font-bold text-text pt-2">
-        {t("groupFeed")}
-      </h2>
-      <FeedList
-        initialCatches={catches}
-        initialReactions={reactions}
-        locale={locale}
-        fetchMoreFn={fetchMore}
-        emptyMessage={t("emptyFeed")}
-      />
+    <div className="mx-auto w-full max-w-[1280px] px-4 py-10 sm:px-12">
+      <GroupHeader group={group} members={members} isCreator={isCreator} locale={locale} />
+      <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <section aria-labelledby="group-catches-title" className="min-w-0">
+          <h2 id="group-catches-title" className="m-0 mb-3.5 font-serif-display text-[26px] font-bold">
+            {t("groupFeed")}
+          </h2>
+          <MagazineGrid
+            initialCatches={catches}
+            initialReactions={reactions}
+            locale={locale}
+            fetchMoreFn={fetchMore}
+            columns={3}
+            emptyMessage={t("emptyFeed")}
+          />
+        </section>
+        <aside className="grid gap-4">
+          <GroupMemberList members={members} />
+          <InvitePanel inviteCode={group.invite_code} locale={locale} memberCount={group.member_count} />
+        </aside>
+      </div>
     </div>
   );
 }

@@ -361,6 +361,16 @@
     "noGroups": "Aún no tienes grupos",
     "createFirst": "¡Crea o únete a un grupo para compartir capturas con tu crew!",
     "groupCount": "{count, plural, one {# grupo} other {# grupos}}",
-    "loadError": "No pudimos cargar tus grupos. Intenta de nuevo en un momento."
+    "loadError": "No pudimos cargar tus grupos. Intenta de nuevo en un momento.",
+    "invite": "Invitar",
+    "membersOf": "{count} de {max}",
+    "joinedOn": "Se unió en {date}",
+    "viewAllMembers": "Ver los {count}",
+    "showLess": "Ver menos",
+    "anonymousAngler": "Pescador",
+    "inviteTitle": "Invita a tu crew",
+    "inviteHelp": "Comparte el enlace. El grupo admite hasta {max} pescadores.",
+    "copyError": "No se pudo copiar. Comparte el código {code}.",
+    "leaveError": "No pudimos sacarte del grupo. Intenta de nuevo."
   }
 }

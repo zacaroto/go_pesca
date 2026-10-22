@@ -23,13 +23,17 @@ type GridProps = {
   initialCatches: FeedCatch[];
   initialReactions: Record<string, FeedReactions>;
   locale: string;
-  feedType: "global" | "allGroups";
+  /** Built-in fetchers for Community; pass fetchMoreFn instead for a single group's feed. */
+  feedType?: "global" | "allGroups";
+  fetchMoreFn?: (locale: string, cursor: string) => Promise<FeedCatch[]>;
+  /** Desktop column count: 4 on Community, 3 when the grid shares the row with a side rail. */
+  columns?: 3 | 4;
   emptyMessage?: string;
   /** undefined hides the records row; null shows it with em dashes. */
   records?: CommunityRecords | null;
 };
 
-export function MagazineGrid({ initialCatches, initialReactions, locale, feedType, emptyMessage, records }: GridProps) {
+export function MagazineGrid({ initialCatches, initialReactions, locale, feedType = "global", fetchMoreFn, columns = 4, emptyMessage, records }: GridProps) {
   const t = useTranslations("feed");
   const [catches, setCatches] = useState(initialCatches);
   const [reactions, setReactions] = useState(initialReactions);
@@ -45,7 +49,7 @@ export function MagazineGrid({ initialCatches, initialReactions, locale, feedTyp
     setLoading(true);
     setLoadError(false);
     try {
-      const moreCatches = await feedTypeFetchers[feedType](locale, lastCatch.created_at);
+      const moreCatches = await (fetchMoreFn ?? feedTypeFetchers[feedType])(locale, lastCatch.created_at);
       if (moreCatches.length < PAGE_SIZE) setHasMore(false);
       if (moreCatches.length > 0) {
         const moreReactions = await fetchMoreReactions(moreCatches.map((c) => c.id));
@@ -73,7 +77,7 @@ export function MagazineGrid({ initialCatches, initialReactions, locale, feedTyp
 
   return (
     <div>
-      <div className="grid grid-cols-2 lg:grid-cols-4 auto-rows-[220px] gap-4">
+      <div className={`grid grid-cols-2 auto-rows-[220px] gap-4 ${columns === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
         {featured && (
           <MagazineTile key={featured.id} entry={featured} reactions={reactions[featured.id] ?? NO_REACTIONS} featured />
         )}
