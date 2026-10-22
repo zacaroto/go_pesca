@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { FishMark } from "@/components/layout/fish-mark";
 import { SpeciesPagerBottom, SpeciesPagerTop } from "@/components/species/species-pager";
+import { TrophyCard } from "@/components/species/trophy-card";
 import { speciesNeighbors, type SpeciesLink } from "@/lib/species-neighbors";
 import {
   ArrowLeftIcon,
@@ -27,6 +28,11 @@ type Species = {
   reference_photo_url: string | null;
   max_weight_kg: number | null;
   max_length_cm: number | null;
+  trophy_weight_kg?: number | null;
+  trophy_length_cm?: number | null;
+  trophy_note_es?: string | null;
+  trophy_note_en?: string | null;
+  trophy_source_url?: string | null;
   fishing_regions_es: string | null;
   fishing_regions_en: string | null;
   best_bait_es: string | null;
@@ -189,6 +195,14 @@ function SpeciesDetailContent({
           <p className={factValue}>{habitatLabel}</p>
         </div>
       </div>
+
+      <TrophyCard
+        weightKg={species.trophy_weight_kg ?? null}
+        lengthCm={species.trophy_length_cm ?? null}
+        note={(locale === "en" ? species.trophy_note_en : species.trophy_note_es) ?? null}
+        sourceUrl={species.trophy_source_url ?? null}
+        locale={locale}
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         {regions.length > 0 && (

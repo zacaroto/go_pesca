@@ -217,7 +217,12 @@
     "prevSpecies": "Previous species: {name}",
     "nextSpecies": "Next species: {name}",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "trophyTitle": "When is it a trophy fish?",
+    "trophyFrom": "From {value}",
+    "trophyOr": " or ",
+    "trophyNone": "Not considered a trophy fish",
+    "trophySource": "View source"
   },
   "feed": {
     "title": "Community",

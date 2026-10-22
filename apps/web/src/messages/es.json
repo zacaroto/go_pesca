@@ -217,7 +217,12 @@
     "prevSpecies": "Especie anterior: {name}",
     "nextSpecies": "Especie siguiente: {name}",
     "previous": "Anterior",
-    "next": "Siguiente"
+    "next": "Siguiente",
+    "trophyTitle": "¿Cuándo es un pez trofeo?",
+    "trophyFrom": "Desde {value}",
+    "trophyOr": " o ",
+    "trophyNone": "No se considera pez trofeo",
+    "trophySource": "Ver fuente"
   },
   "feed": {
     "title": "Comunidad",
