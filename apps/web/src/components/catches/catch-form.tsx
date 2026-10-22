@@ -4,16 +4,66 @@ import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { PhotoUpload } from "./photo-upload";
-import { SpeciesPicker } from "./species-picker";
+import { SpeciesPicker, type PickedSpecies } from "./species-picker";
 import { LocationPicker } from "./location-picker";
+import { CatchPreview, CatchInsightBlock } from "./catch-preview";
+import { StepBar } from "./step-bar";
+import { Segmented } from "./segmented";
 import { submitCatch } from "@/lib/catches";
 import { checkAndAwardAchievements } from "@/lib/achievements";
 import { useAchievements } from "@/components/achievements/achievement-provider";
 import { getUserGroups } from "@/lib/groups";
+import { getCatchInsight, type SpeciesBest } from "@/lib/catch-insight";
+import { fetchSpeciesBests } from "@/lib/species-bests-client";
 
 type Props = {
   locale: string;
 };
+
+type Step = 1 | 2 | 3;
+
+const INPUT_CLASS =
+  "h-[42px] w-full rounded-[var(--r-control)] bg-[var(--ground)] px-3.5 text-sm text-[var(--text)] outline-none placeholder:text-[var(--faint)] focus:shadow-[inset_0_0_0_1.5px_var(--accent)] transition-[box-shadow] duration-[var(--t-ui)] motion-reduce:transition-none";
+const LABEL_CLASS = "block text-[13px] font-medium text-[var(--text)] mb-1.5";
+const BTN_BASE =
+  "inline-flex items-center justify-center gap-2 h-11 px-6 rounded-[var(--r-control)] text-sm font-semibold cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] transition-[background-color,transform,opacity] duration-[var(--t-ui)] ease-[var(--ease-out)] active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100";
+
+/** Today's calendar date in Costa Rica (YYYY-MM-DD), so evenings don't roll over to tomorrow. */
+function todayInCostaRica(): string {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Costa_Rica",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+}
+
+function Toggle({ checked, onChange, title, help }: { checked: boolean; onChange: (v: boolean) => void; title: string; help: string }) {
+  return (
+    <div className="flex items-center justify-between gap-4 py-3 border-t border-[var(--rule)]">
+      <div className="min-w-0">
+        <b className="block text-sm font-semibold text-[var(--text)]">{title}</b>
+        <span className="block text-xs text-[var(--muted)]">{help}</span>
+      </div>
+      <button
+        type="button"
+        role="switch"
+        aria-checked={checked}
+        aria-label={title}
+        data-checked={checked}
+        onClick={() => onChange(!checked)}
+        className="relative shrink-0 w-11 h-6 rounded-full cursor-pointer bg-[var(--raised)] hover:bg-[var(--border)] data-[checked=true]:bg-[var(--accent)] data-[checked=true]:hover:bg-[var(--accent-hi)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] transition-[background-color] duration-[var(--t-ui)] motion-reduce:transition-none"
+      >
+        <span
+          aria-hidden="true"
+          className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-[var(--on-primary)] transition-[transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none ${
+            checked ? "translate-x-5" : "translate-x-0"
+          }`}
+        />
+      </button>
+    </div>
+  );
+}
 
 export function CatchForm({ locale }: Props) {
   const t = useTranslations("catches");
@@ -21,18 +71,19 @@ export function CatchForm({ locale }: Props) {
   const router = useRouter();
   const { showAchievements } = useAchievements();
 
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [step, setStep] = useState<Step>(1);
 
   const [photo, setPhoto] = useState<File | null>(null);
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [speciesId, setSpeciesId] = useState<number | null>(null);
+  const [speciesMeta, setSpeciesMeta] = useState<PickedSpecies | null>(null);
+  const [bests, setBests] = useState<SpeciesBest[]>([]);
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
   const [locationName, setLocationName] = useState("");
-  const [catchDate, setCatchDate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
+  const [catchDate, setCatchDate] = useState(todayInCostaRica);
 
-  // Optional fields
+  // Optional fields. Stored values stay as they are in existing rows; labels go through t().
   const [weightKg, setWeightKg] = useState("");
   const [lengthCm, setLengthCm] = useState("");
   const [baitLure, setBaitLure] = useState("");
@@ -50,41 +101,65 @@ export function CatchForm({ locale }: Props) {
   useEffect(() => {
     getUserGroups()
       .then((groups) => setHasGroups(groups.length > 0))
-      .catch(() => {});
+      .catch((err) => console.error("CatchForm: failed to load groups", err));
+    fetchSpeciesBests().then(setBests);
   }, []);
+
+  useEffect(() => {
+    // Object URLs are an external resource: create per file, revoke on change/unmount.
+    if (!photo) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setPhotoUrl(null);
+      return;
+    }
+    const url = URL.createObjectURL(photo);
+    setPhotoUrl(url);
+    return () => URL.revokeObjectURL(url);
+  }, [photo]);
+
+  const insight = getCatchInsight(speciesId, weightKg ? Number(weightKg) : null, bests);
 
   function handleLocationChange(lat: number, lng: number) {
     setLatitude(lat);
     setLongitude(lng);
   }
 
-  function validateStep1() {
-    if (!photo) {
-      setError("Por favor añade una foto de tu captura");
-      return false;
+  function validate(s: Step): boolean {
+    if (s === 1) {
+      if (!photo) return fail(t("errorPhoto"));
+      if (!speciesId) return fail(t("errorSpecies"));
     }
-    if (!speciesId) {
-      setError("Por favor selecciona una especie");
-      return false;
-    }
+    if (s === 2 && (latitude === null || longitude === null)) return fail(t("errorLocation"));
     setError(null);
     return true;
   }
 
-  function validateStep2() {
-    if (latitude === null || longitude === null) {
-      setError("Por favor marca la ubicación en el mapa");
-      return false;
+  function fail(message: string): false {
+    setError(message);
+    return false;
+  }
+
+  /** Going back is free; going forward validates every step on the way, like Next. */
+  function goToStep(target: number) {
+    if (target <= step) {
+      setError(null);
+      setStep(target as Step);
+      return;
     }
-    setError(null);
-    return true;
+    for (let s = step; s < target; s++) {
+      if (!validate(s as Step)) {
+        setStep(s as Step);
+        return;
+      }
+    }
+    setStep(target as Step);
   }
 
   async function handleSubmit() {
     setError(null);
 
     if (!photo || !speciesId || latitude === null || longitude === null) {
-      setError("Por favor completa los campos requeridos");
+      setError(t("errorRequired"));
       return;
     }
 
@@ -116,331 +191,244 @@ export function CatchForm({ locale }: Props) {
         if (newAchievements.length > 0) {
           showAchievements(newAchievements);
         }
-      } catch {
+      } catch (err) {
         // Don't block navigation if achievement check fails
+        console.error("CatchForm: achievement check failed", err);
       }
 
       router.push(`/${locale}/catches`);
-    } catch {
-      setError("Error al guardar la captura");
+    } catch (err) {
+      console.error("CatchForm: submit failed", err);
+      setError(t("errorSave"));
     } finally {
       setSubmitting(false);
     }
   }
 
+  const stepNames = [t("stepPhotoSpecies"), t("stepPlaceDate"), t("stepDetails")];
+
   return (
-    <div className="max-w-3xl mx-auto px-4 py-4 pb-24">
-      {/* Progress Indicator */}
-      <div className="flex justify-between items-center mb-6 px-2">
-        <div className="flex gap-2 items-center">
-          <div
-            className={`w-9 h-9 rounded-full flex items-center justify-center font-bold chunky-border text-sm transition-all ${
-              step >= 1 ? "bg-primary text-on-primary" : "bg-surface-container-highest text-on-surface-variant"
-            }`}
-            style={{ fontFamily: "var(--font-fredoka)" }}
-          >
-            1
-          </div>
-          <div
-            className={`w-10 sm:w-16 h-2 rounded-full border-2 border-on-surface transition-all ${
-              step >= 2 ? "bg-primary" : "bg-surface-container-highest opacity-50"
-            }`}
-          />
-          <div
-            className={`w-9 h-9 rounded-full flex items-center justify-center font-bold chunky-border text-sm transition-all ${
-              step >= 2 ? "bg-primary text-on-primary" : "bg-surface-container-highest text-on-surface-variant opacity-60"
-            }`}
-            style={{ fontFamily: "var(--font-fredoka)" }}
-          >
-            2
-          </div>
-          <div
-            className={`w-10 sm:w-16 h-2 rounded-full border-2 border-on-surface transition-all ${
-              step >= 3 ? "bg-primary" : "bg-surface-container-highest opacity-50"
-            }`}
-          />
-          <div
-            className={`w-9 h-9 rounded-full flex items-center justify-center font-bold chunky-border text-sm transition-all ${
-              step >= 3 ? "bg-primary text-on-primary" : "bg-surface-container-highest text-on-surface-variant opacity-60"
-            }`}
-            style={{ fontFamily: "var(--font-fredoka)" }}
-          >
-            3
-          </div>
-        </div>
-        <span className="font-bold text-sm text-primary font-heading">
-          Paso {step} de 3
-        </span>
-      </div>
+    <div className="max-w-6xl mx-auto px-4 py-8 pb-24">
+      <div className="grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] gap-12 items-start">
+        <div>
+          <header className="mb-6">
+            <h1 className="font-serif-display font-black text-4xl sm:text-5xl leading-tight text-[var(--text)]">
+              {t("newCatch")}
+            </h1>
+            <p className="mt-2 text-sm text-[var(--muted)]">{t("requiredHint")}</p>
+          </header>
 
-      <h2
-        className="font-display-lg text-2xl sm:text-3xl font-bold mb-6 text-on-surface"
-        style={{ fontFamily: "var(--font-fredoka)" }}
-      >
-        ¡Nueva Captura! 🎣
-      </h2>
+          <StepBar steps={stepNames} current={step} label={t("stepsLabel")} onSelect={goToStep} />
 
-      {/* Main Card Container */}
-      <div className="bg-card-bg rounded-3xl chunky-border chunky-shadow p-5 sm:p-7 flex flex-col gap-6">
-        {/* STEP 1: Foto & Especie */}
-        {step === 1 && (
-          <div className="space-y-6">
-            <section>
-              <label className="font-headline-md text-lg font-bold text-on-surface mb-3 block font-heading">
-                1. Foto del Trofeo *
-              </label>
-              <div className="relative">
-                <PhotoUpload onSelect={setPhoto} />
-                <div className="absolute -bottom-3 -right-2 w-10 h-10 bg-sunny-yellow rounded-full chunky-border flex items-center justify-center rotate-12 shadow-sm pointer-events-none">
-                  <span className="material-symbols-outlined text-on-surface text-xl">star</span>
-                </div>
-              </div>
-            </section>
-
-            <section>
-              <label className="font-headline-md text-lg font-bold text-on-surface mb-3 block font-heading">
-                2. ¿Qué especie picó? *
-              </label>
-              <SpeciesPicker
-                locale={locale}
-                value={speciesId}
-                onChange={setSpeciesId}
-              />
-            </section>
-          </div>
-        )}
-
-        {/* STEP 2: Ubicación & Fecha */}
-        {step === 2 && (
-          <div className="space-y-6">
-            <section>
-              <label className="font-headline-md text-lg font-bold text-on-surface mb-3 block font-heading">
-                3. ¿Dónde ocurrió la captura? *
-              </label>
-              <LocationPicker
-                latitude={latitude}
-                longitude={longitude}
-                onChange={handleLocationChange}
-                locationName={locationName}
-                onLocationNameChange={setLocationName}
-              />
-            </section>
-
-            <section>
-              <label className="font-headline-md text-lg font-bold text-on-surface mb-3 block font-heading">
-                4. Fecha de la captura *
-              </label>
-              <input
-                type="date"
-                value={catchDate}
-                onChange={(e) => setCatchDate(e.target.value)}
-                className="w-full bg-surface-container-lowest font-body-md text-on-surface rounded-2xl chunky-border p-3.5 focus:outline-none focus:ring-4 focus:ring-secondary-container font-semibold"
-                required
-              />
-            </section>
-          </div>
-        )}
-
-        {/* STEP 3: Condiciones, Medidas & Privacidad */}
-        {step === 3 && (
-          <div className="space-y-6">
-            {/* Clima & Marea (Power-ups) */}
-            <section>
-              <label className="font-headline-md text-lg font-bold text-on-surface mb-3 block font-heading">
-                5. Condiciones del Mar y Clima
-              </label>
-              <div className="grid grid-cols-3 gap-3 mb-3">
-                {[
-                  { name: "Soleado", icon: "light_mode", bg: "bg-sunny-yellow/25 text-tertiary" },
-                  { name: "Nublado", icon: "cloud", bg: "bg-outline-variant/30 text-on-surface" },
-                  { name: "Lluvia", icon: "rainy", bg: "bg-primary-fixed/50 text-primary" },
-                ].map((item) => (
-                  <button
-                    key={item.name}
-                    type="button"
-                    onClick={() => setWeather(item.name)}
-                    className={`flex flex-col items-center justify-center rounded-2xl p-3 chunky-border btn-press transition-all cursor-pointer ${
-                      weather === item.name ? "ring-4 ring-primary bg-sunny-yellow/50" : item.bg
-                    }`}
-                  >
-                    <span className="material-symbols-outlined text-3xl mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>
-                      {item.icon}
-                    </span>
-                    <span className="font-bold text-xs font-heading">{item.name}</span>
-                  </button>
-                ))}
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                {["Marea Alta", "Marea Baja"].map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => setTide(item)}
-                    className={`flex items-center justify-center gap-2 rounded-2xl p-3 chunky-border btn-press transition-all cursor-pointer font-bold text-sm ${
-                      tide === item
-                        ? "bg-secondary-container text-on-secondary-container ring-2 ring-secondary"
-                        : "bg-surface-container-high text-on-surface"
-                    }`}
-                  >
-                    <span className="material-symbols-outlined text-xl">waves</span>
-                    <span>{item}</span>
-                  </button>
-                ))}
-              </div>
-            </section>
-
-            {/* Medidas (Peso / Longitud) */}
-            <section className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="font-bold text-sm text-on-surface-variant mb-1.5 block font-heading">
-                  Peso (kg)
-                </label>
-                <input
-                  type="number"
-                  step="0.01"
-                  placeholder="0.0"
-                  value={weightKg}
-                  onChange={(e) => setWeightKg(e.target.value)}
-                  className="w-full bg-surface-container-lowest font-body-lg text-lg text-on-surface rounded-2xl chunky-border p-3 text-center focus:outline-none focus:ring-4 focus:ring-secondary-container font-bold"
-                />
-              </div>
-              <div>
-                <label className="font-bold text-sm text-on-surface-variant mb-1.5 block font-heading">
-                  Longitud (cm)
-                </label>
-                <input
-                  type="number"
-                  step="0.1"
-                  placeholder="0"
-                  value={lengthCm}
-                  onChange={(e) => setLengthCm(e.target.value)}
-                  className="w-full bg-surface-container-lowest font-body-lg text-lg text-on-surface rounded-2xl chunky-border p-3 text-center focus:outline-none focus:ring-4 focus:ring-secondary-container font-bold"
-                />
-              </div>
-            </section>
-
-            {/* Carnada & Notas */}
-            <section className="space-y-4">
-              <div>
-                <label className="font-bold text-sm text-on-surface-variant mb-1.5 block font-heading">
-                  Carnada / Señuelo
-                </label>
-                <input
-                  type="text"
-                  placeholder="Ej. Rapala, Calamar, Camarón vivo..."
-                  value={baitLure}
-                  onChange={(e) => setBaitLure(e.target.value)}
-                  className="w-full bg-surface-container-lowest font-body-md text-on-surface rounded-2xl chunky-border p-3 focus:outline-none focus:ring-4 focus:ring-secondary-container"
-                />
-              </div>
-
-              <div>
-                <label className="font-bold text-sm text-on-surface-variant mb-1.5 block font-heading">
-                  Notas de la jornada
-                </label>
-                <textarea
-                  rows={2}
-                  placeholder="Comentarios, técnicas o detalles especiales..."
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  className="w-full bg-surface-container-lowest font-body-md text-on-surface rounded-2xl chunky-border p-3 focus:outline-none focus:ring-4 focus:ring-secondary-container resize-none"
-                />
-              </div>
-            </section>
-
-            {/* Switches de Privacidad */}
-            <section className="space-y-3 pt-2 border-t border-outline-variant">
-              <label className="flex items-center justify-between cursor-pointer p-2 bg-surface-container-low rounded-2xl chunky-border">
-                <div>
-                  <span className="text-sm font-bold text-on-surface flex items-center gap-2 font-heading">
-                    <span className="material-symbols-outlined text-primary text-xl">public</span>
-                    {t("isPublic")}
-                  </span>
-                  <span className="text-xs text-outline block ml-7">
-                    {t("isPublicHelp")}
-                  </span>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={isPublic}
-                  onChange={(e) => setIsPublic(e.target.checked)}
-                  className="w-6 h-6 rounded-lg accent-primary cursor-pointer"
-                />
-              </label>
-
-              {hasGroups && (
-                <label className="flex items-center justify-between cursor-pointer p-2 bg-surface-container-low rounded-2xl chunky-border">
-                  <div>
-                    <span className="text-sm font-bold text-on-surface flex items-center gap-2 font-heading">
-                      <span className="material-symbols-outlined text-secondary text-xl">groups</span>
-                      {t("shareToGroups")}
-                    </span>
-                    <span className="text-xs text-outline block ml-7">
-                      {t("shareToGroupsHelp")}
-                    </span>
-                  </div>
-                  <input
-                    type="checkbox"
-                    checked={shareToGroups}
-                    onChange={(e) => setShareToGroups(e.target.checked)}
-                    className="w-6 h-6 rounded-lg accent-secondary cursor-pointer"
+          <div className="bg-[var(--surface)] rounded-[var(--r-card)] p-5 sm:p-6 flex flex-col gap-6">
+            {step === 1 && (
+              <div className="space-y-6">
+                <section>
+                  <span className={LABEL_CLASS}>{t("photo")} *</span>
+                  <PhotoUpload onSelect={setPhoto} />
+                </section>
+                <section>
+                  <span className={LABEL_CLASS}>{t("species")} *</span>
+                  <SpeciesPicker
+                    locale={locale}
+                    value={speciesId}
+                    onChange={setSpeciesId}
+                    onSpeciesMeta={setSpeciesMeta}
                   />
-                </label>
+                </section>
+              </div>
+            )}
+
+            {step === 2 && (
+              <div className="space-y-6">
+                <section>
+                  <span className={LABEL_CLASS}>{t("location")} *</span>
+                  <LocationPicker
+                    latitude={latitude}
+                    longitude={longitude}
+                    onChange={handleLocationChange}
+                    locationName={locationName}
+                    onLocationNameChange={setLocationName}
+                  />
+                </section>
+                <section>
+                  <label htmlFor="catch-date" className={LABEL_CLASS}>{t("date")} *</label>
+                  <input
+                    id="catch-date"
+                    type="date"
+                    value={catchDate}
+                    onChange={(e) => setCatchDate(e.target.value)}
+                    className={INPUT_CLASS}
+                    required
+                  />
+                </section>
+              </div>
+            )}
+
+            {step === 3 && (
+              <div className="space-y-5">
+                <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label htmlFor="catch-weight" className={LABEL_CLASS}>{t("weight")}</label>
+                    <input
+                      id="catch-weight"
+                      type="number"
+                      inputMode="decimal"
+                      step="0.01"
+                      min="0"
+                      placeholder="0.0"
+                      value={weightKg}
+                      onChange={(e) => setWeightKg(e.target.value)}
+                      className={`${INPUT_CLASS} tabular-nums`}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="catch-length" className={LABEL_CLASS}>{t("length")}</label>
+                    <input
+                      id="catch-length"
+                      type="number"
+                      inputMode="decimal"
+                      step="0.1"
+                      min="0"
+                      placeholder="0"
+                      value={lengthCm}
+                      onChange={(e) => setLengthCm(e.target.value)}
+                      className={`${INPUT_CLASS} tabular-nums`}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="catch-bait" className={LABEL_CLASS}>{t("bait")}</label>
+                    <input
+                      id="catch-bait"
+                      type="text"
+                      placeholder={t("baitPlaceholder")}
+                      value={baitLure}
+                      onChange={(e) => setBaitLure(e.target.value)}
+                      className={INPUT_CLASS}
+                    />
+                  </div>
+                </section>
+
+                <section>
+                  <span className={LABEL_CLASS}>{t("weather")}</span>
+                  <Segmented
+                    label={t("weather")}
+                    value={weather}
+                    onChange={setWeather}
+                    options={[
+                      { value: "Soleado", label: t("weatherSunny") },
+                      { value: "Nublado", label: t("weatherCloudy") },
+                      { value: "Lluvia", label: t("weatherRain") },
+                    ]}
+                  />
+                </section>
+
+                <section>
+                  <span className={LABEL_CLASS}>{t("tide")}</span>
+                  <Segmented
+                    label={t("tide")}
+                    value={tide}
+                    onChange={setTide}
+                    options={[
+                      { value: "Marea Alta", label: t("tideHigh") },
+                      { value: "Marea Baja", label: t("tideLow") },
+                    ]}
+                  />
+                </section>
+
+                <section>
+                  <span className={LABEL_CLASS}>{t("timeOfDay")}</span>
+                  <Segmented
+                    label={t("timeOfDay")}
+                    value={timeOfDay}
+                    onChange={(v) => setTimeOfDay(v === timeOfDay ? "" : v)}
+                    options={[
+                      { value: "Madrugada", label: t("timeDawn") },
+                      { value: "Mañana", label: t("timeMorning") },
+                      { value: "Tarde", label: t("timeAfternoon") },
+                      { value: "Noche", label: t("timeNight") },
+                    ]}
+                  />
+                </section>
+
+                <section>
+                  <label htmlFor="catch-notes" className={LABEL_CLASS}>{t("notesLabel")}</label>
+                  <textarea
+                    id="catch-notes"
+                    rows={2}
+                    placeholder={t("notesPlaceholder")}
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    className="w-full rounded-[var(--r-control)] bg-[var(--ground)] px-3.5 py-2.5 text-sm text-[var(--text)] outline-none resize-none placeholder:text-[var(--faint)] focus:shadow-[inset_0_0_0_1.5px_var(--accent)] transition-[box-shadow] duration-[var(--t-ui)] motion-reduce:transition-none"
+                  />
+                </section>
+
+                <section>
+                  <Toggle checked={isPublic} onChange={setIsPublic} title={t("isPublic")} help={t("isPublicHelp")} />
+                  {hasGroups && (
+                    <Toggle checked={shareToGroups} onChange={setShareToGroups} title={t("shareToGroups")} help={t("shareToGroupsHelp")} />
+                  )}
+                </section>
+              </div>
+            )}
+
+            {/* Phone: no preview card, only the insight above the actions */}
+            <div className="lg:hidden empty:hidden">
+              <CatchInsightBlock insight={insight} />
+            </div>
+
+            {error && (
+              <p role="alert" className="text-sm font-medium text-[var(--negative)]">
+                {error}
+              </p>
+            )}
+
+            <div className="flex items-center justify-between pt-1">
+              {step > 1 ? (
+                <button
+                  type="button"
+                  onClick={() => goToStep(step - 1)}
+                  className={`${BTN_BASE} text-[var(--text)] hover:bg-[var(--raised)] active:bg-[var(--raised)]`}
+                >
+                  {t("back")}
+                </button>
+              ) : (
+                <div />
               )}
-            </section>
+
+              {step < 3 ? (
+                <button
+                  type="button"
+                  onClick={() => goToStep(step + 1)}
+                  className={`${BTN_BASE} bg-[var(--accent)] text-[var(--on-primary)] hover:bg-[var(--accent-hi)] active:bg-[var(--accent-hi)]`}
+                >
+                  {t("next")}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={submitting}
+                  className={`${BTN_BASE} bg-[var(--accent)] text-[var(--on-primary)] hover:bg-[var(--accent-hi)] active:bg-[var(--accent-hi)] disabled:opacity-50 disabled:cursor-not-allowed`}
+                >
+                  {submitting ? tCommon("loading") : t("saveCatch")}
+                </button>
+              )}
+            </div>
           </div>
-        )}
-
-        {/* Error message */}
-        {error && (
-          <div className="flex items-center gap-2 text-neon-coral text-sm bg-error-container p-3.5 rounded-2xl chunky-border font-bold">
-            <span className="material-symbols-outlined text-xl">error</span>
-            {error}
-          </div>
-        )}
-
-        {/* Wizard Controls */}
-        <div className="flex items-center justify-between pt-2">
-          {step > 1 ? (
-            <button
-              type="button"
-              onClick={() => {
-                setError(null);
-                setStep((s) => (s - 1) as 1 | 2);
-              }}
-              className="bg-surface-container font-headline-md text-sm sm:text-base font-bold py-3 px-6 rounded-2xl chunky-border bouncy-shadow bouncy-hover bouncy-active transition-all"
-            >
-              Atrás
-            </button>
-          ) : <div />}
-
-          {step < 3 ? (
-            <button
-              type="button"
-              onClick={() => {
-                if (step === 1 && validateStep1()) setStep(2);
-                else if (step === 2 && validateStep2()) setStep(3);
-              }}
-              className="bg-accent text-white font-headline-md text-sm sm:text-base font-bold py-3 px-7 rounded-2xl chunky-border chunky-shadow btn-press transition-all flex items-center gap-2"
-            >
-              Siguiente
-              <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>
-                arrow_forward
-              </span>
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={submitting}
-              className="bg-accent text-white font-headline-md text-base sm:text-lg font-bold py-3.5 px-8 rounded-2xl chunky-border chunky-shadow btn-press transition-all flex items-center gap-2 disabled:opacity-50"
-            >
-              <span className="material-symbols-outlined text-xl">check_circle</span>
-              {submitting ? tCommon("loading") : "¡Guardar Captura!"}
-            </button>
-          )}
         </div>
+
+        <CatchPreview
+          photoUrl={photoUrl}
+          species={speciesMeta}
+          weightKg={weightKg}
+          lengthCm={lengthCm}
+          locationName={locationName}
+          catchDate={catchDate}
+          bait={baitLure}
+          insight={insight}
+          locale={locale}
+        />
       </div>
     </div>
   );
