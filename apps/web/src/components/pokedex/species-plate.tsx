@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { FishMark } from "@/components/layout/fish-mark";
@@ -17,6 +18,8 @@ export function SpeciesPlate({ entry, locale }: Props) {
   const description = locale === "en" ? entry.description_en : entry.description_es;
   const photo = entry.reference_photo_url ?? entry.first_catch_photo;
   const habitatKey = HABITAT_KEYS.find((k) => k === entry.habitat);
+  // Remote reference photos can fail (hotlink limits, dead URLs); fall back to the silhouette.
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
 
   return (
     <aside
@@ -27,11 +30,11 @@ export function SpeciesPlate({ entry, locale }: Props) {
         className="mb-[18px] flex h-[260px] items-center justify-center overflow-hidden"
         style={{ background: "var(--ground)", borderRadius: 3 }}
       >
-        {caught && photo ? (
+        {caught && photo && failedSrc !== photo ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={photo} alt={name} className="h-full w-full object-contain" />
+          <img src={photo} alt={name} className="h-full w-full object-contain" onError={() => setFailedSrc(photo)} />
         ) : (
-          <FishMark className="h-24 w-24" />
+          <FishMark className="h-24 w-24 text-silhouette" />
         )}
       </div>
       <h2

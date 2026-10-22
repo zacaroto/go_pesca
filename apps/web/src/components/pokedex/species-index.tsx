@@ -64,43 +64,47 @@ export function SpeciesIndex({ entries, locale }: Props) {
     return t("released");
   }
 
-  const chip = (key: string, label: string, active: boolean, onSelect: () => void) => {
-    return (
-      <button
-        key={key}
-        type="button"
-        aria-pressed={active}
-        onClick={onSelect}
-        className="px-3.5 py-1.5 text-sm font-medium transition-[background-color,color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100 hover:brightness-95 focus-visible:outline-2"
-        style={{
-          background: active ? "var(--text)" : "var(--raised)",
-          color: active ? "var(--ground)" : "var(--text)",
-          borderRadius: "var(--r-pill)",
-        }}
-      >
-        {label}
-      </button>
-    );
-  };
+  // Status: one segmented track; the active segment is the white surface sitting in the raised track.
+  const segment = (key: StatusFilter, label: string, count?: number) => (
+    <button
+      key={key}
+      type="button"
+      aria-pressed={statusFilter === key}
+      data-active={statusFilter === key}
+      onClick={() => setStatusFilter(key)}
+      className="inline-flex h-8 items-center gap-1.5 rounded-full px-3.5 text-sm text-muted hover:text-text active:scale-[0.97] data-[active=true]:bg-surface data-[active=true]:font-semibold data-[active=true]:text-text transition-[background-color,color,transform] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-1"
+    >
+      {label}
+      {count !== undefined && <span className="tabular-nums text-faint">{count}</span>}
+    </button>
+  );
+
+  // Habitat: quiet text tabs with an accent underline, so they read as a second, lighter filter.
+  const habitatTab = (key: HabitatFilter, label: string, progress?: string) => (
+    <button
+      key={key}
+      type="button"
+      aria-pressed={habitat === key}
+      data-active={habitat === key}
+      onClick={() => setHabitat(key)}
+      className="inline-flex h-8 items-center gap-1.5 border-b-2 border-transparent text-sm text-muted hover:text-text active:opacity-70 data-[active=true]:border-accent data-[active=true]:font-semibold data-[active=true]:text-text transition-[color,border-color,opacity] duration-[var(--t-ui)] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2"
+    >
+      {label}
+      {progress && <span className="tabular-nums text-faint">{progress}</span>}
+    </button>
+  );
 
   return (
     <div>
-      <div className="mb-6 flex flex-col gap-3">
-        <div role="group" aria-label={t("statusFilterLabel")} className="flex flex-wrap gap-2">
-          {chip("status-all", t("all"), statusFilter === "all", () => setStatusFilter("all"))}
-          {chip("status-caught", `${t("caughtFilter")} ${caughtTotal}`, statusFilter === "caught", () => setStatusFilter("caught"))}
-          {chip(
-            "status-undiscovered",
-            `${t("undiscovered")} ${entries.length - caughtTotal}`,
-            statusFilter === "undiscovered",
-            () => setStatusFilter("undiscovered"),
-          )}
+      <div className="mb-6 flex flex-wrap items-center gap-x-8 gap-y-3">
+        <div role="group" aria-label={t("statusFilterLabel")} className="inline-flex rounded-full bg-raised p-1">
+          {segment("all", t("all"))}
+          {segment("caught", t("caughtFilter"), caughtTotal)}
+          {segment("undiscovered", t("undiscovered"), entries.length - caughtTotal)}
         </div>
-        <div role="group" aria-label={t("habitatFilterLabel")} className="flex flex-wrap gap-2">
-          {chip("habitat-all", t("allHabitats"), habitat === "all", () => setHabitat("all"))}
-          {HABITATS.map((h) =>
-            chip(`habitat-${h}`, `${t(h)} ${counts[h].caught}/${counts[h].total}`, habitat === h, () => setHabitat(h)),
-          )}
+        <div role="group" aria-label={t("habitatFilterLabel")} className="flex flex-wrap gap-x-5 gap-y-1">
+          {habitatTab("all", t("allHabitats"))}
+          {HABITATS.map((h) => habitatTab(h, t(h), `${counts[h].caught}/${counts[h].total}`))}
         </div>
       </div>
       <div className="grid items-start gap-10 lg:grid-cols-[7fr_5fr]">
