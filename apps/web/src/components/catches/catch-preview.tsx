@@ -5,6 +5,7 @@ import { FishMark } from "@/components/layout/fish-mark";
 import type { CatchInsight } from "@/lib/catch-insight";
 import type { RankInfo } from "@/lib/rank";
 import type { PickedSpecies } from "./species-picker";
+import { RegulationTag } from "@/components/species/regulation-tag";
 
 const ROMAN = { 1: "I", 2: "II", 3: "III" } as const;
 
@@ -84,6 +85,7 @@ export function CatchPreview({ photoUrl, species, weightKg, lengthCm, locationNa
         {species?.name ?? dash}
       </h2>
       {species && <p className="sci-name text-sm mt-1.5">{species.scientific_name}</p>}
+      {species?.regulation && <RegulationTag regulation={species.regulation} className="mt-3" />}
 
       <dl className="grid grid-cols-3 gap-3 mt-5 text-sm tabular-nums">
         <div>

@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { FishMark } from "@/components/layout/fish-mark";
+import { RegulationCard } from "@/components/species/regulation-tag";
+import { parseRegulation, type Regulation } from "@/lib/regulation";
 
 type Species = {
   id: number;
@@ -11,6 +13,10 @@ type Species = {
   name_en: string;
   scientific_name: string;
   reference_photo_url: string | null;
+  regulation?: string | null;
+  regulation_note_es?: string | null;
+  regulation_note_en?: string | null;
+  regulation_source_url?: string | null;
 };
 
 export type PickedSpecies = {
@@ -18,6 +24,7 @@ export type PickedSpecies = {
   name: string;
   scientific_name: string;
   reference_photo_url: string | null;
+  regulation: Regulation | null;
 };
 
 type Props = {
@@ -41,7 +48,8 @@ export function SpeciesPicker({ locale, value, onChange, onSpeciesMeta }: Props)
         const supabase = createClient();
         const { data, error } = await supabase
           .from("species")
-          .select("id, name_es, name_en, scientific_name, reference_photo_url")
+          // "*" so the picker keeps working before the regulation columns exist.
+          .select("*")
           .order("name_es");
         if (error) throw error;
         if (data) setSpecies(data);
@@ -79,6 +87,7 @@ export function SpeciesPicker({ locale, value, onChange, onSpeciesMeta }: Props)
       name: getName(s),
       scientific_name: s.scientific_name,
       reference_photo_url: s.reference_photo_url,
+      regulation: parseRegulation(s.regulation),
     });
   }
 
@@ -133,6 +142,16 @@ export function SpeciesPicker({ locale, value, onChange, onSpeciesMeta }: Props)
           </button>
         ))}
       </div>
+
+      {selected && parseRegulation(selected.regulation) && (
+        <div className="mt-3">
+          <RegulationCard
+            regulation={parseRegulation(selected.regulation)}
+            note={(locale === "en" ? selected.regulation_note_en : selected.regulation_note_es) ?? null}
+            sourceUrl={selected.regulation_source_url ?? null}
+          />
+        </div>
+      )}
 
       {species.length > 0 && visible.length === 0 && (
         <p className="mt-3 text-sm text-[var(--muted)]">{t("noSpeciesFound")}</p>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { FishMark } from "@/components/layout/fish-mark";
+import { RegulationTag } from "@/components/species/regulation-tag";
 import { speciesName } from "@/lib/fishydex-index";
 import type { PokedexEntry } from "@/lib/pokedex";
 
@@ -28,7 +29,7 @@ export function SpeciesPlate({ entry, locale }: Props) {
       style={{ background: "var(--surface)", borderRadius: "var(--r-card)" }}
     >
       <div
-        className="mb-[18px] flex h-[260px] items-center justify-center overflow-hidden"
+        className="relative mb-[18px] flex h-[260px] items-center justify-center overflow-hidden"
         style={{ background: "var(--ground)", borderRadius: 3 }}
       >
         {caught && photo && failedSrc !== photo ? (
@@ -42,6 +43,7 @@ export function SpeciesPlate({ entry, locale }: Props) {
         ) : (
           <FishMark className="h-24 w-24 text-silhouette" />
         )}
+        <RegulationTag regulation={entry.regulation ?? null} className="absolute top-3 left-3" />
       </div>
       {/* Fixed-height text area: name and description are clamped and the facts + CTA are pinned to
           the bottom, so hovering species with longer copy never resizes the plate or moves the button. */}

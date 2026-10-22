@@ -404,5 +404,13 @@
     "stepPlaceTitle": "Place",
     "stepPlaceBody": "Drop a pin on the map. Nobody else sees your coordinates.",
     "photoCredit": "Photo: {credit}"
+  },
+  "regulation": {
+    "release": "Catch & release",
+    "regulated": "Regulated",
+    "releaseTitle": "Mandatory catch and release",
+    "regulatedTitle": "Regulated species",
+    "releaseHint": "By law you must return this fish to the water alive.",
+    "source": "View source"
   }
 }

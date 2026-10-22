@@ -404,5 +404,13 @@
     "stepPlaceTitle": "Lugar",
     "stepPlaceBody": "Marca el punto en el mapa. Nadie más ve tus coordenadas.",
     "photoCredit": "Foto: {credit}"
+  },
+  "regulation": {
+    "release": "Captura y suelta",
+    "regulated": "Regulada",
+    "releaseTitle": "Captura y suelta obligatoria",
+    "regulatedTitle": "Pesca regulada",
+    "releaseHint": "Por ley tienes que devolver este pez al agua con vida.",
+    "source": "Ver fuente"
   }
 }

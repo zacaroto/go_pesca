@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { nextBestWeight } from "./fishydex-index";
+import { parseRegulation, type Regulation } from "./regulation";
 import type { Database } from "./database.types";
 
 type SpeciesRow = Database["public"]["Tables"]["species"]["Row"];
@@ -19,6 +20,7 @@ export type PokedexEntry = {
   description_es: string | null;
   description_en: string | null;
   best_weight_kg: number | null;
+  regulation?: Regulation | null;
 };
 
 export async function getPokedex(userId: string): Promise<PokedexEntry[]> {
@@ -84,6 +86,8 @@ export async function getPokedex(userId: string): Promise<PokedexEntry[]> {
       description_es: s.description_es,
       description_en: s.description_en,
       best_weight_kg: catchData?.best ?? null,
+      // Not in the generated types yet (added by migration 020).
+      regulation: parseRegulation((s as { regulation?: unknown }).regulation),
     };
   });
 }

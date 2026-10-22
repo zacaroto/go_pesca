@@ -36,6 +36,10 @@
   --pill-fresh-ink: #14532d;
   --pill-brack-bg:  #fdf6e3;
   --pill-brack-ink: #7a4b0b;
+  --pill-release-bg:   #fdecec;
+  --pill-release-ink:  #8f1d22;
+  --pill-regulated-bg:  #ececea;
+  --pill-regulated-ink: #121314;
 
   --footer-bg:         #121314;
   --footer-text:       #e8e8e6;
@@ -211,6 +215,8 @@ body {
 .pill-salt  { background: var(--pill-salt-bg);  color: var(--pill-salt-ink); }
 .pill-fresh { background: var(--pill-fresh-bg); color: var(--pill-fresh-ink); }
 .pill-brack { background: var(--pill-brack-bg); color: var(--pill-brack-ink); }
+.pill-regulation[data-regulation="release"]   { background: var(--pill-release-bg);   color: var(--pill-release-ink); }
+.pill-regulation[data-regulation="regulated"] { background: var(--pill-regulated-bg); color: var(--pill-regulated-ink); }
 
 /* ── Shared controls (field guide) ──
    In @layer components so Tailwind utilities (pl-9, w-auto, px-5...) can override them. */

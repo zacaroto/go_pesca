@@ -6,6 +6,8 @@ import { Link } from "@/i18n/navigation";
 import { FishMark } from "@/components/layout/fish-mark";
 import { SpeciesPagerBottom, SpeciesPagerTop } from "@/components/species/species-pager";
 import { TrophyCard } from "@/components/species/trophy-card";
+import { RegulationCard, RegulationTag } from "@/components/species/regulation-tag";
+import { parseRegulation } from "@/lib/regulation";
 import { speciesNeighbors, type SpeciesLink } from "@/lib/species-neighbors";
 import {
   ArrowLeftIcon,
@@ -33,6 +35,10 @@ type Species = {
   trophy_note_es?: string | null;
   trophy_note_en?: string | null;
   trophy_source_url?: string | null;
+  regulation?: string | null;
+  regulation_note_es?: string | null;
+  regulation_note_en?: string | null;
+  regulation_source_url?: string | null;
   fishing_regions_es: string | null;
   fishing_regions_en: string | null;
   best_bait_es: string | null;
@@ -104,6 +110,8 @@ function SpeciesDetailContent({
         ? "pill-salt"
         : "pill-brack";
 
+  const regulation = parseRegulation(species.regulation);
+
   const regions = fishingRegions
     ? fishingRegions.split(",").map((r) => r.trim())
     : [];
@@ -142,11 +150,12 @@ function SpeciesDetailContent({
             ) : (
               <FishMark className="h-20 w-20 text-silhouette" />
             )}
-            <span
-              className={`absolute top-3 left-3 text-[13px] font-semibold px-3 py-1 rounded-[var(--r-pill)] ${habitatPill}`}
-            >
-              {habitatLabel}
-            </span>
+            <div className="absolute top-3 left-3 flex flex-col items-start gap-1.5">
+              <span className={`text-[13px] font-semibold px-3 py-1 rounded-[var(--r-pill)] ${habitatPill}`}>
+                {habitatLabel}
+              </span>
+              <RegulationTag regulation={regulation} />
+            </div>
           </div>
 
           <div className="w-full md:w-1/2 flex flex-col justify-center">
@@ -195,6 +204,12 @@ function SpeciesDetailContent({
           <p className={factValue}>{habitatLabel}</p>
         </div>
       </div>
+
+      <RegulationCard
+        regulation={regulation}
+        note={(locale === "en" ? species.regulation_note_en : species.regulation_note_es) ?? null}
+        sourceUrl={species.regulation_source_url ?? null}
+      />
 
       <TrophyCard
         weightKg={species.trophy_weight_kg ?? null}
