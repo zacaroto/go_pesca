@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { CheckCircleIcon, LockIcon } from "@/components/icons";
 
 type Props = {
   achievementId: string;
@@ -30,54 +31,57 @@ export function AchievementCard({
 
   return (
     <div
-      className={`relative bg-card-bg rounded-xl chunky-border p-4 chunky-shadow transition-all duration-300 hover:-translate-y-1 ${
-        earned ? "" : "opacity-70 grayscale hover:grayscale-0 hover:opacity-100"
+      className={`relative bg-surface border border-border rounded-[var(--r-card)] p-4 ${
+        earned ? "" : "opacity-80"
       }`}
     >
       <div className="flex items-start gap-3">
-        {/* Icon */}
+        {/* Icon (achievement emoji is content) */}
         <div
-          className={`flex items-center justify-center w-14 h-14 rounded-full text-2xl flex-shrink-0 sticker-border ${
+          className={`flex items-center justify-center w-14 h-14 rounded-full text-2xl flex-shrink-0 ${
             earned
-              ? "bg-sunny-yellow"
-              : "bg-surface-container border-dashed"
+              ? "bg-accent-soft"
+              : "bg-raised border border-dashed border-border text-faint"
           }`}
         >
-          {earned ? icon : "🔒"}
+          {earned ? icon : <LockIcon className="h-6 w-6" />}
         </div>
 
-        {/* Content */}
         <div className="flex-1 min-w-0">
           <p
-            className={`text-label-lg font-bold truncate ${
-              earned ? "text-on-surface" : "text-muted"
+            className={`font-serif-display text-base font-bold truncate ${
+              earned ? "text-text" : "text-muted"
             }`}
-            style={{ fontFamily: "var(--font-fredoka)" }}
           >
             {name}
           </p>
-          <p className="text-label-sm text-muted mt-0.5">
+          <p className="text-[13px] text-muted mt-0.5">
             {description}
           </p>
 
-          {/* Earned date */}
           {earned && awardedAt && (
-            <p className="text-label-sm text-secondary font-bold mt-2 flex items-center gap-1">
-              <span className="material-symbols-outlined text-[14px]">check_circle</span>
+            <p className="text-[13px] text-accent-ink font-medium mt-2 flex items-center gap-1">
+              <CheckCircleIcon className="h-4 w-4" />
               {new Date(awardedAt).toLocaleDateString()}
             </p>
           )}
 
-          {/* Progress bar for unearned */}
           {!earned && progress && (
             <div className="mt-2.5">
               <div className="flex items-center justify-between mb-1">
-                <span className="text-label-sm text-muted font-bold">{progress}</span>
-                <span className="text-label-sm text-muted font-bold">{progressPct}%</span>
+                <span className="text-[13px] text-muted font-medium">{progress}</span>
+                <span className="text-[13px] text-muted font-medium">{progressPct}%</span>
               </div>
-              <div className="w-full h-3 bg-surface-container rounded-full overflow-hidden chunky-border">
+              <div
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={progressPct}
+                aria-label={name}
+                className="w-full h-2 bg-raised rounded-full overflow-hidden"
+              >
                 <div
-                  className="h-full bg-gradient-to-r from-primary to-primary-light rounded-full transition-all duration-500 liquid-tube"
+                  className="h-full bg-accent rounded-full transition-[width] duration-500 ease-[var(--ease-out)] motion-reduce:transition-none"
                   style={{ width: `${progressPct}%` }}
                 />
               </div>
@@ -85,13 +89,8 @@ export function AchievementCard({
           )}
         </div>
 
-        {/* Check mark for earned */}
         {earned && (
-          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-secondary flex items-center justify-center sticker-border">
-            <span className="material-symbols-outlined text-on-secondary text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>
-              check
-            </span>
-          </div>
+          <CheckCircleIcon className="h-6 w-6 flex-shrink-0 text-accent" />
         )}
       </div>
     </div>

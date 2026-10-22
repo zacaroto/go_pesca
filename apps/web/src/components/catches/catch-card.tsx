@@ -1,4 +1,8 @@
-import Link from "next/link";
+"use client";
+
+import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { relativeDate } from "@/lib/community-mosaic";
 
 type CatchEntry = {
   id: string;
@@ -16,138 +20,64 @@ type Props = {
   index?: number;
 };
 
-function habitatPillCls(habitat: string | null | undefined) {
-  if (habitat === "saltwater")  return "pill-salt";
-  if (habitat === "freshwater") return "pill-fresh";
-  return "pill-brack";
+function habitatKey(habitat: string | null | undefined) {
+  if (habitat === "saltwater") return "saltwater" as const;
+  if (habitat === "freshwater") return "freshwater" as const;
+  return "brackish" as const;
 }
 
-function habitatLabel(habitat: string | null | undefined) {
-  if (habitat === "saltwater")  return "Salada";
-  if (habitat === "freshwater") return "Dulce";
-  return "Salobre";
-}
+const PILL = {
+  saltwater: "pill-salt",
+  freshwater: "pill-fresh",
+  brackish: "pill-brack",
+} as const;
 
-function relativeTime(dateStr: string) {
-  const date = new Date(dateStr + "T00:00:00");
-  const diffDays = Math.floor((Date.now() - date.getTime()) / 86_400_000);
-  if (diffDays === 0) return "hoy";
-  if (diffDays === 1) return "ayer";
-  if (diffDays < 7)  return `hace ${diffDays}d`;
-  return date.toLocaleDateString("es", { day: "numeric", month: "short" });
-}
+export function CatchCard({ catch_entry }: Props) {
+  const locale = useLocale();
+  const tFeed = useTranslations("feed");
+  const tCommon = useTranslations("common");
+  const key = habitatKey(catch_entry.habitat);
 
-export function CatchCard({ catch_entry, index = 0 }: Props) {
   return (
     <Link
       href={`/catches/${catch_entry.id}`}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "12px",
-        padding: "11px 0",
-        borderBottom: "1px solid var(--rule)",
-        textDecoration: "none",
-        minWidth: 0,
-        transition: `background var(--t-press)`,
-      }}
-      onMouseDown={(e) => (e.currentTarget.style.background = "var(--raised)")}
-      onMouseUp={(e) => (e.currentTarget.style.background = "transparent")}
-      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+      className="flex min-w-0 items-center gap-3 border-b border-rule py-[11px] hover:bg-raised active:bg-raised transition-colors duration-[var(--t-press)] motion-reduce:transition-none"
     >
-      {/* 42px habitat-gradient thumb */}
-      <div
-        style={{
-          width: "42px",
-          height: "42px",
-          borderRadius: "8px",
-          overflow: "hidden",
-          flexShrink: 0,
-          background: "var(--raised)",
-        }}
-      >
+      <div className="h-[42px] w-[42px] flex-shrink-0 overflow-hidden rounded-[var(--r-control)] bg-raised">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={catch_entry.photo_url}
           alt={catch_entry.species_name}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          className="h-full w-full object-cover"
         />
       </div>
 
-      {/* Text column */}
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div
-          style={{
-            fontFamily: "var(--font-playfair), Georgia, serif",
-            fontWeight: 700,
-            fontSize: "13px",
-            color: "var(--text)",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-          }}
-        >
+      <div className="min-w-0 flex-1">
+        <div className="font-serif-display truncate text-[15px] font-bold text-text">
           {catch_entry.species_name}
         </div>
-        <div
-          className="flex items-center gap-1.5 mt-0.5"
-          style={{ minWidth: 0 }}
-        >
+        <div className="mt-0.5 flex min-w-0 items-center gap-1.5">
           {catch_entry.location_name && (
-            <span
-              style={{
-                fontSize: "11px",
-                color: "var(--faint)",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-                minWidth: 0,
-                overflowWrap: "anywhere",
-              }}
-            >
+            <span className="min-w-0 truncate text-[13px] text-muted [overflow-wrap:anywhere]">
               {catch_entry.location_name}
             </span>
           )}
           <span
-            className={habitatPillCls(catch_entry.habitat)}
-            style={{
-              fontSize: "9px",
-              fontWeight: 600,
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              padding: "2px 6px",
-              borderRadius: "999px",
-              flexShrink: 0,
-              whiteSpace: "nowrap",
-            }}
+            className={`${PILL[key]} flex-shrink-0 whitespace-nowrap rounded-[var(--r-pill)] px-2 py-0.5 text-[13px] font-medium`}
           >
-            {habitatLabel(catch_entry.habitat)}
+            {tCommon(`habitat.${key}`)}
           </span>
         </div>
       </div>
 
-      {/* Weight + relative time */}
-      <div style={{ flexShrink: 0, textAlign: "right" }}>
-        {catch_entry.weight_kg && (
-          <div
-            style={{
-              fontSize: "14px",
-              fontWeight: 700,
-              color: "var(--text)",
-              fontVariantNumeric: "tabular-nums",
-              letterSpacing: "-0.01em",
-            }}
-          >
+      <div className="flex-shrink-0 text-right">
+        {catch_entry.weight_kg != null ? (
+          <div className="text-sm font-bold tabular-nums text-text">
             {catch_entry.weight_kg} kg
           </div>
-        )}
-        <div
-          style={{
-            fontSize: "11px",
-            color: "var(--faint)",
-            marginTop: "2px",
-          }}
-        >
-          {relativeTime(catch_entry.catch_date)}
+        ) : null}
+        <div className="mt-0.5 text-[13px] text-muted">
+          {relativeDate(catch_entry.catch_date, new Date(), locale, tFeed)}
         </div>
       </div>
     </Link>

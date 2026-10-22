@@ -1,5 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import { FishMark } from "@/components/layout/fish-mark";
 
 type Species = {
   id: number;
@@ -26,49 +27,42 @@ export function SpeciesCard({ species, locale }: Props) {
         ? t("saltwater")
         : t("brackish");
 
-  const habitatBadgeStyle =
+  const habitatPill =
     species.habitat === "freshwater"
-      ? "bg-secondary text-white"
+      ? "pill-fresh"
       : species.habitat === "saltwater"
-        ? "bg-primary text-white"
-        : "bg-accent-ink text-white";
+        ? "pill-salt"
+        : "pill-brack";
 
   return (
     <Link
       href={`/species/${species.id}`}
-      className="card-foil group block rounded-3xl overflow-hidden bg-card-bg chunky-border chunky-shadow hover:scale-105 active:translate-y-0.5 active:translate-x-0.5 transition-all p-3.5 flex flex-col gap-3 relative"
+      className="group block overflow-hidden bg-surface border border-border rounded-[var(--r-card)] hover:border-faint active:bg-raised p-3 flex flex-col gap-3 relative transition-[border-color,background-color] duration-[var(--t-ui)] ease-[var(--ease-out)] motion-reduce:transition-none"
     >
-      {/* Image Area */}
-      <div className="relative aspect-[4/3] rounded-2xl bg-surface-container flex items-center justify-center overflow-hidden border-2 border-white/60 shadow-inner">
+      <div className="relative aspect-[4/3] rounded-[var(--r-control)] bg-ground flex items-center justify-center overflow-hidden">
         {species.reference_photo_url ? (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={species.reference_photo_url}
             alt={name}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            className="w-full h-full object-cover transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
           />
         ) : (
-          <div className="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center">
-            <span className="text-3xl">🐟</span>
-          </div>
+          <FishMark className="h-12 w-12 text-silhouette" />
         )}
 
-        {/* Habitat badge */}
         <span
-          className={`absolute top-2.5 right-2.5 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm border border-white/40 ${habitatBadgeStyle}`}
+          className={`absolute top-2.5 right-2.5 text-[13px] font-semibold px-2.5 py-0.5 rounded-[var(--r-pill)] ${habitatPill}`}
         >
           {habitatLabel}
         </span>
       </div>
 
-      {/* Info Body */}
       <div className="flex flex-col">
-        <h3
-          className="font-headline-md text-base sm:text-lg font-bold text-on-surface leading-tight truncate"
-          style={{ fontFamily: "var(--font-fredoka)" }}
-        >
+        <h3 className="font-serif-display text-base sm:text-lg font-bold text-text leading-tight truncate">
           {name}
         </h3>
-        <p className="font-label-sm text-xs text-outline italic truncate mt-0.5">
+        <p className="sci-name text-sm truncate mt-0.5">
           {species.scientific_name}
         </p>
       </div>

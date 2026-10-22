@@ -42,30 +42,30 @@ export function SuggestionReview({ suggestion, onUpdated }: Props) {
         .eq("id", suggestion.id);
 
       onUpdated();
-    } catch {
-      // Error handling
+    } catch (err) {
+      console.error("Failed to review suggestion:", err);
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+    <div className="rounded-[var(--r-card)] border border-border bg-surface p-4">
       <div className="flex gap-4">
         {suggestion.photo_url && (
           <img
             src={suggestion.photo_url}
             alt={suggestion.common_name}
-            className="w-20 h-20 object-cover rounded"
+            className="w-20 h-20 object-cover rounded-[var(--r-control)]"
           />
         )}
         <div className="flex-1">
           <h3 className="font-semibold">{suggestion.common_name}</h3>
-          <p className="text-xs text-gray-500">
+          <p className="text-[13px] text-muted">
             {new Date(suggestion.created_at).toLocaleDateString()}
           </p>
           {suggestion.notes && (
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            <p className="text-sm text-muted mt-1">
               {suggestion.notes}
             </p>
           )}
@@ -75,14 +75,14 @@ export function SuggestionReview({ suggestion, onUpdated }: Props) {
         <button
           onClick={() => handleAction("approved")}
           disabled={loading}
-          className="px-4 py-1.5 text-sm bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
+          className="btn-primary px-4 py-1.5 text-sm"
         >
           Approve
         </button>
         <button
           onClick={() => handleAction("rejected")}
           disabled={loading}
-          className="px-4 py-1.5 text-sm bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
+          className="btn-danger px-4 py-1.5 text-sm"
         >
           Reject
         </button>

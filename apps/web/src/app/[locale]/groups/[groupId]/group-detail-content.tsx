@@ -32,7 +32,7 @@ export function GroupDetailContent({ group, members, catches, reactions, userId,
     <div className="max-w-2xl mx-auto px-4 py-8 space-y-4">
       <GroupHeader group={group} isCreator={isCreator} locale={locale} />
       <GroupMemberList members={members} />
-      <h2 className="text-lg font-bold text-foreground pt-2" style={{ fontFamily: "var(--font-fredoka)" }}>
+      <h2 className="font-serif-display text-xl font-bold text-text pt-2">
         {t("groupFeed")}
       </h2>
       <FeedList

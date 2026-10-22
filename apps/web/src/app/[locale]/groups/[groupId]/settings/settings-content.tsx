@@ -30,7 +30,7 @@ export function GroupSettingsContent({ group, locale }: Props) {
 
   return (
     <div className="max-w-xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">{t("settings")}</h1>
+      <h1 className="font-serif-display text-3xl font-bold mb-6">{t("settings")}</h1>
 
       <GroupForm
         locale={locale}
@@ -44,17 +44,17 @@ export function GroupSettingsContent({ group, locale }: Props) {
       />
 
       {/* Delete section */}
-      <div className="mt-8 rounded-2xl bg-red-50 dark:bg-red-900/10 ring-1 ring-red-200 dark:ring-red-900/30 p-4">
-        <h2 className="text-sm font-semibold text-red-700 dark:text-red-400 mb-2">
+      <div className="mt-8 rounded-[var(--r-card)] border border-negative p-4">
+        <h2 className="text-sm font-semibold text-negative mb-2">
           {t("dangerZone")}
         </h2>
-        <p className="text-xs text-red-600 dark:text-red-400/80 mb-3">
+        <p className="text-[13px] text-muted mb-3">
           {t("deleteWarning")}
         </p>
         <button
           onClick={handleDelete}
           disabled={deleting}
-          className="px-4 py-2 rounded-xl text-xs font-semibold bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 transition-colors"
+          className="btn-danger px-4 py-2 text-[13px]"
         >
           {deleting ? t("deleting") : t("deleteGroup")}
         </button>

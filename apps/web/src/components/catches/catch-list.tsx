@@ -148,40 +148,11 @@ export function CatchList({ catches, species }: Props) {
         </div>
       )}
 
-      {/* Cobalt FAB — spring press feedback, shadow breathes */}
+      {/* Add-catch FAB (phone) */}
       <Link
         href="/catches/new"
         aria-label={t("newCatch")}
-        style={{
-          position: "fixed",
-          bottom: "80px",
-          right: "18px",
-          zIndex: 40,
-          width: "50px",
-          height: "50px",
-          borderRadius: "50%",
-          background: "var(--accent)",
-          color: "#ffffff",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          boxShadow: "0 4px 16px rgba(37,99,235,0.4)",
-          textDecoration: "none",
-          transition: `transform var(--t-press) var(--ease-spring), box-shadow var(--t-press)`,
-        }}
-        onMouseDown={(e) => {
-          e.currentTarget.style.transform = "scale(0.92)";
-          e.currentTarget.style.boxShadow = "0 2px 8px rgba(37,99,235,0.3)";
-        }}
-        onMouseUp={(e) => {
-          e.currentTarget.style.transform = "scale(1)";
-          e.currentTarget.style.boxShadow = "0 4px 16px rgba(37,99,235,0.4)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = "scale(1)";
-          e.currentTarget.style.boxShadow = "0 4px 16px rgba(37,99,235,0.4)";
-        }}
-        className="sm:hidden"
+        className="fixed bottom-20 right-[18px] z-40 flex h-[50px] w-[50px] items-center justify-center rounded-full bg-accent text-on-primary hover:bg-accent-hi active:bg-accent-hi active:scale-[0.92] transition-[background-color,transform] duration-[var(--t-press)] ease-[var(--ease-out)] motion-reduce:transition-none motion-reduce:active:scale-100 sm:hidden"
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
           <path d="M12 5v14M5 12h14" />

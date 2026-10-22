@@ -86,12 +86,12 @@ function CatchesContent({
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-extrabold" style={{ fontFamily: "var(--font-fredoka)" }}>
+        <h1 className="font-serif-display text-3xl font-bold">
           {t("title")}
         </h1>
         <Link
           href={`/${locale}/catches/new`}
-          className="inline-flex items-center gap-1.5 bg-accent text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:opacity-90 active:scale-[0.97] transition-all duration-200"
+          className="btn-primary px-5 py-2.5 text-sm"
         >
           <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
             <path fillRule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clipRule="evenodd" />

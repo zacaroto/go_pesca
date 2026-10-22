@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { FishMark } from "@/components/layout/fish-mark";
 import { SpeciesCard } from "./species-card";
 import { SpeciesFilter } from "./species-filter";
 import { SpeciesSearch } from "./species-search";
@@ -23,6 +24,7 @@ type Props = {
 };
 
 export function SpeciesGrid({ species, locale }: Props) {
+  const t = useTranslations("species");
   const tCommon = useTranslations("common");
   const [search, setSearch] = useState("");
   const [habitat, setHabitat] = useState("");
@@ -48,14 +50,14 @@ export function SpeciesGrid({ species, locale }: Props) {
       </div>
 
       {/* Results count */}
-      <p className="text-xs text-gray-400 mb-3">
-        {filtered.length} species
+      <p className="text-[13px] text-muted mb-3">
+        {t("resultCount", { count: filtered.length })}
       </p>
 
       {filtered.length === 0 ? (
         <div className="text-center py-16">
-          <div className="text-4xl mb-3">{"\u{1F41F}"}</div>
-          <p className="text-gray-500 dark:text-gray-400">{tCommon("noResults")}</p>
+          <FishMark className="mx-auto mb-3 h-10 w-10 text-silhouette" />
+          <p className="text-muted">{tCommon("noResults")}</p>
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">

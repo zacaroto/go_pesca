@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { AvatarUpload } from "./avatar-upload";
 import { updateProfile, uploadAvatar } from "@/lib/profile";
+import { CheckCircleIcon, CloseIcon, PinIcon } from "@/components/icons";
 
 type ProfileData = {
   display_name: string | null;
@@ -22,8 +23,8 @@ type Props = {
   profile: ProfileData;
 };
 
-const inputClass =
-  "w-full bg-surface-container-lowest text-on-surface rounded-2xl chunky-border p-3 text-sm focus:outline-none focus:ring-4 focus:ring-secondary-container transition-all";
+const inputClass = "field";
+const labelClass = "block text-sm font-semibold text-text";
 
 const FISHING_TAGS = ["shore", "kayak", "offshore", "fly", "river", "lake", "spearfishing"] as const;
 const REGIONS = ["pacific", "caribbean", "centralValley", "northernPlains", "southPacific"] as const;
@@ -31,6 +32,7 @@ const MAX_SPOTS = 10;
 
 export function ProfileEditDrawer({ open, onClose, profile }: Props) {
   const t = useTranslations("profile");
+  const tCommon = useTranslations("common");
   const router = useRouter();
 
   const [displayName, setDisplayName] = useState(profile.display_name ?? "");
@@ -44,6 +46,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
   const [spotInput, setSpotInput] = useState("");
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   function toggleTag(tag: string) {
     setFishingTags((prev) =>
@@ -64,6 +67,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
 
   async function handleSave() {
     setSaving(true);
+    setSaveError(null);
     try {
       if (avatarFile) {
         await uploadAvatar(avatarFile);
@@ -85,8 +89,9 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
 
       router.refresh();
       onClose();
-    } catch {
-      // Error handled silently
+    } catch (err) {
+      console.error("Failed to save profile:", err);
+      setSaveError(tCommon("errorSaving"));
     } finally {
       setSaving(false);
     }
@@ -97,25 +102,23 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
   return (
     <div className="fixed inset-0 z-50">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-on-surface/40 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-text/40" onClick={onClose} />
 
       {/* Drawer */}
-      <div className="absolute inset-x-0 bottom-0 mx-auto max-w-lg max-h-[75vh] flex flex-col rounded-t-3xl bg-card-bg chunky-border border-b-0 shadow-xl">
+      <div className="absolute inset-x-0 bottom-0 mx-auto max-w-lg max-h-[75vh] flex flex-col rounded-t-[var(--r-card)] bg-surface border border-border border-b-0 shadow-xl">
         {/* Handle + header (sticky) */}
-        <div className="flex-shrink-0 pt-3 pb-2 px-5 border-b border-outline-variant">
-          <div className="w-10 h-1.5 rounded-full bg-outline-variant mx-auto mb-3" />
+        <div className="flex-shrink-0 pt-3 pb-2 px-5 border-b border-border">
+          <div className="w-10 h-1.5 rounded-full bg-border mx-auto mb-3" />
           <div className="flex items-center justify-between">
-            <h2
-              className="text-headline-md text-on-surface"
-              style={{ fontFamily: "var(--font-fredoka)" }}
-            >
+            <h2 className="font-serif-display text-xl font-bold text-text">
               {t("editProfile")}
             </h2>
             <button
               onClick={onClose}
-              className="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center border-2 border-outline-variant hover:scale-105 transition-transform active:translate-y-0.5 active:translate-x-0.5 text-muted"
+              aria-label={tCommon("close")}
+              className="w-9 h-9 rounded-full bg-raised flex items-center justify-center border border-border hover:border-faint active:bg-border text-muted transition-colors duration-[var(--t-press)] motion-reduce:transition-none"
             >
-              <span className="material-symbols-outlined text-xl">close</span>
+              <CloseIcon className="h-5 w-5" />
             </button>
           </div>
         </div>
@@ -131,7 +134,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
 
           {/* Display Name */}
           <div>
-            <label className="block text-label-lg font-bold text-on-surface mb-1.5" style={{ fontFamily: "var(--font-fredoka)" }}>
+            <label className={`${labelClass} mb-1.5`}>
               {t("displayName")}
             </label>
             <input
@@ -144,7 +147,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
 
           {/* Bio */}
           <div>
-            <label className="block text-label-lg font-bold text-on-surface mb-1.5" style={{ fontFamily: "var(--font-fredoka)" }}>
+            <label className={`${labelClass} mb-1.5`}>
               {t("bio")}
             </label>
             <textarea
@@ -158,7 +161,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
 
           {/* Fishing Tags */}
           <div>
-            <label className="block text-label-lg font-bold text-on-surface mb-2" style={{ fontFamily: "var(--font-fredoka)" }}>
+            <label className={`${labelClass} mb-2`}>
               {t("fishingStyle")}
             </label>
             <div className="flex flex-wrap gap-2">
@@ -167,10 +170,11 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
                   key={tag}
                   type="button"
                   onClick={() => toggleTag(tag)}
-                  className={`text-label-sm font-bold px-3 py-1.5 rounded-full border-2 transition-all bouncy-active ${
+                  aria-pressed={fishingTags.includes(tag)}
+                  className={`text-[13px] font-medium px-3 py-1.5 rounded-[var(--r-pill)] border transition-[background-color,border-color,transform] duration-[var(--t-press)] ease-[var(--ease-out)] active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100 ${
                     fishingTags.includes(tag)
-                      ? "bg-primary text-on-primary border-on-surface chunky-shadow"
-                      : "bg-surface-container text-muted border-outline-variant hover:border-primary"
+                      ? "bg-accent text-on-primary border-accent"
+                      : "bg-surface text-muted border-border hover:border-faint active:bg-raised"
                   }`}
                 >
                   {t(`tags.${tag}` as Parameters<typeof t>[0])}
@@ -181,7 +185,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
 
           {/* Favorite Spots */}
           <div>
-            <label className="block text-label-lg font-bold text-on-surface mb-2" style={{ fontFamily: "var(--font-fredoka)" }}>
+            <label className={`${labelClass} mb-2`}>
               {t("favoriteSpots")}
             </label>
             {favoriteSpots.length > 0 && (
@@ -189,16 +193,17 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
                 {favoriteSpots.map((spot) => (
                   <span
                     key={spot}
-                    className="inline-flex items-center gap-1 text-label-sm font-bold px-3 py-1.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed border-2 border-outline-variant"
+                    className="inline-flex items-center gap-1 text-[13px] font-medium px-3 py-1.5 rounded-[var(--r-pill)] pill-brack"
                   >
-                    <span className="material-symbols-outlined text-[14px]">location_on</span>
+                    <PinIcon className="h-3.5 w-3.5" />
                     {spot}
                     <button
                       type="button"
                       onClick={() => removeSpot(spot)}
-                      className="ml-0.5 hover:text-neon-coral transition-colors"
+                      aria-label={`${tCommon("close")} ${spot}`}
+                      className="ml-0.5 rounded-full hover:text-negative active:text-negative transition-colors duration-[var(--t-press)] motion-reduce:transition-none"
                     >
-                      <span className="material-symbols-outlined text-[14px]">close</span>
+                      <CloseIcon className="h-3.5 w-3.5" />
                     </button>
                   </span>
                 ))}
@@ -218,20 +223,20 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
                   type="button"
                   onClick={addSpot}
                   disabled={!spotInput.trim()}
-                  className="flex-shrink-0 px-4 py-2 text-label-sm font-bold rounded-2xl bg-tertiary-container text-on-tertiary-container chunky-border bouncy-shadow bouncy-active disabled:opacity-40 transition-all"
+                  className="btn-secondary flex-shrink-0 px-4 py-2 text-[13px]"
                 >
                   {t("addSpot")}
                 </button>
               </div>
             )}
             {favoriteSpots.length >= MAX_SPOTS && (
-              <p className="text-label-sm text-muted mt-1">{t("maxSpots")}</p>
+              <p className="text-[13px] text-muted mt-1">{t("maxSpots")}</p>
             )}
           </div>
 
           {/* Home Region */}
           <div>
-            <label className="block text-label-lg font-bold text-on-surface mb-1.5" style={{ fontFamily: "var(--font-fredoka)" }}>
+            <label className={`${labelClass} mb-1.5`}>
               {t("homeRegion")}
             </label>
             <select
@@ -250,11 +255,11 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
 
           {/* Social Links */}
           <div className="space-y-3">
-            <label className="block text-label-lg font-bold text-on-surface" style={{ fontFamily: "var(--font-fredoka)" }}>
+            <label className={`${labelClass}`}>
               {t("socialLinks")}
             </label>
             <div className="flex items-center gap-2">
-              <span className="text-label-sm font-bold text-muted w-20 flex-shrink-0">{t("instagram")}</span>
+              <span className="text-[13px] font-medium text-muted w-20 flex-shrink-0">{t("instagram")}</span>
               <input
                 type="text"
                 value={instagram}
@@ -264,7 +269,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
               />
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-label-sm font-bold text-muted w-20 flex-shrink-0">{t("youtube")}</span>
+              <span className="text-[13px] font-medium text-muted w-20 flex-shrink-0">{t("youtube")}</span>
               <input
                 type="text"
                 value={youtube}
@@ -274,7 +279,7 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
               />
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-label-sm font-bold text-muted w-20 flex-shrink-0">{t("other")}</span>
+              <span className="text-[13px] font-medium text-muted w-20 flex-shrink-0">{t("other")}</span>
               <input
                 type="text"
                 value={other}
@@ -287,14 +292,18 @@ export function ProfileEditDrawer({ open, onClose, profile }: Props) {
         </div>
 
         {/* Save button (sticky bottom) */}
-        <div className="flex-shrink-0 px-5 py-4 border-t border-outline-variant">
+        <div className="flex-shrink-0 px-5 py-4 border-t border-border">
+          {saveError && (
+            <p role="alert" className="mb-3 text-sm text-negative">
+              {saveError}
+            </p>
+          )}
           <button
             onClick={handleSave}
             disabled={saving}
-            className="w-full bg-primary text-on-primary py-3.5 rounded-2xl font-bold chunky-border chunky-shadow bouncy-hover bouncy-active disabled:opacity-50 transition-all flex items-center justify-center gap-2"
-            style={{ fontFamily: "var(--font-fredoka)" }}
+            className="btn-primary w-full"
           >
-            <span className="material-symbols-outlined text-xl">check_circle</span>
+            <CheckCircleIcon className="h-5 w-5" />
             {saving ? t("saving") : t("save")}
           </button>
         </div>

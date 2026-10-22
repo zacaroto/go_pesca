@@ -56,7 +56,7 @@ function SpeciesPageContent({
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-extrabold mb-6" style={{ fontFamily: "var(--font-fredoka)" }}>
+      <h1 className="font-serif-display text-3xl font-bold mb-6">
         {t("title")}
       </h1>
       <SpeciesGrid species={species} locale={locale} />

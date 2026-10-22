@@ -14,7 +14,8 @@ export function SpeciesFilter({ value, onChange }: Props) {
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-400 transition-all"
+      aria-label={t("habitat")}
+      className="field w-auto"
     >
       <option value="">{t("allHabitats")}</option>
       <option value="freshwater">{t("freshwater")}</option>

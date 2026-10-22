@@ -166,18 +166,6 @@ body {
   outline-offset: 2px;
 }
 
-/* Material Symbols — keep class so old components don't crash (font no longer loaded) */
-.material-symbols-outlined {
-  font-family: 'Material Symbols Outlined', sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  font-size: 20px;
-  line-height: 1;
-  display: inline-block;
-  white-space: nowrap;
-  -webkit-font-smoothing: antialiased;
-}
-
 /* ── Animation Keyframes ── */
 
 /* #1 — Card entrance (catch cards, feed cards) */
@@ -197,21 +185,57 @@ body {
 .pill-fresh { background: var(--pill-fresh-bg); color: var(--pill-fresh-ink); }
 .pill-brack { background: var(--pill-brack-bg); color: var(--pill-brack-ink); }
 
-/* ── Legacy helper stubs — stops crashes in un-redesigned pages ── */
-.chunky-border  {}
-.chunky-shadow  {}
-.bouncy-shadow  {}
-.bouncy-hover   {}
-.bouncy-active  {}
-.bouncy-hover:hover {}
-.bouncy-active:active {}
-.sticker-border {}
-.sticker-glow   {}
-.fab-3d         {}
-.fab-3d:active  {}
-.holo-overlay   { display: none; }
-.liquid-tube    { background: var(--accent); }
-.bubble         { display: none; }
-.wave-bg        { display: none; }
-.hero-gradient  { background: var(--surface); }
-.bg-gradient-sunset { background: var(--accent); }
+/* ── Shared controls (field guide) ──
+   In @layer components so Tailwind utilities (pl-9, w-auto, px-5...) can override them. */
+@layer components {
+.field {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--r-control);
+  padding: 0.625rem 0.75rem;
+  font-size: 14px;
+  transition: border-color var(--t-ui) var(--ease-out);
+}
+.field:hover { border-color: var(--faint); }
+.field:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+.field::placeholder { color: var(--faint); }
+
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--r-control);
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  transition: background-color var(--t-press) var(--ease-out), border-color var(--t-press) var(--ease-out), transform var(--t-press) var(--ease-out);
+}
+.btn-primary:active,
+.btn-secondary:active,
+.btn-danger:active { transform: scale(0.98); }
+.btn-primary:disabled,
+.btn-secondary:disabled,
+.btn-danger:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-primary { background: var(--accent); color: var(--on-primary); }
+.btn-primary:hover,
+.btn-primary:active { background: var(--accent-hi); }
+.btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+.btn-secondary:hover,
+.btn-secondary:active { border-color: var(--faint); background: var(--raised); }
+.btn-danger { background: var(--negative); color: var(--on-primary); }
+.btn-danger:hover,
+.btn-danger:active { filter: brightness(0.92); }
+@media (prefers-reduced-motion: reduce) {
+  .field,
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger { transition: none; }
+  .btn-primary:active,
+  .btn-secondary:active,
+  .btn-danger:active { transform: none; }
+}
+}

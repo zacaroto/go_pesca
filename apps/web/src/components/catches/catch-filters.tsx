@@ -33,7 +33,7 @@ export function CatchFilters({
       <select
         value={selectedSpecies}
         onChange={(e) => onSpeciesChange(e.target.value)}
-        className="flex-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-400 transition-all"
+        className="field flex-1"
       >
         <option value="">{t("filterBySpecies")}</option>
         {species.map((s) => (
@@ -47,13 +47,13 @@ export function CatchFilters({
           type="date"
           value={dateFrom}
           onChange={(e) => onDateFromChange(e.target.value)}
-          className="flex-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-400 transition-all"
+          className="field flex-1"
         />
         <input
           type="date"
           value={dateTo}
           onChange={(e) => onDateToChange(e.target.value)}
-          className="flex-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-400 transition-all"
+          className="field flex-1"
         />
       </div>
     </div>

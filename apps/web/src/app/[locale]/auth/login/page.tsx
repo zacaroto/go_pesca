@@ -18,7 +18,7 @@ function LoginContent() {
 
   return (
     <div className="flex flex-col items-center justify-center flex-1 px-4 py-16">
-      <h1 className="text-2xl font-bold mb-8">{t("loginTitle")}</h1>
+      <h1 className="font-serif-display text-3xl font-bold mb-8">{t("loginTitle")}</h1>
       <LoginForm />
     </div>
   );

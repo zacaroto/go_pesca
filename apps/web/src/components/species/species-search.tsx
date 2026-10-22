@@ -13,9 +13,10 @@ export function SpeciesSearch({ value, onChange }: Props) {
   return (
     <div className="relative flex-1">
       <svg
-        className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+        className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-faint"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
+        aria-hidden="true"
         fill="none"
         stroke="currentColor"
         strokeWidth={2}
@@ -27,7 +28,8 @@ export function SpeciesSearch({ value, onChange }: Props) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={`${t("search")}...`}
-        className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-sm bg-white dark:bg-gray-800/50 focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-400 outline-none transition-all"
+        aria-label={t("search")}
+        className="field pl-9 pr-3"
       />
     </div>
   );

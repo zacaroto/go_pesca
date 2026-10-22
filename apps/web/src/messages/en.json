@@ -12,7 +12,13 @@
     "submit": "Submit",
     "loading": "Loading...",
     "noResults": "No results found",
-    "errorSaving": "Failed to save changes. Please try again."
+    "errorSaving": "Failed to save changes. Please try again.",
+    "close": "Close",
+    "habitat": {
+      "saltwater": "Saltwater",
+      "freshwater": "Freshwater",
+      "brackish": "Brackish"
+    }
   },
   "nav": {
     "home": "Home",
@@ -24,14 +30,14 @@
     "achievements": "Achievements",
     "profile": "Profile",
     "groups": "Groups",
-    "logCatch": "Log catch"
+    "logCatch": "Log catch",
+    "main": "Main navigation"
   },
   "footer": {
     "quote": "Every species you log helps us understand our waters better.",
     "collection": "Collection",
     "community": "Community",
     "brand": "Go Pesca",
-    "ranks": "Ranks",
     "suggestSpecies": "Suggest a species",
     "responsible": "Responsible fishing",
     "privacy": "Privacy",
@@ -58,7 +64,6 @@
     "emptyTitle": "Your guide is blank",
     "emptyBody": "Log your first catch and it will appear here as the cover of your guide.",
     "logCatch": "Log a catch",
-    "login": "Log in",
     "register": "Create account",
     "loadError": "We couldn't load your guide. Try again in a moment."
   },
@@ -78,9 +83,6 @@
   },
   "pokedex": {
     "title": "My FishyDex",
-    "progress": "{caught}/{total} species caught",
-    "caught": "Caught",
-    "uncaught": "Not caught",
     "all": "All",
     "firstCatch": "First catch",
     "lastCatch": "Last catch",
@@ -92,7 +94,6 @@
     "brackish": "Brackish",
     "undiscovered": "Undiscovered",
     "yourBest": "Your best",
-    "where": "Where",
     "habitat": "Habitat",
     "released": "Released",
     "viewMyCatches": "View my catches",
@@ -171,7 +172,8 @@
     "noSpeciesFound": "No species match that name",
     "loadingMap": "Loading map...",
     "detectingGps": "Detecting location...",
-    "errorLoadSpecies": "Could not load species"
+    "errorLoadSpecies": "Could not load species",
+    "deleteError": "Could not delete the catch. Please try again."
   },
   "rank": {
     "title": "Rank",
@@ -199,15 +201,19 @@
     "weight": "Weight",
     "length": "Length",
     "fishingRegions": "Fishing Regions in CR",
-    "bestBait": "Bait / Lure"
+    "bestBait": "Bait / Lure",
+    "backToCatalog": "Back to catalog",
+    "plateNumber": "Plate no. {n}",
+    "maxWeight": "Max weight",
+    "maxLength": "Max length",
+    "registerCatchOf": "Log a catch of {name}",
+    "resultCount": "{count, plural, one {# species} other {# species}}"
   },
   "feed": {
     "title": "Community",
     "empty": "Nobody has shared a catch yet. Be the first.",
     "loadMore": "Load more",
     "loading": "Loading...",
-    "groupActivity": "Your groups activity",
-    "discover": "Discover",
     "noGroupsTitle": "Join a group",
     "noGroupsDescription": "Share catches and compete with your fishing crew",
     "joinWithCode": "Join with code",
@@ -269,7 +275,8 @@
     "favoriteSpots": "Favorite Spots",
     "favoriteSpotsPlaceholder": "Add a spot...",
     "addSpot": "Add",
-    "maxSpots": "Max 10 spots"
+    "maxSpots": "Max 10 spots",
+    "websiteLink": "Website or link"
   },
   "achievements": {
     "title": "Achievements",

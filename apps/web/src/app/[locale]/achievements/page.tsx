@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { TrophyIcon } from "@/components/icons";
 import { AchievementCard } from "@/components/achievements/achievement-card";
 
 const ACHIEVEMENT_DEFS = [
@@ -75,14 +76,11 @@ export default async function AchievementsPage({ params }: Props) {
   return (
     <div className="max-w-5xl mx-auto px-5 md:px-10 py-8 space-y-8">
       <div className="flex items-center justify-between">
-        <h1
-          className="text-headline-lg text-on-surface flex items-center gap-2"
-          style={{ fontFamily: "var(--font-fredoka)" }}
-        >
-          <span className="material-symbols-outlined text-tertiary-container text-3xl">military_tech</span>
+        <h1 className="font-serif-display text-3xl font-bold text-text flex items-center gap-2">
+          <TrophyIcon className="h-7 w-7 text-muted" />
           {t("title")}
         </h1>
-        <span className="text-label-lg font-bold text-on-primary bg-primary px-4 py-1.5 rounded-full chunky-border chunky-shadow">
+        <span className="text-sm font-semibold text-accent-ink bg-accent-soft px-4 py-1.5 rounded-[var(--r-pill)]">
           {earnedCount}/{ACHIEVEMENT_DEFS.length}
         </span>
       </div>
