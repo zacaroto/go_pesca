@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { checkLearnAchievements } from "@/lib/achievements";
+import { useAchievements } from "@/components/achievements/achievement-provider";
 
 type Props = { itemType: "guide" | "knot"; slug: string; initiallyDone: boolean; signedIn: boolean };
 
@@ -13,6 +15,7 @@ export function MarkDoneButton({ itemType, slug, initiallyDone, signedIn }: Prop
   const [done, setDone] = useState(initiallyDone);
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
+  const { showAchievements } = useAchievements();
 
   if (!signedIn) {
     return (
@@ -37,6 +40,7 @@ export function MarkDoneButton({ itemType, slug, initiallyDone, signedIn }: Prop
           await supabase.from("learn_progress").insert({ user_id: user.id, item_type: itemType, slug } as never);
       if (error) throw error;
       setDone(!done);
+      if (!done) showAchievements(await checkLearnAchievements(user.id));
     } catch (err) {
       console.error("learn: failed to save progress", err);
       setFailed(true);

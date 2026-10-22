@@ -35,6 +35,26 @@ const PATHS: Record<string, React.ReactNode> = {
     </>
   ),
   night_owl: <path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z" />,
+  trophy_catch: (
+    <>
+      <path d="M7 4h10v5a5 5 0 0 1-10 0z" />
+      <path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4M12 14v3M8.5 20h7l-1-3h-5z" />
+    </>
+  ),
+  release_catch: (
+    <>
+      <path d="M9 4v9a4 4 0 0 0 8 0v-2" />
+      <path d="M15 13l2-2 2 2" />
+      <path d="M3 20c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0" />
+    </>
+  ),
+  guides_5: (
+    <>
+      <path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z" />
+      <path d="M4 19V5M8 7h6M8 11h6" />
+    </>
+  ),
+  knots_5: <path d="M6 4c0 6 12 6 12 12a4 4 0 0 1-8 0c0-3 4-4 4-8" />,
 };
 
 /** Line-drawn emblem for each achievement (replaces the old emoji). */

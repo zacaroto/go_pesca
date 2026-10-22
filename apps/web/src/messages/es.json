@@ -373,6 +373,22 @@
       "catch_50": {
         "name": "Leyenda",
         "description": "Registra 50 capturas en total"
+      },
+      "trophy_catch": {
+        "name": "Pieza de trofeo",
+        "description": "Registra una captura que pase el umbral de trofeo de su especie"
+      },
+      "release_catch": {
+        "name": "Suelta responsable",
+        "description": "Registra una captura de una especie de captura y suelta obligatoria"
+      },
+      "guides_5": {
+        "name": "Lector de campo",
+        "description": "Lee 5 guías de Aprender"
+      },
+      "knots_5": {
+        "name": "Manos de nudo",
+        "description": "Aprende 5 nudos en Aprender"
       }
     },
     "summary": "{earned} de {total} sellos en tu libreta",

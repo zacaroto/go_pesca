@@ -21,16 +21,24 @@ export default async function AchievementsPage({ params }: Props) {
   } = await supabase.auth.getUser();
   if (!user) redirect(`/${locale}/auth/login`);
 
-  const [{ data: userAchievements }, { data: allCatches }] = await Promise.all([
+  const [{ data: userAchievements }, { data: allCatches }, { data: learnRows }] = await Promise.all([
     supabase.from("user_achievements").select("achievement_id, awarded_at").eq("user_id", user.id),
     supabase.from("catches").select("species_id").eq("user_id", user.id),
+    supabase.from("learn_progress").select("item_type").eq("user_id", user.id),
   ]);
 
   const awarded = new Map(
     ((userAchievements ?? []) as { achievement_id: string; awarded_at: string }[]).map((a) => [a.achievement_id, a.awarded_at]),
   );
   const catches = (allCatches ?? []) as { species_id: number }[];
-  const stats = { catches: catches.length, species: new Set(catches.map((c) => c.species_id)).size };
+  // learn_progress isn't in the generated Database types yet (migration 023); null before it runs.
+  const learned = (learnRows ?? []) as unknown as { item_type: string }[];
+  const stats = {
+    catches: catches.length,
+    species: new Set(catches.map((c) => c.species_id)).size,
+    guides: learned.filter((r) => r.item_type === "guide").length,
+    knots: learned.filter((r) => r.item_type === "knot").length,
+  };
   const next = nextAchievement(ACHIEVEMENT_DEFS, new Set(awarded.keys()), stats);
   const nextProgress = next ? achievementProgress(next, stats) : null;
   const item = (id: string, field: "name" | "description") => t(`items.${id}.${field}` as Parameters<typeof t>[0]);

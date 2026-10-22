@@ -1,6 +1,6 @@
 export type AchievementDef = {
   id: string;
-  type: "catch_count" | "species_count" | "special";
+  type: "catch_count" | "species_count" | "guide_count" | "knot_count" | "special";
   threshold: number;
 };
 
@@ -15,14 +15,24 @@ export const ACHIEVEMENT_DEFS: AchievementDef[] = [
   { id: "big_catch", type: "special", threshold: 0 },
   { id: "early_bird", type: "special", threshold: 0 },
   { id: "night_owl", type: "special", threshold: 0 },
+  { id: "trophy_catch", type: "special", threshold: 0 },
+  { id: "release_catch", type: "special", threshold: 0 },
+  { id: "guides_5", type: "guide_count", threshold: 5 },
+  { id: "knots_5", type: "knot_count", threshold: 5 },
 ];
 
-export type AnglerStats = { catches: number; species: number };
+/** Aprender milestones, awarded from the "mark as learned" buttons rather than from a catch. */
+export const LEARN_GOALS = [
+  { id: "guides_5", itemType: "guide", threshold: 5 },
+  { id: "knots_5", itemType: "knot", threshold: 5 },
+] as const;
+
+export type AnglerStats = { catches: number; species: number; guides: number; knots: number };
 
 /** Progress toward a countable achievement, capped at its threshold; null for one-off feats. */
 export function achievementProgress(def: AchievementDef, stats: AnglerStats): { current: number; total: number } | null {
   if (def.type === "special") return null;
-  const value = def.type === "catch_count" ? stats.catches : stats.species;
+  const value = { catch_count: stats.catches, species_count: stats.species, guide_count: stats.guides, knot_count: stats.knots }[def.type];
   return { current: Math.min(value, def.threshold), total: def.threshold };
 }
 

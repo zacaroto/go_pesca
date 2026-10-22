@@ -373,6 +373,22 @@
       "catch_50": {
         "name": "Legend",
         "description": "Log 50 total catches"
+      },
+      "trophy_catch": {
+        "name": "Trophy fish",
+        "description": "Log a catch that beats its species' trophy threshold"
+      },
+      "release_catch": {
+        "name": "Responsible release",
+        "description": "Log a catch of a mandatory catch-and-release species"
+      },
+      "guides_5": {
+        "name": "Field reader",
+        "description": "Read 5 guides in Learn"
+      },
+      "knots_5": {
+        "name": "Knot hands",
+        "description": "Learn 5 knots in Learn"
       }
     },
     "summary": "{earned} of {total} stamps in your book",
