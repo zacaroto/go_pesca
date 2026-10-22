@@ -39,11 +39,11 @@ export function UserMenu({ displayName, avatarUrl, userId }: Props) {
           <img
             src={avatarUrl}
             alt=""
-            className="h-8 w-8 shrink-0 rounded-full object-cover ring-1 ring-border"
+            className="h-10 w-10 shrink-0 rounded-full object-cover ring-1 ring-border"
             onError={() => setPhotoFailed(true)}
           />
         ) : (
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-semibold"
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-base font-semibold"
             style={{ background: "var(--accent-soft)", color: "var(--accent-ink)" }}>
             {displayName.charAt(0).toUpperCase()}
           </span>
